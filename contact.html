@@ -2,29 +2,33 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contact Us · IELTS Myanmar</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Contact · NextGenLearningMyanmar | 15k+ Vocabulary Hub</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+      font-family: 'Segoe UI', 'Poppins', Roboto, system-ui, sans-serif;
     }
+
     body {
       background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%);
       min-height: 100vh;
       padding: 2rem;
     }
+
     .container {
-      max-width: 900px;
+      max-width: 950px;
       margin: 0 auto;
       background: white;
       border-radius: 2rem;
       padding: 2.5rem;
-      box-shadow: 0 20px 40px -12px rgba(0,0,0,0.2);
+      box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.2);
+      transition: all 0.2s ease;
     }
+
     h1 {
       color: #1e3c72;
       font-size: 2rem;
@@ -32,138 +36,290 @@
       display: flex;
       align-items: center;
       gap: 1rem;
+      flex-wrap: wrap;
     }
+
+    .brand-chip {
+      background: #f5b04220;
+      padding: 0.3rem 0.9rem;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #b45f1b;
+      border: 1px solid #f5b04260;
+    }
+
     .sub {
       color: #6c7a8e;
-      border-bottom: 2px solid #f5b042;
-      padding-bottom: 1rem;
-      margin-bottom: 1.5rem;
+      border-left: 4px solid #f5b042;
+      padding-left: 1rem;
+      margin-bottom: 1.8rem;
+      font-weight: 500;
     }
-    .contact-card {
-      background: #f8fafd;
+
+    .contact-hero {
+      background: linear-gradient(115deg, #f9fbfe 0%, #ffffff 100%);
       border-radius: 1.5rem;
-      padding: 1.5rem;
-      margin: 1.5rem 0;
-      border: 1px solid #e0e6f0;
+      border: 1px solid #e2ecfb;
+      padding: 1.8rem;
+      margin: 1.2rem 0 1.8rem 0;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.02);
     }
+
     .contact-item {
       display: flex;
       align-items: center;
-      gap: 1rem;
-      padding: 0.8rem 0;
-      border-bottom: 1px solid #e0e6f0;
+      gap: 1.2rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid #e9edf4;
     }
+
     .contact-item:last-child {
       border-bottom: none;
     }
+
     .contact-icon {
-      width: 45px;
-      height: 45px;
+      width: 52px;
+      height: 52px;
       background: #1e3c72;
-      border-radius: 50%;
+      border-radius: 60px;
       display: flex;
       align-items: center;
       justify-content: center;
       color: white;
-      font-size: 1.2rem;
+      font-size: 1.4rem;
+      box-shadow: 0 6px 12px -8px #1e3c7240;
+      transition: 0.2s;
     }
+
     .contact-details {
       flex: 1;
     }
+
     .contact-label {
-      font-weight: bold;
+      font-weight: 700;
       color: #1e3c72;
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
+
     .contact-value {
-      color: #2c3e50;
-      font-size: 1rem;
+      color: #1f2e3f;
+      font-size: 1.1rem;
+      font-weight: 500;
+      word-break: break-word;
     }
+
     .contact-value a {
-      color: #1e3c72;
+      color: #f5a623;
       text-decoration: none;
+      font-weight: 600;
+      border-bottom: 1px dotted #f5b04280;
     }
+
     .contact-value a:hover {
-      text-decoration: underline;
+      color: #c1791a;
+      border-bottom: 1px solid #f5b042;
     }
-    .back-link {
+
+    .email-highlight {
+      background: #fff6e5;
+      padding: 0.25rem 1rem;
+      border-radius: 60px;
       display: inline-block;
+      font-family: monospace;
+      letter-spacing: 0.3px;
+    }
+
+    h2 {
+      color: #1e3c72;
+      font-size: 1.4rem;
+      margin: 1.8rem 0 0.8rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    ul {
+      margin-left: 1.8rem;
+      margin-bottom: 1rem;
+    }
+
+    li {
+      margin-bottom: 0.55rem;
+      line-height: 1.45;
+      color: #2c3e50;
+    }
+
+    .grid-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 1.2rem 0;
+    }
+
+    .info-card {
+      background: #f8fafd;
+      padding: 1rem 1.2rem;
+      border-radius: 1.2rem;
+      border-left: 3px solid #f5b042;
+    }
+
+    .info-card i {
+      color: #f5b042;
+      margin-right: 8px;
+    }
+
+    .note {
+      background: #eef2fa;
+      padding: 1rem 1.4rem;
+      border-radius: 1rem;
+      margin: 1.5rem 0;
+      font-size: 0.9rem;
+      color: #1e3c72;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
       margin-top: 2rem;
       background: #1e3c72;
       color: white;
-      padding: 0.7rem 1.5rem;
+      padding: 0.7rem 1.6rem;
       border-radius: 2rem;
       text-decoration: none;
+      font-weight: 600;
       transition: 0.2s;
     }
+
     .back-link:hover {
-      background: #143157;
+      background: #0f2e52;
+      transform: translateY(-2px);
     }
-    .note {
-      background: #e8f0fe;
-      padding: 1rem;
-      border-radius: 1rem;
-      margin-top: 1.5rem;
-      font-size: 0.9rem;
-      color: #1e3c72;
-      text-align: center;
-    }
+
     hr {
       margin: 1rem 0;
-      border-color: #e0e6f0;
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, #e0e6f0, transparent);
+    }
+
+    .footer-note {
+      text-align: center;
+      font-size: 0.7rem;
+      color: #7e8b9f;
+      margin-top: 1.8rem;
+    }
+
+    @media (max-width: 620px) {
+      body {
+        padding: 1rem;
+      }
+      .container {
+        padding: 1.5rem;
+      }
+      .grid-2col {
+        grid-template-columns: 1fr;
+      }
+      .contact-icon {
+        width: 44px;
+        height: 44px;
+        font-size: 1.1rem;
+      }
     }
   </style>
 </head>
 <body>
 <div class="container">
-  <h1><i class="fas fa-envelope" style="color: #f5b042;"></i> Contact Us</h1>
-  <div class="sub">We'd love to hear from you</div>
+  <h1>
+    <i class="fas fa-address-card" style="color: #f5b042;"></i> 
+    Contact Us
+    <span class="brand-chip"><i class="fas fa-database"></i> 15,000+ vocabulary</span>
+  </h1>
+  <div class="sub">NextGenLearningMyanmar — we're here to help, 24/7 email support</div>
 
-  <p>Have questions, feedback, or suggestions? Reach out to us using the information below. We typically respond within 2-3 business days.</p>
-
-  <div class="contact-card">
+  <!-- primary contact block with updated email -->
+  <div class="contact-hero">
     <div class="contact-item">
-      <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+      <div class="contact-icon"><i class="fas fa-envelope-open-text"></i></div>
       <div class="contact-details">
-        <div class="contact-label">Email</div>
-        <div class="contact-value"><a href="mailto:contact@ieltsmyanmar.com">contact@ieltsmyanmar.com</a></div>
+        <div class="contact-label">📧 DIRECT EMAIL (fastest reply)</div>
+        <div class="contact-value">
+          <a href="mailto:nextgenlearningmyanmar@gmail.com" class="email-highlight" style="background: #fff0db; padding: 0.2rem 0.9rem; border-radius: 40px;">
+            <i class="fas fa-paper-plane"></i> nextgenlearningmyanmar@gmail.com
+          </a>
+        </div>
+        <div style="font-size: 0.75rem; color: #5f6f87; margin-top: 5px;">We respond within 24–48 hours (business days)</div>
+      </div>
+    </div>
+
+    <div class="contact-item">
+      <div class="contact-icon"><i class="fas fa-globe-asia"></i></div>
+      <div class="contact-details">
+        <div class="contact-label">🌐 website</div>
+        <div class="contact-value">NextGenLearningMyanmar (official platform)</div>
       </div>
     </div>
 
     <div class="contact-item">
       <div class="contact-icon"><i class="fas fa-clock"></i></div>
       <div class="contact-details">
-        <div class="contact-label">Response Time</div>
-        <div class="contact-value">Typically 2-3 business days</div>
-      </div>
-    </div>
-
-    <div class="contact-item">
-      <div class="contact-icon"><i class="fas fa-globe"></i></div>
-      <div class="contact-details">
-        <div class="contact-label">Website</div>
-        <div class="contact-value">ieltsmyanmar.com</div>
+        <div class="contact-label">⏱️ response commitment</div>
+        <div class="contact-value">Within 2 business days — Myanmar time (GMT+6:30)</div>
       </div>
     </div>
   </div>
 
-  <h2><i class="fas fa-question-circle"></i> What to Contact Us About</h2>
+  <!-- quick feedback + reason section -->
+  <div class="grid-2col">
+    <div class="info-card">
+      <i class="fas fa-comment-dots"></i> <strong>Suggest words or report issues</strong>
+      <p style="margin-top: 8px; font-size: 0.85rem;">Found a translation error? Want to add a specific IELTS word? Email us directly — we improve together.</p>
+    </div>
+    <div class="info-card">
+      <i class="fas fa-hand-peace"></i> <strong>Collaboration & partnership</strong>
+      <p style="margin-top: 8px; font-size: 0.85rem;">Schools, teachers, creators — let’s expand free learning in Myanmar.</p>
+    </div>
+  </div>
+
+  <h2><i class="fas fa-question-circle"></i> What can you contact us about?</h2>
   <ul>
-    <li>✅ Reporting bugs or technical issues</li>
-    <li>✅ Suggesting new vocabulary words or features</li>
-    <li>✅ Reporting copyright concerns (DMCA)</li>
-    <li>✅ General feedback or questions</li>
-    <li>❌ We do NOT provide IELTS exam answers or cheating methods</li>
-    <li>❌ We do NOT offer personalized tutoring</li>
+    <li><i class="fas fa-check-circle" style="color: #2e7d32; font-size: 0.85rem; margin-right: 0.4rem;"></i> ✅ <strong>Vocabulary feedback:</strong> missing words, Burmese meaning improvements, or level adjustments</li>
+    <li><i class="fas fa-check-circle" style="color: #2e7d32; font-size: 0.85rem; margin-right: 0.4rem;"></i> ✅ <strong>Technical issues:</strong> search not working, audio glitch, or mobile display bugs</li>
+    <li><i class="fas fa-check-circle" style="color: #2e7d32; font-size: 0.85rem; margin-right: 0.4rem;"></i> ✅ <strong>Content suggestions:</strong> new topics, example sentence requests, or grammar articles</li>
+    <li><i class="fas fa-check-circle" style="color: #2e7d32; font-size: 0.85rem; margin-right: 0.4rem;"></i> ✅ <strong>DMCA & copyright:</strong> if you believe any material infringes your rights</li>
+    <li><i class="fas fa-check-circle" style="color: #2e7d32; font-size: 0.85rem; margin-right: 0.4rem;"></i> ✅ <strong>General love & feedback:</strong> we read every message, even short ones!</li>
+    <li><i class="fas fa-times-circle" style="color: #b00020; font-size: 0.85rem; margin-right: 0.4rem;"></i> ❌ We do NOT provide ghostwriting, exam cheating, or live tutoring sessions</li>
+    <li><i class="fas fa-times-circle" style="color: #b00020; font-size: 0.85rem; margin-right: 0.4rem;"></i> ❌ No test answers or "guaranteed band score" schemes — we promote honest learning</li>
   </ul>
 
+  <h2><i class="fas fa-phone-alt"></i> Alternative ways to reach</h2>
+  <p>Currently we operate as a digital-first platform. The fastest and most reliable channel is <strong>email</strong> — we don't have official social media yet but will update soon. For now, feel free to use the email address below for any inquiry.</p>
   <div class="note">
-    <i class="fas fa-shield-alt"></i> <strong>Privacy Note:</strong> Any information you send us via email will only be used to respond to your inquiry. We do not share your information with third parties.
+    <i class="fas fa-envelope" style="font-size: 1.5rem;"></i>
+    <span><strong>📬 Copy our email:</strong> <code style="background: white; padding: 4px 10px; border-radius: 40px; font-size: 0.85rem;">nextgenlearningmyanmar@gmail.com</code> — bookmark it!</span>
+  </div>
+
+  <!-- why free & transparent section -->
+  <h2><i class="fas fa-shield-alt"></i> Privacy & trust</h2>
+  <p>We respect your privacy. Any message you send to <strong>nextgenlearningmyanmar@gmail.com</strong> is used solely to answer your query. We never share, sell, or rent email addresses. No spam, no marketing lists. You can ask to delete your conversation at any time.</p>
+
+  <div class="note" style="background: #fff6e0; border-left: 5px solid #f5b042;">
+    <i class="fas fa-star-of-life" style="color: #f5b042;"></i>
+    <div><strong>💡 Quick tip before writing:</strong> If you're facing technical issues, include your device type (Android/iPhone/PC) and browser name — that helps us solve faster. For vocabulary corrections, attach the exact word & level (A1–C2).</div>
   </div>
 
   <hr>
-  <a href="/" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
+  <a href="/" class="back-link"><i class="fas fa-arrow-left"></i> ← back to vocabulary hub</a>
+  <div class="footer-note">
+    <i class="far fa-copyright"></i> NextGenLearningMyanmar — free IELTS & general English vocabulary (15k+ words) | Based in Myanmar
+  </div>
 </div>
 </body>
 </html>

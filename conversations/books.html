@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books & Reading - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 1rem;
+        }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        
+        .conversation-section {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .conversation-section h2 {
+            background: #0984e3;
+            color: white;
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line {
+            display: grid;
+            grid-template-columns: 70px 1fr 1fr;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            align-items: start;
+        }
+        .speaker { font-weight: bold; color: #0984e3; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { 
+            color: #8e6b3c; 
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 0.95rem;
+        }
+        .audio-btn {
+            background: #eef4ff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.3rem;
+        }
+        .audio-btn:hover { background: #0984e3; color: white; }
+        
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+            padding: 1rem;
+        }
+        .vocab-item {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            border-left: 3px solid #0984e3;
+        }
+        .vocab-eng { font-weight: bold; color: #0984e3; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        
+        .quiz-question {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.8rem;
+        }
+        .quiz-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .quiz-option {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .quiz-option:hover { background: #0984e3; color: white; border-color: #0984e3; }
+        
+        .genre-box {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            padding: 1rem;
+            justify-content: center;
+        }
+        .genre-tag {
+            background: #e3f2fd;
+            padding: 0.4rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.85rem;
+            color: #0984e3;
+            border: 1px solid #0984e3;
+        }
+        
+        .tips-box {
+            background: #e3f2fd;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #0984e3;
+        }
+        .tips-box i { color: #0984e3; margin-right: 8px; }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1rem;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: #1e3c72;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid white;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: #f5b042;
+            color: #1e3c72;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .back-to-top i {
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 42px;
+                height: 42px;
+            }
+            .back-to-top i {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 700px) {
+            .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> All Conversations
+    </a>
+    
+    <header>
+        <h1><i class="fas fa-book-open"></i> Books & Reading</h1>
+        <p>Learn how to discuss books, authors, and reading habits in English</p>
+        <p>စာအုပ်များ၊ စာရေးဆရာများနှင့် စာဖတ်ခြင်းအလေ့အထများအကြောင်း အင်္ဂလိပ်လို ဆွေးနွေးနည်းကို လေ့လာပါ</p>
+    </header>
+    
+    <!-- Dialogue 1: Talking About Your Favorite Book -->
+    <div class="conversation-section">
+        <h2>📖 Favorite Book / အကြိုက်ဆုံးစာအုပ်</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">What's your favorite book of all time?</div>
+                <div class="burmese">မင်းရဲ့ အချိန်တိုင်းရဲ့ အကြိုက်ဆုံးစာအုပ်က ဘာလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What is your favorite book of all time?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">I'd say "To Kill a Mockingbird" by Harper Lee. It's a classic.</div>
+                <div class="burmese">Harper Lee ရဲ့ "To Kill a Mockingbird" လို့ပြောမယ်။ ဒါက ဂန္ထဝင်စာအုပ်ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('I would say To Kill a Mockingbird by Harper Lee. It is a classic.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Oh, I've heard of that. What's it about?</div>
+                <div class="burmese">အိုး၊ အဲဒါကို ကြားဖူးတယ်။ ဘာအကြောင်းလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Oh, I have heard of that. What is it about?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">It's about racial injustice in the American South. It's very powerful.</div>
+                <div class="burmese">အမေရိကန်တောင်ပိုင်းက လူမျိုးရေးမတရားမှုအကြောင်းပါ။ အရမ်းအားကောင်းတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('It is about racial injustice in the American South. It is very powerful.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 2: Book Genres -->
+    <div class="conversation-section">
+        <h2>📚 Book Genres / စာအုပ်အမျိုးအစားများ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">What genre of books do you enjoy reading?</div>
+                <div class="burmese">မင်း စာအုပ်အမျိုးအစား ဘယ်ဟာကို ဖတ်ရတာကြိုက်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What genre of books do you enjoy reading?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">I love mystery and thriller novels. I can't put them down!</div>
+                <div class="burmese">လျှို့ဝှက်ဆန်းကြယ်နဲ့ သည်းဖိုစရာဝတ္ထုတွေ ကြိုက်တယ်။ ချချင်စိတ်မရှိဘူး။</div>
+                <button class="audio-btn" onclick="speakEnglish('I love mystery and thriller novels. I cannot put them down!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Me too! Do you like science fiction or fantasy?</div>
+                <div class="burmese">ငါလည်း! သိပ္ပံဝတ္ထု ဒါမှမဟုတ် စိတ်ကူးယဉ်ဝတ္ထုကြိုက်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Me too! Do you like science fiction or fantasy?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Sometimes. I also enjoy historical fiction based on real events.</div>
+                <div class="burmese">တစ်ခါတစ်ရံ။ ဖြစ်ရပ်မှန်အခြေခံတဲ့ သမိုင်းဝတ္ထုတွေလည်း ကြိုက်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Sometimes. I also enjoy historical fiction based on real events.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 3: Book Recommendations -->
+    <div class="conversation-section">
+        <h2>💡 Book Recommendations / စာအုပ်အကြံပြုချက်များ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Can you recommend a good book for me?</div>
+                <div class="burmese">ငါ့အတွက် စာအုပ်ကောင်းတစ်အုပ် အကြံပြုနိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Can you recommend a good book for me?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Of course! What kind of stories do you like?</div>
+                <div class="burmese">ရပါတယ်! မင်း ဘယ်လိုဇာတ်လမ်းမျိုး ကြိုက်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Of course! What kind of stories do you like?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">I enjoy inspiring true stories about people overcoming challenges.</div>
+                <div class="burmese">စိန်ခေါ်မှုတွေကိုကျော်လွှားတဲ့လူတွေအကြောင်း လှုံ့ဆော်ပေးတဲ့ ဖြစ်ရပ်မှန်ပုံပြင်တွေ ကြိုက်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I enjoy inspiring true stories about people overcoming challenges.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Then you should read "The Boy Who Harnessed the Wind." It's amazing!</div>
+                <div class="burmese">ဒါဆို "The Boy Who Harnessed the Wind" ဖတ်သင့်တယ်။ အံ့သြစရာကောင်းတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Then you should read The Boy Who Harnessed the Wind. It is amazing!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 4: Reading Habits -->
+    <div class="conversation-section">
+        <h2>⏰ Reading Habits / စာဖတ်ခြင်းအလေ့အထများ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">How often do you read?</div>
+                <div class="burmese">မင်း ဘယ်နှစ်ခါလောက် စာဖတ်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('How often do you read?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">I try to read every day, even if it's just for 15 minutes.</div>
+                <div class="burmese">၁၅ မိနစ်လောက်ပဲဖြစ်ဖြစ် နေ့တိုင်းဖတ်ဖို့ ကြိုးစားတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I try to read every day, even if it is just for 15 minutes.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Do you prefer physical books or e-books?</div>
+                <div class="burmese">စာအုပ်ရုပ်ပိုင်း ဒါမှမဟုတ် အီးစာအုပ်ကို ပိုကြိုက်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you prefer physical books or e-books?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">I love physical books. I like the feeling of turning pages.</div>
+                <div class="burmese">စာအုပ်ရုပ်ပိုင်းကို ကြိုက်တယ်။ စာမျက်နှာတွေလှန်တဲ့ခံစားမှုကို ကြိုက်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I love physical books. I like the feeling of turning pages.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 5: At the Library -->
+    <div class="conversation-section">
+        <h2>🏫 At the Library / စာကြည့်တိုက်တွင်</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">How often do you visit the library?</div>
+                <div class="burmese">စာကြည့်တိုက်ကို ဘယ်နှစ်ခါလောက်သွားလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('How often do you visit the library?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">About once a week. It's free to borrow books!</div>
+                <div class="burmese">တစ်ပတ် တစ်ခါလောက်။ စာအုပ်ငှားရတာ အခမဲ့ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('About once a week. It is free to borrow books!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Do they have a good selection?</div>
+                <div class="burmese">သူတို့မှာ ကောင်းတဲ့ရွေးချယ်မှုရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do they have a good selection?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Yes, thousands of books. You can also request books online.</div>
+                <div class="burmese">ဟုတ်တယ်၊ ထောင်နဲ့ချီတဲ့စာအုပ်တွေ။ အွန်လိုင်းကနေ စာအုပ်တွေ တောင်းယူလို့လည်းရတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, thousands of books. You can also request books online.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 6: Buying Books -->
+    <div class="conversation-section">
+        <h2>💰 Buying Books / စာအုပ်များဝယ်ယူခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Where do you usually buy your books?</div>
+                <div class="burmese">မင်း စာအုပ်တွေကို ဘယ်မှာ ပုံမှန်ဝယ်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Where do you usually buy your books?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">I buy them online. It's cheaper and more convenient.</div>
+                <div class="burmese">အွန်လိုင်းမှာဝယ်တယ်။ ပိုစျေးသက်သာပြီး ပိုအဆင်ပြေတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I buy them online. It is cheaper and more convenient.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Do you ever buy used books?</div>
+                <div class="burmese">စာအုပ်ဟောင်းတွေ ဝယ်ဖူးလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you ever buy used books?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Yes, I love used bookstores. You can find hidden gems for very low prices.</div>
+                <div class="burmese">ဟုတ်တယ်၊ စာအုပ်ဟောင်းဆိုင်တွေ ကြိုက်တယ်။ စျေးအရမ်းသက်သာတဲ့ လျှို့ဝှက်ရတနာတွေ ရှာတွေ့နိုင်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, I love used bookstores. You can find hidden gems for very low prices.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 7: Audiobooks -->
+    <div class="conversation-section">
+        <h2>🎧 Audiobooks / အသံစာအုပ်များ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Have you ever tried listening to audiobooks?</div>
+                <div class="burmese">အသံစာအုပ်တွေ နားထောင်ကြည့်ဖူးလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Have you ever tried listening to audiobooks?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Yes, I love them! I listen while I'm driving or exercising.</div>
+                <div class="burmese">ဟုတ်တယ်၊ ကြိုက်တယ်! ကားမောင်းတဲ့အခါ ဒါမှမဟုတ် လေ့ကျင့်ခန်းလုပ်တဲ့အခါ နားထောင်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, I love them! I listen while I am driving or exercising.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Do you find them as good as reading?</div>
+                <div class="burmese">စာဖတ်သလောက် ကောင်းတယ်လို့ ထင်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you find them as good as reading?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Sometimes they're even better because the narrator brings the story to life.</div>
+                <div class="burmese">တစ်ခါတစ်ရံ ပိုကောင်းတယ်၊ အကြောင်းကြီးက ဇာတ်ကြောင်းပြောသူက ဇာတ်လမ်းကို အသက်ဝင်စေတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Sometimes they are even better because the narrator brings the story to life.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 8: Book Clubs -->
+    <div class="conversation-section">
+        <h2>👥 Book Clubs / စာအုပ်စုများ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Are you part of any book clubs?</div>
+                <div class="burmese">မင်း စာအုပ်စုတစ်ခုခုမှာ ပါဝင်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Are you part of any book clubs?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Yes, I meet with a group once a month at the local coffee shop.</div>
+                <div class="burmese">ဟုတ်တယ်၊ ဒေသခံကော်ဖီဆိုင်မှာ တစ်လတစ်ခါ အဖွဲ့တစ်ဖွဲ့နဲ့တွေ့တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, I meet with a group once a month at the local coffee shop.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">That sounds fun! What book are you reading now?</div>
+                <div class="burmese">ပျော်စရာကောင်းပုံရတယ်! အခု ဘယ်စာအုပ်ဖတ်နေလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('That sounds fun! What book are you reading now?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">We're reading "The Midnight Library" by Matt Haig. You should join us!</div>
+                <div class="burmese">ငါတို့ Matt Haig ရဲ့ "The Midnight Library" ကိုဖတ်နေတယ်။ ငါတို့နဲ့ပါဝင်သင့်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('We are reading The Midnight Library by Matt Haig. You should join us!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Book Genres List -->
+    <div class="conversation-section">
+        <h2>📚 Book Genres / စာအုပ်အမျိုးအစားများ</h2>
+        <div class="genre-box">
+            <span class="genre-tag">Mystery (လျှို့ဝှက်ဆန်းကြယ်)</span>
+            <span class="genre-tag">Thriller (သည်းဖိုစရာ)</span>
+            <span class="genre-tag">Romance (အချစ်)</span>
+            <span class="genre-tag">Science Fiction (သိပ္ပံဝတ္ထု)</span>
+            <span class="genre-tag">Fantasy (စိတ်ကူးယဉ်)</span>
+            <span class="genre-tag">Historical Fiction (သမိုင်းဝတ္ထု)</span>
+            <span class="genre-tag">Biography (အတ္ထုပ္ပတ္တိ)</span>
+            <span class="genre-tag">Self-Help (ကိုယ်ပိုင်ဖွံ့ဖြိုးရေး)</span>
+            <span class="genre-tag">Poetry (ကဗျာ)</span>
+            <span class="genre-tag">Horror (ထိတ်လန့်စရာ)</span>
+            <span class="genre-tag">Adventure (စွန့်စားခန်း)</span>
+            <span class="genre-tag">Classic (ဂန္ထဝင်)</span>
+        </div>
+    </div>
+    
+    <!-- Vocabulary Section -->
+    <div class="conversation-section">
+        <h2>📖 Book Vocabulary / စာအုပ်သုံးဝေါဟာရများ</h2>
+        <div class="vocab-grid">
+            <div class="vocab-item"><span class="vocab-eng">Author</span><br><span class="vocab-burmese">စာရေးဆရာ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Publisher</span><br><span class="vocab-burmese">ထုတ်ဝေသူ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Chapter</span><br><span class="vocab-burmese">အခန်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Plot</span><br><span class="vocab-burmese">ဇာတ်ကွက်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Character</span><br><span class="vocab-burmese">ဇာတ်ကောင်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Page-turner</span><br><span class="vocab-burmese">စိတ်ဝင်စားဖွယ်စာအုပ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Bestseller</span><br><span class="vocab-burmese">အရောင်းရဆုံးစာအုပ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Bookworm</span><br><span class="vocab-burmese">စာဖတ်ဝါသနာပါသူ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Library card</span><br><span class="vocab-burmese">စာကြည့်တိုက်ကတ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Due date</span><br><span class="vocab-burmese">ပြန်အပ်ရမည့်ရက်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Review</span><br><span class="vocab-burmese">သုံးသပ်ချက်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Narrator</span><br><span class="vocab-burmese">ဇာတ်ကြောင်းပြောသူ</span></div>
+        </div>
+    </div>
+    
+    <!-- Tips for Reading More -->
+    <div class="conversation-section">
+        <h2>💡 Tips for Reading More / စာပိုမိုဖတ်ရန် အကြံပြုချက်များ</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>How to Build a Reading Habit (စာဖတ်ခြင်းအလေ့အထတည်ဆောက်နည်း):</strong><br>
+            • Set a daily reading goal (e.g., 20 pages per day) (နေ့စဉ်စာဖတ်ရန်ပန်းတိုင်ထားပါ)<br>
+            • Carry a book with you everywhere (စာအုပ်တစ်အုပ်ကို ဘယ်သွားသွားယူသွားပါ)<br>
+            • Join a book club for motivation (လှုံ့ဆော်မှုအတွက် စာအုပ်စုတွင်ပါဝင်ပါ)<br>
+            • Try different formats (physical, e-book, audiobook) (ပုံစံအမျိုးမျိုးစမ်းကြည့်ပါ)<br>
+            • Create a cozy reading space (စာဖတ်ရန် သက်တောင့်သက်သာနေရာဖန်တီးပါ)<br>
+            • Turn off your phone while reading (စာဖတ်နေစဉ် ဖုန်းပိတ်ထားပါ)<br>
+        </div>
+    </div>
+    
+    <!-- Practice Section -->
+    <div class="conversation-section">
+        <h2>✏️ Practice Questions / လေ့ကျင့်ခန်းမေးခွန်းများ</h2>
+        <div class="dialogue-box">
+            <div class="quiz-question">
+                <p><strong>1. How do you ask someone about their favorite book?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What is your favorite book?')">What is your name?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What is your favorite book?')">What is your favorite book?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What is your favorite book?')">Where do you live?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What is your favorite book?')">How old are you?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>2. "စာအုပ်အကြံပြုနိုင်မလား" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can you recommend a book?')">Can you sell a book?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can you recommend a book?')">Can you recommend a book?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can you recommend a book?')">Can you write a book?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can you recommend a book?')">Can you borrow a book?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. What do you call a person who loves reading?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Bookworm')">Book seller</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Bookworm')">Bookworm</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Bookworm')">Book writer</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Bookworm')">Book publisher</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. "ငါ သည်းဖိုစရာဝတ္ထုတွေ ဖတ်ရတာကြိုက်တယ်" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I love reading thrillers.')">I love reading romance novels.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I love reading thrillers.')">I love reading poetry.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I love reading thrillers.')">I love reading thrillers.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I love reading thrillers.')">I love reading biographies.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. What is an audiobook?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A recorded version of a book you listen to')">A book you watch on TV</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A recorded version of a book you listen to')">A book you read online</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A recorded version of a book you listen to')">A recorded version of a book you listen to</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A recorded version of a book you listen to')">A book you write yourself</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p><i class="fas fa-heart" style="color: #0984e3;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p>
+        <p style="font-size: 0.75rem; margin-top: 0.5rem;">Practice these conversations to talk about books and reading with confidence!</p>
+    </footer>
+</div>
+
+<!-- Back to Top Button -->
+<a href="#" class="back-to-top" id="backToTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+<script>
+    function speakEnglish(text) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8;
+        utterance.pitch = 1.0;
+        
+        function setVoice() {
+            const voices = window.speechSynthesis.getVoices();
+            const englishVoice = voices.find(v => v.lang === 'en-US' || v.lang.startsWith('en-'));
+            if (englishVoice) utterance.voice = englishVoice;
+            window.speechSynthesis.speak(utterance);
+        }
+        
+        if (window.speechSynthesis.getVoices().length) setVoice();
+        else window.speechSynthesis.onvoiceschanged = setVoice;
+    }
+    
+    function checkAnswer(element, correctAnswer) {
+        const options = element.parentElement.querySelectorAll('.quiz-option');
+        const isCorrect = element.innerText === correctAnswer;
+        
+        if (isCorrect) {
+            element.style.background = '#2ecc71';
+            element.style.color = 'white';
+            speakEnglish(correctAnswer);
+            setTimeout(() => {
+                options.forEach(opt => {
+                    opt.style.background = '';
+                    opt.style.color = '';
+                });
+            }, 1500);
+        } else {
+            element.style.background = '#e74c3c';
+            element.style.color = 'white';
+            setTimeout(() => {
+                element.style.background = '';
+                element.style.color = '';
+            }, 500);
+        }
+    }
+    
+    // Back to Top Button Functionality
+    (function() {
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        
+        if (backToTopBtn) {
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

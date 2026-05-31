@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Optician & Glasses - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%); font-family: 'Segoe UI', Roboto, sans-serif; padding: 1rem; }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        .back-btn { display: inline-flex; align-items: center; gap: 8px; background: white; padding: 0.6rem 1.2rem; border-radius: 2rem; text-decoration: none; color: #1e3c72; font-weight: 500; margin-bottom: 1rem; transition: 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        .conversation-section { background: white; border-radius: 1rem; margin-bottom: 2rem; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+        .conversation-section h2 { background: #0984e3; color: white; padding: 1rem; font-size: 1.2rem; }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line { display: grid; grid-template-columns: 70px 1fr 1fr; gap: 0.8rem; padding: 0.8rem; border-bottom: 1px solid #eee; align-items: start; }
+        .speaker { font-weight: bold; color: #0984e3; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.95rem; }
+        .audio-btn { background: #eef4ff; border: none; border-radius: 2rem; padding: 0.3rem 0.8rem; cursor: pointer; transition: 0.2s; margin-top: 0.3rem; }
+        .audio-btn:hover { background: #0984e3; color: white; }
+        .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.8rem; padding: 1rem; }
+        .vocab-item { background: #f8f9fa; padding: 0.8rem; border-radius: 0.8rem; border-left: 3px solid #0984e3; }
+        .vocab-eng { font-weight: bold; color: #0984e3; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        .quiz-question { background: #f8f9fa; padding: 1rem; margin-bottom: 1rem; border-radius: 0.8rem; }
+        .quiz-options { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
+        .quiz-option { background: white; padding: 0.5rem 1rem; border-radius: 2rem; border: 1px solid #ddd; cursor: pointer; transition: 0.2s; }
+        .quiz-option:hover { background: #0984e3; color: white; border-color: #0984e3; }
+        .tips-box { background: #e3f2fd; padding: 1rem; border-radius: 0.8rem; margin: 1rem; border-left: 3px solid #0984e3; }
+        .tips-box i { color: #0984e3; margin-right: 8px; }
+        footer { margin-top: 2rem; text-align: center; padding: 1rem; color: #6c757d; font-size: 0.8rem; }
+        .back-to-top { position: fixed; bottom: 1.5rem; right: 1.5rem; background: #1e3c72; color: white; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 1000; opacity: 0; visibility: hidden; border: 2px solid white; }
+        .back-to-top.show { opacity: 1; visibility: visible; }
+        .back-to-top:hover { background: #f5b042; color: #1e3c72; transform: translateY(-3px); }
+        .back-to-top i { font-size: 1.2rem; }
+        @media (max-width: 768px) { .back-to-top { bottom: 1rem; right: 1rem; width: 42px; height: 42px; } .back-to-top i { font-size: 1rem; } }
+        @media (max-width: 700px) { .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; } }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn"><i class="fas fa-arrow-left"></i> All Conversations</a>
+    <header><h1><i class="fas fa-glasses"></i> Optician & Glasses</h1><p>Learn how to buy glasses, get eye exams, and order contact lenses in English</p><p>မျက်မှန်များဝယ်ယူနည်း၊ မျက်စိစစ်ဆေးမှုခံယူနည်းနှင့် မျက်ကပ်မှန်များမှာယူနည်းကို အင်္ဂလိပ်လို လေ့လာပါ</p></header>
+    
+    <!-- Dialogue 1: Eye Exam Appointment -->
+    <div class="conversation-section"><h2>👁️ Eye Exam Appointment / မျက်စိစစ်ဆေးမှုချိန်း</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">Hello, I need to schedule an eye exam.</div><div class="burmese">မင်္ဂလာပါ၊ ကျွန်တော် မျက်စိစစ်ဆေးမှု အချိန်ဇယားဆွဲဖို့ လိုအပ်ပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('Hello, I need to schedule an eye exam.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Receptionist:</div><div class="english">When would you like to come in?</div><div class="burmese">ဘယ်အချိန်လာချင်လဲ။</div><button class="audio-btn" onclick="speakEnglish('When would you like to come in?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">Is there any availability tomorrow morning?</div><div class="burmese">မနက်ဖြန် မနက်ခင်းမှာ ရနိုင်လား။</div><button class="audio-btn" onclick="speakEnglish('Is there any availability tomorrow morning?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Receptionist:</div><div class="english">Yes, we have a slot at 10 AM. The exam takes about 30 minutes.</div><div class="burmese">ဟုတ်ပါတယ်၊ နံနက် ၁၀ နာရီမှာ အချိန်ရှိပါတယ်။ စစ်ဆေးမှုက ၃၀ မိနစ်ခန့်ကြာပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('Yes, we have a slot at 10 AM. The exam takes about 30 minutes.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 2: During the Eye Exam -->
+    <div class="conversation-section"><h2>🔬 During the Eye Exam / မျက်စိစစ်ဆေးနေစဉ်</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Doctor:</div><div class="english">Please read the smallest line you can see on the chart.</div><div class="burmese">ကျေးဇူးပြု၍ ဇယားပေါ်မှာ သင်မြင်နိုင်တဲ့ အသေးဆုံးစာကြောင်းကို ဖတ်ပါ။</div><button class="audio-btn" onclick="speakEnglish('Please read the smallest line you can see on the chart.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Patient:</div><div class="english">E, T, P, M... I can't read the next line. It's blurry.</div><div class="burmese">E, T, P, M... နောက်စာကြောင်းကို ကျွန်တော် မဖတ်နိုင်ဘူး။ ဝါးနေတယ်။</div><button class="audio-btn" onclick="speakEnglish('E, T, P, M... I cannot read the next line. It is blurry.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Doctor:</div><div class="english">Which is better, lens 1 or lens 2?</div><div class="burmese">ဘယ်ဟာ ပိုကောင်းလဲ၊ မှန် ၁ လား မှန် ၂ လား။</div><button class="audio-btn" onclick="speakEnglish('Which is better, lens 1 or lens 2?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Patient:</div><div class="english">Lens 2 is much clearer. I can see the letters now.</div><div class="burmese">မှန် ၂ က ပိုရှင်းတယ်။ အခုစာလုံးတွေ ကျွန်တော်မြင်ရပြီ။</div><button class="audio-btn" onclick="speakEnglish('Lens 2 is much clearer. I can see the letters now.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 3: Prescription Discussion -->
+    <div class="conversation-section"><h2>📝 Prescription Discussion / ဆေးညွှန်းဆွေးနွေးခြင်း</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Doctor:</div><div class="english">Your prescription has changed slightly. You need -2.50 in your left eye and -2.00 in your right eye.</div><div class="burmese">သင့်ဆေးညွှန်း နည်းနည်းပြောင်းသွားပါတယ်။ သင့်ဘယ်ဘက်မျက်လုံးအတွက် -၂.၅၀၊ ညာဘက်အတွက် -၂.၀၀ လိုအပ်ပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('Your prescription has changed slightly. You need -2.50 in your left eye and -2.00 in your right eye.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Patient:</div><div class="english">Do I need to wear glasses all the time now?</div><div class="burmese">အခု မျက်မှန်ကို အချိန်ပြည့် တပ်ဖို့ လိုအပ်လား။</div><button class="audio-btn" onclick="speakEnglish('Do I need to wear glasses all the time now?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Doctor:</div><div class="english">For driving and watching TV, yes. For reading, you might not need them.</div><div class="burmese">ကားမောင်းခြင်းနှင့် တီဗီကြည့်ခြင်းအတွက် လိုအပ်ပါတယ်။ စာဖတ်ဖို့အတွက် မလိုအပ်နိုင်ပါဘူး။</div><button class="audio-btn" onclick="speakEnglish('For driving and watching TV, yes. For reading, you might not need them.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 4: Choosing Frames -->
+    <div class="conversation-section"><h2>🕶️ Choosing Frames / မျက်မှန်ဘောင်ရွေးချယ်ခြင်း</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">Can you help me choose frames that suit my face shape?</div><div class="burmese">ကျွန်တော့်မျက်နှာပုံသဏ္ဍာန်နဲ့ လိုက်ဖက်တဲ့ မျက်မှန်ဘောင်များကို ရွေးပေးနိုင်မလား။</div><button class="audio-btn" onclick="speakEnglish('Can you help me choose frames that suit my face shape?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Optician:</div><div class="english">Of course. Round faces look great with rectangular frames. Let me show you some options.</div><div class="burmese">ရပါတယ်။ ဝိုင်းနေတဲ့မျက်နှာတွေက လေးထောင့်ပုံဘောင်နဲ့ လှပါတယ်။ ရွေးစရာအချို့ ပြပါရစေ။</div><button class="audio-btn" onclick="speakEnglish('Of course. Round faces look great with rectangular frames. Let me show you some options.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">I like these. How much are they?</div><div class="burmese">ဒါတွေကို ကြိုက်တယ်။ ဘယ်လောက်လဲ။</div><button class="audio-btn" onclick="speakEnglish('I like these. How much are they?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Optician:</div><div class="english">The frames are $120, and the lenses are $80. The total would be $200.</div><div class="burmese">ဘောင်က ၁၂၀ ဒေါ်လာ၊ မှန်က ၈၀ ဒေါ်လာပါ။ စုစုပေါင်း ၂၀၀ ဒေါ်လာပါ။</div><button class="audio-btn" onclick="speakEnglish('The frames are 120 dollars, and the lenses are 80 dollars. The total would be 200 dollars.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 5: Lens Options -->
+    <div class="conversation-section"><h2>🔍 Lens Options / မှန်ရွေးချယ်စရာများ</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">What kind of lenses do you recommend?</div><div class="burmese">ဘယ်လိုမှန်မျိုးကို အကြံပြုလဲ။</div><button class="audio-btn" onclick="speakEnglish('What kind of lenses do you recommend?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Optician:</div><div class="english">We have standard, anti-reflective, blue light blocking, and photochromic lenses.</div><div class="burmese">ကျွန်တော်တို့မှာ စံ၊ အလင်းပြန်ကာကွယ်ရေး၊ အပြာရောင်အလင်းကာကွယ်ရေးနှင့် အလင်းလိုက်ပြောင်းလဲနိုင်သောမှန်များ ရှိပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('We have standard, anti-reflective, blue light blocking, and photochromic lenses.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">I work on a computer all day. Which one is best?</div><div class="burmese">ကျွန်တော် တစ်နေ့လုံး ကွန်ပျူတာပေါ်မှာ အလုပ်လုပ်တယ်။ ဘယ်ဟာ အကောင်းဆုံးလဲ။</div><button class="audio-btn" onclick="speakEnglish('I work on a computer all day. Which one is best?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Optician:</div><div class="english">I recommend blue light blocking lenses. They reduce eye strain from screens.</div><div class="burmese">အပြာရောင်အလင်းကာကွယ်ရေးမှန်ကို အကြံပြုပါတယ်။ မျက်နှာပြင်များမှ မျက်စိပင်ပန်းမှုကို လျှော့ချပေးပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('I recommend blue light blocking lenses. They reduce eye strain from screens.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 6: Contact Lenses -->
+    <div class="conversation-section"><h2>👀 Contact Lenses / မျက်ကပ်မှန်များ</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">I want to try contact lenses. Do I need a different prescription?</div><div class="burmese">မျက်ကပ်မှန် စမ်းသုံးချင်ပါတယ်။ မတူညီတဲ့ဆေးညွှန်း လိုအပ်လား။</div><button class="audio-btn" onclick="speakEnglish('I want to try contact lenses. Do I need a different prescription?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Optician:</div><div class="english">Yes, contact lenses require a separate fitting and prescription. We can schedule that today.</div><div class="burmese">ဟုတ်ပါတယ်၊ မျက်ကပ်မှန်များအတွက် သီးသန့် တပ်ဆင်ခြင်းနှင့် ဆေးညွှန်း လိုအပ်ပါတယ်။ ဒီနေ့ အချိန်ဇယားဆွဲနိုင်ပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('Yes, contact lenses require a separate fitting and prescription. We can schedule that today.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">How much do daily contacts cost?</div><div class="burmese">တစ်နေ့သုံး မျက်ကပ်မှန် ဘယ်လောက်လဲ။</div><button class="audio-btn" onclick="speakEnglish('How much do daily contacts cost?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Optician:</div><div class="english">About $50 for a 30-day supply. Monthly disposables are $40 for a 3-month supply.</div><div class="burmese">ရက် ၃၀ ထောက်ပံ့မှုအတွက် ၅၀ ဒေါ်လာလောက်ပါ။ တစ်လသုံးပစ္စည်းများက ၃ လထောက်ပံ့မှုအတွက် ၄၀ ဒေါ်လာပါ။</div><button class="audio-btn" onclick="speakEnglish('About 50 dollars for a 30-day supply. Monthly disposables are 40 dollars for a 3-month supply.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 7: Insurance and Payment -->
+    <div class="conversation-section"><h2>💳 Insurance and Payment / အာမခံနှင့်ငွေပေးချေမှု</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">Do you accept vision insurance?</div><div class="burmese">အမြင်အာမခံ လက်ခံလား။</div><button class="audio-btn" onclick="speakEnglish('Do you accept vision insurance?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Optician:</div><div class="english">Yes, we accept most major plans. Which provider do you have?</div><div class="burmese">ဟုတ်ပါတယ်၊ အဓိကအစီအစဉ်အများစုကို လက်ခံပါတယ်။ ဘယ်ဝန်ဆောင်မှုပေးသူမှာ ရှိလဲ။</div><button class="audio-btn" onclick="speakEnglish('Yes, we accept most major plans. Which provider do you have?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">I have VSP. How much will my copay be?</div><div class="burmese">ကျွန်တော် VSP ရှိပါတယ်။ ကျွန်တော့် copay က ဘယ်လောက်လဲ။</div><button class="audio-btn" onclick="speakEnglish('I have VSP. How much will my copay be?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Optician:</div><div class="english">Your copay for the exam is $15. Frames and lenses have a $150 allowance.</div><div class="burmese">စစ်ဆေးမှုအတွက် သင့် copay က ၁၅ ဒေါ်လာပါ။ ဘောင်နှင့်မှန်အတွက် ဒေါ်လာ ၁၅၀ ခွင့်ပြုထားပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('Your copay for the exam is 15 dollars. Frames and lenses have a 150 dollar allowance.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 8: Pick Up Glasses -->
+    <div class="conversation-section"><h2>✅ Pick Up Glasses / မျက်မှန်လာရောက်ယူခြင်း</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">I'm here to pick up my glasses. They should be ready today.</div><div class="burmese">ကျွန်တော် ကျွန်တော့်မျက်မှန်ကို လာရောက်ယူပါတယ်။ ဒီနေ့ အဆင်သင့်ဖြစ်သင့်ပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('I am here to pick up my glasses. They should be ready today.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Optician:</div><div class="english">What's your name? I'll check in the back.</div><div class="burmese">နာမည်ဘာလဲ။ နောက်ခန်းမှာ စစ်ကြည့်ပါရစေ။</div><button class="audio-btn" onclick="speakEnglish('What is your name? I will check in the back.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Optician:</div><div class="english">Here they are. Please try them on and check the fit.</div><div class="burmese">ဒီမှာပါ။ ကျေးဇူးပြု၍ စမ်းတပ်ကြည့်ပြီး အံဝင်ခွင်ကျဖြစ်မှုကို စစ်ဆေးပါ။</div><button class="audio-btn" onclick="speakEnglish('Here they are. Please try them on and check the fit.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">Perfect! The vision is clear and they're comfortable. Thank you!</div><div class="burmese">ပြီးပြည့်စုံပါတယ်! အမြင်က ရှင်းပြီး သက်တောင့်သက်သာရှိပါတယ်။ ကျေးဇူးပါ။</div><button class="audio-btn" onclick="speakEnglish('Perfect! The vision is clear and they are comfortable. Thank you!')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <div class="tips-box"><i class="fas fa-lightbulb"></i> <strong>Tips for Eye Care (မျက်စိစောင့်ရှောက်မှုအကြံပြုချက်များ):</strong><br>• Get an eye exam every 1-2 years (နှစ်တိုင်း သို့မဟုတ် နှစ်နှစ်တစ်ခါ မျက်စိစစ်ဆေးမှုခံယူပါ)<br>• Wear sunglasses to protect from UV rays (UV ရောင်ခြည်မှကာကွယ်ရန် နေကာမျက်မှန်တပ်ပါ)<br>• Take breaks from screens every 20 minutes (မိနစ် ၂၀ တိုင်း မျက်နှာပြင်များမှ အနားယူပါ)<br>• Clean your glasses with a microfiber cloth (မိုက်ခရိုဖိုက်ဘာအထည်ဖြင့် သင့်မျက်မှန်ကို သန့်ရှင်းရေးလုပ်ပါ)</div>
+    
+    <div class="conversation-section"><div class="vocab-grid">
+        <div class="vocab-item"><span class="vocab-eng">Optometrist</span><br><span class="vocab-burmese">မျက်စိဆရာဝန်</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Prescription</span><br><span class="vocab-burmese">ဆေးညွှန်း</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Nearsighted</span><br><span class="vocab-burmese">အဝေးမှုန်</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Farsighted</span><br><span class="vocab-burmese">အနီးမှုန်</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Astigmatism</span><br><span class="vocab-burmese">အဆီဂမ်တစ်ဇင်</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Progressive lenses</span><br><span class="vocab-burmese">တိုးတက်သောမှန်များ</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Transition lenses</span><br><span class="vocab-burmese">အလင်းပြောင်းမှန်များ</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Anti-scratch coating</span><br><span class="vocab-burmese">ခြစ်ရာကာကွယ်ရေးအလွှာ</span></div>
+    </div></div>
+    
+    <div class="conversation-section"><div class="quiz-question"><p><strong>1. How do you schedule an eye exam?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'I need to schedule an eye exam.')">I need to buy glasses.</div><div class="quiz-option" onclick="checkAnswer(this, 'I need to schedule an eye exam.')">I need to schedule an eye exam.</div><div class="quiz-option" onclick="checkAnswer(this, 'I need to schedule an eye exam.')">I need contact lenses.</div><div class="quiz-option" onclick="checkAnswer(this, 'I need to schedule an eye exam.')">I need new frames.</div></div></div>
+    <div class="quiz-question"><p><strong>2. "ဘယ်မှန်က ပိုကောင်းလဲ" in English?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'Which lens is better?')">Which frame is cheaper?</div><div class="quiz-option" onclick="checkAnswer(this, 'Which lens is better?')">Which lens is better?</div><div class="quiz-option" onclick="checkAnswer(this, 'Which lens is better?')">What is my prescription?</div><div class="quiz-option" onclick="checkAnswer(this, 'Which lens is better?')">Do I need glasses?</div></div></div>
+    <div class="quiz-question"><p><strong>3. What does "blue light blocking" mean?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'Lenses that reduce exposure to screen light')">Lenses that darken in sunlight</div><div class="quiz-option" onclick="checkAnswer(this, 'Lenses that reduce exposure to screen light')">Lenses that are scratch-resistant</div><div class="quiz-option" onclick="checkAnswer(this, 'Lenses that reduce exposure to screen light')">Lenses that reduce exposure to screen light</div><div class="quiz-option" onclick="checkAnswer(this, 'Lenses that reduce exposure to screen light')">Lenses that are anti-glare</div></div></div>
+    <div class="quiz-question"><p><strong>4. "မျက်မှန်ဘောင်တွေကို ကြည့်လို့ရမလား" in English?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'Can I see the frames?')">Can I try contacts?</div><div class="quiz-option" onclick="checkAnswer(this, 'Can I see the frames?')">Can I see the frames?</div><div class="quiz-option" onclick="checkAnswer(this, 'Can I see the frames?')">Can I get a discount?</div><div class="quiz-option" onclick="checkAnswer(this, 'Can I see the frames?')">Can I get an appointment?</div></div></div>
+    <div class="quiz-question"><p><strong>5. What is a "copay"?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'The amount you pay for a medical service with insurance')">The total cost of glasses</div><div class="quiz-option" onclick="checkAnswer(this, 'The amount you pay for a medical service with insurance')">The insurance premium</div><div class="quiz-option" onclick="checkAnswer(this, 'The amount you pay for a medical service with insurance')">The amount you pay for a medical service with insurance</div><div class="quiz-option" onclick="checkAnswer(this, 'The amount you pay for a medical service with insurance')">The refund amount</div></div></div>
+    </div>
+    <footer><p><i class="fas fa-heart" style="color: #0984e3;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p></footer>
+</div>
+<a href="#" class="back-to-top" id="backToTopBtn"><i class="fas fa-arrow-up"></i></a>
+<script>
+    function speakEnglish(text){if(!window.speechSynthesis)return;window.speechSynthesis.cancel();const utterance=new SpeechSynthesisUtterance(text);utterance.lang='en-US';utterance.rate=0.8;utterance.pitch=1.0;function setVoice(){const voices=window.speechSynthesis.getVoices();const englishVoice=voices.find(v=>v.lang==='en-US'||v.lang.startsWith('en-'));if(englishVoice)utterance.voice=englishVoice;window.speechSynthesis.speak(utterance);}if(window.speechSynthesis.getVoices().length)setVoice();else window.speechSynthesis.onvoiceschanged=setVoice;}
+    function checkAnswer(element,correctAnswer){const options=element.parentElement.querySelectorAll('.quiz-option');const isCorrect=element.innerText===correctAnswer;if(isCorrect){element.style.background='#2ecc71';element.style.color='white';speakEnglish(correctAnswer);setTimeout(()=>{options.forEach(opt=>{opt.style.background='';opt.style.color='';});},1500);}else{element.style.background='#e74c3c';element.style.color='white';setTimeout(()=>{options.forEach(opt=>{opt.style.background='';opt.style.color='';});},500);}}
+    (function(){const btn=document.getElementById('backToTopBtn');if(btn){window.addEventListener('scroll',function(){btn.classList.toggle('show',window.scrollY>300);});btn.addEventListener('click',function(e){e.preventDefault();window.scrollTo({top:0,behavior:'smooth'});});}})();
+</script>
+</body>
+</html>

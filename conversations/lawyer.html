@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lawyer Consultation - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 1rem;
+        }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        
+        .conversation-section {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .conversation-section h2 {
+            background: #6c5ce7;
+            color: white;
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line {
+            display: grid;
+            grid-template-columns: 70px 1fr 1fr;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            align-items: start;
+        }
+        .speaker { font-weight: bold; color: #6c5ce7; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { 
+            color: #8e6b3c; 
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 0.95rem;
+        }
+        .audio-btn {
+            background: #eef4ff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.3rem;
+        }
+        .audio-btn:hover { background: #6c5ce7; color: white; }
+        
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+            padding: 1rem;
+        }
+        .vocab-item {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            border-left: 3px solid #6c5ce7;
+        }
+        .vocab-eng { font-weight: bold; color: #6c5ce7; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        
+        .quiz-question {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.8rem;
+        }
+        .quiz-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .quiz-option {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .quiz-option:hover { background: #6c5ce7; color: white; border-color: #6c5ce7; }
+        
+        .tips-box {
+            background: #f3e5f5;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #6c5ce7;
+        }
+        .tips-box i { color: #6c5ce7; margin-right: 8px; }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1rem;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: #1e3c72;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid white;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: #f5b042;
+            color: #1e3c72;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .back-to-top i {
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 42px;
+                height: 42px;
+            }
+            .back-to-top i {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 700px) {
+            .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> All Conversations
+    </a>
+    
+    <header>
+        <h1><i class="fas fa-gavel"></i> Lawyer Consultation</h1>
+        <p>Learn how to get legal advice, discuss cases, and hire attorneys in English</p>
+        <p>ဥပဒေအကြံဉာဏ်ရယူနည်း၊ အမှုကိစ္စများဆွေးနွေးနည်းနှင့် ရှေ့နေများငှားရမ်းနည်းကို အင်္ဂလိပ်လို လေ့လာပါ</p>
+    </header>
+    
+    <!-- Dialogue 1: Scheduling a Consultation -->
+    <div class="conversation-section">
+        <h2>📅 Scheduling a Consultation / တိုင်ပင်ဆွေးနွေးရန်အချိန်ယူခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Client:</div>
+                <div class="english">Hello, I'd like to schedule a consultation with a lawyer.</div>
+                <div class="burmese">မင်္ဂလာပါ၊ ရှေ့နေတစ်ဦးနဲ့ တိုင်ပင်ဆွေးနွေးရန် အချိန်ယူချင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Hello, I would like to schedule a consultation with a lawyer.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Receptionist:</div>
+                <div class="english">What type of legal issue are you facing?</div>
+                <div class="burmese">ဘယ်လိုဥပဒေရေးရာပြဿနာမျိုး ကြုံနေရလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What type of legal issue are you facing?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Client:</div>
+                <div class="english">It's about a contract dispute with my landlord.</div>
+                <div class="burmese">ကျွန်တော့်အိမ်ရှင်နဲ့ စာချုပ်အငြင်းပွားမှုပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('It is about a contract dispute with my landlord.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Receptionist:</div>
+                <div class="english">Our contract lawyer is available on Thursday at 2 PM. Does that work for you?</div>
+                <div class="burmese">ကျွန်တော်တို့ရဲ့ စာချုပ်ရှေ့နေ ကြာသပတေးနေ့ နေ့လယ် ၂ နာရီမှာ ရနိုင်ပါတယ်။ အဆင်ပြေလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Our contract lawyer is available on Thursday at 2 PM. Does that work for you?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 2: First Meeting with Lawyer -->
+    <div class="conversation-section">
+        <h2>👨‍⚖️ First Meeting with Lawyer / ရှေ့နေနှင့်ပထမဆုံးတွေ့ဆုံခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Lawyer:</div>
+                <div class="english">Good afternoon. Please have a seat. Tell me about your situation.</div>
+                <div class="burmese">မင်္ဂလာနေ့လယ်ခင်းပါ။ ကျေးဇူးပြု၍ ထိုင်ပါ။ သင့်အခြေအနေကို ပြောပြပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Good afternoon. Please have a seat. Tell me about your situation.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Client:</div>
+                <div class="english">My landlord is refusing to return my security deposit. He says there are damages, but that's not true.</div>
+                <div class="burmese">ကျွန်တော့်အိမ်ရှင်က ကျွန်တော့်အပ်ငွေကို ပြန်ပေးဖို့ ငြင်းဆန်နေတယ်။ ပျက်စီးမှုတွေရှိတယ်လို့ပြောပေမယ့် ဒါက မမှန်ပါဘူး။</div>
+                <button class="audio-btn" onclick="speakEnglish('My landlord is refusing to return my security deposit. He says there are damages, but that is not true.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Lawyer:</div>
+                <div class="english">Do you have photos or a move-in inspection report?</div>
+                <div class="burmese">ဓာတ်ပုံများ သို့မဟုတ် ဝင်ရောက်စစ်ဆေးမှုအစီရင်ခံစာ ရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you have photos or a move-in inspection report?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Client:</div>
+                <div class="english">Yes, I took photos before I moved in and after I moved out.</div>
+                <div class="burmese">ဟုတ်ကဲ့၊ ကျွန်တော် မပြောင်းမီနဲ့ ပြောင်းပြီးနောက် ဓာတ်ပုံရိုက်ထားပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, I took photos before I moved in and after I moved out.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 3: Discussing Fees -->
+    <div class="conversation-section">
+        <h2>💰 Discussing Fees / အခကြေးငွေများဆွေးနွေးခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Client:</div>
+                <div class="english">How much do you charge for your services?</div>
+                <div class="burmese">သင့်ဝန်ဆောင်မှုများအတွက် ဘယ်လောက်ကျသင့်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('How much do you charge for your services?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Lawyer:</div>
+                <div class="english">I charge $250 per hour. The initial consultation is free.</div>
+                <div class="burmese">ကျွန်တော် တစ်နာရီ ၂၅၀ ဒေါ်လာ ကောက်ခံပါတယ်။ ကနဦးတိုင်ပင်ဆွေးနွေးမှုက အခမဲ့ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('I charge 250 dollars per hour. The initial consultation is free.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Client:</div>
+                <div class="english">Do you offer a flat fee for this type of case?</div>
+                <div class="burmese">ဒီအမှုအမျိုးအစားအတွက် ပုံသေအခကြေးငွေ ပေးလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you offer a flat fee for this type of case?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Lawyer:</div>
+                <div class="english">For small claims court, I can do a flat fee of $500, plus court costs.</div>
+                <div class="burmese">တရားရုံးအသေးစားအတွက် ပုံသေအခကြေးငွေ ၅၀၀ ဒေါ်လာ၊ တရားရုံးစရိတ်များအပိုပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('For small claims court, I can do a flat fee of 500 dollars, plus court costs.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 4: Employment Dispute -->
+    <div class="conversation-section">
+        <h2>💼 Employment Dispute / အလုပ်ခွင်အငြင်းပွားမှု</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Client:</div>
+                <div class="english">I was fired without cause. I think it was unfair dismissal.</div>
+                <div class="burmese">ကျွန်တော် အကြောင်းပြချက်မရှိဘဲ အလုပ်ထုတ်ခံခဲ့ရတယ်။ မတရားအလုပ်ထုတ်ခြင်းလို့ ထင်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I was fired without cause. I think it was unfair dismissal.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Lawyer:</div>
+                <div class="english">I specialize in employment law. Do you have an employment contract?</div>
+                <div class="burmese">ကျွန်တော် အလုပ်ခွင်ဥပဒေကို အထူးပြုပါတယ်။ အလုပ်ခန့်စာချုပ်ရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('I specialize in employment law. Do you have an employment contract?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Client:</div>
+                <div class="english">Yes, here it is. They fired me two weeks after I filed a complaint about harassment.</div>
+                <div class="burmese">ဟုတ်ကဲ့၊ ဒီမှာပါ။ ကျွန်တော် နှောင့်ယှက်မှုအကြောင်း တိုင်ကြားပြီး နှစ်ပတ်အကြာမှာ သူတို့ ကျွန်တော့်ကို အလုပ်ထုတ်လိုက်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, here it is. They fired me two weeks after I filed a complaint about harassment.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Lawyer:</div>
+                <div class="english">That sounds like retaliation, which is illegal. I think you have a strong case.</div>
+                <div class="burmese">ဒါက လက်စားချေခြင်းဖြစ်ပြီး တရားမဝင်ပါဘူး။ သင့်မှာ ခိုင်မာတဲ့အမှုရှိတယ်လို့ ထင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('That sounds like retaliation, which is illegal. I think you have a strong case.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 5: Family Law -->
+    <div class="conversation-section">
+        <h2>👪 Family Law / မိသားစုဥပဒေ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Client:</div>
+                <div class="english">I'm going through a divorce and need legal advice about custody.</div>
+                <div class="burmese">ကျွန်တော် ကွာရှင်းပြတ်စဲမှုဖြစ်နေပြီး ကလေးထိန်းသိမ်းခွင့်အကြောင်း ဥပဒေအကြံဉာဏ်လိုအပ်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am going through a divorce and need legal advice about custody.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Lawyer:</div>
+                <div class="english">I understand this is a difficult time. Do you have children together?</div>
+                <div class="burmese">ဒါက ခက်ခဲတဲ့အချိန်ဖြစ်တယ်ဆိုတာ နားလည်းပါတယ်။ အတူတူ ကလေးတွေရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('I understand this is a difficult time. Do you have children together?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Client:</div>
+                <div class="english">Yes, we have two children, ages 5 and 8. I want joint custody.</div>
+                <div class="burmese">ဟုတ်ကဲ့၊ ကျွန်တော်တို့မှာ အသက် ၅ နှစ်နဲ့ ၈ နှစ်အရွယ် ကလေးနှစ်ယောက်ရှိပါတယ်။ ပူးတွဲထိန်းသိမ်းခွင့် လိုချင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, we have two children, ages 5 and 8. I want joint custody.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Lawyer:</div>
+                <div class="english">Joint custody is common unless there are safety concerns. I can help you file the paperwork.</div>
+                <div class="burmese">ဘေးကင်းရေးစိုးရိမ်စရာများမရှိရင် ပူးတွဲထိန်းသိမ်းခွင့်က ပုံမှန်ပါ။ စာရွက်စာတမ်းများ တင်သွင်းဖို့ ကူညီနိုင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Joint custody is common unless there are safety concerns. I can help you file the paperwork.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 6: Personal Injury -->
+    <div class="conversation-section">
+        <h2>🚑 Personal Injury / ကိုယ်ထိလက်ရောက်ထိခိုက်မှု</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Client:</div>
+                <div class="english">I was in a car accident that wasn't my fault. I want to file a claim.</div>
+                <div class="burmese">ကျွန်တော် ကျွန်တော့်အမှားမဟုတ်တဲ့ ကားမတော်တဆမှုတစ်ခုဖြစ်ခဲ့တယ်။ တောင်းဆိုချက်တစ်ခုတင်လိုပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I was in a car accident that was not my fault. I want to file a claim.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Lawyer:</div>
+                <div class="english">I handle personal injury cases on a contingency fee basis. That means you pay nothing unless we win.</div>
+                <div class="burmese">ကျွန်တော် ကိုယ်ထိလက်ရောက်ထိခိုက်မှုအမှုများကို အောင်မြင်မှုအခကြေးငွေစနစ်ဖြင့် ကိုင်တွယ်ပါတယ်။ ဆိုလိုတာက ကျွန်တော်တို့အနိုင်ရမှသာ သင်ပေးရမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I handle personal injury cases on a contingency fee basis. That means you pay nothing unless we win.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Client:</div>
+                <div class="english">That's good to know. Do you think I have a case?</div>
+                <div class="burmese">သိရတာ ကောင်းပါတယ်။ ကျွန်တော့်မှာ အမှုရှိတယ်လို့ ထင်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('That is good to know. Do you think I have a case?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Lawyer:</div>
+                <div class="english">Based on what you've told me, yes. I'll need to review the police report and medical records.</div>
+                <div class="burmese">သင်ပြောပြထားတာအပေါ်မူတည်ပြီး ဟုတ်ပါတယ်။ ရဲအစီရင်ခံစာနဲ့ ဆေးဘက်ဆိုင်ရာမှတ်တမ်းများကို ပြန်လည်သုံးသပ်ဖို့လိုပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Based on what you have told me, yes. I will need to review the police report and medical records.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 7: Estate Planning -->
+    <div class="conversation-section">
+        <h2>📜 Estate Planning / အမွေဆက်ခံမှုစီမံကိန်းရေးဆွဲခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Client:</div>
+                <div class="english">I'd like to create a will and set up a trust for my children.</div>
+                <div class="burmese">ကျွန်တော် သေတမ်းစာတစ်စောင်နဲ့ ကျွန်တော့်ကလေးများအတွက် ယုံကြည်မှုတစ်ခု တည်ထောင်ချင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I would like to create a will and set up a trust for my children.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Lawyer:</div>
+                <div class="english">That's a wise decision. Do you have a list of your assets?</div>
+                <div class="burmese">ဒါက ပညာရှိဆုံးဖြတ်ချက်ပါ။ သင့်ပိုင်ဆိုင်မှုစာရင်းရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('That is a wise decision. Do you have a list of your assets?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Client:</div>
+                <div class="english">Yes, I prepared a list. I also want to name a guardian for my children.</div>
+                <div class="burmese">ဟုတ်ကဲ့၊ ကျွန်တော် စာရင်းပြင်ဆင်ထားပါတယ်။ ကျွန်တော့်ကလေးများအတွက် အုပ်ထိန်းသူတစ်ဦးကိုလည်း သတ်မှတ်ချင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, I prepared a list. I also want to name a guardian for my children.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Lawyer:</div>
+                <div class="english">We can do all of that. I'll draft the documents and review them with you next week.</div>
+                <div class="burmese">အားလုံးလုပ်ပေးနိုင်ပါတယ်။ ကျွန်တော် စာရွက်စာတမ်းများရေးဆွဲပြီး လာမယ့်အပတ် သင့်နဲ့ ပြန်လည်သုံးသပ်ပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('We can do all of that. I will draft the documents and review them with you next week.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 8: Contract Review -->
+    <div class="conversation-section">
+        <h2>📝 Contract Review / စာချုပ်ပြန်လည်သုံးသပ်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Client:</div>
+                <div class="english">I received a business contract. Can you review it before I sign?</div>
+                <div class="burmese">ကျွန်တော် စီးပွားရေးစာချုပ်တစ်ခုရရှိခဲ့တယ်။ မချုပ်ဆိုခင် ပြန်လည်သုံးသပ်ပေးနိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('I received a business contract. Can you review it before I sign?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Lawyer:</div>
+                <div class="english">Absolutely. I'll look for any unfavorable clauses and suggest changes.</div>
+                <div class="burmese">လုံးဝရပါတယ်။ မသင့်လျော်တဲ့အပိုဒ်များကို ရှာဖွေပြီး ပြောင်းလဲမှုများ အကြံပြုပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Absolutely. I will look for any unfavorable clauses and suggest changes.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Client:</div>
+                <div class="english">How long will it take?</div>
+                <div class="burmese">ဘယ်လောက်ကြာမလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('How long will it take?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Lawyer:</div>
+                <div class="english">I can review a 10-page contract within 48 hours. The fee is $300.</div>
+                <div class="burmese">စာမျက်နှာ ၁၀ မျက်နှာပါ စာချုပ်ကို ၄၈ နာရီအတွင်း ပြန်လည်သုံးသပ်နိုင်ပါတယ်။ အခကြေးငွေက ၃၀၀ ဒေါ်လာပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('I can review a 10-page contract within 48 hours. The fee is 300 dollars.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Types of Lawyers -->
+    <div class="conversation-section">
+        <h2>⚖️ Types of Lawyers / ရှေ့နေအမျိုးအစားများ</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Common Legal Specialties (အသုံးများသောဥပဒေဆိုင်ရာအထူးပြုများ):</strong><br>
+            • <strong>Criminal Defense Lawyer</strong> - ရာဇဝတ်မှုကာကွယ်ရေးရှေ့နေ<br>
+            • <strong>Personal Injury Lawyer</strong> - ကိုယ်ထိလက်ရောက်ထိခိုက်မှုရှေ့နေ<br>
+            • <strong>Family Lawyer</strong> - မိသားစုရှေ့နေ (divorce, custody, adoption)<br>
+            • <strong>Employment Lawyer</strong> - အလုပ်ခွင်ရှေ့နေ<br>
+            • <strong>Real Estate Lawyer</strong> - အိမ်ခြံမြေရှေ့နေ<br>
+            • <strong>Immigration Lawyer</strong> - လူဝင်မှုကြီးကြပ်ရေးရှေ့နေ<br>
+            • <strong>Bankruptcy Lawyer</strong> - ဒေဝါလီခံရှေ့နေ<br>
+            • <strong>Corporate Lawyer</strong> - ကော်ပိုရိတ်ရှေ့နေ<br>
+            • <strong>Intellectual Property Lawyer</strong> - ဉာဏပစ္စည်းမူပိုင်ရှေ့နေ<br>
+        </div>
+    </div>
+    
+    <!-- Legal Vocabulary -->
+    <div class="conversation-section">
+        <h2>📚 Legal Vocabulary / ဥပဒေသုံးဝေါဟာရများ</h2>
+        <div class="vocab-grid">
+            <div class="vocab-item"><span class="vocab-eng">Plaintiff</span><br><span class="vocab-burmese">တရားလို</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Defendant</span><br><span class="vocab-burmese">တရားခံ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Lawsuit</span><br><span class="vocab-burmese">တရားစွဲခြင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Evidence</span><br><span class="vocab-burmese">သက်သေ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Witness</span><br><span class="vocab-burmese">သက်သေ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Settlement</span><br><span class="vocab-burmese">ပြေလည်မှု</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Appeal</span><br><span class="vocab-burmese">အယူခံ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Verdict</span><br><span class="vocab-burmese">စီရင်ချက်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Attorney-client privilege</span><br><span class="vocab-burmese">ရှေ့နေ-ဖောက်သည်အခွင့်အရေး</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Pro bono</span><br><span class="vocab-burmese">အခမဲ့ဥပဒေဝန်ဆောင်မှု</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Retainer</span><br><span class="vocab-burmese">ကြိုတင်အပ်ငွေ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Statute of limitations</span><br><span class="vocab-burmese">သက်ဆိုင်ရာဥပဒေကန့်သတ်ချက်</span></div>
+        </div>
+    </div>
+    
+    <!-- Legal Tips -->
+    <div class="conversation-section">
+        <h2>💡 Legal Tips / ဥပဒေအကြံပြုချက်များ</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Before Meeting a Lawyer (ရှေ့နေမတွေ့မီ):</strong><br>
+            • Gather all relevant documents (သက်ဆိုင်ရာစာရွက်စာတမ်းများအားလုံးစုဆောင်းပါ)<br>
+            • Write down key dates and facts (အဓိကရက်စွဲများနှင့်အချက်အလက်များကိုရေးမှတ်ပါ)<br>
+            • Prepare a list of questions (မေးခွန်းများစာရင်းပြင်ဆင်ပါ)<br>
+            • Be honest with your lawyer (သင့်ရှေ့နေနှင့်ရိုးသားပါ)<br>
+            • Ask about fees upfront (အခကြေးငွေများအကြောင်းကြိုမေးမြန်းပါ)<br>
+            <br>
+            <strong>During the Consultation (တိုင်ပင်ဆွေးနွေးစဉ်):</strong><br>
+            • Take notes (မှတ်စုယူပါ)<br>
+            • Ask for clarification if you don't understand (နားမလည်ရင် ရှင်းလင်းချက်တောင်းပါ)<br>
+            • Discuss possible outcomes (ဖြစ်နိုင်ခြေရှိသောရလဒ်များကိုဆွေးနွေးပါ)<br>
+            • Get a written fee agreement (စာဖြင့်ရေးသားထားသောအခကြေးငွေသဘောတူညီချက်ရယူပါ)<br>
+        </div>
+    </div>
+    
+    <!-- Practice Section -->
+    <div class="conversation-section">
+        <h2>✏️ Practice Questions / လေ့ကျင့်ခန်းမေးခွန်းများ</h2>
+        <div class="dialogue-box">
+            <div class="quiz-question">
+                <p><strong>1. How do you ask to schedule a legal consultation?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like to schedule a consultation with a lawyer.')">I would like to sue someone.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like to schedule a consultation with a lawyer.')">I would like to schedule a consultation with a lawyer.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like to schedule a consultation with a lawyer.')">I need to go to court.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like to schedule a consultation with a lawyer.')">I want to file a complaint.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>2. "ရှေ့နေတစ်ဦးနဲ့ စကားပြောဖို့ လိုအပ်ပါတယ်" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I need to speak with a lawyer.')">I need to see a doctor.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I need to speak with a lawyer.')">I need to speak with a lawyer.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I need to speak with a lawyer.')">I need to go to the police.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I need to speak with a lawyer.')">I need to find a witness.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. What does "pro bono" mean in legal terms?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Free legal services')">Expensive legal services</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Free legal services')">Fast legal services</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Free legal services')">Free legal services</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Free legal services')">Private legal services</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. "ဒီအမှုအတွက် ပုံသေအခကြေးငွေ ပေးလား" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Do you offer a flat fee for this case?')">Do you charge by the hour?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Do you offer a flat fee for this case?')">Do you offer a flat fee for this case?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Do you offer a flat fee for this case?')">Do you work on contingency?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Do you offer a flat fee for this case?')">Do you accept credit cards?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. What is a "contingency fee"?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'You pay only if you win the case')">You pay upfront regardless of outcome</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'You pay only if you win the case')">You pay by the hour</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'You pay only if you win the case')">You pay only if you win the case</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'You pay only if you win the case')">You pay a flat rate</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p><i class="fas fa-heart" style="color: #6c5ce7;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p>
+        <p style="font-size: 0.75rem; margin-top: 0.5rem;">Practice these conversations to handle legal situations with confidence!</p>
+    </footer>
+</div>
+
+<!-- Back to Top Button -->
+<a href="#" class="back-to-top" id="backToTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+<script>
+    function speakEnglish(text) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8;
+        utterance.pitch = 1.0;
+        
+        function setVoice() {
+            const voices = window.speechSynthesis.getVoices();
+            const englishVoice = voices.find(v => v.lang === 'en-US' || v.lang.startsWith('en-'));
+            if (englishVoice) utterance.voice = englishVoice;
+            window.speechSynthesis.speak(utterance);
+        }
+        
+        if (window.speechSynthesis.getVoices().length) setVoice();
+        else window.speechSynthesis.onvoiceschanged = setVoice;
+    }
+    
+    function checkAnswer(element, correctAnswer) {
+        const options = element.parentElement.querySelectorAll('.quiz-option');
+        const isCorrect = element.innerText === correctAnswer;
+        
+        if (isCorrect) {
+            element.style.background = '#2ecc71';
+            element.style.color = 'white';
+            speakEnglish(correctAnswer);
+            setTimeout(() => {
+                options.forEach(opt => {
+                    opt.style.background = '';
+                    opt.style.color = '';
+                });
+            }, 1500);
+        } else {
+            element.style.background = '#e74c3c';
+            element.style.color = 'white';
+            setTimeout(() => {
+                element.style.background = '';
+                element.style.color = '';
+            }, 500);
+        }
+    }
+    
+    // Back to Top Button Functionality
+    (function() {
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        
+        if (backToTopBtn) {
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

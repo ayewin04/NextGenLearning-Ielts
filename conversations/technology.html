@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technology & Computers - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 1rem;
+        }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        
+        .conversation-section {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .conversation-section h2 {
+            background: #00b894;
+            color: white;
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line {
+            display: grid;
+            grid-template-columns: 70px 1fr 1fr;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            align-items: start;
+        }
+        .speaker { font-weight: bold; color: #00b894; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { 
+            color: #8e6b3c; 
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 0.95rem;
+        }
+        .audio-btn {
+            background: #eef4ff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.3rem;
+        }
+        .audio-btn:hover { background: #00b894; color: white; }
+        
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+            padding: 1rem;
+        }
+        .vocab-item {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            border-left: 3px solid #00b894;
+        }
+        .vocab-eng { font-weight: bold; color: #00b894; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        
+        .quiz-question {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.8rem;
+        }
+        .quiz-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .quiz-option {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .quiz-option:hover { background: #00b894; color: white; border-color: #00b894; }
+        
+        .tips-box {
+            background: #e8f8f5;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #00b894;
+        }
+        .tips-box i { color: #00b894; margin-right: 8px; }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1rem;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: #1e3c72;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid white;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: #f5b042;
+            color: #1e3c72;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .back-to-top i {
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 42px;
+                height: 42px;
+            }
+            .back-to-top i {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 700px) {
+            .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> All Conversations
+    </a>
+    
+    <header>
+        <h1><i class="fas fa-laptop-code"></i> Technology & Computers</h1>
+        <p>Learn how to talk about computers, internet, apps, and technical problems</p>
+        <p>ကွန်ပျူတာများ၊ အင်တာနက်၊ အက်ပ်များနှင့် နည်းပညာပြဿနာများအကြောင်း ပြောဆိုနည်းကို လေ့လာပါ</p>
+    </header>
+    
+    <!-- Dialogue 1: Buying a New Laptop -->
+    <div class="conversation-section">
+        <h2>💻 Buying a New Laptop / လက်ပ်တော့အသစ်ဝယ်ယူခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Hi, I'm looking to buy a new laptop. Can you help me?</div>
+                <div class="burmese">မင်္ဂလာပါ၊ ကျွန်တော် လက်ပ်တော့အသစ်ဝယ်ချင်လို့ရှာနေတယ်။ ကူညီနိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Hi, I am looking to buy a new laptop. Can you help me?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Salesperson:</div>
+                <div class="english">Of course. What will you use it for?</div>
+                <div class="burmese">ရပါတယ်။ ဘာအတွက်သုံးမလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Of course. What will you use it for?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Mostly for work, some video editing, and maybe light gaming.</div>
+                <div class="burmese">အများစုက အလုပ်အတွက်၊ ဗီဒီယိုတည်းဖြတ်ခြင်းနည်းနည်း၊ ဂိမ်းအနည်းငယ်ဆော့နိုင်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Mostly for work, some video editing, and maybe light gaming.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Salesperson:</div>
+                <div class="english">I recommend this model. It has 16GB RAM, a fast processor, and a 512GB SSD.</div>
+                <div class="burmese">ဒီမော်ဒယ်ကို အကြံပြုပါတယ်။ 16GB RAM၊ မြန်ဆန်တဲ့ ပရိုဆက်ဆာ နဲ့ 512GB SSD ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I recommend this model. It has 16GB RAM, a fast processor, and a 512GB SSD.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 2: Computer Not Working -->
+    <div class="conversation-section">
+        <h2>⚠️ Computer Not Working / ကွန်ပျူတာအလုပ်မလုပ်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Employee:</div>
+                <div class="english">My computer won't turn on. I think it's broken.</div>
+                <div class="burmese">ကျွန်တော့်ကွန်ပျူတာ မဖွင့်တတ်ဘူး။ ပျက်နေတယ်ထင်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('My computer will not turn on. I think it is broken.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 IT Support:</div>
+                <div class="english">Did you check if it's plugged in?</div>
+                <div class="burmese">ပလပ်စွပ်ထားလား စစ်ကြည့်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Did you check if it is plugged in?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Employee:</div>
+                <div class="english">Yes, it's plugged in. The light on the power button is off.</div>
+                <div class="burmese">ဟုတ်တယ်၊ ပလပ်စွပ်ထားတယ်။ ပါဝါခလုတ်က မီးမလင်းဘူး။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, it is plugged in. The light on the power button is off.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 IT Support:</div>
+                <div class="english">I'll come take a look. Try holding the power button for 30 seconds to reset it.</div>
+                <div class="burmese">ကျွန်တော်လာကြည့်မယ်။ ပြန်သတ်မှတ်ဖို့ ပါဝါခလုတ်ကို ၃၀ စက္ကန့်လောက် ဖိထားကြည့်ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('I will come take a look. Try holding the power button for 30 seconds to reset it.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 3: Internet Connection Problems -->
+    <div class="conversation-section">
+        <h2>🌐 Internet Connection Problems / အင်တာနက်ချိတ်ဆက်မှုပြဿနာများ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">My internet is very slow today. I can't load any websites.</div>
+                <div class="burmese">ဒီနေ့ ကျွန်တော့်အင်တာနက် အရမ်းနှေးတယ်။ ဘာဝက်ဘ်ဆိုက်မှ မဖွင့်နိုင်ဘူး။</div>
+                <button class="audio-btn" onclick="speakEnglish('My internet is very slow today. I cannot load any websites.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Support:</div>
+                <div class="english">Let me check your connection. Have you tried restarting your router?</div>
+                <div class="burmese">သင့်ချိတ်ဆက်မှုကို စစ်ကြည့်ပါရစေ။ router ပြန်ဖွင့်ကြည့်ဖူးလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Let me check your connection. Have you tried restarting your router?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Yes, I unplugged it and plugged it back in. It didn't help.</div>
+                <div class="burmese">ဟုတ်တယ်၊ ပလပ်နုတ်ပြီး ပြန်စွပ်ကြည့်တယ်။ မသက်သာဘူး။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, I unplugged it and plugged it back in. It did not help.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Support:</div>
+                <div class="english">There might be an outage in your area. I'll check and call you back.</div>
+                <div class="burmese">မင်းဒေသမှာ ပြတ်တောက်မှုဖြစ်နိုင်တယ်။ စစ်ကြည့်ပြီး ပြန်ခေါ်ပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('There might be an outage in your area. I will check and call you back.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 4: Forgot Password -->
+    <div class="conversation-section">
+        <h2>🔑 Forgot Password / စကားဝှက်မေ့သွားခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 User:</div>
+                <div class="english">I can't log into my email account. I forgot my password.</div>
+                <div class="burmese">ကျွန်တော် ကျွန်တော့်အီးမေးလ်အကောင့်ကို ဝင်မရဘူး။ စကားဝှက်မေ့သွားတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I cannot log into my email account. I forgot my password.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Support:</div>
+                <div class="english">Don't worry. Click on "Forgot Password" and we'll send a reset link to your phone.</div>
+                <div class="burmese">မပူပါနဲ့။ "Forgot Password" ကိုနှိပ်ပါ၊ ပြန်သတ်မှတ်ရန်လင့်ခ်ကို သင့်ဖုန်းကို ပို့ပေးပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do not worry. Click on Forgot Password and we will send a reset link to your phone.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 User:</div>
+                <div class="english">Okay, I did that. How long will it take?</div>
+                <div class="burmese">အိုကေ၊ လုပ်လိုက်ပြီ။ ဘယ်လောက်ကြာမလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Okay, I did that. How long will it take?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Support:</div>
+                <div class="english">You should receive it within 5 minutes. Check your spam folder too.</div>
+                <div class="burmese">၅ မိနစ်အတွင်း ရရှိသင့်ပါတယ်။ spam ဖိုင်တွဲကိုလည်း စစ်ကြည့်ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('You should receive it within 5 minutes. Check your spam folder too.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 5: Virus or Malware -->
+    <div class="conversation-section">
+        <h2>🦠 Virus or Malware / ဗိုင်းရပ်စ် သို့မဟုတ် မဲလ်ဝဲ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 User:</div>
+                <div class="english">I think my computer has a virus. It's running very slowly and pop-ups keep appearing.</div>
+                <div class="burmese">ကျွန်တော့်ကွန်ပျူတာမှာ ဗိုင်းရပ်စ်ရှိနေတယ်ထင်တယ်။ အရမ်းနှေးနေပြီး ပေါ့ပ်အပ်တွေ ဆက်တိုက်ပေါ်နေတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I think my computer has a virus. It is running very slowly and pop-ups keep appearing.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Tech Support:</div>
+                <div class="english">Let's run a virus scan. Do you have antivirus software installed?</div>
+                <div class="burmese">ဗိုင်းရပ်စ်စစ်ဆေးမှု ပြုလုပ်ကြည့်ရအောင်။ ဗိုင်းရပ်စ်ဆော့ဖ်ဝဲ တပ်ဆင်ထားလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Let us run a virus scan. Do you have antivirus software installed?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 User:</div>
+                <div class="english">Yes, I have Windows Defender. I'll run a scan now.</div>
+                <div class="burmese">ဟုတ်တယ်၊ Windows Defender ရှိတယ်။ အခုစစ်ဆေးမှုလုပ်မယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, I have Windows Defender. I will run a scan now.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Tech Support:</div>
+                <div class="english">If it finds anything, quarantine it. Also, update your software regularly.</div>
+                <div class="burmese">တစ်ခုခုတွေ့ရင် quarantine လုပ်ပါ။ သင့်ဆော့ဖ်ဝဲကိုလည်း ပုံမှန် အပ်ဒိတ်လုပ်ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('If it finds anything, quarantine it. Also, update your software regularly.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 6: Setting Up Wi-Fi -->
+    <div class="conversation-section">
+        <h2>📶 Setting Up Wi-Fi / Wi-Fi တပ်ဆင်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I just moved into a new apartment. How do I set up Wi-Fi?</div>
+                <div class="burmese">ကျွန်တော် တိုက်ခန်းအသစ်ကို ပြောင်းလာတယ်။ Wi-Fi ကို ဘယ်လိုတပ်ဆင်ရမလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('I just moved into a new apartment. How do I set up Wi-Fi?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Technician:</div>
+                <div class="english">First, you need to choose an internet service provider. I recommend this company.</div>
+                <div class="burmese">ပထမဆုံး၊ အင်တာနက်ဝန်ဆောင်မှုပေးသူကို ရွေးဖို့လိုတယ်။ ဒီကုမ္ပဏီကို အကြံပြုပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('First, you need to choose an internet service provider. I recommend this company.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">What plan do you suggest for a two-person household?</div>
+                <div class="burmese">လူနှစ်ယောက်အိမ်အတွက် ဘယ်အစီအစဉ်ကို အကြံပြုလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What plan do you suggest for a two-person household?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Technician:</div>
+                <div class="english">100 Mbps should be enough for streaming and working from home.</div>
+                <div class="burmese">100 Mbps က streaming နဲ့ အိမ်မှအလုပ်လုပ်ဖို့ လုံလောက်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('100 Mbps should be enough for streaming and working from home.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 7: Software Update -->
+    <div class="conversation-section">
+        <h2>🔄 Software Update / ဆော့ဖ်ဝဲအပ်ဒိတ်</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 User:</div>
+                <div class="english">My phone is asking me to update the software. Should I do it?</div>
+                <div class="burmese">ကျွန်တော့်ဖုန်းက ဆော့ဖ်ဝဲအပ်ဒိတ်လုပ်ဖို့ တောင်းဆိုနေတယ်။ လုပ်သင့်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('My phone is asking me to update the software. Should I do it?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Friend:</div>
+                <div class="english">Yes, it's a good idea. Updates fix bugs and improve security.</div>
+                <div class="burmese">ဟုတ်တယ်၊ အကြံကောင်းပါ။ အပ်ဒိတ်တွေက အမှားတွေကိုပြင်ပြီး လုံခြုံရေးကိုတိုးတက်စေတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, it is a good idea. Updates fix bugs and improve security.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 User:</div>
+                <div class="english">Will it delete my data?</div>
+                <div class="burmese">ကျွန်တော့်ဒေတာတွေ ဖျက်ပစ်မှာလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Will it delete my data?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Friend:</div>
+                <div class="english">No, it should keep all your files. But it's always safe to back up first.</div>
+                <div class="burmese">မဟုတ်ဘူး၊ မင်းဖိုင်တွေ အားလုံးထားရှိသင့်တယ်။ ဒါပေမယ့် အရင်ဆုံး backup လုပ်တာ အမြဲလုံခြုံတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('No, it should keep all your files. But it is always safe to back up first.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 8: Buying a New Phone -->
+    <div class="conversation-section">
+        <h2>📱 Buying a New Phone / ဖုန်းအသစ်ဝယ်ယူခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I'm thinking of getting a new smartphone. Which one do you recommend?</div>
+                <div class="burmese">ကျွန်တော် စမတ်ဖုန်းအသစ်ဝယ်ဖို့ စဉ်းစားနေတယ်။ ဘယ်ဟာအကြံပြုလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am thinking of getting a new smartphone. Which one do you recommend?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Salesperson:</div>
+                <div class="english">What's your budget? And what features are important to you?</div>
+                <div class="burmese">သင့်ဘတ်ဂျက်က ဘယ်လောက်လဲ။ ဘယ်အင်္ဂါရပ်တွေက သင့်အတွက်အရေးကြီးလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What is your budget? And what features are important to you?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Around $500. I want a good camera and long battery life.</div>
+                <div class="burmese">၅၀၀ ဒေါ်လာလောက်။ ကင်မရာကောင်းကောင်းနဲ့ ဘက်ထရီခံနိုင်ရည်ရှည်တာ လိုချင်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Around 500 dollars. I want a good camera and long battery life.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Salesperson:</div>
+                <div class="english">This model has a 50MP camera and a battery that lasts all day. It's on sale for $480.</div>
+                <div class="burmese">ဒီမော်ဒယ်မှာ 50MP ကင်မရာနဲ့ တစ်နေကုန်ခံတဲ့ ဘက်ထရီပါတယ်။ ဈေးလျှော့ပြီး ၄၈၀ ဒေါ်လာပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('This model has a 50MP camera and a battery that lasts all day. It is on sale for 480 dollars.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Vocabulary Section -->
+    <div class="conversation-section">
+        <h2>📚 Technology Vocabulary / နည်းပညာသုံးဝေါဟာရများ</h2>
+        <div class="vocab-grid">
+            <div class="vocab-item"><span class="vocab-eng">Hardware / Software</span><br><span class="vocab-burmese">ဟာ့ဒ်ဝဲ/ဆော့ဖ်ဝဲ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Processor (CPU)</span><br><span class="vocab-burmese">ပရိုဆက်ဆာ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">RAM (Memory)</span><br><span class="vocab-burmese">မမ်မိုရီ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Storage (SSD/HDD)</span><br><span class="vocab-burmese">သိုလှောင်မှု</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Virus / Malware</span><br><span class="vocab-burmese">ဗိုင်းရပ်စ်/မဲလ်ဝဲ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Firewall</span><br><span class="vocab-burmese">ဖိုင်ယာဝေါ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Bandwidth</span><br><span class="vocab-burmese">ဘန်းဝစ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Router / Modem</span><br><span class="vocab-burmese">ရောက်တာ/မိုဒမ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Backup</span><br><span class="vocab-burmese">အရန်သိမ်းဆည်းခြင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Cloud storage</span><br><span class="vocab-burmese">ကလောက်ဒ်သိုလှောင်မှု</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Download / Upload</span><br><span class="vocab-burmese">ဒေါင်းလုတ်/အပ်လုတ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Troubleshoot</span><br><span class="vocab-burmese">ပြဿနာရှာဖွေဖြေရှင်းခြင်း</span></div>
+        </div>
+    </div>
+    
+    <!-- Useful Technology Phrases -->
+    <div class="conversation-section">
+        <h2>💡 Useful Technology Phrases / အသုံးဝင်သောနည်းပညာစကားစုများ</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Common Tech Problems (အဖြစ်များသောနည်းပညာပြဿနာများ):</strong><br>
+            • "The screen is frozen." (မျက်နှာပြင်ရပ်သွားတယ်။)<br>
+            • "My battery drains too quickly." (ကျွန်တော့်ဘက်ထရီက အရမ်းမြန်မြန်ကုန်တယ်။)<br>
+            • "I can't connect to Wi-Fi." (ကျွန်တော် Wi-Fi မချိတ်နိုင်ဘူး။)<br>
+            • "The app keeps crashing." (အက်ပ်က ဆက်တိုက်ကျသွားတယ်။)<br>
+            • "I think someone hacked my account." (တစ်ယောက်ယောက် ငါ့အကောင့်ကို ဖောက်ထွင်းဝင်ရောက်တယ်ထင်တယ်။)<br>
+            <br>
+            <i class="fas fa-lightbulb"></i>
+            <strong>Tips for Troubleshooting (ပြဿနာရှာဖွေဖြေရှင်းရန်အကြံပြုချက်များ):</strong><br>
+            • "Try turning it off and on again." (ပိတ်ပြီးပြန်ဖွင့်ကြည့်ပါ။)<br>
+            • "Clear your browser cache." (သင့်ဘရောက်ဆာ cache ကိုရှင်းပါ။)<br>
+            • "Check for software updates." (ဆော့ဖ်ဝဲအပ်ဒိတ်များကိုစစ်ဆေးပါ။)<br>
+            • "Reinstall the application." (အက်ပ်ကို ပြန်လည်ထည့်သွင်းပါ။)<br>
+        </div>
+    </div>
+    
+    <!-- Practice Section -->
+    <div class="conversation-section">
+        <h2>✏️ Practice Questions / လေ့ကျင့်ခန်းမေးခွန်းများ</h2>
+        <div class="dialogue-box">
+            <div class="quiz-question">
+                <p><strong>1. How do you say "ကျွန်တော့်ကွန်ပျူတာ အလုပ်မလုပ်ဘူး" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'My computer is not working.')">My computer is fast.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'My computer is not working.')">My computer is new.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'My computer is not working.')">My computer is not working.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'My computer is not working.')">I love my computer.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. "ဗိုင်းရပ်စ်စစ်ဆေးမှုပြုလုပ်ပါ" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Run a virus scan.')">Restart the computer.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Run a virus scan.')">Install software.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Run a virus scan.')">Run a virus scan.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Run a virus scan.')">Update Windows.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. What does "back up your data" mean?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Save a copy of your files somewhere safe')">Delete all files</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Save a copy of your files somewhere safe')">Share your files</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Save a copy of your files somewhere safe')">Save a copy of your files somewhere safe</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Save a copy of your files somewhere safe')">Move your files</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. "အင်တာနက်အရမ်းနှေးတယ်" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'The internet is very slow.')">The internet is fast.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'The internet is very slow.')">The internet is down.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'The internet is very slow.')">The internet is very slow.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'The internet is very slow.')">The internet is expensive.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p><i class="fas fa-heart" style="color: #00b894;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p>
+        <p style="font-size: 0.75rem; margin-top: 0.5rem;">Practice these conversations to handle technology problems and talk about computers confidently!</p>
+    </footer>
+</div>
+
+<!-- Back to Top Button -->
+<a href="#" class="back-to-top" id="backToTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+<script>
+    function speakEnglish(text) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8;
+        utterance.pitch = 1.0;
+        
+        function setVoice() {
+            const voices = window.speechSynthesis.getVoices();
+            const englishVoice = voices.find(v => v.lang === 'en-US' || v.lang.startsWith('en-'));
+            if (englishVoice) utterance.voice = englishVoice;
+            window.speechSynthesis.speak(utterance);
+        }
+        
+        if (window.speechSynthesis.getVoices().length) setVoice();
+        else window.speechSynthesis.onvoiceschanged = setVoice;
+    }
+    
+    function checkAnswer(element, correctAnswer) {
+        const options = element.parentElement.querySelectorAll('.quiz-option');
+        const isCorrect = element.innerText === correctAnswer;
+        
+        if (isCorrect) {
+            element.style.background = '#2ecc71';
+            element.style.color = 'white';
+            speakEnglish(correctAnswer);
+            setTimeout(() => {
+                options.forEach(opt => {
+                    opt.style.background = '';
+                    opt.style.color = '';
+                });
+            }, 1500);
+        } else {
+            element.style.background = '#e74c3c';
+            element.style.color = 'white';
+            setTimeout(() => {
+                element.style.background = '';
+                element.style.color = '';
+            }, 500);
+        }
+    }
+    
+    // Back to Top Button Functionality
+    (function() {
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        
+        if (backToTopBtn) {
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

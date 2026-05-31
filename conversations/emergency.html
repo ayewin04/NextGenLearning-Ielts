@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergency Situations - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 1rem;
+        }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        
+        .conversation-section {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .conversation-section h2 {
+            background: #c0392b;
+            color: white;
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line {
+            display: grid;
+            grid-template-columns: 70px 1fr 1fr;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            align-items: start;
+        }
+        .speaker { font-weight: bold; color: #c0392b; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { 
+            color: #8e6b3c; 
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 0.95rem;
+        }
+        .audio-btn {
+            background: #eef4ff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.3rem;
+        }
+        .audio-btn:hover { background: #c0392b; color: white; }
+        
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+            padding: 1rem;
+        }
+        .vocab-item {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            border-left: 3px solid #c0392b;
+        }
+        .vocab-eng { font-weight: bold; color: #c0392b; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        
+        .quiz-question {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.8rem;
+        }
+        .quiz-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .quiz-option {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .quiz-option:hover { background: #c0392b; color: white; border-color: #c0392b; }
+        
+        .emergency-numbers {
+            background: #fdeded;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            text-align: center;
+            border-left: 3px solid #c0392b;
+        }
+        .emergency-number { font-size: 1.2rem; font-weight: bold; color: #c0392b; }
+        
+        .tips-box {
+            background: #fdeded;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #c0392b;
+        }
+        .tips-box i { color: #c0392b; margin-right: 8px; }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1rem;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: #1e3c72;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid white;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: #f5b042;
+            color: #1e3c72;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .back-to-top i {
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 42px;
+                height: 42px;
+            }
+            .back-to-top i {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 700px) {
+            .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> All Conversations
+    </a>
+    
+    <header>
+        <h1><i class="fas fa-truck-medical"></i> Emergency Situations</h1>
+        <p>Learn how to call for help during emergencies like fire, accident, medical issues, or theft</p>
+        <p>မီး၊ မတော်တဆမှု၊ ကျန်းမာရေးပြဿနာ သို့မဟုတ် ခိုးယူခံရမှုများကဲ့သို့ အရေးပေါ်အခြေအနေများတွင် အကူအညီတောင်းနည်းကို လေ့လာပါ</p>
+    </header>
+    
+    <!-- Emergency Numbers -->
+    <div class="conversation-section">
+        <h2>🚨 Emergency Numbers / အရေးပေါ်ဖုန်းနံပါတ်များ</h2>
+        <div class="emergency-numbers">
+            <p><i class="fas fa-ambulance"></i> <strong>Ambulance / Medical Emergency:</strong> <span class="emergency-number">999</span> or <span class="emergency-number">911</span></p>
+            <p><i class="fas fa-fire-extinguisher"></i> <strong>Fire Department:</strong> <span class="emergency-number">999</span> or <span class="emergency-number">911</span></p>
+            <p><i class="fas fa-shield-alt"></i> <strong>Police:</strong> <span class="emergency-number">999</span> or <span class="emergency-number">911</span></p>
+            <p><i class="fas fa-question-circle"></i> <strong>General Emergency (USA/Canada):</strong> <span class="emergency-number">911</span></p>
+            <p><i class="fas fa-question-circle"></i> <strong>General Emergency (UK/Australia):</strong> <span class="emergency-number">999</span> or <span class="emergency-number">000</span></p>
+            <p><i class="fas fa-question-circle"></i> <strong>General Emergency (EU):</strong> <span class="emergency-number">112</span></p>
+        </div>
+    </div>
+    
+    <!-- Dialogue 1: Calling an Ambulance -->
+    <div class="conversation-section">
+        <h2>🚑 Calling an Ambulance / လူနာတင်ယာဉ်ခေါ်ဆိုခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Caller:</div>
+                <div class="english">I need an ambulance immediately! My mother is having a heart attack.</div>
+                <div class="burmese">လူနာတင်ယာဉ် ချက်ချင်းလိုအပ်ပါတယ်! ကျွန်တော့်အမေ နှလုံးဖောက်နေတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I need an ambulance immediately! My mother is having a heart attack.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Operator:</div>
+                <div class="english">Stay calm. What is your address?</div>
+                <div class="burmese">စိတ်အေးအေးထားပါ။ သင့်လိပ်စာက ဘာလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Stay calm. What is your address?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Caller:</div>
+                <div class="english">123 Pine Street, Apartment 5B. Please hurry!</div>
+                <div class="burmese">ပိုင်းလမ်း ၁၂၃၊ အခန်းနံပါတ် ၅B။ ကျေးဇူးပြု၍ မြန်မြန်လာပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('123 Pine Street, Apartment 5B. Please hurry!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Operator:</div>
+                <div class="english">Is she conscious?</div>
+                <div class="burmese">သူ သတိရနေလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Is she conscious?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Caller:</div>
+                <div class="english">Barely. She's having trouble breathing.</div>
+                <div class="burmese">အနည်းငယ်သာ။ သူ အသက်ရှူရခက်နေတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Barely. She is having trouble breathing.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Operator:</div>
+                <div class="english">An ambulance is on its way. Please stay on the line.</div>
+                <div class="burmese">လူနာတင်ယာဉ် လာနေပါပြီ။ ကျေးဇူးပြု၍ လိုင်းပေါ်တွင်နေပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('An ambulance is on its way. Please stay on the line.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 2: Reporting a Fire -->
+    <div class="conversation-section">
+        <h2>🔥 Reporting a Fire / မီးလောင်မှုအကြောင်းကြားခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Caller:</div>
+                <div class="english">Fire! There's a fire in my building!</div>
+                <div class="burmese">မီးလောင်နေတယ်! ကျွန်တော့်အဆောက်အအုံမှာ မီးလောင်နေတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Fire! There is a fire in my building!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Operator:</div>
+                <div class="english">Where is the fire located?</div>
+                <div class="burmese">မီးက ဘယ်မှာရှိလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Where is the fire located?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Caller:</div>
+                <div class="english">At 456 Oak Avenue. It's on the third floor. I can see smoke coming out of the window.</div>
+                <div class="burmese">အုတ်လမ်း ၄၅၆ မှာပါ။ တတိယထပ်မှာပါ။ ပြတင်းပေါက်ကနေ မီးခိုးထွက်နေတာ မြင်ရတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('At 456 Oak Avenue. It is on the third floor. I can see smoke coming out of the window.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Operator:</div>
+                <div class="english">Is everyone out of the building?</div>
+                <div class="burmese">လူတိုင်း အဆောက်အအုံကနေ ထွက်ပြီးပြီလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Is everyone out of the building?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Caller:</div>
+                <div class="english">I think so, but I'm not sure. Please send help quickly!</div>
+                <div class="burmese">ထင်ပါတယ်၊ ဒါပေမယ့် သေချာမသိဘူး။ ကျေးဇူးပြု၍ အကူအညီမြန်မြန်ပို့ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('I think so, but I am not sure. Please send help quickly!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 3: Reporting a Theft -->
+    <div class="conversation-section">
+        <h2>👮 Reporting a Theft / ခိုးမှုအကြောင်းကြားခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Caller:</div>
+                <div class="english">I need to report a theft. My wallet was stolen.</div>
+                <div class="burmese">ခိုးမှုတစ်ခု အကြောင်းကြားဖို့ လိုအပ်ပါတယ်။ ကျွန်တော့်ပိုက်ဆံအိတ် ခိုးခံလိုက်ရတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I need to report a theft. My wallet was stolen.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Operator:</div>
+                <div class="english">Where did it happen?</div>
+                <div class="burmese">ဘယ်မှာဖြစ်တာလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Where did it happen?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Caller:</div>
+                <div class="english">At the bus station on Main Street, about 20 minutes ago.</div>
+                <div class="burmese">မိန်းလမ်းက ဘတ်စ်ကားမှတ်တိုင်မှာ လွန်ခဲ့တဲ့ ၂၀ မိနစ်လောက်က။</div>
+                <button class="audio-btn" onclick="speakEnglish('At the bus station on Main Street, about 20 minutes ago.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Operator:</div>
+                <div class="english">Can you describe the person who stole it?</div>
+                <div class="burmese">ခိုးသွားတဲ့လူကို ဖော်ပြနိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Can you describe the person who stole it?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Caller:</div>
+                <div class="english">He was wearing a black jacket and jeans. He ran toward the park.</div>
+                <div class="burmese">သူက အနက်ရောင်ဂျာကင်နဲ့ ဂျင်းဘောင်းဘီဝတ်ထားတယ်။ ပန်းခြံဘက်ကို ပြေးသွားတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('He was wearing a black jacket and jeans. He ran toward the park.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 4: Reporting an Accident -->
+    <div class="conversation-section">
+        <h2>🚗 Reporting an Accident / မတော်တဆမှုအကြောင်းကြားခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Caller:</div>
+                <div class="english">There's been a car accident at the intersection of 5th Avenue and Main Street.</div>
+                <div class="burmese">၅ လမ်းနဲ့ မိန်းလမ်းဆုံမှာ ကားမတော်တဆမှုဖြစ်နေတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('There has been a car accident at the intersection of 5th Avenue and Main Street.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Operator:</div>
+                <div class="english">Is anyone injured?</div>
+                <div class="burmese">တစ်ယောက်ယောက် ဒဏ်ရာရလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Is anyone injured?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Caller:</div>
+                <div class="english">Yes, one person looks hurt. There's blood on his head.</div>
+                <div class="burmese">ဟုတ်တယ်၊ လူတစ်ယောက် ဒဏ်ရာရပုံရတယ်။ သူ့ခေါင်းမှာ သွေးတွေရှိတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, one person looks hurt. There is blood on his head.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Operator:</div>
+                <div class="english">I'm sending an ambulance and police right away. How many cars are involved?</div>
+                <div class="burmese">လူနာတင်ယာဉ်နဲ့ ရဲကို ချက်ချင်းစေလွှတ်နေပါတယ်။ ကားဘယ်နှစ်စီးပါလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am sending an ambulance and police right away. How many cars are involved?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Caller:</div>
+                <div class="english">Two cars. One is badly damaged.</div>
+                <div class="burmese">ကားနှစ်စီးပါတယ်။ တစ်စီးက အဆိုးဘက်ပျက်စီးနေတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Two cars. One is badly damaged.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 5: Lost Child -->
+    <div class="conversation-section">
+        <h2>👶 Lost Child / ကလေးပျောက်ဆုံးခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Parent:</div>
+                <div class="english">Please help me! I can't find my son. He's only 5 years old.</div>
+                <div class="burmese">ကျေးဇူးပြု၍ ကူညီပါ! ကျွန်တော့်သားကို ရှာမတွေ့ဘူး။ သူက အသက် ၅ နှစ်ပဲရှိသေးတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Please help me! I cannot find my son. He is only 5 years old.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Operator:</div>
+                <div class="english">Where did you last see him?</div>
+                <div class="burmese">နောက်ဆုံး သူ့ကို ဘယ်မှာတွေ့ခဲ့လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Where did you last see him?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Parent:</div>
+                <div class="english">At the shopping mall food court, about 15 minutes ago.</div>
+                <div class="burmese">ကုန်တိုက် အစားအသောက်ခန်းမမှာ လွန်ခဲ့တဲ့ ၁၅ မိနစ်လောက်က။</div>
+                <button class="audio-btn" onclick="speakEnglish('At the shopping mall food court, about 15 minutes ago.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Operator:</div>
+                <div class="english">What is he wearing? What does he look like?</div>
+                <div class="burmese">သူ ဘာဝတ်ထားလဲ။ သူဘယ်လိုပုံစံလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What is he wearing? What does he look like?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Parent:</div>
+                <div class="english">He has black hair and brown eyes. He's wearing a red shirt and blue shorts. His name is David.</div>
+                <div class="burmese">သူ့မှာ ဆံပင်နက်၊ မျက်လုံးညိုရှိတယ်။ အင်္ကျီနီနဲ့ ဘောင်းဘီတိုအပြာဝတ်ထားတယ်။ သူ့နာမည် ဒေးဗစ်ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('He has black hair and brown eyes. He is wearing a red shirt and blue shorts. His name is David.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 6: Medical Emergency - Allergic Reaction -->
+    <div class="conversation-section">
+        <h2>💊 Medical Emergency - Allergic Reaction / ဆေးဘက်ဆိုင်ရာအရေးပေါ် - ဓာတ်မတည့်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Caller:</div>
+                <div class="english">My friend is having a severe allergic reaction. She can't breathe!</div>
+                <div class="burmese">ကျွန်မသူငယ်ချင်း ပြင်းထန်တဲ့ ဓာတ်မတည့်မှုဖြစ်နေတယ်။ သူမ အသက်မရှူနိုင်ဘူး။</div>
+                <button class="audio-btn" onclick="speakEnglish('My friend is having a severe allergic reaction. She cannot breathe!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Operator:</div>
+                <div class="english">Does she have an EpiPen?</div>
+                <div class="burmese">သူမမှာ EpiPen ရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Does she have an EpiPen?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Caller:</div>
+                <div class="english">Yes, she has one in her bag. What should I do?</div>
+                <div class="burmese">ဟုတ်တယ်၊ သူမအိတ်ထဲမှာရှိတယ်။ ကျွန်မ ဘာလုပ်သင့်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, she has one in her bag. What should I do?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Operator:</div>
+                <div class="english">Remove the cap and press it firmly against her outer thigh. Hold for 10 seconds. Ambulance is on the way.</div>
+                <div class="burmese">အဖုံးဖယ်ပြီး သူမရဲ့ပေါင်အပြင်ဘက်မှာ သေချာဖိပါ။ ၁၀ စက္ကန့်ထားပါ။ လူနာတင်ယာဉ် လာနေပါပြီ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Remove the cap and press it firmly against her outer thigh. Hold for 10 seconds. Ambulance is on the way.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 7: Reporting a Suspicious Person -->
+    <div class="conversation-section">
+        <h2>👤 Reporting a Suspicious Person / သံသယဖြစ်ဖွယ်လူတစ်ဦးအကြောင်းကြားခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Caller:</div>
+                <div class="english">There's a suspicious person outside my house. He's been standing there for an hour.</div>
+                <div class="burmese">ကျွန်တော့်အိမ်အပြင်မှာ သံသယဖြစ်ဖွယ်လူတစ်ယောက်ရှိတယ်။ သူ တစ်နာရီကြာ ရပ်နေတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('There is a suspicious person outside my house. He has been standing there for an hour.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Operator:</div>
+                <div class="english">Can you describe him?</div>
+                <div class="burmese">သူ့ကို ဖော်ပြနိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Can you describe him?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Caller:</div>
+                <div class="english">He's tall, wearing a hoodie and a mask. He keeps looking at the windows.</div>
+                <div class="burmese">သူက အရပ်ရှည်တယ်၊ ဟုဒီနဲ့ မျက်နှာဖုံးဝတ်ထားတယ်။ ပြတင်းပေါက်တွေကို ဆက်တိုက်ကြည့်နေတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('He is tall, wearing a hoodie and a mask. He keeps looking at the windows.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Operator:</div>
+                <div class="english">Don't open the door. I'm sending a police car to your location.</div>
+                <div class="burmese">တံခါးမဖွင့်ပါနဲ့။ ကျွန်တော် သင့်နေရာကို ရဲကားတစ်စီး စေလွှတ်နေပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do not open the door. I am sending a police car to your location.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 8: Natural Disaster - Earthquake -->
+    <div class="conversation-section">
+        <h2>🌍 Natural Disaster - Earthquake / သဘာဝဘေးအန္တရာယ် - ငလျင်</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Caller:</div>
+                <div class="english">We just felt a strong earthquake! Buildings are shaking!</div>
+                <div class="burmese">ငလျင်ပြင်းပြင်းတစ်ခု ခံစားလိုက်ရတယ်! အဆောက်အအုံတွေ လှုပ်နေတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('We just felt a strong earthquake! Buildings are shaking!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Operator:</div>
+                <div class="english">Drop, cover, and hold on. Get under a table or desk.</div>
+                <div class="burmese">ငုံ့ပါ၊ အကာအကွယ်ယူပါ၊ စွဲကိုင်ထားပါ။ စားပွဲ ဒါမှမဟုတ် စားပွဲခုံအောက်ကို ဝင်ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Drop, cover, and hold on. Get under a table or desk.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Caller:</div>
+                <div class="english">Is anyone injured in your area?</div>
+                <div class="burmese">မင်းဒေသမှာ တစ်ယောက်ယောက် ဒဏ်ရာရလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Is anyone injured in your area?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Caller:</div>
+                <div class="english">Not sure yet. The shaking just stopped. There might be aftershocks.</div>
+                <div class="burmese">မသေချာသေးဘူး။ လှုပ်ခြင်း ရပ်သွားပြီ။ နောက်ထပ်ငလျင်ငယ်တွေ ထပ်လာနိုင်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Not sure yet. The shaking just stopped. There might be aftershocks.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Operator:</div>
+                <div class="english">Stay away from windows and tall furniture. If you can, go outside to an open area.</div>
+                <div class="burmese">ပြတင်းပေါက်များနှင့် အမြင့်ပရိဘောဂများနှင့် ဝေးဝေးနေပါ။ ဖြစ်နိုင်ရင် အပြင်ဘက် လွင်ပြင်ကို ထွက်သွားပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Stay away from windows and tall furniture. If you can, go outside to an open area.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Vocabulary Section -->
+    <div class="conversation-section">
+        <h2>📚 Emergency Vocabulary / အရေးပေါ်သုံးဝေါဟာရများ</h2>
+        <div class="vocab-grid">
+            <div class="vocab-item"><span class="vocab-eng">Emergency</span><br><span class="vocab-burmese">အရေးပေါ်အခြေအနေ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Ambulance</span><br><span class="vocab-burmese">လူနာတင်ယာဉ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Fire department</span><br><span class="vocab-burmese">မီးသတ်ဌာန</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Police</span><br><span class="vocab-burmese">ရဲ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Injured</span><br><span class="vocab-burmese">ဒဏ်ရာရသော</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Conscious</span><br><span class="vocab-burmese">သတိရသော</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Theft / Stolen</span><br><span class="vocab-burmese">ခိုးမှု/ခိုးယူခံရသော</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Accident</span><br><span class="vocab-burmese">မတော်တဆမှု</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Allergic reaction</span><br><span class="vocab-burmese">ဓာတ်မတည့်ခြင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Suspicious</span><br><span class="vocab-burmese">သံသယဖြစ်ဖွယ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Earthquake</span><br><span class="vocab-burmese">ငလျင်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Evacuate</span><br><span class="vocab-burmese">စွန့်ခွာထွက်ပြေးခြင်း</span></div>
+        </div>
+    </div>
+    
+    <!-- Useful Emergency Phrases -->
+    <div class="conversation-section">
+        <h2>💡 Useful Emergency Phrases / အသုံးဝင်သောအရေးပေါ်စကားစုများ</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>When Calling Emergency Services (အရေးပေါ်ဝန်ဆောင်မှုများကိုခေါ်ဆိုသည့်အခါ):</strong><br>
+            • "What is your emergency?" (သင့်ရဲ့အရေးပေါ်အခြေအနေက ဘာလဲ။)<br>
+            • "What's the nearest intersection?" (အနီးဆုံးလမ်းဆုံက ဘာလဲ။)<br>
+            • "Stay on the line. Don't hang up." (လိုင်းပေါ်မှာနေပါ။ ဖုန်းမချပါနဲ့။)<br>
+            • "Help is on the way." (အကူအညီ လာနေပါပြီ။)<br>
+            <br>
+            <i class="fas fa-lightbulb"></i>
+            <strong>Important Information to Give (ပေးရန်အရေးကြီးသောအချက်အလက်များ):</strong><br>
+            • Your location (တည်နေရာ)<br>
+            • What happened (ဘာဖြစ်သွားတာလဲ)<br>
+            • Number of people injured (ဒဏ်ရာရသူဦးရေ)<br>
+            • Any weapons involved (လက်နက်ပါဝင်မှုရှိလား)<br>
+            • Your name and phone number (နာမည်နှင့်ဖုန်းနံပါတ်)<br>
+        </div>
+    </div>
+    
+    <!-- Practice Section -->
+    <div class="conversation-section">
+        <h2>✏️ Practice Questions / လေ့ကျင့်ခန်းမေးခွန်းများ</h2>
+        <div class="dialogue-box">
+            <div class="quiz-question">
+                <p><strong>1. What number do you call for a medical emergency in the USA?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, '911')">411</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, '911')">911</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, '911')">311</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, '911')">511</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>2. "ကျွန်တော့်ပိုက်ဆံအိတ် ခိုးခံလိုက်ရတယ်" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'My wallet was stolen.')">My wallet is lost.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'My wallet was stolen.')">I lost my wallet.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'My wallet was stolen.')">My wallet was stolen.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'My wallet was stolen.')">I found my wallet.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. What should you do during an earthquake according to the dialogue?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Drop, cover, and hold on')">Run outside immediately</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Drop, cover, and hold on')">Stand by the window</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Drop, cover, and hold on')">Drop, cover, and hold on</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Drop, cover, and hold on')">Keep walking normally</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. "သူကသတိမရှိဘူး" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'He is unconscious.')">He is sleeping.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'He is unconscious.')">He is awake.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'He is unconscious.')">He is unconscious.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'He is unconscious.')">He is talking.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. What do you call the vehicle that takes sick people to the hospital?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Ambulance')">Police car</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Ambulance')">Fire truck</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Ambulance')">Ambulance</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Ambulance')">Taxi</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p><i class="fas fa-heart" style="color: #c0392b;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p>
+        <p style="font-size: 0.75rem; margin-top: 0.5rem;">Practice these conversations to stay safe and know how to respond in emergencies!</p>
+    </footer>
+</div>
+
+<!-- Back to Top Button -->
+<a href="#" class="back-to-top" id="backToTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+<script>
+    function speakEnglish(text) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8;
+        utterance.pitch = 1.0;
+        
+        function setVoice() {
+            const voices = window.speechSynthesis.getVoices();
+            const englishVoice = voices.find(v => v.lang === 'en-US' || v.lang.startsWith('en-'));
+            if (englishVoice) utterance.voice = englishVoice;
+            window.speechSynthesis.speak(utterance);
+        }
+        
+        if (window.speechSynthesis.getVoices().length) setVoice();
+        else window.speechSynthesis.onvoiceschanged = setVoice;
+    }
+    
+    function checkAnswer(element, correctAnswer) {
+        const options = element.parentElement.querySelectorAll('.quiz-option');
+        const isCorrect = element.innerText === correctAnswer;
+        
+        if (isCorrect) {
+            element.style.background = '#2ecc71';
+            element.style.color = 'white';
+            speakEnglish(correctAnswer);
+            setTimeout(() => {
+                options.forEach(opt => {
+                    opt.style.background = '';
+                    opt.style.color = '';
+                });
+            }, 1500);
+        } else {
+            element.style.background = '#e74c3c';
+            element.style.color = 'white';
+            setTimeout(() => {
+                element.style.background = '';
+                element.style.color = '';
+            }, 500);
+        }
+    }
+    
+    // Back to Top Button Functionality
+    (function() {
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        
+        if (backToTopBtn) {
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cooking & Recipes - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 1rem;
+        }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        
+        .conversation-section {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .conversation-section h2 {
+            background: #e17055;
+            color: white;
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line {
+            display: grid;
+            grid-template-columns: 70px 1fr 1fr;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            align-items: start;
+        }
+        .speaker { font-weight: bold; color: #e17055; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { 
+            color: #8e6b3c; 
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 0.95rem;
+        }
+        .audio-btn {
+            background: #eef4ff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.3rem;
+        }
+        .audio-btn:hover { background: #e17055; color: white; }
+        
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+            padding: 1rem;
+        }
+        .vocab-item {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            border-left: 3px solid #e17055;
+        }
+        .vocab-eng { font-weight: bold; color: #e17055; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        
+        .quiz-question {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.8rem;
+        }
+        .quiz-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .quiz-option {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .quiz-option:hover { background: #e17055; color: white; border-color: #e17055; }
+        
+        .recipe-box {
+            background: #fdf2e9;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #e17055;
+        }
+        .ingredient-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .ingredient-tag {
+            background: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 2rem;
+            font-size: 0.8rem;
+            border: 1px solid #e17055;
+        }
+        
+        .tips-box {
+            background: #fef5e7;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #e17055;
+        }
+        .tips-box i { color: #e17055; margin-right: 8px; }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1rem;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: #1e3c72;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid white;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: #f5b042;
+            color: #1e3c72;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .back-to-top i {
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 42px;
+                height: 42px;
+            }
+            .back-to-top i {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 700px) {
+            .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> All Conversations
+    </a>
+    
+    <header>
+        <h1><i class="fas fa-utensils"></i> Cooking & Recipes</h1>
+        <p>Learn how to share recipes, cooking tips, and talk about food preparation in English</p>
+        <p>ချက်ပြုတ်နည်းများ၊ ချက်ပြုတ်အကြံပြုချက်များနှင့် အစားအစာပြင်ဆင်မှုအကြောင်း အင်္ဂလိပ်လို ပြောဆိုနည်းကို လေ့လာပါ</p>
+    </header>
+    
+    <!-- Dialogue 1: Asking for a Recipe -->
+    <div class="conversation-section">
+        <h2>📖 Asking for a Recipe / ချက်ပြုတ်နည်းတစ်ခုတောင်းခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">This soup is delicious! Can you give me the recipe?</div>
+                <div class="burmese">ဒီဟင်းရည်က အရသာရှိတယ်! ချက်နည်းပေးနိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('This soup is delicious! Can you give me the recipe?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Of course! It's my grandmother's secret recipe.</div>
+                <div class="burmese">ရပါတယ်! ဒါက ကျွန်မအဖွားရဲ့ လျှို့ဝှက်ချက်ပြုတ်နည်းပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Of course! It is my grandmother\'s secret recipe.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">What ingredients do I need?</div>
+                <div class="burmese">ဘယ်ပါဝင်ပစ္စည်းတွေ လိုအပ်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What ingredients do I need?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">You'll need chicken broth, carrots, celery, onions, and some spices.</div>
+                <div class="burmese">ကြက်သားဟင်းရည်၊ မုန်လာဥနီ၊ တရုတ်နံနံ၊ ကြက်သွန်နီ၊ ဟင်းခတ်အမွှေးအကြိုင်တချို့ လိုအပ်ပါလိမ့်မယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('You will need chicken broth, carrots, celery, onions, and some spices.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 2: Sharing a Traditional Recipe -->
+    <div class="conversation-section">
+        <h2>🥘 Sharing a Traditional Recipe / ရိုးရာချက်ပြုတ်နည်းမျှဝေခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">I'd love to learn how to make traditional Myanmar curry.</div>
+                <div class="burmese">ရိုးရာမြန်မာဟင်းချက်နည်း လေ့လာချင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I would love to learn how to make traditional Myanmar curry.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">It's easy! First, heat some oil in a pan.</div>
+                <div class="burmese">လွယ်ပါတယ်! ပထမဆုံး၊ ဒယ်အိုးထဲမှာ ဆီအပူပေးပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('It is easy! First, heat some oil in a pan.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Then what?</div>
+                <div class="burmese">ပြီးရင်ရော။</div>
+                <button class="audio-btn" onclick="speakEnglish('Then what?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Add onions, garlic, and ginger. Fry until golden brown. Then add your meat and curry powder.</div>
+                <div class="burmese">ကြက်သွန်နီ၊ ကြက်သွန်ဖြူ၊ ချင်းထည့်ပါ။ အညိုရောင်ပေါ်လာသည်အထိ ကြော်ပါ။ ပြီးရင် အသားနဲ့ ဟင်းမှုန့်ထည့်ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Add onions, garlic, and ginger. Fry until golden brown. Then add your meat and curry powder.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 3: Cooking Instructions -->
+    <div class="conversation-section">
+        <h2>📝 Cooking Instructions / ချက်ပြုတ်ညွှန်ကြားချက်များ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">How long should I cook the rice?</div>
+                <div class="burmese">ထမင်းကို ဘယ်လောက်ကြာကြာ ချက်သင့်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('How long should I cook the rice?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">About 15-20 minutes. Simmer on low heat until the water is absorbed.</div>
+                <div class="burmese">၁၅-၂၀ မိနစ်လောက်။ ရေကုန်သည်အထိ အပူအသင့်အတိုင်း နူအောင်ချက်ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('About 15-20 minutes. Simmer on low heat until the water is absorbed.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Should I cover the pot?</div>
+                <div class="burmese">အိုးအဖုံးပိတ်သင့်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Should I cover the pot?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Yes, always cover the pot when cooking rice. Don't lift the lid while it's cooking.</div>
+                <div class="burmese">ဟုတ်တယ်၊ ထမင်းချက်တဲ့အခါ အိုးအဖုံးအမြဲပိတ်ပါ။ ချက်နေစဉ် အဖုံးမဖွင့်ပါနဲ့။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, always cover the pot when cooking rice. Do not lift the lid while it is cooking.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 4: Baking a Cake -->
+    <div class="conversation-section">
+        <h2>🎂 Baking a Cake / ကိတ်မုန့်ဖုတ်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">I want to bake a chocolate cake for my friend's birthday.</div>
+                <div class="burmese">ကျွန်တော့်သူငယ်ချင်းမွေးနေ့အတွက် ချောကလက်ကိတ်မုန့်ဖုတ်ချင်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I want to bake a chocolate cake for my friend\'s birthday.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">That's so thoughtful! Do you need help with the recipe?</div>
+                <div class="burmese">အင်မတန်စဉ်းစားပေးတဲ့သူပဲ! ချက်နည်းအတွက် အကူအညီလိုလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('That is so thoughtful! Do you need help with the recipe?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Yes, please. What temperature should I set the oven to?</div>
+                <div class="burmese">ဟုတ်ကဲ့။ မီးဖိုကို ဘယ်အပူချိန်သတ်မှတ်ရမလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, please. What temperature should I set the oven to?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Preheat to 350°F (175°C). Bake for 30 minutes. You can check with a toothpick.</div>
+                <div class="burmese">350°F (175°C) သို့ ကြိုအပူပေးပါ။ ၃၀ မိနစ်ဖုတ်ပါ။ သွားကြားထိုးတံနဲ့ စစ်လို့ရပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Preheat to 350 degrees Fahrenheit. Bake for 30 minutes. You can check with a toothpick.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 5: Substituting Ingredients -->
+    <div class="conversation-section">
+        <h2>🔄 Substituting Ingredients / ပါဝင်ပစ္စည်းများအစားထိုးခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">I don't have any eggs. What can I use instead?</div>
+                <div class="burmese">ငါ့မှာ ကြက်ဥမရှိဘူး။ အစားဘာသုံးလို့ရမလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('I do not have any eggs. What can I use instead?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">You can use mashed bananas or applesauce as an egg substitute in baking.</div>
+                <div class="burmese">ဖုတ်တဲ့အခါ ငှက်ပျောသီးနုန်းချေထားတာ ဒါမှမဟုတ် ပန်းသီးငါးပိတို့ကို ကြက်ဥအစားထိုးအဖြစ် သုံးနိုင်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('You can use mashed bananas or applesauce as an egg substitute in baking.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Really? How much should I use?</div>
+                <div class="burmese">တကယ်လား? ဘယ်လောက်သုံးသင့်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Really? How much should I use?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">One mashed banana equals one egg. It works really well!</div>
+                <div class="burmese">ငှက်ပျောသီးနုန်းချေတစ်လုံးက ကြက်ဥတစ်လုံးနဲ့ညီတယ်။ တကယ်ကောင်းကောင်းအလုပ်လုပ်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('One mashed banana equals one egg. It works really well!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 6: Cooking for Guests -->
+    <div class="conversation-section">
+        <h2>👥 Cooking for Guests / ဧည့်သည်များအတွက်ချက်ပြုတ်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">I'm having friends over for dinner. What should I cook?</div>
+                <div class="burmese">ငါ ညစာစားဖို့ သူငယ်ချင်းတွေကို အိမ်ကိုဖိတ်ထားတယ်။ ဘာချက်သင့်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am having friends over for dinner. What should I cook?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Pasta is always a good choice. It's easy and everyone loves it.</div>
+                <div class="burmese">ပါစတာက အမြဲတမ်း ကောင်းတဲ့ရွေးချယ်မှုပါ။ လွယ်တယ်၊ လူတိုင်းကြိုက်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Pasta is always a good choice. It is easy and everyone loves it.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Great idea! Should I make a salad too?</div>
+                <div class="burmese">အကြံကောင်းပါတယ်! သုပ်လည်းလုပ်သင့်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Great idea! Should I make a salad too?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Yes, a simple green salad with dressing would be perfect.</div>
+                <div class="burmese">ဟုတ်တယ်၊ အသုပ်ဆီနဲ့ ရိုးရိုးအစိမ်းရောင်သုပ်က ပြီးပြည့်စုံလိမ့်မယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, a simple green salad with dressing would be perfect.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 7: Dietary Restrictions -->
+    <div class="conversation-section">
+        <h2>🥗 Dietary Restrictions / အစားအသောက်ကန့်သတ်ချက်များ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">My friend is vegetarian. What can I cook for her?</div>
+                <div class="burmese">ကျွန်မသူငယ်ချင်း သက်သတ်လွတ်စားတယ်။ သူမအတွက် ကျွန်မ ဘာချက်ပေးရမလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('My friend is vegetarian. What can I cook for her?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">You could make vegetable stir-fry with tofu. It's healthy and delicious.</div>
+                <div class="burmese">တိုဟူးနဲ့ ဟင်းသီးဟင်းရွက်ကြော် လုပ်နိုင်တယ်။ ကျန်းမာရေးနဲ့ညီညွတ်ပြီး အရသာရှိတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('You could make vegetable stir-fry with tofu. It is healthy and delicious.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Does she eat eggs and dairy?</div>
+                <div class="burmese">သူမ ကြက်ဥနဲ့ နို့ထွက်ပစ္စည်းတွေ စားလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Does she eat eggs and dairy?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Yes, she's lacto-ovo vegetarian. So eggs and dairy are fine.</div>
+                <div class="burmese">ဟုတ်တယ်၊ သူမ lacto-ovo သက်သတ်လွတ်စားသူပါ။ ဒါကြောင့် ကြက်ဥနဲ့ နို့ထွက်ပစ္စည်းတွေ စားလို့ရတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, she is lacto-ovo vegetarian. So eggs and dairy are fine.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 8: Learning to Cook -->
+    <div class="conversation-section">
+        <h2>👩‍🍳 Learning to Cook / ချက်ပြုတ်တတ်အောင်သင်ယူခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">I want to learn how to cook. Where should I start?</div>
+                <div class="burmese">ငါ ချက်ပြုတ်တတ်အောင် သင်ချင်တယ်။ ဘယ်ကနေစသင့်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('I want to learn how to cook. Where should I start?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Start with simple recipes like scrambled eggs or pasta.</div>
+                <div class="burmese">ကြက်ဥကြော် ဒါမှမဟုတ် ပါစတာလို ရိုးရိုးလက်စွမ်းပြချက်နည်းတွေနဲ့ စပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Start with simple recipes like scrambled eggs or pasta.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">What about using spices? I'm always scared to use too much.</div>
+                <div class="burmese">ဟင်းခတ်အမွှေးအကြိုင်သုံးတာကရော? သိပ်များမှာစိုးရိမ်မိတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('What about using spices? I am always scared to use too much.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Start with a small amount, then taste and adjust. You'll get better with practice.</div>
+                <div class="burmese">နည်းနည်းနဲ့စပြီး အရသာကြည့်၊ ချိန်ညှိပါ။ လေ့ကျင့်ရင်းနဲ့ ပိုကောင်းလာလိမ့်မယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Start with a small amount, then taste and adjust. You will get better with practice.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Sample Recipe -->
+    <div class="conversation-section">
+        <h2>📖 Sample Recipe: Chicken Curry / နမူနာချက်နည်း- ကြက်သားဟင်း</h2>
+        <div class="recipe-box">
+            <p><strong>Ingredients / ပါဝင်ပစ္စည်းများ:</strong></p>
+            <div class="ingredient-list">
+                <span class="ingredient-tag">500g chicken (ကြက်သား)</span>
+                <span class="ingredient-tag">2 onions (ကြက်သွန်နီ ၂ လုံး)</span>
+                <span class="ingredient-tag">3 garlic cloves (ကြက်သွန်ဖြူ ၃ မွှာ)</span>
+                <span class="ingredient-tag">1 inch ginger (ချင်း ၁ လက်မ)</span>
+                <span class="ingredient-tag">2 tbsp curry powder (ဟင်းမှုန့် ၂ ဇွန်း)</span>
+                <span class="ingredient-tag">1 cup coconut milk (အုန်းနို့ ၁ ခွက်)</span>
+                <span class="ingredient-tag">Salt to taste (ဆား အနည်းငယ်)</span>
+            </div>
+            <p><strong>Instructions / ညွှန်ကြားချက်များ:</strong></p>
+            <ol style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                <li>Heat oil in a pan. (ဒယ်အိုးထဲတွင် ဆီအပူပေးပါ)</li>
+                <li>Add onions, garlic, and ginger. Fry until golden. (ကြက်သွန်နီ၊ ကြက်သွန်ဖြူ၊ ချင်းထည့်ပါ။ အညိုရောင်ပေါ်သည်အထိကြော်ပါ)</li>
+                <li>Add chicken and curry powder. Cook for 5 minutes. (ကြက်သားနှင့် ဟင်းမှုန့်ထည့်ပါ။ ၅ မိနစ်ချက်ပါ)</li>
+                <li>Add coconut milk and simmer for 20 minutes. (အုန်းနို့ထည့်ပြီး ၂၀ မိနစ် နူအောင်ချက်ပါ)</li>
+                <li>Add salt to taste. Serve with rice. (ဆားအနည်းငယ်ထည့်ပါ။ ထမင်းနှင့်တွဲဖက်သုံးဆောင်ပါ)</li>
+            </ol>
+        </div>
+    </div>
+    
+    <!-- Vocabulary Section -->
+    <div class="conversation-section">
+        <h2>📚 Cooking Vocabulary / ချက်ပြုတ်သုံးဝေါဟာရများ</h2>
+        <div class="vocab-grid">
+            <div class="vocab-item"><span class="vocab-eng">Boil</span><br><span class="vocab-burmese">ပြုတ်သည်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Fry</span><br><span class="vocab-burmese">ကြော်သည်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Bake</span><br><span class="vocab-burmese">ဖုတ်သည်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Steam</span><br><span class="vocab-burmese">ပေါင်းသည်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Chop / Dice</span><br><span class="vocab-burmese">တုံးတုံး/အတုံးသေးသေးဖြစ်အောင်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Simmer</span><br><span class="vocab-burmese">နူအောင်ချက်သည်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Marinate</span><br><span class="vocab-burmese">အသားကိုဟင်းခတ်ဖြင့်နယ်သည်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Season</span><br><span class="vocab-burmese">ဟင်းခတ်မွှေးအကြိုင်ထည့်သည်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Taste</span><br><span class="vocab-burmese">အရသာကြည့်သည်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Whisk</span><br><span class="vocab-burmese">မွှေသည်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Garnish</span><br><span class="vocab-burmese">ပန်းနုရောင်ပြင်သည်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Simmer</span><br><span class="vocab-burmese">အချိန်ကြာကြာနူအောင်ချက်သည်</span></div>
+        </div>
+    </div>
+    
+    <!-- Cooking Tips -->
+    <div class="conversation-section">
+        <h2>💡 Cooking Tips for Beginners / အစပြုသူများအတွက် ချက်ပြုတ်အကြံပြုချက်များ</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Essential Cooking Tips (မရှိမဖြစ် ချက်ပြုတ်အကြံပြုချက်များ):</strong><br>
+            • <strong>Mise en place</strong> - Prepare all ingredients before cooking (ချက်ပြုတ်ခြင်းမပြုမီ ပါဝင်ပစ္စည်းများအားလုံးကို ပြင်ဆင်ထားပါ)<br>
+            • <strong>Keep knives sharp</strong> - Sharp knives are safer than dull ones (ဓားများကို ထက်အောင်ထားပါ)<br>
+            • <strong>Don't overcrowd the pan</strong> - Food will steam instead of fry (ဒယ်အိုးအား မပိမပိတ်စေနှင့်)<br>
+            • <strong>Taste as you go</strong> - Adjust seasoning throughout cooking (ချက်နေစဉ် အရသာကြည့်ပါ)<br>
+            • <strong>Clean as you cook</strong> - It makes the process less overwhelming (ချက်နေစဉ် သန့်ရှင်းရေးလုပ်ပါ)<br>
+        </div>
+    </div>
+    
+    <!-- Practice Section -->
+    <div class="conversation-section">
+        <h2>✏️ Practice Questions / လေ့ကျင့်ခန်းမေးခွန်းများ</h2>
+        <div class="dialogue-box">
+            <div class="quiz-question">
+                <p><strong>1. How do you ask someone for a recipe?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can you give me the recipe?')">Can you eat this?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can you give me the recipe?')">Can you give me the recipe?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can you give me the recipe?')">Do you like cooking?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can you give me the recipe?')">Where is the kitchen?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>2. "ဒယ်အိုးထဲတွင် ဆီအပူပေးပါ" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Heat oil in a pan.')">Add water to the pan.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Heat oil in a pan.')">Heat oil in a pan.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Heat oil in a pan.')">Turn off the stove.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Heat oil in a pan.')">Open the refrigerator.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. What temperature do you bake a cake at?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, '350°F (175°C)')">100°F (38°C)</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, '350°F (175°C)')">500°F (260°C)</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, '350°F (175°C)')">350°F (175°C)</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, '350°F (175°C)')">200°F (93°C)</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. "ကျွန်တော် သက်သတ်လွတ်စားတယ်" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I am vegetarian.')">I love meat.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I am vegetarian.')">I am vegetarian.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I am vegetarian.')">I eat everything.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I am vegetarian.')">I don't like food.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. What can you use as an egg substitute in baking?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Mashed banana')">Sugar</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Mashed banana')">Salt</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Mashed banana')">Mashed banana</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Mashed banana')">Flour</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p><i class="fas fa-heart" style="color: #e17055;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p>
+        <p style="font-size: 0.75rem; margin-top: 0.5rem;">Practice these conversations to share recipes and cooking tips confidently!</p>
+    </footer>
+</div>
+
+<!-- Back to Top Button -->
+<a href="#" class="back-to-top" id="backToTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+<script>
+    function speakEnglish(text) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8;
+        utterance.pitch = 1.0;
+        
+        function setVoice() {
+            const voices = window.speechSynthesis.getVoices();
+            const englishVoice = voices.find(v => v.lang === 'en-US' || v.lang.startsWith('en-'));
+            if (englishVoice) utterance.voice = englishVoice;
+            window.speechSynthesis.speak(utterance);
+        }
+        
+        if (window.speechSynthesis.getVoices().length) setVoice();
+        else window.speechSynthesis.onvoiceschanged = setVoice;
+    }
+    
+    function checkAnswer(element, correctAnswer) {
+        const options = element.parentElement.querySelectorAll('.quiz-option');
+        const isCorrect = element.innerText === correctAnswer;
+        
+        if (isCorrect) {
+            element.style.background = '#2ecc71';
+            element.style.color = 'white';
+            speakEnglish(correctAnswer);
+            setTimeout(() => {
+                options.forEach(opt => {
+                    opt.style.background = '';
+                    opt.style.color = '';
+                });
+            }, 1500);
+        } else {
+            element.style.background = '#e74c3c';
+            element.style.color = 'white';
+            setTimeout(() => {
+                element.style.background = '';
+                element.style.color = '';
+            }, 500);
+        }
+    }
+    
+    // Back to Top Button Functionality
+    (function() {
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        
+        if (backToTopBtn) {
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

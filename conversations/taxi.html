@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taking a Taxi - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 1rem;
+        }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        .conversation-section {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .conversation-section h2 { background: #f39c12; color: white; padding: 1rem; font-size: 1.2rem; }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line {
+            display: grid;
+            grid-template-columns: 70px 1fr 1fr;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            align-items: start;
+        }
+        .speaker { font-weight: bold; color: #f39c12; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.95rem; }
+        .audio-btn {
+            background: #eef4ff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.3rem;
+        }
+        .audio-btn:hover { background: #f39c12; color: white; }
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+            padding: 1rem;
+        }
+        .vocab-item {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            border-left: 3px solid #f39c12;
+        }
+        .vocab-eng { font-weight: bold; color: #f39c12; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        .quiz-question {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.8rem;
+        }
+        .quiz-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .quiz-option {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .quiz-option:hover { background: #f39c12; color: white; border-color: #f39c12; }
+        .tips-box {
+            background: #fef9e7;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #f39c12;
+        }
+        .tips-box i { color: #f39c12; margin-right: 8px; }
+        footer { margin-top: 2rem; text-align: center; padding: 1rem; color: #6c757d; font-size: 0.8rem; }
+        .back-to-top {
+            position: fixed; bottom: 1.5rem; right: 1.5rem; background: #1e3c72; color: white;
+            width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center;
+            justify-content: center; text-decoration: none; cursor: pointer; transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 1000; opacity: 0; visibility: hidden;
+            border: 2px solid white;
+        }
+        .back-to-top.show { opacity: 1; visibility: visible; }
+        .back-to-top:hover { background: #f5b042; color: #1e3c72; transform: translateY(-3px); }
+        .back-to-top i { font-size: 1.2rem; }
+        @media (max-width: 768px) {
+            .back-to-top { bottom: 1rem; right: 1rem; width: 42px; height: 42px; }
+            .back-to-top i { font-size: 1rem; }
+        }
+        @media (max-width: 700px) { .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; } }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn"><i class="fas fa-arrow-left"></i> All Conversations</a>
+    <header>
+        <h1><i class="fas fa-taxi"></i> Taking a Taxi</h1>
+        <p>Learn how to hail taxis, give directions, and pay the fare in English</p>
+        <p>တက္ကစီခေါ်နည်း၊ လမ်းညွှန်ပြသနည်းနှင့် ယာဉ်စီးခ ပေးချေနည်းကို အင်္ဂလိပ်လို လေ့လာပါ</p>
+    </header>
+    
+    <!-- Dialogue 1: Hailing a Taxi -->
+    <div class="conversation-section">
+        <h2>🚕 Hailing a Taxi / တက္ကစီခေါ်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line"><div class="speaker">👤 Passenger:</div><div class="english">Taxi! Is this taxi available?</div><div class="burmese">တက္ကစီ! ဒီတက္ကစီ ရနေလား။</div><button class="audio-btn" onclick="speakEnglish('Taxi! Is this taxi available?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+            <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">Yes, where to?</div><div class="burmese">ဟုတ်ကဲ့၊ ဘယ်ကိုသွားမလို့လဲ။</div><button class="audio-btn" onclick="speakEnglish('Yes, where to?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+            <div class="dialogue-line"><div class="speaker">👤 Passenger:</div><div class="english">I need to go to the airport, please.</div><div class="burmese">လေဆိပ်ကို သွားဖို့လိုပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('I need to go to the airport, please.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+            <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">Please hop in. It will be about $25.</div><div class="burmese">ကျေးဇူးပြု၍ တက်ပါ။ ၂၅ ဒေါ်လာလောက် ကျပါလိမ့်မယ်။</div><button class="audio-btn" onclick="speakEnglish('Please hop in. It will be about 25 dollars.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 2: Giving Directions -->
+    <div class="conversation-section">
+        <h2>🗺️ Giving Directions / လမ်းညွှန်ပြခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line"><div class="speaker">👤 Passenger:</div><div class="english">Please take me to 123 Main Street.</div><div class="burmese">ကျေးဇူးပြု၍ Main Street ၁၂၃ ကို ခေါ်သွားပေးပါ။</div><button class="audio-btn" onclick="speakEnglish('Please take me to 123 Main Street.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+            <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">Do you know the nearest intersection?</div><div class="burmese">အနီးဆုံးလမ်းဆုံကို သိလား။</div><button class="audio-btn" onclick="speakEnglish('Do you know the nearest intersection?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+            <div class="dialogue-line"><div class="speaker">👤 Passenger:</div><div class="english">It's near the park. Turn left at the traffic light.</div><div class="burmese">ပန်းခြံအနားမှာပါ။ မီးပွိုင့်မှာ ဘယ်ဘက်ကွေ့ပါ။</div><button class="audio-btn" onclick="speakEnglish('It is near the park. Turn left at the traffic light.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+            <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">Got it. I know where that is.</div><div class="burmese">နားလည်းပါပြီ။ အဲဒါ ဘယ်မှာလဲ ကျွန်တော်သိပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('Got it. I know where that is.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 3: Asking for Estimated Fare -->
+    <div class="conversation-section">
+        <h2>💰 Asking for Estimated Fare / ခန့်မှန်းယာဉ်စီးခကိုမေးခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line"><div class="speaker">👤 Passenger:</div><div class="english">How much will it cost to go to the city center?</div><div class="burmese">မြို့လယ်ကို သွားဖို့ ဘယ်လောက်ကျမလဲ။</div><button class="audio-btn" onclick="speakEnglish('How much will it cost to go to the city center?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+            <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">About $15, depending on traffic.</div><div class="burmese">ယာဉ်ကြောပေါ်မူတည်ပြီး ၁၅ ဒေါ်လာလောက်ပါ။</div><button class="audio-btn" onclick="speakEnglish('About 15 dollars, depending on traffic.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+            <div class="dialogue-line"><div class="speaker">👤 Passenger:</div><div class="english">Is that a flat rate or metered?</div><div class="burmese">ဒါက ပုံသေနှုန်းလား မီတာပါလား။</div><button class="audio-btn" onclick="speakEnglish('Is that a flat rate or metered?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+            <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">It's metered. The rate is $2.50 per mile plus $0.50 per minute waiting time.</div><div class="burmese">မီတာပါ။ နှုန်းထားက တစ်မိုင် ၂.၅၀ ဒေါ်လာ အပေါင်း စောင့်ဆိုင်းချိန် တစ်မိနစ် ၀.၅၀ ဒေါ်လာပါ။</div><button class="audio-btn" onclick="speakEnglish('It is metered. The rate is 2 dollars 50 cents per mile plus 50 cents per minute waiting time.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 4: During the Ride -->
+    <div class="conversation-section">
+        <h2>🚗 During the Ride / ခရီးစဉ်အတွင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line"><div class="speaker">👤 Passenger:</div><div class="english">Could you please turn on the air conditioning? It's very hot.</div><div class="burmese">လေအေးပေးစက် ဖွင့်ပေးနိုင်မလား။ အရမ်းပူတယ်။</div><button class="audio-btn" onclick="speakEnglish('Could you please turn on the air conditioning? It is very hot.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+            <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">Of course. Is this temperature okay?</div><div class="burmese">ရပါတယ်။ ဒီအပူချိန် အဆင်ပြေလား။</div><button class="audio-btn" onclick="speakEnglish('Of course. Is this temperature okay?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+            <div class="dialogue-line"><div class="speaker">👤 Passenger:</div><div class="english">Perfect. Could you also turn down the radio a little?</div><div class="burmese">ပြီးပြည့်စုံပါတယ်။ ရေဒီယိုကိုလည်း နည်းနည်းလျှော့ပေးနိုင်မလား။</div><button class="audio-btn" onclick="speakEnglish('Perfect. Could you also turn down the radio a little?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+            <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">Sure, no problem.</div><div class="burmese">ရပါတယ်၊ ပြဿနာမရှိပါဘူး။</div><button class="audio-btn" onclick="speakEnglish('Sure, no problem.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 5: Paying the Fare -->
+    <div class="conversation-section">
+        <h2>💵 Paying the Fare / ယာဉ်စီးခ ပေးချေခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">The meter says $18.50.</div><div class="burmese">မီတာက ၁၈.၅၀ ဒေါ်လာပြထားပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('The meter says 18 dollars and 50 cents.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+            <div class="dialogue-line"><div class="speaker">👤 Passenger:</div><div class="english">Here's $20. Keep the change.</div><div class="burmese">ဒီမှာ ၂၀ ဒေါ်လာပါ။ ပြန်လက်ငွေထားလိုက်ပါ။</div><button class="audio-btn" onclick="speakEnglish('Here is 20 dollars. Keep the change.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+            <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">Thank you very much! Have a great day!</div><div class="burmese">ကျေးဇူးအရမ်းတင်ပါတယ်! နေ့လယ်ကောင်းကောင်းဖြတ်သန်းပါ။</div><button class="audio-btn" onclick="speakEnglish('Thank you very much! Have a great day!')"><i class="fas fa-volume-up"></i> Listen</button></div>
+            <div class="dialogue-line"><div class="speaker">👤 Passenger:</div><div class="english">Can I get a receipt, please?</div><div class="burmese">ပြေစာရနိုင်မလား။</div><button class="audio-btn" onclick="speakEnglish('Can I get a receipt, please?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 6: Lost Item in Taxi -->
+    <div class="conversation-section">
+        <h2>🔍 Lost Item in Taxi / တက္ကစီတွင် ပစ္စည်းပျောက်ဆုံးခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line"><div class="speaker">👤 Passenger:</div><div class="english">I think I left my phone in your taxi. Can you check?</div><div class="burmese">ကျွန်တော့်ဖုန်းကို သင့်တက္ကစီမှာ မေ့ခဲ့တယ်ထင်တယ်။ စစ်ပေးနိုင်မလား။</div><button class="audio-btn" onclick="speakEnglish('I think I left my phone in your taxi. Can you check?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+            <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">Let me look. Yes, I found it. Where can I return it?</div><div class="burmese">ကြည့်ပါရစေ။ ဟုတ်ကဲ့၊ တွေ့ပါတယ်။ ဘယ်မှာ ပြန်ပေးရမလဲ။</div><button class="audio-btn" onclick="speakEnglish('Let me look. Yes, I found it. Where can I return it?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+            <div class="dialogue-line"><div class="speaker">👤 Passenger:</div><div class="english">I'm at the hotel lobby. Can you bring it back? I'll pay for your time.</div><div class="burmese">ကျွန်တော် ဟိုတယ်ဧည့်ခန်းမှာပါ။ ပြန်ယူလာပေးနိုင်မလား။ သင့်အချိန်အတွက် ပေးပါမယ်။</div><button class="audio-btn" onclick="speakEnglish('I am at the hotel lobby. Can you bring it back? I will pay for your time.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+            <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">I'll be there in 10 minutes.</div><div class="burmese">ကျွန်တော် ၁၀ မိနစ်အတွင်း ရောက်ပါမယ်။</div><button class="audio-btn" onclick="speakEnglish('I will be there in 10 minutes.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 7: Late Night Taxi -->
+    <div class="conversation-section">
+        <h2>🌙 Late Night Taxi / ညနက်ခင်းတက္ကစီ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line"><div class="speaker">👤 Passenger:</div><div class="english">Do you accept credit cards?</div><div class="burmese">ခရက်ဒစ်ကဒ်များ လက်ခံလား။</div><button class="audio-btn" onclick="speakEnglish('Do you accept credit cards?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+            <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">Yes, I have a card reader. No extra fee.</div><div class="burmese">ဟုတ်ပါတယ်၊ ကျွန်တော်မှာ ကဒ်ဖတ်စက်ရှိပါတယ်။ အပိုအခကြေးငွေ မရှိပါဘူး။</div><button class="audio-btn" onclick="speakEnglish('Yes, I have a card reader. No extra fee.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+            <div class="dialogue-line"><div class="speaker">👤 Passenger:</div><div class="english">Great. Could you please drive safely? It's raining.</div><div class="burmese">ကောင်းပါတယ်။ မိုးရွာနေလို့ ကျေးဇူးပြု၍ ဘေးကင်းစွာ မောင်းပေးပါ။</div><button class="audio-btn" onclick="speakEnglish('Great. Could you please drive safely? It is raining.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+            <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">Don't worry. I'll drive carefully.</div><div class="burmese">မပူပါနဲ့။ ဂရုတစိုက်မောင်းပါမယ်။</div><button class="audio-btn" onclick="speakEnglish('Do not worry. I will drive carefully.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 8: Ride-Sharing App -->
+    <div class="conversation-section">
+        <h2>📱 Ride-Sharing App / ရိုက်ရှဲယားအက်ပ်</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line"><div class="speaker">👤 Passenger:</div><div class="english">I requested a ride through the app. Are you my driver?</div><div class="burmese">ကျွန်တော် အက်ပ်မှတစ်ဆင့် ကားခေါ်ခဲ့တယ်။ ခင်ဗျားက ကျွန်တော့်ယာဉ်မောင်းလား။</div><button class="audio-btn" onclick="speakEnglish('I requested a ride through the app. Are you my driver?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+            <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">Yes, are you John? Please confirm the last four digits of your phone number.</div><div class="burmese">ဟုတ်ပါတယ်၊ ခင်ဗျား ဂျွန်လား။ ကျေးဇူးပြု၍ သင့်ဖုန်းနံပါတ်ရဲ့ နောက်ဆုံးဂဏန်း ၄ လုံးကို အတည်ပြုပါ။</div><button class="audio-btn" onclick="speakEnglish('Yes, are you John? Please confirm the last four digits of your phone number.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+            <div class="dialogue-line"><div class="speaker">👤 Passenger:</div><div class="english">1234. Let's go to Grand Hotel.</div><div class="burmese">၁၂၃၄။ Grand Hotel ကို သွားကြရအောင်။</div><button class="audio-btn" onclick="speakEnglish('1234. Let us go to Grand Hotel.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+            <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">I'll follow the GPS route. Estimated arrival in 12 minutes.</div><div class="burmese">ကျွန်တော် GPS လမ်းကြောင်းကို လိုက်ပါမယ်။ ခန့်မှန်းရောက်ရှိချိန် ၁၂ မိနစ်ပါ။</div><button class="audio-btn" onclick="speakEnglish('I will follow the GPS route. Estimated arrival in 12 minutes.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        </div>
+    </div>
+    
+    <!-- Taxi Vocabulary -->
+    <div class="conversation-section">
+        <h2>📚 Taxi Vocabulary / တက္ကစီသုံးဝေါဟာရများ</h2>
+        <div class="vocab-grid">
+            <div class="vocab-item"><span class="vocab-eng">Meter</span><br><span class="vocab-burmese">မီတာ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Fare</span><br><span class="vocab-burmese">ယာဉ်စီးခ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Tip</span><br><span class="vocab-burmese">အကြံပြုငွေ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Drop-off location</span><br><span class="vocab-burmese">ဆင်းမည့်နေရာ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Pickup location</span><br><span class="vocab-burmese">တက်မည့်နေရာ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Surge pricing</span><br><span class="vocab-burmese">ဈေးတက်ချိန်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Flat rate</span><br><span class="vocab-burmese">ပုံသေနှုန်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Taxi stand</span><br><span class="vocab-burmese">တက္ကစီမှတ်တိုင်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Hail a cab</span><br><span class="vocab-burmese">တက္ကစီခေါ်သည်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Flag drop</span><br><span class="vocab-burmese">စတင်ခ</span></div>
+        </div>
+    </div>
+    
+    <div class="conversation-section"><div class="quiz-question"><p><strong>1. How do you hail a taxi?</strong></p>
+    <div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'Taxi! Is this taxi available?')">Where is the bus stop?</div><div class="quiz-option" onclick="checkAnswer(this, 'Taxi! Is this taxi available?')">Taxi! Is this taxi available?</div><div class="quiz-option" onclick="checkAnswer(this, 'Taxi! Is this taxi available?')">How much to the airport?</div><div class="quiz-option" onclick="checkAnswer(this, 'Taxi! Is this taxi available?')">Do you take credit cards?</div></div></div>
+    <div class="quiz-question"><p><strong>2. "ကျေးဇူးပြု၍ လေဆိပ်ကို ခေါ်သွားပေးပါ" in English?</strong></p>
+    <div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'Please take me to the airport.')">Please take me to the station.</div><div class="quiz-option" onclick="checkAnswer(this, 'Please take me to the airport.')">Please take me to the airport.</div><div class="quiz-option" onclick="checkAnswer(this, 'Please take me to the airport.')">Please take me to the hotel.</div><div class="quiz-option" onclick="checkAnswer(this, 'Please take me to the airport.')">Please take me home.</div></div></div>
+    <div class="quiz-question"><p><strong>3. What does "keep the change" mean?</strong></p>
+    <div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'Let the driver keep the extra money as a tip')">Ask for the change back</div><div class="quiz-option" onclick="checkAnswer(this, 'Let the driver keep the extra money as a tip')">Pay less than the fare</div><div class="quiz-option" onclick="checkAnswer(this, 'Let the driver keep the extra money as a tip')">Let the driver keep the extra money as a tip</div><div class="quiz-option" onclick="checkAnswer(this, 'Let the driver keep the extra money as a tip')">Pay with exact change</div></div></div>
+    <div class="quiz-question"><p><strong>4. "မီတာက ဘယ်လောက်ပြထားလဲ" in English?</strong></p>
+    <div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'What does the meter say?')">Where is the meter?</div><div class="quiz-option" onclick="checkAnswer(this, 'What does the meter say?')">What does the meter say?</div><div class="quiz-option" onclick="checkAnswer(this, 'What does the meter say?')">Is the meter running?</div><div class="quiz-option" onclick="checkAnswer(this, 'What does the meter say?')">How much is the meter?</div></div></div>
+    <div class="quiz-question"><p><strong>5. What should you do if you leave something in a taxi?</strong></p>
+    <div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'Contact the taxi company or driver immediately')">Wait and hope they return it</div><div class="quiz-option" onclick="checkAnswer(this, 'Contact the taxi company or driver immediately')">Ignore it</div><div class="quiz-option" onclick="checkAnswer(this, 'Contact the taxi company or driver immediately')">Contact the taxi company or driver immediately</div><div class="quiz-option" onclick="checkAnswer(this, 'Contact the taxi company or driver immediately')">Buy a new one</div></div></div>
+    </div>
+    <footer><p><i class="fas fa-heart" style="color: #f39c12;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p><p style="font-size: 0.75rem; margin-top: 0.5rem;">Practice these conversations to take taxis with confidence!</p></footer>
+</div>
+<a href="#" class="back-to-top" id="backToTopBtn"><i class="fas fa-arrow-up"></i></a>
+<script>
+    function speakEnglish(text){if(!window.speechSynthesis)return;window.speechSynthesis.cancel();const utterance=new SpeechSynthesisUtterance(text);utterance.lang='en-US';utterance.rate=0.8;utterance.pitch=1.0;function setVoice(){const voices=window.speechSynthesis.getVoices();const englishVoice=voices.find(v=>v.lang==='en-US'||v.lang.startsWith('en-'));if(englishVoice)utterance.voice=englishVoice;window.speechSynthesis.speak(utterance);}if(window.speechSynthesis.getVoices().length)setVoice();else window.speechSynthesis.onvoiceschanged=setVoice;}
+    function checkAnswer(element,correctAnswer){const options=element.parentElement.querySelectorAll('.quiz-option');const isCorrect=element.innerText===correctAnswer;if(isCorrect){element.style.background='#2ecc71';element.style.color='white';speakEnglish(correctAnswer);setTimeout(()=>{options.forEach(opt=>{opt.style.background='';opt.style.color='';});},1500);}else{element.style.background='#e74c3c';element.style.color='white';setTimeout(()=>{options.forEach(opt=>{opt.style.background='';opt.style.color='';});},500);}}
+    (function(){const btn=document.getElementById('backToTopBtn');if(btn){window.addEventListener('scroll',function(){btn.classList.toggle('show',window.scrollY>300);});btn.addEventListener('click',function(e){e.preventDefault();window.scrollTo({top:0,behavior:'smooth'});});}})();
+</script>
+</body>
+</html>

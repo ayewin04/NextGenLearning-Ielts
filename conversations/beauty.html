@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beauty & Salon - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 1rem;
+        }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        
+        .conversation-section {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .conversation-section h2 {
+            background: #fd79a8;
+            color: white;
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line {
+            display: grid;
+            grid-template-columns: 70px 1fr 1fr;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            align-items: start;
+        }
+        .speaker { font-weight: bold; color: #fd79a8; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { 
+            color: #8e6b3c; 
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 0.95rem;
+        }
+        .audio-btn {
+            background: #eef4ff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.3rem;
+        }
+        .audio-btn:hover { background: #fd79a8; color: white; }
+        
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+            padding: 1rem;
+        }
+        .vocab-item {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            border-left: 3px solid #fd79a8;
+        }
+        .vocab-eng { font-weight: bold; color: #fd79a8; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        
+        .quiz-question {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.8rem;
+        }
+        .quiz-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .quiz-option {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .quiz-option:hover { background: #fd79a8; color: white; border-color: #fd79a8; }
+        
+        .services-box {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            padding: 1rem;
+            justify-content: center;
+        }
+        .service-card {
+            background: #fdf2f8;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            text-align: center;
+            min-width: 100px;
+            border: 1px solid #fd79a8;
+        }
+        .service-icon { font-size: 2rem; }
+        .service-name { font-weight: bold; color: #fd79a8; margin-top: 0.3rem; }
+        
+        .tips-box {
+            background: #fdf2f8;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #fd79a8;
+        }
+        .tips-box i { color: #fd79a8; margin-right: 8px; }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1rem;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: #1e3c72;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid white;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: #f5b042;
+            color: #1e3c72;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .back-to-top i {
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 42px;
+                height: 42px;
+            }
+            .back-to-top i {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 700px) {
+            .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> All Conversations
+    </a>
+    
+    <header>
+        <h1><i class="fas fa-scissors"></i> Beauty & Salon</h1>
+        <p>Learn how to get a haircut, manicure, and other beauty services in English</p>
+        <p>ဆံပင်ညှပ်နည်း၊ လက်သည်းအလှပြင်နည်းနှင့် အခြားအလှအပဝန်ဆောင်မှုများအတွက် အင်္ဂလိပ်လို ပြောဆိုနည်းကို လေ့လာပါ</p>
+    </header>
+    
+    <!-- Dialogue 1: Making a Hair Appointment -->
+    <div class="conversation-section">
+        <h2>📅 Making a Hair Appointment / ဆံပင်ညှပ်ရန် အချိန်ယူခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Hello, I'd like to book a haircut appointment for tomorrow.</div>
+                <div class="burmese">မင်္ဂလာပါ၊ မနက်ဖြန် ဆံပင်ညှပ်ရန် အချိန်ယူချင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Hello, I would like to book a haircut appointment for tomorrow.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Receptionist:</div>
+                <div class="english">Sure. What time works best for you?</div>
+                <div class="burmese">ရပါတယ်။ ဘယ်အချိန်အဆင်ပြေလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Sure. What time works best for you?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Do you have anything available around 2 PM?</div>
+                <div class="burmese">နေ့လယ် ၂ နာရီလောက်မှာ ရနိုင်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you have anything available around 2 PM?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Receptionist:</div>
+                <div class="english">Yes, we have a 2:30 PM slot with Lisa. Would that work?</div>
+                <div class="burmese">ဟုတ်ပါတယ်၊ Lisa နဲ့ နေ့လယ် ၂ နာရီခွဲမှာ အချိန်ရှိပါတယ်။ အဆင်ပြေမလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, we have a 2:30 PM slot with Lisa. Would that work?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Perfect. I'll take it. Thank you!</div>
+                <div class="burmese">ပြီးပြည့်စုံတယ်။ ရပါတယ်။ ကျေးဇူးပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Perfect. I will take it. Thank you!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 2: Getting a Haircut (Women) -->
+    <div class="conversation-section">
+        <h2>✂️ Getting a Haircut - Women / ဆံပင်ညှပ်ခြင်း - အမျိုးသမီး</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Stylist:</div>
+                <div class="english">Hello! How would you like your hair cut today?</div>
+                <div class="burmese">မင်္ဂလာပါ! ဒီနေ့ ဆံပင်ဘယ်လိုညှပ်ချင်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Hello! How would you like your hair cut today?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I'd like to trim about 2 inches off the bottom, and add some layers.</div>
+                <div class="burmese">အောက်ပိုင်းကို ၂ လက်မလောက်ဖြတ်ပြီး အလွှာလိုက်ထည့်ပေးချင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I would like to trim about 2 inches off the bottom, and add some layers.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Stylist:</div>
+                <div class="english">Would you like bangs as well?</div>
+                <div class="burmese">နဖူးဆံလည်း ညှပ်ချင်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Would you like bangs as well?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">No, just keep them long. I like my current length on top.</div>
+                <div class="burmese">မလိုပါဘူး၊ ရှည်ရှည်ထားပါ။ အပေါ်ပိုင်း လက်ရှိအရှည်ကို ကြိုက်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('No, just keep them long. I like my current length on top.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Stylist:</div>
+                <div class="english">Got it. Is this length okay?</div>
+                <div class="burmese">နားလည်းပါပြီ။ ဒီအရှည်အဆင်ပြေလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Got it. Is this length okay?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 3: Getting a Haircut (Men) -->
+    <div class="conversation-section">
+        <h2>💈 Getting a Haircut - Men / ဆံပင်ညှပ်ခြင်း - အမျိုးသား</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Barber:</div>
+                <div class="english">What can I do for you today?</div>
+                <div class="burmese">ဒီနေ့ ဘာလုပ်ပေးရမလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What can I do for you today?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I need a trim on the sides and a little off the top.</div>
+                <div class="burmese">ဘေးနှစ်ဖက်ကို ညှပ်ပြီး အပေါ်ပိုင်း နည်းနည်းဖြတ်ပေးဖို့လိုတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I need a trim on the sides and a little off the top.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Barber:</div>
+                <div class="english">How short on the sides? Number 2 or 3?</div>
+                <div class="burmese">ဘေးနှစ်ဖက်ကို ဘယ်လောက်တိုတိုလဲ။ နံပါတ် ၂ လား ၃ လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('How short on the sides? Number 2 or 3?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Number 2, please. And can you clean up the back?</div>
+                <div class="burmese">နံပါတ် ၂ ပါ။ နောက်ကျောကိုလည်း သန့်ရှင်းပေးနိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Number 2, please. And can you clean up the back?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Barber:</div>
+                <div class="english">Of course. Would you like me to use clippers or scissors?</div>
+                <div class="burmese">ရပါတယ်။ စက်သုံးပေးရမလား၊ ကတ်ကြေးသုံးပေးရမလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Of course. Would you like me to use clippers or scissors?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 4: Hair Coloring -->
+    <div class="conversation-section">
+        <h2>🎨 Hair Coloring / ဆံပင်ဆိုးခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I'd like to color my hair. What do you recommend?</div>
+                <div class="burmese">ကျွန်မ ဆံပင်ဆိုးချင်ပါတယ်။ ဘာအကြံပေးချင်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('I would like to color my hair. What do you recommend?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Stylist:</div>
+                <div class="english">What color are you thinking? Brown, blonde, or something bold?</div>
+                <div class="burmese">ဘာအရောင်စဉ်းစားထားလဲ။ အညိုလား၊ ရွှေဝါလား၊ ဒါမှမဟုတ် ထင်ရှားတဲ့အရောင်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('What color are you thinking? Brown, blonde, or something bold?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I want to go lighter, maybe caramel brown.</div>
+                <div class="burmese">ပိုဖျော့သွားချင်တယ်၊ caramel အညိုလောက်ပေါ့။</div>
+                <button class="audio-btn" onclick="speakEnglish('I want to go lighter, maybe caramel brown.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Stylist:</div>
+                <div class="english">That would look beautiful on you. It will take about 2 hours. Is that okay?</div>
+                <div class="burmese">အဲဒါ မင်းအတွက် အရမ်းလှမယ်။ ၂ နာရီလောက်ကြာပါလိမ့်မယ်။ အဆင်ပြေလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('That would look beautiful on you. It will take about 2 hours. Is that okay?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 5: Getting a Manicure -->
+    <div class="conversation-section">
+        <h2>💅 Getting a Manicure / လက်သည်းအလှပြင်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I'd like to get a manicure and pedicure, please.</div>
+                <div class="burmese">လက်သည်းနဲ့ ခြေသည်းအလှပြင်ချင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I would like to get a manicure and pedicure, please.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Nail Tech:</div>
+                <div class="english">Great choice. Do you want regular polish or gel?</div>
+                <div class="burmese">ကောင်းတဲ့ရွေးချယ်မှုပါ။ ပုံမှန်ဆေးလိမ်းချင်လား၊ gel လိမ်းချင်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Great choice. Do you want regular polish or gel?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Gel, please. It lasts longer. What colors do you have?</div>
+                <div class="burmese">Gel ပါ။ ကြာရှည်ခံတယ်။ ဘယ်အရောင်တွေရှိလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Gel, please. It lasts longer. What colors do you have?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Nail Tech:</div>
+                <div class="english">We have a wide range. Red, pink, nude, blue, and more. Would you like to see the color chart?</div>
+                <div class="burmese">ကျွန်တော်တို့မှာ ရွေးချယ်စရာများစွာရှိတယ်။ အနီ၊ ပန်း၊ နူးညံ့၊ အပြာ နဲ့ အခြားများစွာ။ အရောင်ဇယားကြည့်ချင်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('We have a wide range. Red, pink, nude, blue, and more. Would you like to see the color chart?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 6: Getting a Facial -->
+    <div class="conversation-section">
+        <h2>💆 Getting a Facial / မျက်နှာအလှပြင်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I'm interested in getting a facial. What treatments do you offer?</div>
+                <div class="burmese">မျက်နှာအလှပြင်ခြင်း စိတ်ဝင်စားပါတယ်။ ဘယ်လိုကုသမှုတွေ ပေးလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am interested in getting a facial. What treatments do you offer?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Esthetician:</div>
+                <div class="english">We have deep cleansing, anti-aging, and brightening facials. What is your skin type?</div>
+                <div class="burmese">ကျွန်တော်တို့မှာ နက်ရှိုင်းစင်ကြယ်ရေး၊ အိုမင်းရင့်ရော်မှုကာကွယ်ရေးနဲ့ တောက်ပစေရေး မျက်နှာအလှပြင်ခြင်းတွေ ရှိပါတယ်။ သင့်အသားအရေအမျိုးအစားက ဘာလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('We have deep cleansing, anti-aging, and brightening facials. What is your skin type?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">My skin is combination, sometimes oily in the T-zone.</div>
+                <div class="burmese">ကျွန်မအသားအရေက ပေါင်းစပ်ထားတာပါ၊ တစ်ခါတစ်ရံ T-zone မှာ ဆီပြန်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('My skin is combination, sometimes oily in the T-zone.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Esthetician:</div>
+                <div class="english">I recommend the deep cleansing facial. It will help balance your skin.</div>
+                <div class="burmese">နက်ရှိုင်းစင်ကြယ်ရေးမျက်နှာအလှပြင်ခြင်းကို အကြံပြုပါတယ်။ သင့်အသားအရေကို ဟန်ချက်ညီစေပါလိမ့်မယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I recommend the deep cleansing facial. It will help balance your skin.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 7: At the Spa -->
+    <div class="conversation-section">
+        <h2>🧖 At the Spa / စပါတွင်</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I'd like to book a massage. What types do you offer?</div>
+                <div class="burmese">နှိပ်နယ်မှုတစ်ခု အချိန်ယူချင်ပါတယ်။ ဘယ်အမျိုးအစားတွေ ပေးလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('I would like to book a massage. What types do you offer?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Receptionist:</div>
+                <div class="english">We have Swedish, deep tissue, hot stone, and aromatherapy massage.</div>
+                <div class="burmese">ဆွီဒင်၊ deep tissue၊ ကျောက်ပူနှိပ်နယ်မှုနဲ့ ရေနံသုံးနှိပ်နယ်မှုတွေ ရှိပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('We have Swedish, deep tissue, hot stone, and aromatherapy massage.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I have a lot of tension in my shoulders. Which do you recommend?</div>
+                <div class="burmese">ကျွန်မပခုံးမှာ တင်းမာမှုတွေ အများကြီးရှိတယ်။ ဘယ်ဟာအကြံပြုလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('I have a lot of tension in my shoulders. Which do you recommend?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Receptionist:</div>
+                <div class="english">Deep tissue massage is best for muscle tension. It focuses on deeper layers of muscle.</div>
+                <div class="burmese">Deep tissue နှိပ်နယ်မှုက ကြွက်သားတင်းမာမှုအတွက် အကောင်းဆုံးပါ။ ကြွက်သားရဲ့ နက်ရှိုင်းတဲ့အလွှာတွေကို အဓိကထားပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Deep tissue massage is best for muscle tension. It focuses on deeper layers of muscle.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 8: Paying and Tipping -->
+    <div class="conversation-section">
+        <h2>💰 Paying and Tipping / ငွေရှင်းခြင်းနှင့် အကြံပြုငွေ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I'm ready to check out. How much is the total?</div>
+                <div class="burmese">ငွေရှင်းဖို့ အဆင်သင့်ဖြစ်ပြီ။ စုစုပေါင်းဘယ်လောက်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am ready to check out. How much is the total?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Receptionist:</div>
+                <div class="english">That will be $85. Would you like to add a tip for the stylist?</div>
+                <div class="burmese">၈၅ ဒေါ်လာပါ။ ဆံပင်ညှပ်သူအတွက် အကြံပြုငွေထည့်ချင်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('That will be 85 dollars. Would you like to add a tip for the stylist?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Yes, please add 15%. So that's about $13 tip. Total $98.</div>
+                <div class="burmese">ဟုတ်ကဲ့၊ ၁၅ ရာခိုင်နှုန်း ထည့်ပါ။ အကြံပြုငွေ ၁၃ ဒေါ်လာလောက်ပါ။ စုစုပေါင်း ၉၈ ဒေါ်လာပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, please add 15 percent. So that is about 13 dollars tip. Total 98 dollars.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Receptionist:</div>
+                <div class="english">Here is your receipt. Thank you for coming! See you next time.</div>
+                <div class="burmese">ဒီမှာ ပြေစာပါ။ လာတဲ့အတွက် ကျေးဇူးပါ။ နောက်တစ်ခါ ပြန်ဆုံကြမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Here is your receipt. Thank you for coming! See you next time.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Salon Services -->
+    <div class="conversation-section">
+        <h2>💇 Popular Salon Services / လူကြိုက်များသောအလှပြင်ဆိုင်ဝန်ဆောင်မှုများ</h2>
+        <div class="services-box">
+            <div class="service-card">
+                <div class="service-icon">✂️</div>
+                <div class="service-name">Haircut</div>
+                <div>ဆံပင်ညှပ်</div>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🎨</div>
+                <div class="service-name">Hair Color</div>
+                <div>ဆံပင်ဆိုး</div>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">💅</div>
+                <div class="service-name">Manicure</div>
+                <div>လက်သည်းအလှပြင်</div>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">💆</div>
+                <div class="service-name">Facial</div>
+                <div>မျက်နှာအလှပြင်</div>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🧖</div>
+                <div class="service-name">Massage</div>
+                <div>နှိပ်နယ်</div>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">💇‍♀️</div>
+                <div class="service-name">Blowout</div>
+                <div>ဆံပင်လေမှုတ်</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Vocabulary Section -->
+    <div class="conversation-section">
+        <h2>📚 Salon Vocabulary / အလှပြင်ဆိုင်သုံးဝေါဟာရများ</h2>
+        <div class="vocab-grid">
+            <div class="vocab-item"><span class="vocab-eng">Haircut</span><br><span class="vocab-burmese">ဆံပင်ညှပ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Trim</span><br><span class="vocab-burmese">ဖြတ်ညှပ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Layers</span><br><span class="vocab-burmese">အလွှာလိုက်ညှပ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Bangs</span><br><span class="vocab-burmese">နဖူးဆံ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Blow-dry</span><br><span class="vocab-burmese">လေမှုတ်ခြောက်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Highlights</span><br><span class="vocab-burmese">ဆံပင်အရောင်ဖျော့စင်းများ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Manicure / Pedicure</span><br><span class="vocab-burmese">လက်သည်း/ခြေသည်းအလှပြင်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Facial</span><br><span class="vocab-burmese">မျက်နှာအလှပြင်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Massage</span><br><span class="vocab-burmese">နှိပ်နယ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Appointment</span><br><span class="vocab-burmese">အချိန်ယူခြင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Tip</span><br><span class="vocab-burmese">အကြံပြုငွေ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Stylist / Barber</span><br><span class="vocab-burmese">ဆံပင်ညှပ်သူ/အမျိုးသားဆံပင်ညှပ်သူ</span></div>
+        </div>
+    </div>
+    
+    <!-- Useful Salon Phrases -->
+    <div class="conversation-section">
+        <h2>💡 Useful Salon Phrases / အသုံးဝင်သောအလှပြင်ဆိုင်စကားစုများ</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>When Getting a Haircut (ဆံပင်ညှပ်သည့်အခါ):</strong><br>
+            • "I'd like to keep the length, just clean up the ends." (အရှည်အတိုင်းထားပြီး အဖျားတွေကိုပဲ သန့်ရှင်းပေးပါ။)<br>
+            • "Can you take a little more off the top?" (အပေါ်ပိုင်းကို နည်းနည်းပိုဖြတ်ပေးနိုင်မလား။)<br>
+            • "Please don't cut it too short." (ကျေးဇူးပြု၍ အရမ်းတိုတိုမဖြတ်ပါနဲ့။)<br>
+            • "I want to grow out my hair." (ကျွန်မ ဆံပင်ရှည်ထားချင်တယ်။)<br>
+            <br>
+            <i class="fas fa-lightbulb"></i>
+            <strong>For Nail Services (လက်သည်းဝန်ဆောင်မှုများအတွက်):</strong><br>
+            • "I want a square/round/almond shape." (စတုရန်း/ဝိုင်း/ဗာဒံသီးပုံ လိုချင်တယ်။)<br>
+            • "Can you do nail art?" (လက်သည်းပန်းချီဆွဲပေးနိုင်မလား။)<br>
+            • "My cuticles are dry." (ကျွန်မရဲ့လက်သည်းခြေတွေ ခြောက်သွေ့နေတယ်။)<br>
+        </div>
+    </div>
+    
+    <!-- Practice Section -->
+    <div class="conversation-section">
+        <h2>✏️ Practice Questions / လေ့ကျင့်ခန်းမေးခွန်းများ</h2>
+        <div class="dialogue-box">
+            <div class="quiz-question">
+                <p><strong>1. How do you ask to book a haircut appointment?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like to book a haircut appointment.')">I need to wash my hair.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like to book a haircut appointment.')">I would like to book a haircut appointment.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like to book a haircut appointment.')">Where is the salon?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like to book a haircut appointment.')">How much is a haircut?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>2. "ဆံပင်တိုတိုညှပ်ချင်ပါတယ်" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I want a short haircut.')">I want long hair.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I want a short haircut.')">I want a short haircut.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I want a short haircut.')">I want curly hair.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I want a short haircut.')">I want straight hair.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. What is the extra money you give to the stylist called?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Tip')">Tax</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Tip')">Fee</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Tip')">Tip</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Tip')">Discount</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. "လက်သည်းအလှပြင်ချင်ပါတယ်" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like a manicure.')">I would like a haircut.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like a manicure.')">I would like a facial.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like a manicure.')">I would like a manicure.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like a manicure.')">I would like a massage.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. What does "deep tissue massage" focus on?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Deeper layers of muscle')">Only the skin</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Deeper layers of muscle')">Only the bones</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Deeper layers of muscle')">Deeper layers of muscle</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Deeper layers of muscle')">Only the surface</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p><i class="fas fa-heart" style="color: #fd79a8;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p>
+        <p style="font-size: 0.75rem; margin-top: 0.5rem;">Practice these conversations to communicate confidently at the salon or spa!</p>
+    </footer>
+</div>
+
+<!-- Back to Top Button -->
+<a href="#" class="back-to-top" id="backToTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+<script>
+    function speakEnglish(text) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8;
+        utterance.pitch = 1.0;
+        
+        function setVoice() {
+            const voices = window.speechSynthesis.getVoices();
+            const englishVoice = voices.find(v => v.lang === 'en-US' || v.lang.startsWith('en-'));
+            if (englishVoice) utterance.voice = englishVoice;
+            window.speechSynthesis.speak(utterance);
+        }
+        
+        if (window.speechSynthesis.getVoices().length) setVoice();
+        else window.speechSynthesis.onvoiceschanged = setVoice;
+    }
+    
+    function checkAnswer(element, correctAnswer) {
+        const options = element.parentElement.querySelectorAll('.quiz-option');
+        const isCorrect = element.innerText === correctAnswer;
+        
+        if (isCorrect) {
+            element.style.background = '#2ecc71';
+            element.style.color = 'white';
+            speakEnglish(correctAnswer);
+            setTimeout(() => {
+                options.forEach(opt => {
+                    opt.style.background = '';
+                    opt.style.color = '';
+                });
+            }, 1500);
+        } else {
+            element.style.background = '#e74c3c';
+            element.style.color = 'white';
+            setTimeout(() => {
+                element.style.background = '';
+                element.style.color = '';
+            }, 500);
+        }
+    }
+    
+    // Back to Top Button Functionality
+    (function() {
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        
+        if (backToTopBtn) {
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

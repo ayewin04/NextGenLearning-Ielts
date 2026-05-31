@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asking for Directions - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 1rem;
+        }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        
+        .conversation-section {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .conversation-section h2 {
+            background: #3498db;
+            color: white;
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line {
+            display: grid;
+            grid-template-columns: 70px 1fr 1fr;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            align-items: start;
+        }
+        .speaker { font-weight: bold; color: #3498db; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { 
+            color: #8e6b3c; 
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 0.95rem;
+        }
+        .audio-btn {
+            background: #eef4ff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.3rem;
+        }
+        .audio-btn:hover { background: #3498db; color: white; }
+        
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+            padding: 1rem;
+        }
+        .vocab-item {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            border-left: 3px solid #3498db;
+        }
+        .vocab-eng { font-weight: bold; color: #3498db; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        
+        .quiz-question {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.8rem;
+        }
+        .quiz-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .quiz-option {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .quiz-option:hover { background: #3498db; color: white; border-color: #3498db; }
+        
+        .direction-box {
+            background: #e8f4f8;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #3498db;
+        }
+        .direction-icon {
+            text-align: center;
+            font-size: 2rem;
+            margin: 0.5rem;
+        }
+        
+        .tips-box {
+            background: #e8f0f8;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #3498db;
+        }
+        .tips-box i { color: #3498db; margin-right: 8px; }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1rem;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: #1e3c72;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid white;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: #f5b042;
+            color: #1e3c72;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .back-to-top i {
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 42px;
+                height: 42px;
+            }
+            .back-to-top i {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 700px) {
+            .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> All Conversations
+    </a>
+    
+    <header>
+        <h1><i class="fas fa-map-lines"></i> Asking for Directions</h1>
+        <p>Learn how to ask for and give directions to different places</p>
+        <p>လမ်းညွှန်မေးမြန်းနည်းနှင့် နေရာအမျိုးမျိုးသို့ လမ်းညွှန်ပြသနည်းကို လေ့လာပါ</p>
+    </header>
+    
+    <div class="direction-icon">
+        <i class="fas fa-compass"></i> <i class="fas fa-map-marker-alt"></i> <i class="fas fa-road"></i>
+    </div>
+    
+    <!-- Dialogue 1: Asking for the Nearest Bank -->
+    <div class="conversation-section">
+        <h2>🏦 Asking for the Nearest Bank / အနီးဆုံးဘဏ်ကိုမေးခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Tourist:</div>
+                <div class="english">Excuse me, is there a bank near here?</div>
+                <div class="burmese">ခွင့်လွှတ်ပါ၊ ဒီအနားမှာ ဘဏ်ရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Excuse me, is there a bank near here?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Local:</div>
+                <div class="english">Yes, there's one on Main Street. Go straight for two blocks.</div>
+                <div class="burmese">ဟုတ်တယ်၊ Main Street မှာရှိတယ်။ နှစ်တုံးတည့်တည့်သွားပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, there is one on Main Street. Go straight for two blocks.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Tourist:</div>
+                <div class="english">Then what?</div>
+                <div class="burmese">ပြီးရင် ဘယ်လိုလုပ်ရမလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Then what?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Local:</div>
+                <div class="english">Turn left at the traffic light. The bank will be on your right, next to the supermarket.</div>
+                <div class="burmese">မီးပွိုင့်မှာ ဘယ်ဘက်ကွေ့ပါ။ ဘဏ်က ကုန်စုံဆိုင်ဘေးမှာ သင့်ညာဘက်ခြမ်းမှာရှိပါလိမ့်မယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Turn left at the traffic light. The bank will be on your right, next to the supermarket.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Tourist:</div>
+                <div class="english">Thank you so much!</div>
+                <div class="burmese">ကျေးဇူးအရမ်းတင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Thank you so much!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 2: Looking for the Train Station -->
+    <div class="conversation-section">
+        <h2>🚂 Looking for the Train Station / မီးရထားဘူတာရုံရှာဖွေခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Passenger:</div>
+                <div class="english">Excuse me, I'm looking for the train station. How do I get there?</div>
+                <div class="burmese">ခွင့်လွှတ်ပါ၊ ကျွန်တော် မီးရထားဘူတာရုံကို ရှာနေတယ်။ ဘယ်လိုသွားရမလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Excuse me, I am looking for the train station. How do I get there?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Local:</div>
+                <div class="english">It's about a 10-minute walk from here. Go straight until you see the park.</div>
+                <div class="burmese">ဒီကနေ ၁၀ မိနစ်လမ်းလျှောက်ကွာပါတယ်။ ပန်းခြံမြင်သည်အထိ တည့်တည့်သွားပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('It is about a 10-minute walk from here. Go straight until you see the park.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Passenger:</div>
+                <div class="english">Okay, then?</div>
+                <div class="burmese">အိုကေ၊ ပြီးရင်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Okay, then?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Local:</div>
+                <div class="english">Turn right at the park. The station will be in front of you. You can't miss it.</div>
+                <div class="burmese">ပန်းခြံမှာ ညာဘက်ကွေ့ပါ။ ဘူတာရုံက ရှေ့မှာရှိပါလိမ့်မယ်။ လွတ်သွားမှာမဟုတ်ပါဘူး။</div>
+                <button class="audio-btn" onclick="speakEnglish('Turn right at the park. The station will be in front of you. You cannot miss it.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 3: Finding a Restaurant -->
+    <div class="conversation-section">
+        <h2>🍜 Finding a Restaurant / စားသောက်ဆိုင်ရှာဖွေခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Tourist:</div>
+                <div class="english">Can you recommend a good restaurant near here?</div>
+                <div class="burmese">ဒီအနားမှာ ကောင်းတဲ့စားသောက်ဆိုင် အကြံပေးနိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Can you recommend a good restaurant near here?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Local:</div>
+                <div class="english">Sure! There's a great Thai restaurant on the corner of 2nd Street.</div>
+                <div class="burmese">ရပါတယ်! ၂ လမ်းထောင့်မှာ ထိုင်းစားသောက်ဆိုင် ကောင်းကောင်းရှိတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Sure! There is a great Thai restaurant on the corner of 2nd Street.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Tourist:</div>
+                <div class="english">How do I get there?</div>
+                <div class="burmese">အဲဒီကို ဘယ်လိုသွားရမလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('How do I get there?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Local:</div>
+                <div class="english">Walk two blocks this way, then turn right. It's on the left, across from the bookstore.</div>
+                <div class="burmese">ဒီဘက်ကို နှစ်တုံးလမ်းလျှောက်ပြီး ညာဘက်ကွေ့ပါ။ စာအုပ်ဆိုင်အလယ်မှာ ဘယ်ဘက်ခြမ်းမှာရှိတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Walk two blocks this way, then turn right. It is on the left, across from the bookstore.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 4: Getting to the Hospital -->
+    <div class="conversation-section">
+        <h2>🏥 Getting to the Hospital / ဆေးရုံသို့သွားခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Person:</div>
+                <div class="english">Is there a hospital nearby? My friend is sick.</div>
+                <div class="burmese">အနီးအနားမှာ ဆေးရုံရှိလား။ ကျွန်တော့်သူငယ်ချင်း ဖျားနေတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Is there a hospital nearby? My friend is sick.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Local:</div>
+                <div class="english">Yes, the city hospital is about 5 minutes away by car. Go straight and take the first left.</div>
+                <div class="burmese">ဟုတ်တယ်၊ မြို့ဆေးရုံက ကားနဲ့ ၅ မိနစ်လောက်ဝေးတယ်။ တည့်တည့်သွားပြီး ပထမလမ်းဆုံမှာ ဘယ်ဘက်ကွေ့ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, the city hospital is about 5 minutes away by car. Go straight and take the first left.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Person:</div>
+                <div class="english">Go straight and first left. Got it. Thank you!</div>
+                <div class="burmese">တည့်တည့်သွားပြီး ပထမဘယ်ဘက်ကွေ့။ နားလည်းပါပြီ။ ကျေးဇူးပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Go straight and first left. Got it. Thank you!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 5: Where is the Bus Stop? -->
+    <div class="conversation-section">
+        <h2>🚏 Where is the Bus Stop? / ဘတ်စ်ကားမှတ်တိုင် ဘယ်မှာလဲ။</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Tourist:</div>
+                <div class="english">Excuse me, where is the nearest bus stop?</div>
+                <div class="burmese">ခွင့်လွှတ်ပါ၊ အနီးဆုံးဘတ်စ်ကားမှတ်တိုင် ဘယ်မှာလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Excuse me, where is the nearest bus stop?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Local:</div>
+                <div class="english">It's just around the corner. Walk to the end of this street and you'll see it.</div>
+                <div class="burmese">ထောင့်ကွေ့ရုံပါပဲ။ ဒီလမ်းအဆုံးအထိ လမ်းလျှောက်ရင် တွေ့ပါလိမ့်မယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('It is just around the corner. Walk to the end of this street and you will see it.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Tourist:</div>
+                <div class="english">Which bus goes to the city center?</div>
+                <div class="burmese">မြို့လယ်ကို ဘယ်ဘတ်စ်ကားကသွားလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Which bus goes to the city center?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Local:</div>
+                <div class="english">Take Bus number 12 or 25. Both go to the city center.</div>
+                <div class="burmese">ဘတ်စ်ကားအမှတ် ၁၂ သို့မဟုတ် ၂၅ စီးပါ။ နှစ်မျိုးလုံး မြို့လယ်ကိုသွားပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Take Bus number 12 or 25. Both go to the city center.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 6: Giving Detailed Directions -->
+    <div class="conversation-section">
+        <h2>🗺️ Giving Detailed Directions / အသေးစိတ်လမ်းညွှန်ပြခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Tourist:</div>
+                <div class="english">Can you tell me how to get to the museum?</div>
+                <div class="burmese">ပြတိုက်ကို ဘယ်လိုသွားရမလဲ ပြောပြနိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Can you tell me how to get to the museum?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Local:</div>
+                <div class="english">Sure. First, go straight until you reach the traffic light.</div>
+                <div class="burmese">ရပါတယ်။ ပထမဆုံး၊ မီးပွိုင့်ရောက်သည်အထိ တည့်တည့်သွားပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Sure. First, go straight until you reach the traffic light.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Local:</div>
+                <div class="english">Then, turn left and walk for about 200 meters.</div>
+                <div class="burmese">ပြီးရင်၊ ဘယ်ဘက်ကွေ့ပြီး မီတာ ၂၀၀ လောက်လမ်းလျှောက်ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Then, turn left and walk for about 200 meters.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Local:</div>
+                <div class="english">Finally, turn right at the second corner. The museum will be on your left.</div>
+                <div class="burmese">နောက်ဆုံး၊ ဒုတိယလမ်းထောင့်မှာ ညာဘက်ကွေ့ပါ။ ပြတိုက်က သင့်ဘယ်ဘက်ခြမ်းမှာရှိပါလိမ့်မယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Finally, turn right at the second corner. The museum will be on your left.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Tourist:</div>
+                <div class="english">Thank you very much! That's very helpful.</div>
+                <div class="burmese">ကျေးဇူးအရမ်းတင်ပါတယ်! အရမ်းအထောက်အကူဖြစ်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Thank you very much! That is very helpful.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 7: Using Landmarks -->
+    <div class="conversation-section">
+        <h2>🏛️ Using Landmarks / အထင်ကရနေရာများသုံးပြီးလမ်းညွှန်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Tourist:</div>
+                <div class="english">Is the post office far from here?</div>
+                <div class="burmese">စာတိုက်က ဒီကနေ ဝေးလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Is the post office far from here?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Local:</div>
+                <div class="english">No, it's very close. Go past the church and it's next to the school.</div>
+                <div class="burmese">မဟုတ်ဘူး၊ အရမ်းနီးတယ်။ ဘုရားကျောင်းကိုဖြတ်ပြီး ကျောင်းဘေးမှာရှိတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('No, it is very close. Go past the church and it is next to the school.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Tourist:</div>
+                <div class="english">Go past the church. Is it on the left or right?</div>
+                <div class="burmese">ဘုရားကျောင်းကိုဖြတ်ပါ။ ဘယ်ဘက်လား ညာဘက်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Go past the church. Is it on the left or right?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Local:</div>
+                <div class="english">It's on the right, across from the park. You'll see a big red building.</div>
+                <div class="burmese">ပန်းခြံအလယ်မှာ ညာဘက်ခြမ်းမှာရှိတယ်။ အနီရောင်အဆောက်အအုံကြီးတစ်ခု တွေ့ရပါလိမ့်မယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('It is on the right, across from the park. You will see a big red building.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 8: Asking About Distance -->
+    <div class="conversation-section">
+        <h2>📏 Asking About Distance / အကွာအဝေးမေးမြန်းခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Tourist:</div>
+                <div class="english">How far is the airport from here?</div>
+                <div class="burmese">လေဆိပ်က ဒီကနေ ဘယ်လောက်ဝေးလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('How far is the airport from here?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Local:</div>
+                <div class="english">It's about 5 kilometers away. About 15 minutes by taxi.</div>
+                <div class="burmese">၅ ကီလိုမီတာလောက်ဝေးတယ်။ တက္ကစီနဲ့ ၁၅ မိနစ်လောက်။</div>
+                <button class="audio-btn" onclick="speakEnglish('It is about 5 kilometers away. About 15 minutes by taxi.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Tourist:</div>
+                <div class="english">Can I walk there?</div>
+                <div class="burmese">ကျွန်တော် လမ်းလျှောက်သွားလို့ရမလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Can I walk there?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Local:</div>
+                <div class="english">It's too far to walk. I recommend taking a taxi or bus.</div>
+                <div class="burmese">လမ်းလျှောက်ဖို့ အရမ်းဝေးတယ်။ တက္ကစီ ဒါမှမဟုတ် ဘတ်စ်ကားစီးဖို့ အကြံပြုပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('It is too far to walk. I recommend taking a taxi or bus.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Direction Phrases Summary -->
+    <div class="conversation-section">
+        <h2>🧭 Direction Phrases / လမ်းညွှန်စကားစုများ</h2>
+        <div class="direction-box">
+            <p><strong><i class="fas fa-arrow-up"></i> Go straight</strong> - တည့်တည့်သွားပါ</p>
+            <p><strong><i class="fas fa-arrow-left"></i> Turn left</strong> - ဘယ်ဘက်ကွေ့ပါ</p>
+            <p><strong><i class="fas fa-arrow-right"></i> Turn right</strong> - ညာဘက်ကွေ့ပါ</p>
+            <p><strong><i class="fas fa-location-dot"></i> Next to / Beside</strong> - ဘေးမှာ</p>
+            <p><strong><i class="fas fa-exchange-alt"></i> Across from / Opposite</strong> - အလယ်မှာ</p>
+            <p><strong><i class="fas fa-corner"></i> On the corner</strong> - လမ်းထောင့်မှာ</p>
+            <p><strong><i class="fas fa-gavel"></i> Between</strong> - ကြားမှာ</p>
+            <p><strong><i class="fas fa-flag-checkered"></i> At the end of the street</strong> - လမ်းအဆုံးမှာ</p>
+            <p><strong><i class="fas fa-traffic-light"></i> Traffic light</strong> - မီးပွိုင့်</p>
+            <p><strong><i class="fas fa-walking"></i> It's a 10-minute walk</strong> - ၁၀ မိနစ်လမ်းလျှောက်ကွာ</p>
+        </div>
+    </div>
+    
+    <!-- Vocabulary Section -->
+    <div class="conversation-section">
+        <h2>📚 Direction Vocabulary / လမ်းညွှန်သုံးဝေါဟာရများ</h2>
+        <div class="vocab-grid">
+            <div class="vocab-item"><span class="vocab-eng">Turn left / right</span><br><span class="vocab-burmese">ဘယ်/ညာ ကွေ့ပါ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Go straight</span><br><span class="vocab-burmese">တည့်တည့်သွားပါ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Block</span><br><span class="vocab-burmese">လမ်းတုံး</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Corner</span><br><span class="vocab-burmese">လမ်းထောင့်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Intersection</span><br><span class="vocab-burmese">လမ်းဆုံ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Traffic light</span><br><span class="vocab-burmese">မီးပွိုင့်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Crosswalk</span><br><span class="vocab-burmese">လူကူးမျဉ်းကျား</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Landmark</span><br><span class="vocab-burmese">အထင်ကရနေရာ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">North / South / East / West</span><br><span class="vocab-burmese">မြောက်/တောင်/အရှေ့/အနောက်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Near / Far</span><br><span class="vocab-burmese">နီးသော/ဝေးသော</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Next to / Beside</span><br><span class="vocab-burmese">ဘေးမှာ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Across from / Opposite</span><br><span class="vocab-burmese">မျက်နှာချင်းဆိုင်</span></div>
+        </div>
+    </div>
+    
+    <!-- Useful Direction Phrases -->
+    <div class="conversation-section">
+        <h2>💡 Useful Direction Phrases / အသုံးဝင်သောလမ်းညွှန်စကားစုများ</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Asking for Directions (လမ်းညွှန်မေးမြန်းခြင်း):</strong><br>
+            • "Can you show me on the map?" (မြေပုံပေါ်မှာ ပြပေးနိုင်မလား။)<br>
+            • "Am I going the right way?" (ကျွန်တော် လမ်းမှန်သွားနေလား။)<br>
+            • "Is it within walking distance?" (လမ်းလျှောက်နိုင်တဲ့အကွာအဝေးမှာလား။)<br>
+            • "How long does it take to get there?" (အဲဒီကိုရောက်ဖို့ ဘယ်လောက်ကြာမလဲ။)<br>
+            • "I'm lost. Can you help me?" (ကျွန်တော် လမ်းမှားနေတယ်။ ကူညီနိုင်မလား။)<br>
+            <br>
+            <i class="fas fa-lightbulb"></i>
+            <strong>Giving Directions (လမ်းညွှန်ပြခြင်း):</strong><br>
+            • "Take the first/second street on your left." (သင့်ဘယ်ဘက်ရှိ ပထမ/ဒုတိယလမ်းကိုယူပါ။)<br>
+            • "It's about a five-minute walk." (ငါးမိနစ်လမ်းလျှောက်ကွာပါတယ်။)<br>
+            • "You'll see it on your right-hand side." (သင့်ညာဘက်ခြမ်းမှာ တွေ့ရပါလိမ့်မယ်။)<br>
+            • "Follow this road until you see the cinema." (ရုပ်ရှင်ရုံမြင်သည်အထိ ဒီလမ်းအတိုင်းလိုက်ပါ။)<br>
+        </div>
+    </div>
+    
+    <!-- Practice Section -->
+    <div class="conversation-section">
+        <h2>✏️ Practice Questions / လေ့ကျင့်ခန်းမေးခွန်းများ</h2>
+        <div class="dialogue-box">
+            <div class="quiz-question">
+                <p><strong>1. How do you ask for the nearest bank?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Is there a bank near here?')">What time is the bank open?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Is there a bank near here?')">Is there a bank near here?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Is there a bank near here?')">Where is the bank manager?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Is there a bank near here?')">Do you work at the bank?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>2. "တည့်တည့်သွားပြီး ဘယ်ဘက်ကွေ့ပါ" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Go straight and turn left.')">Turn left and go straight.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Go straight and turn left.')">Go straight and turn right.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Go straight and turn left.')">Go straight and turn left.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Go straight and turn left.')">Go back and turn left.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. What does "it's a 10-minute walk" mean?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'It takes 10 minutes to walk there')">It is 10 kilometers away</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'It takes 10 minutes to walk there')">It takes 10 minutes to walk there</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'It takes 10 minutes to walk there')">It is too far to walk</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'It takes 10 minutes to walk there')">You need a car</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. "ဘတ်စ်ကားမှတ်တိုင်က ဘယ်မှာလဲ" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Where is the bus stop?')">Where is the train station?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Where is the bus stop?')">Where is the airport?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Where is the bus stop?')">Where is the bus stop?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Where is the bus stop?')">Where is the hospital?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. What do you say when you want someone to show you on a map?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can you show me on the map?')">Can you give me a map?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can you show me on the map?')">I need a map.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can you show me on the map?')">Can you show me on the map?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can you show me on the map?')">Where is the map?</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p><i class="fas fa-heart" style="color: #3498db;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p>
+        <p style="font-size: 0.75rem; margin-top: 0.5rem;">Practice these conversations to ask for and give directions confidently!</p>
+    </footer>
+</div>
+
+<!-- Back to Top Button -->
+<a href="#" class="back-to-top" id="backToTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+<script>
+    function speakEnglish(text) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8;
+        utterance.pitch = 1.0;
+        
+        function setVoice() {
+            const voices = window.speechSynthesis.getVoices();
+            const englishVoice = voices.find(v => v.lang === 'en-US' || v.lang.startsWith('en-'));
+            if (englishVoice) utterance.voice = englishVoice;
+            window.speechSynthesis.speak(utterance);
+        }
+        
+        if (window.speechSynthesis.getVoices().length) setVoice();
+        else window.speechSynthesis.onvoiceschanged = setVoice;
+    }
+    
+    function checkAnswer(element, correctAnswer) {
+        const options = element.parentElement.querySelectorAll('.quiz-option');
+        const isCorrect = element.innerText === correctAnswer;
+        
+        if (isCorrect) {
+            element.style.background = '#2ecc71';
+            element.style.color = 'white';
+            speakEnglish(correctAnswer);
+            setTimeout(() => {
+                options.forEach(opt => {
+                    opt.style.background = '';
+                    opt.style.color = '';
+                });
+            }, 1500);
+        } else {
+            element.style.background = '#e74c3c';
+            element.style.color = 'white';
+            setTimeout(() => {
+                element.style.background = '';
+                element.style.color = '';
+            }, 500);
+        }
+    }
+    
+    // Back to Top Button Functionality
+    (function() {
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        
+        if (backToTopBtn) {
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phone Calls - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 1rem;
+        }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        
+        .conversation-section {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .conversation-section h2 {
+            background: #2980b9;
+            color: white;
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line {
+            display: grid;
+            grid-template-columns: 70px 1fr 1fr;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            align-items: start;
+        }
+        .speaker { font-weight: bold; color: #2980b9; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { 
+            color: #8e6b3c; 
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 0.95rem;
+        }
+        .audio-btn {
+            background: #eef4ff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.3rem;
+        }
+        .audio-btn:hover { background: #2980b9; color: white; }
+        
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+            padding: 1rem;
+        }
+        .vocab-item {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            border-left: 3px solid #2980b9;
+        }
+        .vocab-eng { font-weight: bold; color: #2980b9; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        
+        .quiz-question {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.8rem;
+        }
+        .quiz-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .quiz-option {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .quiz-option:hover { background: #2980b9; color: white; border-color: #2980b9; }
+        
+        .tips-box {
+            background: #e8f0f8;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #2980b9;
+        }
+        .tips-box i { color: #2980b9; margin-right: 8px; }
+        
+        .phone-icon {
+            text-align: center;
+            font-size: 3rem;
+            margin: 0.5rem;
+        }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1rem;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: #1e3c72;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid white;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: #f5b042;
+            color: #1e3c72;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .back-to-top i {
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 42px;
+                height: 42px;
+            }
+            .back-to-top i {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 700px) {
+            .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> All Conversations
+    </a>
+    
+    <header>
+        <h1><i class="fas fa-phone"></i> Phone Calls</h1>
+        <p>Learn how to make phone calls, leave messages, and handle different phone situations</p>
+        <p>ဖုန်းခေါ်ဆိုနည်း၊ မက်ဆေ့ချ်ထားခဲ့နည်းနှင့် အမျိုးမျိုးသောဖုန်းအခြေအနေများကို ကိုင်တွယ်နည်း လေ့လာပါ</p>
+    </header>
+    
+    <div class="phone-icon">
+        <i class="fas fa-phone-alt"></i> <i class="fas fa-mobile-alt"></i> <i class="fas fa-headset"></i>
+    </div>
+    
+    <!-- Dialogue 1: Making a Call -->
+    <div class="conversation-section">
+        <h2>📞 Making a Call / ဖုန်းခေါ်ဆိုခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Caller:</div>
+                <div class="english">Hello, may I speak to Mr. Smith, please?</div>
+                <div class="burmese">မင်္ဂလာပါ၊ မစ္စတာစမစ်နဲ့ စကားပြောလို့ရမလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Hello, may I speak to Mr. Smith, please?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Receiver:</div>
+                <div class="english">Speaking. Who's calling, please?</div>
+                <div class="burmese">ကျွန်တော်ပါ။ ဘယ်သူခေါ်တာလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Speaking. Who is calling, please?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Caller:</div>
+                <div class="english">This is Aung from ABC Company. How are you today?</div>
+                <div class="burmese">ဒါက ABC ကုမ္ပဏီက အောင်ပါ။ ဒီနေ့ နေကောင်းလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('This is Aung from ABC Company. How are you today?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Receiver:</div>
+                <div class="english">I'm doing well, thank you. How can I help you?</div>
+                <div class="burmese">ကျွန်တော် ကောင်းပါတယ်၊ ကျေးဇူးပါ။ ဘယ်လိုကူညီရမလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am doing well, thank you. How can I help you?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 2: The Person is Not Available -->
+    <div class="conversation-section">
+        <h2>📝 Person Not Available / လိုချင်သူမရှိခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Caller:</div>
+                <div class="english">Hello, could I speak to Mary, please?</div>
+                <div class="burmese">မင်္ဂလာပါ၊ မေရီနဲ့ စကားပြောလို့ရမလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Hello, could I speak to Mary, please?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Receiver:</div>
+                <div class="english">I'm sorry, she's not here right now. Can I take a message?</div>
+                <div class="burmese">စိတ်မကောင်းပါဘူး၊ သူ ဒီမှာ မရှိဘူး။ မက်ဆေ့ချ်ထားခဲ့လို့ရမလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am sorry, she is not here right now. Can I take a message?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Caller:</div>
+                <div class="english">Yes, please. Could you tell her that John called?</div>
+                <div class="burmese">ဟုတ်ကဲ့။ ဂျွန်ခေါ်တယ်လို့ သူ့ကို ပြောပါလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, please. Could you tell her that John called?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Receiver:</div>
+                <div class="english">Certainly. Does she have your number?</div>
+                <div class="burmese">ရပါတယ်။ သင့်နံပါတ်ကို သူမှာရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Certainly. Does she have your number?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Caller:</div>
+                <div class="english">Yes, she has it. Thank you. Goodbye.</div>
+                <div class="burmese">ဟုတ်တယ်၊ သူ့မှာရှိတယ်။ ကျေးဇူးပါ။ သွားတော့မယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, she has it. Thank you. Goodbye.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 3: Wrong Number -->
+    <div class="conversation-section">
+        <h2>❌ Wrong Number / မှားယွင်းသောနံပါတ်</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Caller:</div>
+                <div class="english">Hello, is this 555-1234?</div>
+                <div class="burmese">မင်္ဂလာပါ၊ ဒါ ၅၅၅-၁၂၃၄ လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Hello, is this 555-1234?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Receiver:</div>
+                <div class="english">No, this is 555-5678. I think you have the wrong number.</div>
+                <div class="burmese">မဟုတ်ပါဘူး၊ ဒါ ၅၅၅-၅၆၇၈ ပါ။ နံပါတ်မှားနေတယ် ထင်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('No, this is 555-5678. I think you have the wrong number.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Caller:</div>
+                <div class="english">Oh, I'm so sorry! Please excuse me.</div>
+                <div class="burmese">အိုး၊ သိပ်တောင်းပန်ပါတယ်။ ကျေးဇူးပြု၍ ခွင့်လွှတ်ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Oh, I am so sorry! Please excuse me.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Receiver:</div>
+                <div class="english">No problem. Have a good day!</div>
+                <div class="burmese">ပြဿနာမရှိပါဘူး။ နေ့လယ်ကောင်းကောင်းဖြတ်သန်းပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('No problem. Have a good day!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 4: Leaving a Voicemail -->
+    <div class="conversation-section">
+        <h2>📱 Leaving a Voicemail / အသံမက်ဆေ့ချ်ထားခဲ့ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Recording:</div>
+                <div class="english">You have reached the voicemail of David. Please leave a message after the beep.</div>
+                <div class="burmese">သင်သည် ဒေးဗစ်၏ အသံမက်ဆေ့ချ်သို့ ရောက်ရှိပါသည်။ အသံမြည်ပြီးနောက် မက်ဆေ့ချ်ထားခဲ့ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('You have reached the voicemail of David. Please leave a message after the beep.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Caller:</div>
+                <div class="english">Hi David, this is Susan. Please call me back when you get this. My number is 555-9876. Thanks! Bye.</div>
+                <div class="burmese">ဟိုင်းဒေးဗစ်၊ ဒါက ဆူဇန်ပါ။ ဒါကိုရရင် ကျေးဇူးပြု၍ ကျွန်မကို ပြန်ခေါ်ပါ။ ကျွန်မနံပါတ်က ၅၅၅-၉၈၇၆ ပါ။ ကျေးဇူးပါ။ ဘိုင်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Hi David, this is Susan. Please call me back when you get this. My number is 555-9876. Thanks! Bye.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 5: Business Call -->
+    <div class="conversation-section">
+        <h2>🏢 Business Call / စီးပွားရေးဖုန်းခေါ်ဆိုမှု</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Secretary:</div>
+                <div class="english">Good morning, XYZ Corporation. How may I direct your call?</div>
+                <div class="burmese">မင်္ဂလာနံနက်ခင်းပါ၊ XYZ ကော်ပိုရေးရှင်း။ ခေါ်ဆိုမှုကို ဘယ်ကို လွှဲပေးရမလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Good morning, XYZ Corporation. How may I direct your call?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Caller:</div>
+                <div class="english">I'd like to speak to Mr. Johnson in the sales department, please.</div>
+                <div class="burmese">ကျေးဇူးပြု၍ အရောင်းဌာနက မစ္စတာဂျွန်ဆင်နဲ့ စကားပြောချင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I would like to speak to Mr. Johnson in the sales department, please.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Secretary:</div>
+                <div class="english">One moment, please. I'll transfer you.</div>
+                <div class="burmese">ခဏစောင့်ပါ။ လွှဲပေးပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('One moment, please. I will transfer you.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Mr. Johnson:</div>
+                <div class="english">Hello, this is Mr. Johnson speaking. How can I help you?</div>
+                <div class="burmese">မင်္ဂလာပါ၊ ကျွန်တော် မစ္စတာဂျွန်ဆင်ပါ။ ဘယ်လိုကူညီရမလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Hello, this is Mr. Johnson speaking. How can I help you?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 6: Asking Someone to Call Back Later -->
+    <div class="conversation-section">
+        <h2>⏰ Call Back Later / နောက်မှပြန်ခေါ်ရန် တောင်းဆိုခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Caller:</div>
+                <div class="english">Hello, is Tom there?</div>
+                <div class="burmese">မင်္ဂလာပါ၊ တွမ်ရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Hello, is Tom there?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Receiver:</div>
+                <div class="english">He's in a meeting right now. Can you call back in an hour?</div>
+                <div class="burmese">သူ အခု အစည်းအဝေးလုပ်နေတယ်။ တစ်နာရီကြာရင် ပြန်ခေါ်လို့ရမလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('He is in a meeting right now. Can you call back in an hour?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Caller:</div>
+                <div class="english">Sure, I'll call back later. Thank you.</div>
+                <div class="burmese">ကောင်းပါတယ်၊ နောက်မှ ပြန်ခေါ်ပါမယ်။ ကျေးဇူးပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Sure, I will call back later. Thank you.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 7: Poor Connection -->
+    <div class="conversation-section">
+        <h2>📶 Poor Connection / အဆက်အသွယ်မကောင်းခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Caller:</div>
+                <div class="english">Hello? Can you hear me?</div>
+                <div class="burmese">မင်္ဂလာပါ? ကျွန်တော့်စကား ကြားရလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Hello? Can you hear me?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Receiver:</div>
+                <div class="english">The connection is very bad. You're breaking up. Could you speak louder?</div>
+                <div class="burmese">အဆက်အသွယ် အရမ်းဆိုးနေတယ်။ သင့်အသံ ပြတ်တောင်းပြတ်တောင်းဖြစ်နေတယ်။ ကျယ်ကျယ်ပြောလို့ရမလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('The connection is very bad. You are breaking up. Could you speak louder?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Caller:</div>
+                <div class="english">Let me go outside. Is this better?</div>
+                <div class="burmese">အပြင်ထွက်လိုက်မယ်။ ဒါက ပိုကောင်းလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Let me go outside. Is this better?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Receiver:</div>
+                <div class="english">Yes, much better. What were you saying?</div>
+                <div class="burmese">ဟုတ်တယ်၊ အများကြီးကောင်းတယ်။ မင်းဘာပြောနေတာလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, much better. What were you saying?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 8: Ending a Call -->
+    <div class="conversation-section">
+        <h2>👋 Ending a Call / ဖုန်းခေါ်ဆိုမှုကို အဆုံးသတ်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Caller:</div>
+                <div class="english">Well, I should let you go now. Thanks for your time.</div>
+                <div class="burmese">ကောင်းပြီ၊ အခု သင့်ကို သွားခွင့်ပြုသင့်တယ်။ အချိန်ပေးတဲ့အတွက် ကျေးဇူးပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Well, I should let you go now. Thanks for your time.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Receiver:</div>
+                <div class="english">It was nice talking to you. Talk to you soon!</div>
+                <div class="burmese">မင်းနဲ့စကားပြောရတာ ဝမ်းသာပါတယ်။ မကြာခင်ပြောကြမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('It was nice talking to you. Talk to you soon!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Caller:</div>
+                <div class="english">Goodbye! Take care.</div>
+                <div class="burmese">သွားတော့မယ်! ဂရုစိုက်ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Goodbye! Take care.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Receiver:</div>
+                <div class="english">You too. Bye!</div>
+                <div class="burmese">မင်းလည်းပါ။ ဘိုင်း။</div>
+                <button class="audio-btn" onclick="speakEnglish('You too. Bye!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 9: Calling Customer Service -->
+    <div class="conversation-section">
+        <h2>🎧 Calling Customer Service / ဖောက်သည်ဝန်ဆောင်မှုကိုခေါ်ဆိုခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Automated:</div>
+                <div class="english">Welcome to customer service. Please press 1 for English, 2 for Burmese.</div>
+                <div class="burmese">ဖောက်သည်ဝန်ဆောင်မှုသို့ ကြိုဆိုပါတယ်။ အင်္ဂလိပ်အတွက် ၁ ကိုနှိပ်ပါ၊ မြန်မာအတွက် ၂ ကိုနှိပ်ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Welcome to customer service. Please press 1 for English, 2 for Burmese.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Representative:</div>
+                <div class="english">Customer service, this is Sarah speaking. How can I assist you?</div>
+                <div class="burmese">ဖောက်သည်ဝန်ဆောင်မှု၊ ဒါက ဆာရာပါ။ ဘယ်လိုကူညီရမလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Customer service, this is Sarah speaking. How can I assist you?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Caller:</div>
+                <div class="english">I have a problem with my internet connection. It's been down for two days.</div>
+                <div class="burmese">ကျွန်တော့်အင်တာနက်ချိတ်ဆက်မှုမှာ ပြဿနာရှိတယ်။ နှစ်ရက်ကြာ ပြတ်နေတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I have a problem with my internet connection. It has been down for two days.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Representative:</div>
+                <div class="english">I'm sorry to hear that. Let me check your account. What's your account number?</div>
+                <div class="burmese">ကြားရတာ စိတ်မကောင်းပါဘူး။ သင့်အကောင့်ကို စစ်ကြည့်ပါရစေ။ သင့်အကောင့်နံပါတ်က ဘာလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am sorry to hear that. Let me check your account. What is your account number?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Vocabulary Section -->
+    <div class="conversation-section">
+        <h2>📚 Phone Vocabulary / ဖုန်းသုံးဝေါဟာရများ</h2>
+        <div class="vocab-grid">
+            <div class="vocab-item"><span class="vocab-eng">Caller / Receiver</span><br><span class="vocab-burmese">ခေါ်ဆိုသူ/လက်ခံသူ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Voicemail</span><br><span class="vocab-burmese">အသံမက်ဆေ့ချ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Missed call</span><br><span class="vocab-burmese">လွတ်သွားသောဖုန်းခေါ်ဆိုမှု</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Ringtone</span><br><span class="vocab-burmese">မြည်သံ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Hang up</span><br><span class="vocab-burmese">ဖုန်းချသည်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Call back</span><br><span class="vocab-burmese">ပြန်ခေါ်သည်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">On hold</span><br><span class="vocab-burmese">စောင့်ဆိုင်းနေသည်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Transfer the call</span><br><span class="vocab-burmese">ဖုန်းလွှဲသည်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Wrong number</span><br><span class="vocab-burmese">မှားယွင်းသောနံပါတ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Phonebook / Contacts</span><br><span class="vocab-burmese">ဖုန်းစာအုပ်/အဆက်အသွယ်များ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Text message / SMS</span><br><span class="vocab-burmese">စာတို/စာသားမက်ဆေ့ချ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Battery low</span><br><span class="vocab-burmese">ဘက်ထရီအားနည်းနေသည်</span></div>
+        </div>
+    </div>
+    
+    <!-- Useful Phone Phrases -->
+    <div class="conversation-section">
+        <h2>💡 Useful Phone Phrases / အသုံးဝင်သောဖုန်းစကားစုများ</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Making a Call (ဖုန်းခေါ်ဆိုခြင်း):</strong><br>
+            • "May I ask who's calling?" (ဘယ်သူခေါ်တာလဲ မေးလို့ရမလား။)<br>
+            • "I'll put you through now." (အခု သင့်ကို လွှဲပေးပါမယ်။)<br>
+            • "Can you hold the line for a moment?" (ခဏလောက် ဖုန်းကိုင်ထားပေးလို့ရမလား။)<br>
+            • "Please speak clearly." (ကျေးဇူးပြု၍ ရှင်းရှင်းလင်းလင်းပြောပါ။)<br>
+            • "I can barely hear you." (ခင်ဗျားစကား ကျွန်တော် အနည်းငယ်သာ ကြားရတယ်။)<br>
+            <br>
+            <i class="fas fa-lightbulb"></i>
+            <strong>Leaving a Message (မက်ဆေ့ချ်ထားခဲ့ခြင်း):</strong><br>
+            • "Could you ask him to call me back?" (သူ့ကို ကျွန်တော့်ကို ပြန်ခေါ်ဖို့ ပြောပေးနိုင်မလား။)<br>
+            • "I'll call again later." (ကျွန်တော် နောက်မှ ပြန်ခေါ်ပါမယ်။)<br>
+            • "Sorry to bother you." (နှောက်ယှက်တဲ့အတွက် စိတ်မကောင်းပါဘူး။)<br>
+            • "I have to go now." (ကျွန်တော် အခုသွားရတော့မယ်။)<br>
+        </div>
+    </div>
+    
+    <!-- Practice Section -->
+    <div class="conversation-section">
+        <h2>✏️ Practice Questions / လေ့ကျင့်ခန်းမေးခွန်းများ</h2>
+        <div class="dialogue-box">
+            <div class="quiz-question">
+                <p><strong>1. How do you ask to speak to someone on the phone?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'May I speak to...?')">What time is it?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'May I speak to...?')">May I speak to...?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'May I speak to...?')">Where are you?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'May I speak to...?')">How are you?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>2. "သူမရှိပါဘူး" in English on the phone?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'She is not here.')">She is here.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'She is not here.')">She is sleeping.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'She is not here.')">She is not here.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'She is not here.')">She is busy.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. What do you say when you dial the wrong number?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I am sorry, I have the wrong number.')">You called me.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I am sorry, I have the wrong number.')">I am sorry, I have the wrong number.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I am sorry, I have the wrong number.')">Goodbye.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I am sorry, I have the wrong number.')">Call me back.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. "မက်ဆေ့ချ်ထားခဲ့လို့ရမလား" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can I leave a message?')">Can I call back?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can I leave a message?')">Can I leave a message?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can I leave a message?')">Can you call me?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can I leave a message?')">Do you have my number?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. How do you end a phone conversation politely?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'It was nice talking to you. Goodbye!')">Hang up now.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'It was nice talking to you. Goodbye!')">I am busy.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'It was nice talking to you. Goodbye!')">It was nice talking to you. Goodbye!</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'It was nice talking to you. Goodbye!')">No comment.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p><i class="fas fa-heart" style="color: #2980b9;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p>
+        <p style="font-size: 0.75rem; margin-top: 0.5rem;">Practice these conversations to speak confidently on the phone in English!</p>
+    </footer>
+</div>
+
+<!-- Back to Top Button -->
+<a href="#" class="back-to-top" id="backToTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+<script>
+    function speakEnglish(text) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8;
+        utterance.pitch = 1.0;
+        
+        function setVoice() {
+            const voices = window.speechSynthesis.getVoices();
+            const englishVoice = voices.find(v => v.lang === 'en-US' || v.lang.startsWith('en-'));
+            if (englishVoice) utterance.voice = englishVoice;
+            window.speechSynthesis.speak(utterance);
+        }
+        
+        if (window.speechSynthesis.getVoices().length) setVoice();
+        else window.speechSynthesis.onvoiceschanged = setVoice;
+    }
+    
+    function checkAnswer(element, correctAnswer) {
+        const options = element.parentElement.querySelectorAll('.quiz-option');
+        const isCorrect = element.innerText === correctAnswer;
+        
+        if (isCorrect) {
+            element.style.background = '#2ecc71';
+            element.style.color = 'white';
+            speakEnglish(correctAnswer);
+            setTimeout(() => {
+                options.forEach(opt => {
+                    opt.style.background = '';
+                    opt.style.color = '';
+                });
+            }, 1500);
+        } else {
+            element.style.background = '#e74c3c';
+            element.style.color = 'white';
+            setTimeout(() => {
+                element.style.background = '';
+                element.style.color = '';
+            }, 500);
+        }
+    }
+    
+    // Back to Top Button Functionality
+    (function() {
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        
+        if (backToTopBtn) {
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

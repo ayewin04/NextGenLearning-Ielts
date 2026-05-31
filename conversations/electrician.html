@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electrician - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 1rem;
+        }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        
+        .conversation-section {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .conversation-section h2 {
+            background: #f1c40f;
+            color: #1e3c72;
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line {
+            display: grid;
+            grid-template-columns: 70px 1fr 1fr;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            align-items: start;
+        }
+        .speaker { font-weight: bold; color: #d4a017; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { 
+            color: #8e6b3c; 
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 0.95rem;
+        }
+        .audio-btn {
+            background: #eef4ff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.3rem;
+        }
+        .audio-btn:hover { background: #f1c40f; color: #1e3c72; }
+        
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+            padding: 1rem;
+        }
+        .vocab-item {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            border-left: 3px solid #f1c40f;
+        }
+        .vocab-eng { font-weight: bold; color: #d4a017; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        
+        .quiz-question {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.8rem;
+        }
+        .quiz-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .quiz-option {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .quiz-option:hover { background: #f1c40f; color: #1e3c72; border-color: #f1c40f; }
+        
+        .tips-box {
+            background: #fef9e7;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #f1c40f;
+        }
+        .tips-box i { color: #d4a017; margin-right: 8px; }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1rem;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: #1e3c72;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid white;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: #f5b042;
+            color: #1e3c72;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .back-to-top i {
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 42px;
+                height: 42px;
+            }
+            .back-to-top i {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 700px) {
+            .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> All Conversations
+    </a>
+    
+    <header>
+        <h1><i class="fas fa-bolt"></i> Electrician</h1>
+        <p>Learn how to fix electrical problems, install lights, and rewire homes in English</p>
+        <p>လျှပ်စစ်ပြဿနာများပြုပြင်နည်း၊ မီးများတပ်ဆင်နည်းနှင့် အိမ်များပြန်လည်ဝါယာကြိုးသွယ်တန်းနည်းတို့ကို အင်္ဂလိပ်လို လေ့လာပါ</p>
+    </header>
+    
+    <!-- Dialogue 1: Power Outage -->
+    <div class="conversation-section">
+        <h2>⚡ Power Outage / မီးပျက်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Homeowner:</div>
+                <div class="english">Hello, the power is out in my house. Can you come take a look?</div>
+                <div class="burmese">မင်္ဂလာပါ၊ ကျွန်တော့်အိမ်မှာ မီးပျက်နေတယ်။ လာကြည့်ပေးနိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Hello, the power is out in my house. Can you come take a look?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Electrician:</div>
+                <div class="english">Did you check the circuit breaker first?</div>
+                <div class="burmese">ဆားကစ်ဘရိတ်ကို အရင်စစ်ကြည့်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Did you check the circuit breaker first?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Homeowner:</div>
+                <div class="english">Yes, nothing is tripped. All the switches are in the "on" position.</div>
+                <div class="burmese">ဟုတ်တယ်၊ ဘာမှမပြတ်ဘူး။ ခလုတ်တွေ အားလုံး "on" နေရာမှာရှိတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, nothing is tripped. All the switches are in the on position.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Electrician:</div>
+                <div class="english">Could be a problem with the main breaker or a loose connection. I'll be there in an hour.</div>
+                <div class="burmese">ပင်မဘရိတ် ဒါမှမဟုတ် ဝါယာကြိုးပြတ်တောက်မှု ပြဿနာဖြစ်နိုင်တယ်။ ကျွန်တော် တစ်နာရီအတွင်း ရောက်ပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Could be a problem with the main breaker or a loose connection. I will be there in an hour.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 2: Flickering Lights -->
+    <div class="conversation-section">
+        <h2>💡 Flickering Lights / မီးများမှိတ်တုတ်မှိတ်တုတ်ဖြစ်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Homeowner:</div>
+                <div class="english">The lights in my living room keep flickering. What could be wrong?</div>
+                <div class="burmese">ကျွန်တော့်ဧည့်ခန်းက မီးတွေ ဆက်တိုက်မှိတ်တုတ်မှိတ်တုတ်ဖြစ်နေတယ်။ ဘာဖြစ်နိုင်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('The lights in my living room keep flickering. What could be wrong?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Electrician:</div>
+                <div class="english">It could be a loose bulb, a faulty switch, or a wiring issue. Let me test it.</div>
+                <div class="burmese">မီးလုံးမြဲမြဲမဟုတ်တာ၊ ခလုတ်ပျက်စီးတာ၊ ဒါမှမဟုတ် ဝါယာကြိုးပြဿနာဖြစ်နိုင်တယ်။ စမ်းသပ်ကြည့်ပါရစေ။</div>
+                <button class="audio-btn" onclick="speakEnglish('It could be a loose bulb, a faulty switch, or a wiring issue. Let me test it.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Electrician:</div>
+                <div class="english">I found the problem. The neutral wire is loose. I'll tighten it.</div>
+                <div class="burmese">ပြဿနာကို ကျွန်တော်တွေ့ပြီ။ ကြားနေဝါယာကြိုး မြဲမြဲမဟုတ်ဘူး။ ကျွန်တော် ကျစ်ပေးပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I found the problem. The neutral wire is loose. I will tighten it.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Homeowner:</div>
+                <div class="english">Thank you. How much will it cost?</div>
+                <div class="burmese">ကျေးဇူးပါ။ ဘယ်လောက်ကုန်ကျမလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Thank you. How much will it cost?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 3: Installing a Ceiling Fan -->
+    <div class="conversation-section">
+        <h2>🌀 Installing a Ceiling Fan / မျက်နှာကျက်ပန်ကာတပ်ဆင်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Homeowner:</div>
+                <div class="english">I bought a ceiling fan. Can you install it for me?</div>
+                <div class="burmese">ကျွန်တော် မျက်နှာကျက်ပန်ကာတစ်လုံးဝယ်ခဲ့တယ်။ ကျွန်တော့်အတွက် တပ်ဆင်ပေးနိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('I bought a ceiling fan. Can you install it for me?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Electrician:</div>
+                <div class="english">Sure. Does the ceiling box support the weight of a fan?</div>
+                <div class="burmese">ရပါတယ်။ မျက်နှာကျက်သေတ္တာက ပန်ကာရဲ့အလေးချိန်ကို ခံနိုင်ရည်ရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Sure. Does the ceiling box support the weight of a fan?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Homeowner:</div>
+                <div class="english">I'm not sure. It had a light fixture there before.</div>
+                <div class="burmese">မသေချာဘူး။ အရင်က မီးအလင်းရောင်တပ်ဆင်မှုရှိခဲ့တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am not sure. It had a light fixture there before.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Electrician:</div>
+                <div class="english">Light boxes aren't rated for fans. I'll need to install a fan-rated box. That's an extra $50.</div>
+                <div class="burmese">မီးသေတ္တာတွေက ပန်ကာအတွက် အဆင့်သတ်မှတ်မထားပါဘူး။ ကျွန်တော် ပန်ကာအဆင့်သတ်မှတ်ထားတဲ့သေတ္တာ တပ်ဆင်ဖို့လိုပါမယ်။ အပို ၅၀ ဒေါ်လာပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Light boxes are not rated for fans. I will need to install a fan-rated box. That is an extra 50 dollars.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 4: Dead Outlets -->
+    <div class="conversation-section">
+        <h2>🔌 Dead Outlets / ပလပ်ပေါက်များအလုပ်မလုပ်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Homeowner:</div>
+                <div class="english">Two of my kitchen outlets aren't working. The rest are fine.</div>
+                <div class="burmese">ကျွန်တော့်မီးဖိုချောင်က ပလပ်ပေါက်နှစ်ခု အလုပ်မလုပ်ဘူး။ ကျန်တာတွေ အဆင်ပြေတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Two of my kitchen outlets are not working. The rest are fine.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Electrician:</div>
+                <div class="english">Probably a GFCI outlet that tripped. Check if there's a reset button.</div>
+                <div class="burmese">GFCI ပလပ်ပေါက် ပြတ်သွားတာဖြစ်နိုင်တယ်။ ပြန်သတ်မှတ်ခလုတ်ရှိလား စစ်ကြည့်ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Probably a GFCI outlet that tripped. Check if there is a reset button.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Homeowner:</div>
+                <div class="english">I see it. I pressed reset, but nothing happened.</div>
+                <div class="burmese">မြင်ရတယ်။ ပြန်သတ်မှတ်နှိပ်ပေမယ့် ဘာမှမဖြစ်ဘူး။</div>
+                <button class="audio-btn" onclick="speakEnglish('I see it. I pressed reset, but nothing happened.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Electrician:</div>
+                <div class="english">The GFCI might be faulty. I'll replace it for you.</div>
+                <div class="burmese">GFCI ချွတ်ယွင်းနေနိုင်တယ်။ ကျွန်တော် အစားထိုးပေးပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('The GFCI might be faulty. I will replace it for you.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 5: Lighting Installation -->
+    <div class="conversation-section">
+        <h2>✨ Lighting Installation / မီးအလင်းရောင်တပ်ဆင်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Homeowner:</div>
+                <div class="english">I want to install pendant lights over my kitchen island.</div>
+                <div class="burmese">ကျွန်တော့်မီးဖိုချောင်ကျွန်းပေါ်မှာ ဆွဲထားမီးများ တပ်ဆင်ချင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I want to install pendant lights over my kitchen island.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Electrician:</div>
+                <div class="english">That's a great idea. How many lights do you want?</div>
+                <div class="burmese">အကြံကောင်းပါတယ်။ မီးဘယ်နှစ်လုံးလိုချင်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('That is a great idea. How many lights do you want?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Homeowner:</div>
+                <div class="english">Three lights, evenly spaced. I also want them on a dimmer switch.</div>
+                <div class="burmese">မီးသုံးလုံး၊ ညီတူညီမျှခြားပြီး။ အလင်းအမှောင်ချိန်ညှိနိုင်တဲ့ခလုတ်ပေါ်မှာလည်း ထားချင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Three lights, evenly spaced. I also want them on a dimmer switch.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Electrician:</div>
+                <div class="english">I can do that. It will take about 2 hours. The total cost will be $180 including materials.</div>
+                <div class="burmese">လုပ်ပေးနိုင်ပါတယ်။ ၂ နာရီလောက်ကြာပါမယ်။ ပစ္စည်းများအပါအဝင် စုစုပေါင်းကုန်ကျစရိတ် ၁၈၀ ဒေါ်လာပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('I can do that. It will take about 2 hours. The total cost will be 180 dollars including materials.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 6: Circuit Breaker Keeps Tripping -->
+    <div class="conversation-section">
+        <h2>🔄 Circuit Breaker Keeps Tripping / ဆားကစ်ဘရိတ်ဆက်တိုက်ပြတ်နေခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Homeowner:</div>
+                <div class="english">The circuit breaker for my bedroom keeps tripping. I reset it, but it trips again after a few minutes.</div>
+                <div class="burmese">ကျွန်တော့်အိပ်ခန်းအတွက် ဆားကစ်ဘရိတ် ဆက်တိုက်ပြတ်နေတယ်။ ပြန်သတ်မှတ်ပေမယ့် မိနစ်အနည်းငယ်ကြာရင် ထပ်ပြတ်ပြန်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('The circuit breaker for my bedroom keeps tripping. I reset it, but it trips again after a few minutes.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Electrician:</div>
+                <div class="english">That means there's an overload or a short circuit. What do you have plugged in?</div>
+                <div class="burmese">ဆိုလိုတာက ဝန်ပိုခြင်း ဒါမှမဟုတ် ရှော့ဆားကစ်ဖြစ်တယ်။ ဘာတွေပလပ်စွပ်ထားလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('That means there is an overload or a short circuit. What do you have plugged in?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Homeowner:</div>
+                <div class="english">A space heater, a TV, and a phone charger.</div>
+                <div class="burmese">လျှပ်စစ်အပူပေးစက်၊ တီဗွီ၊ ဖုန်းအားသွင်းကိရိယာ။</div>
+                <button class="audio-btn" onclick="speakEnglish('A space heater, a TV, and a phone charger.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Electrician:</div>
+                <div class="english">The space heater draws a lot of power. Try unplugging it and see if the breaker stays on.</div>
+                <div class="burmese">လျှပ်စစ်အပူပေးစက်က ပါဝါအများကြီးယူတယ်။ ပလပ်ဖြုတ်ပြီး ဘရိတ်ဆက်ရှိမရှိကြည့်ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('The space heater draws a lot of power. Try unplugging it and see if the breaker stays on.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 7: Outdoor Lighting -->
+    <div class="conversation-section">
+        <h2>🌙 Outdoor Lighting / အပြင်ဘက်မီးအလင်းရောင်</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Homeowner:</div>
+                <div class="english">I want to install security lights in my backyard.</div>
+                <div class="burmese">ကျွန်တော့်အနောက်ဖေးမှာ လုံခြုံရေးမီးများ တပ်ဆင်ချင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I want to install security lights in my backyard.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Electrician:</div>
+                <div class="english">Motion-activated lights are energy-efficient. How many do you need?</div>
+                <div class="burmese">လှုပ်ရှားမှုမီးများက စွမ်းအင်သက်သာပါတယ်။ ဘယ်နှစ်လုံးလိုအပ်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Motion-activated lights are energy-efficient. How many do you need?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Homeowner:</div>
+                <div class="english">Two lights. One over the back door and one near the garage.</div>
+                <div class="burmese">မီးနှစ်လုံး။ အနောက်တံခါးအပေါ်မှာ တစ်လုံးနဲ့ ကားဂိုဒေါင်အနားမှာ တစ်လုံး။</div>
+                <button class="audio-btn" onclick="speakEnglish('Two lights. One over the back door and one near the garage.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Electrician:</div>
+                <div class="english">I'll need to run wiring from your main panel. I'll give you a quote after inspecting the site.</div>
+                <div class="burmese">သင့်ပင်မပြားကနေ ဝါယာကြိုးသွယ်ဖို့လိုပါမယ်။ နေရာစစ်ဆေးပြီးရင် စျေးနှုန်းပေးပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I will need to run wiring from your main panel. I will give you a quote after inspecting the site.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 8: Electrical Safety Inspection -->
+    <div class="conversation-section">
+        <h2>🔍 Electrical Safety Inspection / လျှပ်စစ်ဘေးကင်းရေးစစ်ဆေးခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Homeowner:</div>
+                <div class="english">I just bought this old house. Can you do a full electrical safety inspection?</div>
+                <div class="burmese">ကျွန်တော် ဒီအိမ်ဟောင်းကို အခုမှဝယ်ထားတယ်။ လျှပ်စစ်ဘေးကင်းရေးစစ်ဆေးမှု အပြည့်အစုံလုပ်ပေးနိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('I just bought this old house. Can you do a full electrical safety inspection?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Electrician:</div>
+                <div class="english">Absolutely. I'll check all outlets, switches, wiring, and the main panel.</div>
+                <div class="burmese">လုံးဝလုပ်ပေးနိုင်ပါတယ်။ ပလပ်ပေါက်များ၊ ခလုတ်များ၊ ဝါယာကြိုးများ နှင့် ပင်မပြားကို စစ်ဆေးပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Absolutely. I will check all outlets, switches, wiring, and the main panel.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Electrician:</div>
+                <div class="english">I found some issues. The wiring is outdated, and there are no GFCIs in the kitchen and bathrooms.</div>
+                <div class="burmese">ပြဿနာအချို့တွေ့ရပါတယ်။ ဝါယာကြိုးတွေ ခေတ်နောက်ကျနေပြီး မီးဖိုချောင်နဲ့ ရေချိုးခန်းတွေမှာ GFCI မပါပါဘူး။</div>
+                <button class="audio-btn" onclick="speakEnglish('I found some issues. The wiring is outdated, and there are no GFCIs in the kitchen and bathrooms.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Homeowner:</div>
+                <div class="english">How much to fix everything?</div>
+                <div class="burmese">အားလုံးပြင်ဖို့ ဘယ်လောက်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('How much to fix everything?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Electrical Vocabulary -->
+    <div class="conversation-section">
+        <h2>⚡ Electrical Vocabulary / လျှပ်စစ်သုံးဝေါဟာရများ</h2>
+        <div class="vocab-grid">
+            <div class="vocab-item"><span class="vocab-eng">Circuit breaker</span><br><span class="vocab-burmese">ဆားကစ်ဘရိတ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">GFCI (Ground Fault Circuit Interrupter)</span><br><span class="vocab-burmese">မြေချို့ယွင်းမှုကာကွယ်ရေးကိရိယာ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Outlet / Receptacle</span><br><span class="vocab-burmese">ပလပ်ပေါက်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Switch</span><br><span class="vocab-burmese">ခလုတ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Wire / Cable</span><br><span class="vocab-burmese">ဝါယာကြိုး/ကေဘယ်ကြိုး</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Panel / Breaker box</span><br><span class="vocab-burmese">ဘရိတ်သေတ္တာ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Dimmer switch</span><br><span class="vocab-burmese">အလင်းအမှောင်ချိန်ညှိခလုတ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Surge protector</span><br><span class="vocab-burmese">လျှပ်စစ်လှိုင်းကာကွယ်ရေး</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Ground wire</span><br><span class="vocab-burmese">မြေချဝါယာကြိုး</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Short circuit</span><br><span class="vocab-burmese">ရှော့ဆားကစ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Overload</span><br><span class="vocab-burmese">ဝန်ပိုခြင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Voltage</span><br><span class="vocab-burmese">ဗို့အား</span></div>
+        </div>
+    </div>
+    
+    <!-- Electrical Safety Tips -->
+    <div class="conversation-section">
+        <h2>💡 Electrical Safety Tips / လျှပ်စစ်ဘေးကင်းရေးအကြံပြုချက်များ</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Safety First (ဘေးကင်းရေးကိုဦးစားပေးပါ):</strong><br>
+            • Never touch electrical appliances with wet hands (စိုစွတ်သောလက်ဖြင့် လျှပ်စစ်ပစ္စည်းများကို ဘယ်တော့မှ မထိပါနှင့်)<br>
+            • Don't overload outlets with too many plugs (ပလပ်ပေါက်များကို ပလပ်အများအပြားဖြင့် ဝန်မပိုပါစေနှင့်)<br>
+            • Replace damaged cords immediately (ပျက်စီးနေသောကြိုးများကို ချက်ချင်းအစားထိုးပါ)<br>
+            • Keep electrical devices away from water (လျှပ်စစ်ပစ္စည်းများကို ရေနှင့်ဝေးဝေးထားပါ)<br>
+            • Test GFCI outlets monthly (GFCI ပလပ်ပေါက်များကို လစဉ်စမ်းသပ်ပါ)<br>
+            • Have a licensed electrician do all electrical work (လျှပ်စစ်အလုပ်အားလုံးကို လိုင်စင်ရလျှပ်စစ်ပညာရှင်ဖြင့် လုပ်ဆောင်ပါ)<br>
+            • Install smoke detectors and test them regularly (မီးခိုးရှာဖွေစက်များ တပ်ဆင်ပြီး ပုံမှန်စမ်းသပ်ပါ)<br>
+        </div>
+    </div>
+    
+    <!-- Common Electrical Problems -->
+    <div class="conversation-section">
+        <h2>⚠️ Common Electrical Problems / အဖြစ်များသောလျှပ်စစ်ပြဿနာများ</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>When to Call an Electrician (မည်သည့်အခါတွင် လျှပ်စစ်ပညာရှင်ကိုခေါ်ရမည်):</strong><br>
+            • Frequent circuit breaker trips (မကြာခဏ ဆားကစ်ဘရိတ်ပြတ်ခြင်း)<br>
+            • Burning smell from outlets or switches (ပလပ်ပေါက်များ သို့မဟုတ် ခလုတ်များမှ လောင်ကျွမ်းနံ့ထွက်ခြင်း)<br>
+            • Buzzing or crackling sounds (အိပ်ဆီဗုံခြင်း သို့မဟုတ် ဖြတ်တောက်သံများ)<br>
+            • Discolored outlets or switches (အရောင်ပြောင်းသွားသော ပလပ်ပေါက်များ သို့မဟုတ် ခလုတ်များ)<br>
+            • Lights that dim when appliances turn on (ပစ္စည်းများဖွင့်သောအခါ မှိန်သွားသောမီးများ)<br>
+            • Sparking when plugging in (ပလပ်စွပ်သောအခါ မီးပွားထွက်ခြင်း)<br>
+        </div>
+    </div>
+    
+    <!-- Practice Section -->
+    <div class="conversation-section">
+        <h2>✏️ Practice Questions / လေ့ကျင့်ခန်းမေးခွန်းများ</h2>
+        <div class="dialogue-box">
+            <div class="quiz-question">
+                <p><strong>1. How do you report a power outage?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'The power is out in my house.')">The light is flickering.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'The power is out in my house.')">The power is out in my house.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'The power is out in my house.')">The outlet is not working.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'The power is out in my house.')">The switch is broken.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>2. "ဆားကစ်ဘရိတ် ပြတ်နေတယ်" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'The circuit breaker tripped.')">The circuit breaker is on.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'The circuit breaker tripped.')">The circuit breaker tripped.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'The circuit breaker tripped.')">The circuit breaker is new.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'The circuit breaker tripped.')">The circuit breaker is old.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. What does GFCI stand for?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Ground Fault Circuit Interrupter')">General Fault Circuit Interrupter</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Ground Fault Circuit Interrupter')">Ground Fault Circuit Interrupter</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Ground Fault Circuit Interrupter')">Ground Fuse Circuit Interrupter</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Ground Fault Circuit Interrupter')">Ground Fault Circuit Indicator</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. "ဒီမီးလုံးအတွက် အလင်းအမှောင်ချိန်ညှိခလုတ်တစ်ခု တပ်ဆင်ချင်ပါတယ်" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I want to install a dimmer switch for this light.')">I want to install a regular switch.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I want to install a dimmer switch for this light.')">I want to install a dimmer switch for this light.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I want to install a dimmer switch for this light.')">I want to remove this light.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I want to install a dimmer switch for this light.')">I want to paint this light.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. What should you do before touching any electrical wiring?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Turn off the power at the circuit breaker')">Wear rubber gloves only</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Turn off the power at the circuit breaker')">Turn off the power at the circuit breaker</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Turn off the power at the circuit breaker')">Call a friend</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Turn off the power at the circuit breaker')">Use a metal tool</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p><i class="fas fa-heart" style="color: #f1c40f;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p>
+        <p style="font-size: 0.75rem; margin-top: 0.5rem;">Practice these conversations to handle electrical problems with confidence!</p>
+    </footer>
+</div>
+
+<!-- Back to Top Button -->
+<a href="#" class="back-to-top" id="backToTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+<script>
+    function speakEnglish(text) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8;
+        utterance.pitch = 1.0;
+        
+        function setVoice() {
+            const voices = window.speechSynthesis.getVoices();
+            const englishVoice = voices.find(v => v.lang === 'en-US' || v.lang.startsWith('en-'));
+            if (englishVoice) utterance.voice = englishVoice;
+            window.speechSynthesis.speak(utterance);
+        }
+        
+        if (window.speechSynthesis.getVoices().length) setVoice();
+        else window.speechSynthesis.onvoiceschanged = setVoice;
+    }
+    
+    function checkAnswer(element, correctAnswer) {
+        const options = element.parentElement.querySelectorAll('.quiz-option');
+        const isCorrect = element.innerText === correctAnswer;
+        
+        if (isCorrect) {
+            element.style.background = '#2ecc71';
+            element.style.color = 'white';
+            speakEnglish(correctAnswer);
+            setTimeout(() => {
+                options.forEach(opt => {
+                    opt.style.background = '';
+                    opt.style.color = '';
+                });
+            }, 1500);
+        } else {
+            element.style.background = '#e74c3c';
+            element.style.color = 'white';
+            setTimeout(() => {
+                element.style.background = '';
+                element.style.color = '';
+            }, 500);
+        }
+    }
+    
+    // Back to Top Button Functionality
+    (function() {
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        
+        if (backToTopBtn) {
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

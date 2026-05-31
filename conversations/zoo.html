@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zoo - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 1rem;
+        }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        
+        .conversation-section {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .conversation-section h2 {
+            background: #27ae60;
+            color: white;
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line {
+            display: grid;
+            grid-template-columns: 70px 1fr 1fr;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            align-items: start;
+        }
+        .speaker { font-weight: bold; color: #27ae60; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { 
+            color: #8e6b3c; 
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 0.95rem;
+        }
+        .audio-btn {
+            background: #eef4ff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.3rem;
+        }
+        .audio-btn:hover { background: #27ae60; color: white; }
+        
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+            padding: 1rem;
+        }
+        .vocab-item {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            border-left: 3px solid #27ae60;
+        }
+        .vocab-eng { font-weight: bold; color: #27ae60; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        
+        .quiz-question {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.8rem;
+        }
+        .quiz-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .quiz-option {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .quiz-option:hover { background: #27ae60; color: white; border-color: #27ae60; }
+        
+        .animal-box {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            padding: 1rem;
+            justify-content: center;
+        }
+        .animal-card {
+            background: #e8f5e9;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            text-align: center;
+            min-width: 100px;
+            border: 1px solid #27ae60;
+        }
+        .animal-icon { font-size: 2rem; }
+        .animal-name { font-weight: bold; color: #27ae60; }
+        
+        .tips-box {
+            background: #e8f5e9;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #27ae60;
+        }
+        .tips-box i { color: #27ae60; margin-right: 8px; }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1rem;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: #1e3c72;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid white;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: #f5b042;
+            color: #1e3c72;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .back-to-top i {
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 42px;
+                height: 42px;
+            }
+            .back-to-top i {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 700px) {
+            .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> All Conversations
+    </a>
+    
+    <header>
+        <h1><i class="fas fa-paw"></i> Zoo</h1>
+        <p>Learn how to talk about animals, zoo exhibits, and conservation in English</p>
+        <p>တိရစ္ဆာန်များ၊ တိရစ္ဆာန်ရုံပြပွဲများနှင့် ထိန်းသိမ်းရေးအကြောင်း အင်္ဂလိပ်လို ပြောဆိုနည်းကို လေ့လာပါ</p>
+    </header>
+    
+    <!-- Dialogue 1: Buying Zoo Tickets -->
+    <div class="conversation-section">
+        <h2>🎫 Buying Zoo Tickets / တိရစ္ဆာန်ရုံလက်မှတ်များဝယ်ယူခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Visitor:</div>
+                <div class="english">Hello, how much are tickets to the zoo?</div>
+                <div class="burmese">မင်္ဂလာပါ၊ တိရစ္ဆာန်ရုံလက်မှတ်စျေးနှုန်းက ဘယ်လောက်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Hello, how much are tickets to the zoo?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Cashier:</div>
+                <div class="english">Adults are $20, children (ages 3-12) are $12, and seniors are $15.</div>
+                <div class="burmese">လူကြီး ၂၀ ဒေါ်လာ၊ ကလေး (အသက် ၃-၁၂) ၁၂ ဒေါ်လာ၊ သက်ကြီးရွယ်အိုများ ၁၅ ဒေါ်လာပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Adults are 20 dollars, children ages 3 to 12 are 12 dollars, and seniors are 15 dollars.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Visitor:</div>
+                <div class="english">Two adults and one child, please. Is there a parking fee?</div>
+                <div class="burmese">လူကြီးနှစ်ယောက်နဲ့ ကလေးတစ်ယောက်ပါ။ ကားပါကင်ကြေးရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Two adults and one child, please. Is there a parking fee?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Cashier:</div>
+                <div class="english">Parking is free. Here are your tickets. Enjoy your visit!</div>
+                <div class="burmese">ကားပါကင်က အခမဲ့ပါ။ ဒီမှာ သင့်လက်မှတ်တွေပါ။ ပျော်ရွှင်စွာလည်ပတ်ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Parking is free. Here are your tickets. Enjoy your visit!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 2: Getting a Map -->
+    <div class="conversation-section">
+        <h2>🗺️ Getting a Map / မြေပုံရယူခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Visitor:</div>
+                <div class="english">Do you have a map of the zoo?</div>
+                <div class="burmese">တိရစ္ဆာန်ရုံရဲ့ မြေပုံရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you have a map of the zoo?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Staff:</div>
+                <div class="english">Yes, here's a free map. The pandas are in Zone A, and the lions are in Zone C.</div>
+                <div class="burmese">ဟုတ်ကဲ့၊ ဒီမှာ အခမဲ့မြေပုံပါ။ ပန်ဒါတွေက ဇုန် A မှာ၊ ခြင်္သေ့တွေက ဇုန် C မှာပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, here is a free map. The pandas are in Zone A, and the lions are in Zone C.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Visitor:</div>
+                <div class="english">What about the elephants?</div>
+                <div class="burmese">ဆင်တွေကရော။</div>
+                <button class="audio-btn" onclick="speakEnglish('What about the elephants?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Staff:</div>
+                <div class="english">They're in Zone B, near the reptile house. There's also a feeding show at 2 PM.</div>
+                <div class="burmese">ဇုန် B မှာ၊ တွားသွားသတ္တဝါအိမ်အနားမှာပါ။ နေ့လယ် ၂ နာရီမှာ အစာကျွေးပွဲလည်းရှိပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('They are in Zone B, near the reptile house. There is also a feeding show at 2 PM.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 3: At the Elephant Exhibit -->
+    <div class="conversation-section">
+        <h2>🐘 At the Elephant Exhibit / ဆင်ပြပွဲတွင်</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Look at the elephants! They're so big!</div>
+                <div class="burmese">ဆင်တွေကို ကြည့်စမ်း! သူတို့ အရမ်းကြီးတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Look at the elephants! They are so big!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">That's an Asian elephant. You can tell by its smaller ears compared to African elephants.</div>
+                <div class="burmese">ဒါက အာရှဆင်ပါ။ အာဖရိကဆင်တွေနဲ့ ယှဉ်ရင် နားရွက်သေးသေးနဲ့ ခွဲခြားနိုင်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('That is an Asian elephant. You can tell by its smaller ears compared to African elephants.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">How long do they live?</div>
+                <div class="burmese">သူတို့ ဘယ်လောက်ကြာကြာ အသက်ရှင်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('How long do they live?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Elephants can live up to 70 years in the wild, even longer in captivity.</div>
+                <div class="burmese">ဆင်တွေဟာ တောရိုင်းထဲမှာ နှစ် ၇၀ အထိ၊ သိမ်းထားရင် ပိုကြာကြာ အသက်ရှင်နိုင်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Elephants can live up to 70 years in the wild, even longer in captivity.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 4: Lion and Tiger Area -->
+    <div class="conversation-section">
+        <h2>🦁 Lion and Tiger Area / ခြင်္သေ့နှင့်ကျားဧရိယာ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">The lion is sleeping again. He always looks so lazy!</div>
+                <div class="burmese">ခြင်္သေ့ ပြန်အိပ်နေပြီ။ သူ အမြဲလိုလို အရမ်းပျင်းရိပုံရတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('The lion is sleeping again. He always looks so lazy!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Actually, lions sleep up to 20 hours a day. They're most active at night.</div>
+                <div class="burmese">တကယ်တမ်းက ခြင်္သေ့တွေ တစ်နေ့ကို ၂၀ နာရီအထိ အိပ်တယ်။ သူတို့ ညဘက်မှာ အတက်ကြွဆုံးပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Actually, lions sleep up to 20 hours a day. They are most active at night.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Look at the tiger pacing back and forth. It's beautiful.</div>
+                <div class="burmese">ကျား နောက်ပြန်ရှေ့ဆက် လျှောက်နေတာကို ကြည့်စမ်း။ အရမ်းလှတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Look at the tiger pacing back and forth. It is beautiful.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Tigers are endangered. There are only about 4,000 left in the wild.</div>
+                <div class="burmese">ကျားတွေ မျိုးသုဉ်းလုနီးပါးပါ။ တောရိုင်းထဲမှာ ၄၀၀၀ လောက်ပဲ ကျန်ရှိတော့တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Tigers are endangered. There are only about 4,000 left in the wild.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 5: Monkey and Ape House -->
+    <div class="conversation-section">
+        <h2>🐒 Monkey and Ape House / မျောက်နှင့်ဝက်ဝံအိမ်</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">The monkeys are so funny! Look at them swinging on the ropes.</div>
+                <div class="burmese">မျောက်တွေ အရမ်းရယ်စရာကောင်းတယ်! ကြိုးတွေပေါ်လွဲနေတာကြည့်စမ်း။</div>
+                <button class="audio-btn" onclick="speakEnglish('The monkeys are so funny! Look at them swinging on the ropes.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Those are spider monkeys. They have very long tails that help them balance.</div>
+                <div class="burmese">ဒါတွေက ပင့်ကူမျောက်တွေပါ။ သူတို့မှာ ဟန်ချက်ညီအောင် ကူညီပေးတဲ့ အမြီးအလွန်ရှည်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Those are spider monkeys. They have very long tails that help them balance.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">What about the gorilla? He looks so strong.</div>
+                <div class="burmese">ဂေါ်ရီလာကရော? သူ အရမ်းသန်မာပုံရတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('What about the gorilla? He looks so strong.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Gorillas are gentle giants. They're herbivores and very intelligent.</div>
+                <div class="burmese">ဂေါ်ရီလာတွေက နူးညံ့တဲ့ဘီလူးကြီးတွေပါ။ သူတို့က သတ်သတ်လွတ်စားပြီး အရမ်းဉာဏ်ကောင်းတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Gorillas are gentle giants. They are herbivores and very intelligent.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 6: Reptile House -->
+    <div class="conversation-section">
+        <h2>🐍 Reptile House / တွားသွားသတ္တဝါအိမ်</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">I'm a little scared of snakes.</div>
+                <div class="burmese">ငါ မြွေတွေကို နည်းနည်းကြောက်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am a little scared of snakes.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Don't worry, they're behind glass. Look at this python. It's huge!</div>
+                <div class="burmese">မပူပါနဲ့၊ သူတို့ မှန်အနောက်မှာရှိတယ်။ ဒီစပါးအုံးမြွေကို ကြည့်စမ်း။ ဧရာမကြီးပဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do not worry, they are behind glass. Look at this python. It is huge!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">And look at the crocodile. It hasn't moved in minutes.</div>
+                <div class="burmese">မိကျောင်းကို ကြည့်စမ်း။ မိနစ်နဲ့ချီပြီး မလှုပ်ဘူး။</div>
+                <button class="audio-btn" onclick="speakEnglish('And look at the crocodile. It has not moved in minutes.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Crocodiles can stay completely still for hours while waiting for prey.</div>
+                <div class="burmese">မိကျောင်းတွေဟာ သားကောင်ကိုစောင့်ရင်း နာရီပေါင်းများစွာ လုံးဝမလှုပ်ဘဲ နေနိုင်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Crocodiles can stay completely still for hours while waiting for prey.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 7: Bird Aviary -->
+    <div class="conversation-section">
+        <h2>🦜 Bird Aviary / ငှက်ကျီ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">This bird aviary is beautiful. Listen to all the different sounds!</div>
+                <div class="burmese">ဒီငှက်ကျီက လှတယ်။ မတူညီတဲ့အသံတွေ အားလုံးကို နားထောင်စမ်း။</div>
+                <button class="audio-btn" onclick="speakEnglish('This bird aviary is beautiful. Listen to all the different sounds!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Those colorful birds are parrots. Some of them can even talk!</div>
+                <div class="burmese">အရောင်စုံငှက်တွေက ကြက်တူရွေးတွေပါ။ တချို့က စကားတောင်ပြောနိုင်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Those colorful birds are parrots. Some of them can even talk!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Look at the peacock! Its feathers are amazing.</div>
+                <div class="burmese">ဒေါင်းကို ကြည့်စမ်း! သူ့အမွေးတွေက အံ့သြစရာကောင်းတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Look at the peacock! Its feathers are amazing.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">When the peacock spreads its feathers, it's called a train. It uses it to attract a mate.</div>
+                <div class="burmese">ဒေါင်းက သူ့အမွေးတွေဖြန့်တဲ့အခါ "train" လို့ခေါ်တယ်။ အောင်မြင်ဖော်ကိုဆွဲဆောင်ဖို့ သုံးတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('When the peacock spreads its feathers, it is called a train. It uses it to attract a mate.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 8: Zoo Conservation -->
+    <div class="conversation-section">
+        <h2>🌍 Zoo Conservation / တိရစ္ဆာန်ရုံထိန်းသိမ်းရေး</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Do zoos help protect endangered animals?</div>
+                <div class="burmese">တိရစ္ဆာန်ရုံတွေက မျိုးသုဉ်းလုနီးတိရစ္ဆာန်တွေကို ကာကွယ်ဖို့ ကူညီလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do zoos help protect endangered animals?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Yes, many zoos have breeding programs for endangered species like pandas and tigers.</div>
+                <div class="burmese">ဟုတ်ကဲ့၊ တိရစ္ဆာန်ရုံအများအပြားမှာ ပန်ဒါနဲ့ ကျားလို မျိုးသုဉ်းလုနီးမျိုးစိတ်တွေအတွက် မွေးမြူရေးအစီအစဉ်တွေ ရှိပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, many zoos have breeding programs for endangered species like pandas and tigers.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">That's good to know. I saw a sign about adopting an animal.</div>
+                <div class="burmese">သိရတာ ကောင်းပါတယ်။ တိရစ္ဆာန်မွေးစားခြင်းအကြောင်း ဆိုင်းဘုတ်တစ်ခု မြင်လိုက်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('That is good to know. I saw a sign about adopting an animal.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">You can sponsor an animal. Your donation helps with food, medical care, and conservation efforts.</div>
+                <div class="burmese">တိရစ္ဆာန်တစ်ကောင်ကို ပံ့ပိုးနိုင်ပါတယ်။ သင့်အလှူငွေက အစာ၊ ကျန်းမာရေးစောင့်ရှောက်မှု၊ နှင့် ထိန်းသိမ်းရေးလုပ်ငန်းများအတွက် ကူညီပေးပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('You can sponsor an animal. Your donation helps with food, medical care, and conservation efforts.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Animals List -->
+    <div class="conversation-section">
+        <h2>🐘 Animals at the Zoo / တိရစ္ဆာန်ရုံရှိ တိရစ္ဆာန်များ</h2>
+        <div class="animal-box">
+            <div class="animal-card">
+                <div class="animal-icon">🦁</div>
+                <div class="animal-name">Lion</div>
+                <div>ခြင်္သေ့</div>
+            </div>
+            <div class="animal-card">
+                <div class="animal-icon">🐘</div>
+                <div class="animal-name">Elephant</div>
+                <div>ဆင်</div>
+            </div>
+            <div class="animal-card">
+                <div class="animal-icon">🐅</div>
+                <div class="animal-name">Tiger</div>
+                <div>ကျား</div>
+            </div>
+            <div class="animal-card">
+                <div class="animal-icon">🐒</div>
+                <div class="animal-name">Monkey</div>
+                <div>မျောက်</div>
+            </div>
+            <div class="animal-card">
+                <div class="animal-icon">🦒</div>
+                <div class="animal-name">Giraffe</div>
+                <div>သစ်ကုလားအုတ်</div>
+            </div>
+            <div class="animal-card">
+                <div class="animal-icon">🦓</div>
+                <div class="animal-name">Zebra</div>
+                <div>မြင်းကျား</div>
+            </div>
+            <div class="animal-card">
+                <div class="animal-icon">🐧</div>
+                <div class="animal-name">Penguin</div>
+                <div>ပင်ဂွင်း</div>
+            </div>
+            <div class="animal-card">
+                <div class="animal-icon">🐍</div>
+                <div class="animal-name">Snake</div>
+                <div>မြွေ</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Vocabulary Section -->
+    <div class="conversation-section">
+        <h2>📚 Zoo Vocabulary / တိရစ္ဆာန်ရုံသုံးဝေါဟာရများ</h2>
+        <div class="vocab-grid">
+            <div class="vocab-item"><span class="vocab-eng">Enclosure / Habitat</span><br><span class="vocab-burmese">အကာအရံ/နေရင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Zookeeper</span><br><span class="vocab-burmese">တိရစ္ဆာန်ရုံမှူး</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Endangered species</span><br><span class="vocab-burmese">မျိုးသုဉ်းလုနီးမျိုးစိတ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Breeding program</span><br><span class="vocab-burmese">မွေးမြူရေးအစီအစဉ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Feeding time</span><br><span class="vocab-burmese">အစာကျွေးချိန်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Carnivore</span><br><span class="vocab-burmese">အသားစား</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Herbivore</span><br><span class="vocab-burmese">အပင်စား</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Omnivore</span><br><span class="vocab-burmese">အသားအပင်စား</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Nocturnal</span><br><span class="vocab-burmese">ညဘက်သွားလာသော</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Conservation</span><br><span class="vocab-burmese">ထိန်းသိမ်းရေး</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Wildlife</span><br><span class="vocab-burmese">တောရိုင်းတိရစ္ဆာန်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Extinct</span><br><span class="vocab-burmese">မျိုးသုဉ်းသော</span></div>
+        </div>
+    </div>
+    
+    <!-- Zoo Tips -->
+    <div class="conversation-section">
+        <h2>💡 Zoo Tips for Visitors / လာရောက်လည်ပတ်သူများအတွက် တိရစ္ဆာန်ရုံအကြံပြုချက်များ</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Tips for a Great Zoo Visit (ကောင်းမွန်သော တိရစ္ဆာန်ရုံလည်ပတ်မှုအတွက် အကြံပြုချက်များ):</strong><br>
+            • Go early in the morning when animals are most active (နံနက်စောစော သွားပါ၊ တိရစ္ဆာန်များ အတက်ကြွဆုံးအချိန်)<br>
+            • Wear comfortable shoes (သက်တောင့်သက်သာရှိသော ဖိနပ်စီးပါ)<br>
+            • Bring water and sunscreen (ရေနှင့် နေကာခရင်မ် ယူလာပါ)<br>
+            • Don't feed the animals (တိရစ္ဆာန်များကို အစာမကျွေးပါနှင့်)<br>
+            • Stay on designated paths (သတ်မှတ်ထားသောလမ်းများပေါ်တွင်နေပါ)<br>
+            • Check the schedule for feeding times and shows (အစာကျွေးချိန်နှင့် ပွဲများအတွက် အချိန်ဇယားစစ်ဆေးပါ)<br>
+        </div>
+    </div>
+    
+    <!-- Practice Section -->
+    <div class="conversation-section">
+        <h2>✏️ Practice Questions / လေ့ကျင့်ခန်းမေးခွန်းများ</h2>
+        <div class="dialogue-box">
+            <div class="quiz-question">
+                <p><strong>1. How do you ask where the elephants are located?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Where are the elephants?')">Where is the exit?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Where are the elephants?')">Where are the elephants?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Where are the elephants?')">How much is the ticket?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Where are the elephants?')">What time does the zoo close?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>2. "ခြင်္သေ့တွေ တစ်နေ့ကို ၂၀ နာရီအထိ အိပ်တယ်" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Lions sleep up to 20 hours a day.')">Lions sleep all day.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Lions sleep up to 20 hours a day.')">Lions sleep up to 20 hours a day.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Lions sleep up to 20 hours a day.')">Lions never sleep.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Lions sleep up to 20 hours a day.')">Lions sleep only at night.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. What is a "herbivore"?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'An animal that eats plants')">An animal that eats meat</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'An animal that eats plants')">An animal that eats both plants and meat</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'An animal that eats plants')">An animal that eats plants</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'An animal that eats plants')">An animal that doesn't eat</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. "ဒီတိရစ္ဆာန်ရုံမှာ ပန်ဒါတွေရှိလား" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Does this zoo have pandas?')">Does this zoo have lions?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Does this zoo have pandas?')">Does this zoo have pandas?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Does this zoo have pandas?')">Does this zoo have tigers?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Does this zoo have pandas?')">Does this zoo have monkeys?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. What does "endangered species" mean?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A species at risk of extinction')">A common species</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A species at risk of extinction')">A species that is everywhere</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A species at risk of extinction')">A species at risk of extinction</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A species at risk of extinction')">A species that is already extinct</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p><i class="fas fa-heart" style="color: #27ae60;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p>
+        <p style="font-size: 0.75rem; margin-top: 0.5rem;">Practice these conversations to talk about animals and visit the zoo with confidence!</p>
+    </footer>
+</div>
+
+<!-- Back to Top Button -->
+<a href="#" class="back-to-top" id="backToTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+<script>
+    function speakEnglish(text) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8;
+        utterance.pitch = 1.0;
+        
+        function setVoice() {
+            const voices = window.speechSynthesis.getVoices();
+            const englishVoice = voices.find(v => v.lang === 'en-US' || v.lang.startsWith('en-'));
+            if (englishVoice) utterance.voice = englishVoice;
+            window.speechSynthesis.speak(utterance);
+        }
+        
+        if (window.speechSynthesis.getVoices().length) setVoice();
+        else window.speechSynthesis.onvoiceschanged = setVoice;
+    }
+    
+    function checkAnswer(element, correctAnswer) {
+        const options = element.parentElement.querySelectorAll('.quiz-option');
+        const isCorrect = element.innerText === correctAnswer;
+        
+        if (isCorrect) {
+            element.style.background = '#2ecc71';
+            element.style.color = 'white';
+            speakEnglish(correctAnswer);
+            setTimeout(() => {
+                options.forEach(opt => {
+                    opt.style.background = '';
+                    opt.style.color = '';
+                });
+            }, 1500);
+        } else {
+            element.style.background = '#e74c3c';
+            element.style.color = 'white';
+            setTimeout(() => {
+                element.style.background = '';
+                element.style.color = '';
+            }, 500);
+        }
+    }
+    
+    // Back to Top Button Functionality
+    (function() {
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        
+        if (backToTopBtn) {
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

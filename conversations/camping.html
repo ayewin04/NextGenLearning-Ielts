@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camping & Hiking - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 1rem;
+        }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        
+        .conversation-section {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .conversation-section h2 {
+            background: #e17055;
+            color: white;
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line {
+            display: grid;
+            grid-template-columns: 70px 1fr 1fr;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            align-items: start;
+        }
+        .speaker { font-weight: bold; color: #e17055; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { 
+            color: #8e6b3c; 
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 0.95rem;
+        }
+        .audio-btn {
+            background: #eef4ff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.3rem;
+        }
+        .audio-btn:hover { background: #e17055; color: white; }
+        
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+            padding: 1rem;
+        }
+        .vocab-item {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            border-left: 3px solid #e17055;
+        }
+        .vocab-eng { font-weight: bold; color: #e17055; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        
+        .quiz-question {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.8rem;
+        }
+        .quiz-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .quiz-option {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .quiz-option:hover { background: #e17055; color: white; border-color: #e17055; }
+        
+        .tips-box {
+            background: #fef5e7;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #e17055;
+        }
+        .tips-box i { color: #e17055; margin-right: 8px; }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1rem;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: #1e3c72;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid white;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: #f5b042;
+            color: #1e3c72;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .back-to-top i {
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 42px;
+                height: 42px;
+            }
+            .back-to-top i {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 700px) {
+            .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> All Conversations
+    </a>
+    
+    <header>
+        <h1><i class="fas fa-campground"></i> Camping & Hiking</h1>
+        <p>Learn how to plan camping trips, talk about nature, and hiking trails in English</p>
+        <p>စခန်းချခရီးစဉ်များစီစဉ်နည်း၊ သဘာဝအကြောင်းပြောဆိုနည်းနှင့် တောင်တက်လမ်းများအကြောင်း အင်္ဂလိပ်လို ပြောဆိုနည်းကို လေ့လာပါ</p>
+    </header>
+    
+    <!-- Dialogue 1: Planning a Camping Trip -->
+    <div class="conversation-section">
+        <h2>🏕️ Planning a Camping Trip / စခန်းချခရီးစဉ်စီစဉ်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Let's go camping next weekend. The weather forecast looks good.</div>
+                <div class="burmese">လာမယ့်စနေ၊ တနင်္ဂနွေ စခန်းချသွားကြရအောင်။ မိုးလေဝသခန့်မှန်းချက်က ကောင်းတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Let us go camping next weekend. The weather forecast looks good.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">That sounds perfect! Where should we go?</div>
+                <div class="burmese">ပြီးပြည့်စုံတယ်! ဘယ်ကိုသွားသင့်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('That sounds perfect! Where should we go?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">How about Kalaw? The mountains are beautiful this time of year.</div>
+                <div class="burmese">ကလောမြို့ကရော? ဒီရာသီမှာ တောင်တွေ အရမ်းလှတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('How about Kalaw? The mountains are beautiful this time of year.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">I've never been there. Let's do it! Do we need a permit?</div>
+                <div class="burmese">ငါ အဲဒီကို တစ်ခါမှမသွားဖူးဘူး။ သွားကြရအောင်! ခွင့်ပြုမိန့် လိုအပ်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('I have never been there. Let us do it! Do we need a permit?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 2: Camping Gear -->
+    <div class="conversation-section">
+        <h2>🎒 Camping Gear / စခန်းချပစ္စည်းကိရိယာများ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">What camping gear do we need to bring?</div>
+                <div class="burmese">ဘယ်စခန်းချပစ္စည်းကိရိယာတွေ ယူလာဖို့လိုလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What camping gear do we need to bring?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">We'll need a tent, sleeping bags, and a camping stove.</div>
+                <div class="burmese">တဲ၊ အိပ်အိတ်၊ နဲ့ စခန်းချမီးဖိုတွေ လိုပါလိမ့်မယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('We will need a tent, sleeping bags, and a camping stove.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">I have a two-person tent. Do you have a sleeping bag?</div>
+                <div class="burmese">ငါ့မှာ လူနှစ်ယောက်တဲရှိတယ်။ မင်းမှာ အိပ်အိတ်ရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('I have a two-person tent. Do you have a sleeping bag?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Yes, I'll bring mine. Don't forget a flashlight and extra batteries!</div>
+                <div class="burmese">ဟုတ်တယ်၊ ငါ့ဟာယူလာမယ်။ လက်နှိပ်ဓာတ်မီးနဲ့ ဘက်ထရီအပိုတွေ မမေ့နဲ့။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, I will bring mine. Do not forget a flashlight and extra batteries!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 3: Choosing a Campsite -->
+    <div class="conversation-section">
+        <h2>⛺ Choosing a Campsite / စခန်းချနေရာရွေးချယ်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">This looks like a good spot. It's flat and near the river.</div>
+                <div class="burmese">ဒါက နေရာကောင်းပုံရတယ်။ ပြန့်ပြီး မြစ်အနားမှာရှိတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('This looks like a good spot. It is flat and near the river.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">We should camp away from the river in case it rains and the water rises.</div>
+                <div class="burmese">မိုးရွားပြီး ရေတက်လာရင်အတွက် မြစ်နဲ့ဝေးဝေးမှာ စခန်းချသင့်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('We should camp away from the river in case it rains and the water rises.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Good point. What about that clearing over there?</div>
+                <div class="burmese">မှန်ပါတယ်။ ဟိုဘက်က လွင်ပြင်ကရော။</div>
+                <button class="audio-btn" onclick="speakEnglish('Good point. What about that clearing over there?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Perfect. Let's set up the tent there before it gets dark.</div>
+                <div class="burmese">ပြီးပြည့်စုံတယ်။ မှောင်ခင် တဲထိုးကြရအောင်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Perfect. Let us set up the tent there before it gets dark.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 4: Setting Up Camp -->
+    <div class="conversation-section">
+        <h2>🔨 Setting Up Camp / စခန်းချနေရာပြင်ဆင်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Can you help me set up the tent?</div>
+                <div class="burmese">တဲထိုးဖို့ ကူညီနိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Can you help me set up the tent?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Sure. First, lay out the groundsheet. Then we'll assemble the poles.</div>
+                <div class="burmese">ရပါတယ်။ ပထမဆုံး၊ မြေခံအကာကို ခင်းပါ။ ပြီးရင် တိုင်တွေ စုစည်းပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Sure. First, lay out the groundsheet. Then we will assemble the poles.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">These poles fit together like this, right?</div>
+                <div class="burmese">ဒီတိုင်တွေ ဒီလိုစုစည်းလိုက်တယ်ဟုတ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('These poles fit together like this, right?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Yes, that's correct. Now let's attach the rainfly in case it rains.</div>
+                <div class="burmese">ဟုတ်တယ်၊ မှန်တယ်။ မိုးရွားရင်အတွက် မိုးကာအကာကို ချိတ်လိုက်ရအောင်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, that is correct. Now let us attach the rainfly in case it rains.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 5: Starting a Campfire -->
+    <div class="conversation-section">
+        <h2>🔥 Starting a Campfire / မီးပုံဖိုခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Let's gather some wood for the campfire.</div>
+                <div class="burmese">မီးပုံအတွက် ထင်းအချို့ စုဆောင်းကြရအောင်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Let us gather some wood for the campfire.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">I'll get small sticks for kindling and larger logs for fuel.</div>
+                <div class="burmese">မီးစရန်အတွက် တုတ်ချောင်းအသေးတွေနဲ့ လောင်စာအတွက် ထင်းတုံးကြီးတွေ ယူမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I will get small sticks for kindling and larger logs for fuel.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Do you have a lighter or matches?</div>
+                <div class="burmese">မီးခြစ် ဒါမှမဟုတ် မီးခြစ်ဆံ ရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you have a lighter or matches?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">I brought waterproof matches. Let's make a teepee shape with the wood.</div>
+                <div class="burmese">ရေစိုခံမီးခြစ်ဆံ ယူလာတယ်။ ထင်းတွေနဲ့ တိပီပုံစံလုပ်ကြရအောင်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I brought waterproof matches. Let us make a teepee shape with the wood.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 6: Hiking Trail -->
+    <div class="conversation-section">
+        <h2>🥾 Hiking Trail / တောင်တက်လမ်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Which trail should we take? There's a short 3-mile loop or a longer 8-mile trail to the waterfall.</div>
+                <div class="burmese">ဘယ်လမ်းကြောင်းကို သွားသင့်လဲ။ ၃ မိုင်တို loop လမ်းကြောင်း ဒါမှမဟုတ် ရေတံခွန်ကို ၈ မိုင်ရှည်တဲ့လမ်းကြောင်းရှိတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Which trail should we take? There is a short 3-mile loop or a longer 8-mile trail to the waterfall.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Let's do the longer one. I want to see the waterfall.</div>
+                <div class="burmese">ရှည်တာကိုလုပ်ကြရအောင်။ ရေတံခွန်ကိုမြင်ချင်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Let us do the longer one. I want to see the waterfall.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Good idea. Make sure to bring plenty of water and wear sturdy shoes.</div>
+                <div class="burmese">အကြံကောင်းပါတယ်။ ရေများများယူလာပြီး ခိုင်ခံ့တဲ့ဖိနပ်စီးဖို့ သေချာပါစေ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Good idea. Make sure to bring plenty of water and wear sturdy shoes.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">The view from the top is supposed to be amazing. Let's go!</div>
+                <div class="burmese">ထိပ်ပေါ်ကမြင်ကွင်းက အံ့သြစရာကောင်းမယ်။ သွားကြရအောင်။</div>
+                <button class="audio-btn" onclick="speakEnglish('The view from the top is supposed to be amazing. Let us go!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 7: Nature Talk -->
+    <div class="conversation-section">
+        <h2>🌲 Nature Talk / သဘာဝစကားပြော</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Listen to the birds singing. It's so peaceful out here.</div>
+                <div class="burmese">ငှက်တွေ သီချင်းဆိုတာကို နားထောင်စမ်း။ ဒီမှာ အရမ်းငြိမ်းချမ်းတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Listen to the birds singing. It is so peaceful out here.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">I love being in nature. It's a great escape from the city noise.</div>
+                <div class="burmese">သဘာဝထဲမှာနေရတာ ကြိုက်တယ်။ မြို့ဆူညံသံကနေ လွတ်မြောက်ဖို့ အကောင်းဆုံးပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('I love being in nature. It is a great escape from the city noise.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Look at that deer over there! Don't make any sudden movements.</div>
+                <div class="burmese">ဟိုမှာ သမင်ကို ကြည့်စမ်း! ရုတ်တရက်လှုပ်ရှားမှုတွေ မလုပ်ပါနဲ့။</div>
+                <button class="audio-btn" onclick="speakEnglish('Look at that deer over there! Do not make any sudden movements.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Wow, it's so beautiful. This is why I love camping.</div>
+                <div class="burmese">ဝိုး၊ အရမ်းလှတယ်။ ဒါကြောင့် ငါ စခန်းချတာကို ကြိုက်တာ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Wow, it is so beautiful. This is why I love camping.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 8: Packing Up -->
+    <div class="conversation-section">
+        <h2>🚮 Packing Up / စခန်းသိမ်းခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Time to pack up. Make sure we leave no trace.</div>
+                <div class="burmese">သိမ်းဖို့အချိန်ရောက်ပြီ။ ခြေရာမချန်ထားရဘူးဆိုတာ သေချာပါစေ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Time to pack up. Make sure we leave no trace.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">I'll collect all the trash. Did you put out the campfire completely?</div>
+                <div class="burmese">ငါ အမှိုက်အားလုံး သိမ်းမယ်။ မီးပုံကို လုံးဝငြိမ်းသွားအောင် လုပ်ပြီးပြီလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('I will collect all the trash. Did you put out the campfire completely?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Yes, I poured water over it and stirred the ashes.</div>
+                <div class="burmese">ဟုတ်တယ်၊ ရေလောင်းပြီး ပြာတွေကို မွှေပေးလိုက်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, I poured water over it and stirred the ashes.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Let's do one last walk around to make sure we didn't forget anything.</div>
+                <div class="burmese">တစ်ခုခုမေ့ကျန်တာ မရှိဘူးဆိုတာ သေချာအောင် နောက်ဆုံးတစ်ပတ် လမ်းလျှောက်ကြရအောင်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Let us do one last walk around to make sure we did not forget anything.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Camping Checklist -->
+    <div class="conversation-section">
+        <h2>✅ Camping Checklist / စခန်းချစစ်ဆေးစာရင်း</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Essential Camping Gear (မရှိမဖြစ် စခန်းချပစ္စည်းကိရိယာများ):</strong><br>
+            • ⛺ Tent (တဲ)<br>
+            • 😴 Sleeping bag & sleeping pad (အိပ်အိတ်နှင့် အိပ်ဖျာ)<br>
+            • 🔦 Flashlight / Headlamp (လက်နှိပ်ဓာတ်မီး/ခေါင်းစွပ်မီး)<br>
+            • 🍳 Camping stove & fuel (စခန်းချမီးဖိုနှင့် လောင်စာ)<br>
+            • 🧥 Warm clothes & rain jacket (ပူနွေးသောအဝတ်အစားများနှင့် မိုးကာအင်္ကျီ)<br>
+            • 🥾 Hiking boots (တောင်တက်ဖိနပ်)<br>
+            • 💧 Water filter or purification tablets (ရေစစ် သို့မဟုတ် ရေသန့်စင်ဆေးပြား)<br>
+            • 🗺️ Map & compass (မြေပုံနှင့် သံလိုက်အိမ်မြှောင်)<br>
+            • 🩹 First aid kit (ရှေးဦးသူနာပြုသေတ္တာ)<br>
+            • 🍽️ Multi-tool & utensils (ဘက်စုံသုံးကိရိယာနှင့် မီးဖိုချောင်သုံးပစ္စည်းများ)<br>
+        </div>
+    </div>
+    
+    <!-- Leave No Trace Principles -->
+    <div class="conversation-section">
+        <h2>🌿 Leave No Trace Principles / ခြေရာမချန်ထားရမည့် အခြေခံမူများ</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>7 Principles of Leave No Trace (ခြေရာမချန်ထားရေး အခြေခံမူ ၇ ချက်):</strong><br>
+            • Plan ahead and prepare (ကြိုတင်စီစဉ်ပြီး ပြင်ဆင်ပါ)<br>
+            • Travel and camp on durable surfaces (ခံနိုင်ရည်ရှိသော မျက်နှာပြင်များပေါ်တွင် ခရီးသွားပြီး စခန်းချပါ)<br>
+            • Dispose of waste properly (အမှိုက်ကို စနစ်တကျ စွန့်ပစ်ပါ)<br>
+            • Leave what you find (တွေ့ရှိသမျှကို ထားခဲ့ပါ)<br>
+            • Minimize campfire impacts (မီးပုံ၏ သက်ရောက်မှုကို လျှော့ချပါ)<br>
+            • Respect wildlife (တောရိုင်းတိရစ္ဆာန်များကို လေးစားပါ)<br>
+            • Be considerate of other visitors (အခြားဧည့်သည်များကို ထည့်သွင်းစဉ်းစားပါ)<br>
+        </div>
+    </div>
+    
+    <!-- Vocabulary Section -->
+    <div class="conversation-section">
+        <h2>📚 Camping & Hiking Vocabulary / စခန်းချနှင့်တောင်တက်သုံးဝေါဟာရများ</h2>
+        <div class="vocab-grid">
+            <div class="vocab-item"><span class="vocab-eng">Backpack</span><br><span class="vocab-burmese">ကျောပိုးအိတ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Trail marker</span><br><span class="vocab-burmese">လမ်းကြောင်းအမှတ်အသား</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Summit / Peak</span><br><span class="vocab-burmese">ထိပ်/တောင်ထွတ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Elevation gain</span><br><span class="vocab-burmese">အမြင့်တက်ခြင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Wilderness</span><br><span class="vocab-burmese">တောရိုင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Compass</span><br><span class="vocab-burmese">သံလိုက်အိမ်မြှောင်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Kindling</span><br><span class="vocab-burmese">မီးစရန်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Tinder</span><br><span class="vocab-burmese">မီးမွှေးပစ္စည်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Weatherproof</span><br><span class="vocab-burmese">ရာသီဥတုဒဏ်ခံ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Whistle</span><br><span class="vocab-burmese">ချွက်ချက်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Bear bag</span><br><span class="vocab-burmese">ဝက်ဝံအိတ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Dehydration</span><br><span class="vocab-burmese">ရေဓာတ်ခန်းခြောက်ခြင်း</span></div>
+        </div>
+    </div>
+    
+    <!-- Practice Section -->
+    <div class="conversation-section">
+        <h2>✏️ Practice Questions / လေ့ကျင့်ခန်းမေးခွန်းများ</h2>
+        <div class="dialogue-box">
+            <div class="quiz-question">
+                <p><strong>1. How do you suggest going camping?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Let us go camping this weekend.')">Let us go shopping this weekend.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Let us go camping this weekend.')">Let us go camping this weekend.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Let us go camping this weekend.')">Let us go swimming this weekend.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Let us go camping this weekend.')">Let us go to work this weekend.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>2. "မီးပုံကို လုံးဝငြိမ်းသွားအောင်လုပ်ပါ" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Make sure the campfire is completely out.')">Make sure the campfire is big.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Make sure the campfire is completely out.')">Make sure the campfire is completely out.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Make sure the campfire is completely out.')">Make sure the campfire is burning.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Make sure the campfire is completely out.')">Make sure the campfire is hot.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. What does "leave no trace" mean?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Leave the campsite as you found it')">Leave trash behind</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Leave the campsite as you found it')">Leave the campsite as you found it</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Leave the campsite as you found it')">Leave food for animals</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Leave the campsite as you found it')">Leave your tent behind</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. "တဲထိုးဖို့ ကူညီနိုင်မလား" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can you help set up the tent?')">Can you help pack the tent?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can you help set up the tent?')">Can you help set up the tent?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can you help set up the tent?')">Can you help buy the tent?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can you help set up the tent?')">Can you help clean the tent?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. What should you do before hiking on a new trail?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Check the trail map and difficulty level')">Start walking immediately</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Check the trail map and difficulty level')">Check the trail map and difficulty level</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Check the trail map and difficulty level')">Ignore the map</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Check the trail map and difficulty level')">Run as fast as possible</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p><i class="fas fa-heart" style="color: #e17055;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p>
+        <p style="font-size: 0.75rem; margin-top: 0.5rem;">Practice these conversations to plan camping trips and enjoy the outdoors with confidence!</p>
+    </footer>
+</div>
+
+<!-- Back to Top Button -->
+<a href="#" class="back-to-top" id="backToTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+<script>
+    function speakEnglish(text) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8;
+        utterance.pitch = 1.0;
+        
+        function setVoice() {
+            const voices = window.speechSynthesis.getVoices();
+            const englishVoice = voices.find(v => v.lang === 'en-US' || v.lang.startsWith('en-'));
+            if (englishVoice) utterance.voice = englishVoice;
+            window.speechSynthesis.speak(utterance);
+        }
+        
+        if (window.speechSynthesis.getVoices().length) setVoice();
+        else window.speechSynthesis.onvoiceschanged = setVoice;
+    }
+    
+    function checkAnswer(element, correctAnswer) {
+        const options = element.parentElement.querySelectorAll('.quiz-option');
+        const isCorrect = element.innerText === correctAnswer;
+        
+        if (isCorrect) {
+            element.style.background = '#2ecc71';
+            element.style.color = 'white';
+            speakEnglish(correctAnswer);
+            setTimeout(() => {
+                options.forEach(opt => {
+                    opt.style.background = '';
+                    opt.style.color = '';
+                });
+            }, 1500);
+        } else {
+            element.style.background = '#e74c3c';
+            element.style.color = 'white';
+            setTimeout(() => {
+                element.style.background = '';
+                element.style.color = '';
+            }, 500);
+        }
+    }
+    
+    // Back to Top Button Functionality
+    (function() {
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        
+        if (backToTopBtn) {
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Party - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 1rem;
+        }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        
+        .conversation-section {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .conversation-section h2 {
+            background: #e84393;
+            color: white;
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line {
+            display: grid;
+            grid-template-columns: 70px 1fr 1fr;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            align-items: start;
+        }
+        .speaker { font-weight: bold; color: #e84393; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { 
+            color: #8e6b3c; 
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 0.95rem;
+        }
+        .audio-btn {
+            background: #eef4ff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.3rem;
+        }
+        .audio-btn:hover { background: #e84393; color: white; }
+        
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+            padding: 1rem;
+        }
+        .vocab-item {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            border-left: 3px solid #e84393;
+        }
+        .vocab-eng { font-weight: bold; color: #e84393; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        
+        .quiz-question {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.8rem;
+        }
+        .quiz-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .quiz-option {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .quiz-option:hover { background: #e84393; color: white; border-color: #e84393; }
+        
+        .tips-box {
+            background: #fdf2f8;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #e84393;
+        }
+        .tips-box i { color: #e84393; margin-right: 8px; }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1rem;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: #1e3c72;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid white;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: #f5b042;
+            color: #1e3c72;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .back-to-top i {
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 42px;
+                height: 42px;
+            }
+            .back-to-top i {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 700px) {
+            .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> All Conversations
+    </a>
+    
+    <header>
+        <h1><i class="fas fa-birthday-cake"></i> Birthday Party</h1>
+        <p>Learn how to plan parties, buy gifts, and celebrate birthdays in English</p>
+        <p>ပါတီများစီစဉ်နည်း၊ လက်ဆောင်များဝယ်ယူနည်းနှင့် မွေးနေ့များကျင်းပနည်းကို အင်္ဂလိပ်လို လေ့လာပါ</p>
+    </header>
+    
+    <!-- Dialogue 1: Planning a Birthday Party -->
+    <div class="conversation-section">
+        <h2>🎈 Planning a Birthday Party / မွေးနေ့ပါတီစီစဉ်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">I'm planning a surprise party for my sister's birthday. Can you help me?</div>
+                <div class="burmese">ကျွန်မညီမရဲ့မွေးနေ့အတွက် အံ့အားသင့်စရာပါတီတစ်ခု စီစဉ်နေတယ်။ ကူညီနိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am planning a surprise party for my sister\'s birthday. Can you help me?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Of course! When is her birthday?</div>
+                <div class="burmese">ရပါတယ်! သူမရဲ့မွေးနေ့က ဘယ်တော့လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Of course! When is her birthday?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Next Saturday. I want to invite about 20 people.</div>
+                <div class="burmese">လာမယ့်စနေနေ့မှာ။ လူ ၂၀ လောက် ဖိတ်ချင်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Next Saturday. I want to invite about 20 people.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Where will you have it?</div>
+                <div class="burmese">ဘယ်မှာကျင်းပမလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Where will you have it?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 2: Inviting Friends -->
+    <div class="conversation-section">
+        <h2>💌 Inviting Friends / သူငယ်ချင်းများကိုဖိတ်ကြားခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Hey, I'm having a birthday party this Saturday. Would you like to come?</div>
+                <div class="burmese">ဟေး၊ ဒီစနေနေ့မှာ ငါ မွေးနေ့ပါတီလုပ်မယ်။ လာချင်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Hey, I am having a birthday party this Saturday. Would you like to come?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">I'd love to! What time does it start?</div>
+                <div class="burmese">လာချင်ပါတယ်! ဘယ်အချိန်စလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('I would love to! What time does it start?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">At 7 PM at my house. I'll send you the address.</div>
+                <div class="burmese">ညနေ ၇ နာရီမှာ ငါ့အိမ်မှာပါ။ လိပ်စာ ပို့ပေးပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('At 7 PM at my house. I will send you the address.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Should I bring anything?</div>
+                <div class="burmese">ဘာတစ်ခုခု ယူလာသင့်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Should I bring anything?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 3: Birthday Gifts -->
+    <div class="conversation-section">
+        <h2>🎁 Birthday Gifts / မွေးနေ့လက်ဆောင်များ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">What should I get for her birthday? She has everything!</div>
+                <div class="burmese">သူမမွေးနေ့အတွက် ဘာဝယ်ရမလဲ။ သူ့မှာ အကုန်ရှိတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('What should I get for her birthday? She has everything!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">How about a gift card? That way she can choose what she wants.</div>
+                <div class="burmese">လက်ဆောင်ကဒ် ကောက်ရော? အဲဒါဆို သူလိုချင်တာကို ရွေးနိုင်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('How about a gift card? That way she can choose what she wants.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">That's a great idea! Or maybe I can get her a nice perfume.</div>
+                <div class="burmese">အကြံကောင်းပါတယ်! ဒါမှမဟုတ် ရေမွှေးကောင်းကောင်း ဝယ်လို့ရတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('That is a great idea! Or maybe I can get her a nice perfume.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Perfume is always a nice gift. Do you know what scents she likes?</div>
+                <div class="burmese">ရေမွှေးက အမြဲတမ်းလှတဲ့လက်ဆောင်ပါ။ သူမကြိုက်တဲ့အနံ့တွေကို သိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Perfume is always a nice gift. Do you know what scents she likes?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 4: Decorations and Theme -->
+    <div class="conversation-section">
+        <h2>🎨 Decorations and Theme / အလှဆင်ပစ္စည်းများနှင့် ခေါင်းစဉ်</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">What theme should we choose for the party?</div>
+                <div class="burmese">ပါတီအတွက် ဘယ်ခေါင်းစဉ် ရွေးသင့်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What theme should we choose for the party?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">She loves flowers. How about a garden theme?</div>
+                <div class="burmese">သူမပန်းတွေကြိုက်တယ်။ ဥယျာဉ်ခေါင်းစဉ် ကောက်ရော။</div>
+                <button class="audio-btn" onclick="speakEnglish('She loves flowers. How about a garden theme?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Perfect! I'll get flower decorations and a floral cake.</div>
+                <div class="burmese">ပြီးပြည့်စုံတယ်! ငါ ပန်းအလှဆင်ပစ္စည်းများနဲ့ ပန်းပုံကိတ်မုန့် ဝယ်မယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Perfect! I will get flower decorations and a floral cake.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Don't forget balloons and a banner that says "Happy Birthday"!</div>
+                <div class="burmese">ပူဖောင်းများနဲ့ "Happy Birthday" လို့ရေးထားတဲ့ ဗင်နာတစ်ခုကို မမေ့နဲ့။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do not forget balloons and a banner that says Happy Birthday!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 5: Birthday Cake -->
+    <div class="conversation-section">
+        <h2>🎂 Birthday Cake / မွေးနေ့ကိတ်မုန့်</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">What kind of cake should I order?</div>
+                <div class="burmese">ဘယ်လိုကိတ်မုန့်မျိုး မှာသင့်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What kind of cake should I order?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">She loves chocolate. A chocolate cake with buttercream frosting would be perfect.</div>
+                <div class="burmese">သူမ ချောကလက်ကြိုက်တယ်။ ထောပတ်ခရင်မ်နဲ့ ချောကလက်ကိတ်မုန့်က ပြီးပြည့်စုံမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('She loves chocolate. A chocolate cake with buttercream frosting would be perfect.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">How many candles should I put? She's turning 25.</div>
+                <div class="burmese">ဖယောင်းတိုင်ဘယ်နှစ်ခုထည့်သင့်လဲ။ သူမ အသက် ၂၅ နှစ် ပြည့်တော့မယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('How many candles should I put? She is turning 25.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">You can put one big candle shaped like a 25 or 25 small candles.</div>
+                <div class="burmese">၂၅ ပုံသဏ္ဍာန်ရှိတဲ့ ဖယောင်းတိုင်ကြီးတစ်ခု ဒါမှမဟုတ် ဖယောင်းတိုင်သေး ၂၅ ခုထည့်နိုင်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('You can put one big candle shaped like a 25 or 25 small candles.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 6: At the Party -->
+    <div class="conversation-section">
+        <h2>🎉 At the Party / ပါတီပွဲတွင်</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Guest A:</div>
+                <div class="english">Happy birthday! This party is amazing!</div>
+                <div class="burmese">မွေးနေ့ပျော်ရွှင်ပါစေ! ဒီပါတီက အံ့သြစရာကောင်းတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Happy birthday! This party is amazing!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Birthday Person:</div>
+                <div class="english">Thank you so much for coming! I'm so happy everyone is here.</div>
+                <div class="burmese">လာတဲ့အတွက် ကျေးဇူးအရမ်းတင်ပါတယ်! လူတိုင်းဒီမှာရှိတာ အရမ်းဝမ်းသာမိတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Thank you so much for coming! I am so happy everyone is here.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Guest A:</div>
+                <div class="english">The food is delicious! Did you make it yourself?</div>
+                <div class="burmese">အစားအသောက်က အရသာရှိတယ်! မင်းကိုယ်တိုင်ချက်တာလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('The food is delicious! Did you make it yourself?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Birthday Person:</div>
+                <div class="english">My mom helped me cook. I'm glad you like it!</div>
+                <div class="burmese">အမေက ချက်ဖို့ ကူညီပေးတယ်။ မင်းကြိုက်တာ ဝမ်းသာပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('My mom helped me cook. I am glad you like it!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 7: Singing and Cake Cutting -->
+    <div class="conversation-section">
+        <h2>🎵 Singing and Cake Cutting / သီချင်းဆိုခြင်းနှင့် ကိတ်မုန့်ဖြတ်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Everyone:</div>
+                <div class="english">Happy birthday to you, happy birthday to you...</div>
+                <div class="burmese">မင်္ဂလာမွေးနေ့ပါ၊ မင်္ဂလာမွေးနေ့ပါ...</div>
+                <button class="audio-btn" onclick="speakEnglish('Happy birthday to you, happy birthday to you...')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Guest A:</div>
+                <div class="english">Make a wish before you blow out the candles!</div>
+                <div class="burmese">ဖယောင်းတိုင်မှုတ်ခင် ဆုတောင်းလိုက်ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Make a wish before you blow out the candles!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Birthday Person:</div>
+                <div class="english">I wish for health and happiness for everyone I love.</div>
+                <div class="burmese">ငါချစ်တဲ့လူတိုင်းအတွက် ကျန်းမာရေးနဲ့ ပျော်ရွှင်မှုကို ဆုတောင်းတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I wish for health and happiness for everyone I love.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Guest B:</div>
+                <div class="english">Now let's cut the cake! Who wants the first slice?</div>
+                <div class="burmese">အခု ကိတ်မုန့်ကို ခုတ်ကြရအောင်! ပထမအချပ်ကို ဘယ်သူလိုချင်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Now let us cut the cake! Who wants the first slice?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 8: Opening Gifts -->
+    <div class="conversation-section">
+        <h2>🎁 Opening Gifts / လက်ဆောင်များဖွင့်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Birthday Person:</div>
+                <div class="english">Thank you all for the wonderful gifts! You shouldn't have!</div>
+                <div class="burmese">လှပသောလက်ဆောင်များအတွက် အားလုံးကို ကျေးဇူးတင်ပါတယ်! မပေးသင့်ဘူး။</div>
+                <button class="audio-btn" onclick="speakEnglish('Thank you all for the wonderful gifts! You should not have!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Guest A:</div>
+                <div class="english">Open mine first! I think you'll love it.</div>
+                <div class="burmese">ငါ့ဟာ အရင်ဖွင့်ပါ! မင်းကြိုက်မယ်ထင်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Open mine first! I think you will love it.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Birthday Person:</div>
+                <div class="english">Oh wow, this is exactly what I wanted! Thank you so much!</div>
+                <div class="burmese">အိုး ဝိုး၊ ဒါက ငါလိုချင်တာပဲ! ကျေးဇူးအရမ်းတင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Oh wow, this is exactly what I wanted! Thank you so much!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Guest B:</div>
+                <div class="english">We're so glad you like it. Happy birthday again!</div>
+                <div class="burmese">မင်းကြိုက်တာ ငါတို့ဝမ်းသာပါတယ်။ နောက်တစ်ခါ မွေးနေ့ပျော်ရွှင်ပါစေ။</div>
+                <button class="audio-btn" onclick="speakEnglish('We are so glad you like it. Happy birthday again!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Party Planning Checklist -->
+    <div class="conversation-section">
+        <h2>📋 Party Planning Checklist / ပါတီစီစဉ်ရေးစစ်ဆေးစာရင်း</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>How to Plan a Birthday Party (မွေးနေ့ပါတီစီစဉ်နည်း):</strong><br>
+            • Set a date and time (ရက်စွဲနှင့်အချိန်သတ်မှတ်ပါ)<br>
+            • Choose a venue (နေရာရွေးချယ်ပါ)<br>
+            • Create a guest list (ဧည့်သည်စာရင်းပြုစုပါ)<br>
+            • Send invitations (ဖိတ်စာများပို့ပါ)<br>
+            • Plan the menu (မီနူးစီစဉ်ပါ)<br>
+            • Order the cake (ကိတ်မုန့်မှာယူပါ)<br>
+            • Buy decorations (အလှဆင်ပစ္စည်းများဝယ်ယူပါ)<br>
+            • Plan activities/games (လှုပ်ရှားမှုများ/ဂိမ်းများစီစဉ်ပါ)<br>
+            • Buy party favors (ပါတီလက်ဆောင်များဝယ်ယူပါ)<br>
+            • Don't forget the candles and matches! (ဖယောင်းတိုင်နှင့်မီးခြစ်များမမေ့ပါနှင့်)<br>
+        </div>
+    </div>
+    
+    <!-- Vocabulary Section -->
+    <div class="conversation-section">
+        <h2>📚 Birthday Vocabulary / မွေးနေ့သုံးဝေါဟာရများ</h2>
+        <div class="vocab-grid">
+            <div class="vocab-item"><span class="vocab-eng">Surprise party</span><br><span class="vocab-burmese">အံ့အားသင့်စရာပါတီ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Birthday card</span><br><span class="vocab-burmese">မွေးနေ့ကဒ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Party favor</span><br><span class="vocab-burmese">ပါတီလက်ဆောင်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Blow out candles</span><br><span class="vocab-burmese">ဖယောင်းတိုင်မှုတ်သည်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Make a wish</span><br><span class="vocab-burmese">ဆုတောင်းသည်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Birthday hat</span><br><span class="vocab-burmese">မွေးနေ့ဦးထုပ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Streamers</span><br><span class="vocab-burmese">စက္ကူဖဲကြိုးများ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Confetti</span><br><span class="vocab-burmese">ကွန်ဖက်တီ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Pinata</span><br><span class="vocab-burmese">ပိယာတာ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Birthday song</span><br><span class="vocab-burmese">မွေးနေ့သီချင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Birthday boy/girl</span><br><span class="vocab-burmese">မွေးနေ့သား/သမီး</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Toast</span><br><span class="vocab-burmese">ခွက်ခတ်ခြင်း</span></div>
+        </div>
+    </div>
+    
+    <!-- Practice Section -->
+    <div class="conversation-section">
+        <h2>✏️ Practice Questions / လေ့ကျင့်ခန်းမေးခွန်းများ</h2>
+        <div class="dialogue-box">
+            <div class="quiz-question">
+                <p><strong>1. How do you invite someone to a birthday party?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Would you like to come to my birthday party?')">Would you like to go to work?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Would you like to come to my birthday party?')">Would you like to come to my birthday party?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Would you like to come to my birthday party?')">Would you like to go to school?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Would you like to come to my birthday party?')">Would you like to go home?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>2. "မွေးနေ့ပျော်ရွှင်ပါစေ" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Happy birthday!')">Merry Christmas!</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Happy birthday!')">Happy New Year!</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Happy birthday!')">Happy birthday!</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Happy birthday!')">Happy anniversary!</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. What do you do before blowing out birthday candles?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Make a wish')">Open gifts</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Make a wish')">Eat cake</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Make a wish')">Make a wish</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Make a wish')">Dance</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. "လက်ဆောင်ကဒ်တစ်ခုယူမယ်" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I will take a gift card.')">I will take a birthday card.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I will take a gift card.')">I will take a gift card.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I will take a gift card.')">I will take a credit card.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I will take a gift card.')">I will take a postcard.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. What is a "surprise party"?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A party the person doesn\'t know about until they arrive')">A party at a restaurant</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A party the person doesn\'t know about until they arrive')">A party with no guests</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A party the person doesn\'t know about until they arrive')">A party the person doesn't know about until they arrive</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A party the person doesn\'t know about until they arrive')">A party for children only</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p><i class="fas fa-heart" style="color: #e84393;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p>
+        <p style="font-size: 0.75rem; margin-top: 0.5rem;">Practice these conversations to plan and enjoy birthday parties with confidence!</p>
+    </footer>
+</div>
+
+<!-- Back to Top Button -->
+<a href="#" class="back-to-top" id="backToTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+<script>
+    function speakEnglish(text) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8;
+        utterance.pitch = 1.0;
+        
+        function setVoice() {
+            const voices = window.speechSynthesis.getVoices();
+            const englishVoice = voices.find(v => v.lang === 'en-US' || v.lang.startsWith('en-'));
+            if (englishVoice) utterance.voice = englishVoice;
+            window.speechSynthesis.speak(utterance);
+        }
+        
+        if (window.speechSynthesis.getVoices().length) setVoice();
+        else window.speechSynthesis.onvoiceschanged = setVoice;
+    }
+    
+    function checkAnswer(element, correctAnswer) {
+        const options = element.parentElement.querySelectorAll('.quiz-option');
+        const isCorrect = element.innerText === correctAnswer;
+        
+        if (isCorrect) {
+            element.style.background = '#2ecc71';
+            element.style.color = 'white';
+            speakEnglish(correctAnswer);
+            setTimeout(() => {
+                options.forEach(opt => {
+                    opt.style.background = '';
+                    opt.style.color = '';
+                });
+            }, 1500);
+        } else {
+            element.style.background = '#e74c3c';
+            element.style.color = 'white';
+            setTimeout(() => {
+                element.style.background = '';
+                element.style.color = '';
+            }, 500);
+        }
+    }
+    
+    // Back to Top Button Functionality
+    (function() {
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        
+        if (backToTopBtn) {
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

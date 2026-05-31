@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yoga Class - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 1rem;
+        }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        
+        .conversation-section {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .conversation-section h2 {
+            background: #9b59b6;
+            color: white;
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line {
+            display: grid;
+            grid-template-columns: 70px 1fr 1fr;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            align-items: start;
+        }
+        .speaker { font-weight: bold; color: #9b59b6; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { 
+            color: #8e6b3c; 
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 0.95rem;
+        }
+        .audio-btn {
+            background: #eef4ff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.3rem;
+        }
+        .audio-btn:hover { background: #9b59b6; color: white; }
+        
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+            padding: 1rem;
+        }
+        .vocab-item {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            border-left: 3px solid #9b59b6;
+        }
+        .vocab-eng { font-weight: bold; color: #9b59b6; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        
+        .quiz-question {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.8rem;
+        }
+        .quiz-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .quiz-option {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .quiz-option:hover { background: #9b59b6; color: white; border-color: #9b59b6; }
+        
+        .tips-box {
+            background: #f3e5f5;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #9b59b6;
+        }
+        .tips-box i { color: #9b59b6; margin-right: 8px; }
+        
+        .schedule-table {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            text-align: center;
+        }
+        .schedule-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px dashed #ddd;
+        }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1rem;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: #1e3c72;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid white;
+        }
+        .back-to-top.show { opacity: 1; visibility: visible; }
+        .back-to-top:hover { background: #f5b042; color: #1e3c72; transform: translateY(-3px); }
+        .back-to-top i { font-size: 1.2rem; }
+        
+        @media (max-width: 768px) {
+            .back-to-top { bottom: 1rem; right: 1rem; width: 42px; height: 42px; }
+            .back-to-top i { font-size: 1rem; }
+        }
+        @media (max-width: 700px) {
+            .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> All Conversations
+    </a>
+    
+    <header>
+        <h1><i class="fas fa-praying-hands"></i> Yoga Class</h1>
+        <p>Learn how to join yoga classes, ask about schedules, and meditation in English</p>
+        <p>ယောဂသင်တန်းများတက်ရောက်နည်း၊ အချိန်ဇယားများအကြောင်းမေးမြန်းနည်းနှင့် တရားထိုင်ခြင်းအကြောင်း အင်္ဂလိပ်လို လေ့လာပါ</p>
+    </header>
+    
+    <!-- Dialogue 1: Inquiring About Yoga Classes -->
+    <div class="conversation-section">
+        <h2>🧘 Inquiring About Yoga Classes / ယောဂသင်တန်းများအကြောင်းစုံစမ်းခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Student:</div>
+                <div class="english">Hello, I'm interested in taking yoga classes. What types do you offer?</div>
+                <div class="burmese">မင်္ဂလာပါ၊ ယောဂသင်တန်းများတက်ရန် စိတ်ဝင်စားပါတယ်။ ဘယ်အမျိုးအစားတွေ ပေးလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Hello, I am interested in taking yoga classes. What types do you offer?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Instructor:</div>
+                <div class="english">We offer Hatha, Vinyasa, Ashtanga, Yin, and Restorative yoga. We also have beginner and advanced levels.</div>
+                <div class="burmese">ကျွန်တော်တို့မှာ Hatha၊ Vinyasa၊ Ashtanga၊ Yin နှင့် Restorative ယောဂတို့ကို ပေးပါတယ်။ အစပြုသူနှင့် အဆင့်မြင့်သင်တန်းများလည်း ရှိပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('We offer Hatha, Vinyasa, Ashtanga, Yin, and Restorative yoga. We also have beginner and advanced levels.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Student:</div>
+                <div class="english">I'm a beginner. Which class do you recommend?</div>
+                <div class="burmese">ကျွန်တော် အစပြုသူပါ။ ဘယ်သင်တန်းကို အကြံပြုလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am a beginner. Which class do you recommend?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Instructor:</div>
+                <div class="english">I recommend Hatha yoga for beginners. It's slower-paced and focuses on basic postures.</div>
+                <div class="burmese">အစပြုသူများအတွက် Hatha ယောဂကို အကြံပြုပါတယ်။ အရှိန်နှေးပြီး အခြေခံကိုယ်ဟန်များကို အဓိကထားပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I recommend Hatha yoga for beginners. It is slower-paced and focuses on basic postures.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 2: Class Schedule -->
+    <div class="conversation-section">
+        <h2>📅 Class Schedule / သင်တန်းအချိန်ဇယား</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Student:</div>
+                <div class="english">What's the class schedule like?</div>
+                <div class="burmese">သင်တန်းအချိန်ဇယားက ဘယ်လိုလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What is the class schedule like?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Instructor:</div>
+                <div class="english">We have morning classes at 7 AM and 9 AM, and evening classes at 5 PM, 6 PM, and 7:30 PM.</div>
+                <div class="burmese">ကျွန်တော်တို့မှာ နံနက် ၇ နာရီနှင့် ၉ နာရီတွင် မနက်ပိုင်းသင်တန်းများ၊ ညနေ ၅ နာရီ၊ ၆ နာရီနှင့် ၇:၃၀ နာရီတွင် ညနေပိုင်းသင်တန်းများ ရှိပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('We have morning classes at 7 AM and 9 AM, and evening classes at 5 PM, 6 PM, and 7:30 PM.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Student:</div>
+                <div class="english">Are there classes on weekends?</div>
+                <div class="burmese">အားလပ်ရက်များတွင် သင်တန်းများရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Are there classes on weekends?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Instructor:</div>
+                <div class="english">Yes, Saturday at 8 AM and 10 AM. Sunday at 9 AM only.</div>
+                <div class="burmese">ဟုတ်ပါတယ်၊ စနေနေ့ နံနက် ၈ နာရီနှင့် ၁၀ နာရီ။ တနင်္ဂနွေနေ့ နံနက် ၉ နာရီတစ်ခုတည်းပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, Saturday at 8 AM and 10 AM. Sunday at 9 AM only.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 3: What to Bring -->
+    <div class="conversation-section">
+        <h2>🎒 What to Bring / ဘာတွေယူလာရမလဲ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Student:</div>
+                <div class="english">What do I need to bring to my first class?</div>
+                <div class="burmese">ကျွန်တော့်ပထမဆုံးသင်တန်းအတွက် ဘာတွေယူလာဖို့လိုလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What do I need to bring to my first class?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Instructor:</div>
+                <div class="english">Bring a yoga mat, water bottle, and comfortable clothes. We have mats available to rent for $2.</div>
+                <div class="burmese">ယောဂဖျာ၊ ရေပုလင်းနှင့် သက်တောင့်သက်သာရှိသောအဝတ်အစားများ ယူလာပါ။ ငှားရန် ဖျာများ ၂ ဒေါ်လာနှင့် ရနိုင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Bring a yoga mat, water bottle, and comfortable clothes. We have mats available to rent for 2 dollars.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Student:</div>
+                <div class="english">Should I eat before class?</div>
+                <div class="burmese">သင်တန်းမတက်မီ စားသင့်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Should I eat before class?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Instructor:</div>
+                <div class="english">It's best to practice on an empty stomach or eat a light meal 2 hours before class.</div>
+                <div class="burmese">ဗိုက်ထဲတွင်အစာမရှိဘဲ လေ့ကျင့်ခြင်း သို့မဟုတ် သင်တန်းမတက်မီ ၂ နာရီအလိုတွင် ပေါ့ပါးသောအစာစားခြင်းက အကောင်းဆုံးပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('It is best to practice on an empty stomach or eat a light meal 2 hours before class.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 4: Pricing and Packages -->
+    <div class="conversation-section">
+        <h2>💰 Pricing and Packages / စျေးနှုန်းများနှင့် အထုပ်များ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Student:</div>
+                <div class="english">How much does each class cost?</div>
+                <div class="burmese">သင်တန်းတစ်ခုစီ ဘယ်လောက်ကုန်ကျလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('How much does each class cost?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Instructor:</div>
+                <div class="english">Drop-in rate is $18 per class. We also offer packages: 5 classes for $75, or 10 classes for $140.</div>
+                <div class="burmese">တစ်ကြိမ်နှုန်းက သင်တန်းတစ်ခုလျှင် ၁၈ ဒေါ်လာပါ။ အထုပ်များလည်း ပေးပါတယ်- ၅ သင်တန်း ၇၅ ဒေါ်လာ၊ သို့မဟုတ် ၁၀ သင်တန်း ၁၄၀ ဒေါ်လာ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Drop-in rate is 18 dollars per class. We also offer packages: 5 classes for 75 dollars, or 10 classes for 140 dollars.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Student:</div>
+                <div class="english">Do you have monthly unlimited memberships?</div>
+                <div class="burmese">လစဉ်အကန့်အသတ်မဲ့အသင်းဝင်မှုများ ရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you have monthly unlimited memberships?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Instructor:</div>
+                <div class="english">Yes, $120 per month for unlimited classes. Students and seniors get a 10% discount.</div>
+                <div class="burmese">ဟုတ်ပါတယ်၊ အကန့်အသတ်မဲ့သင်တန်းများအတွက် တစ်လ ၁၂၀ ဒေါ်လာပါ။ ကျောင်းသားများနှင့် သက်ကြီးရွယ်အိုများအတွက် ၁၀ ရာခိုင်နှုန်းလျှော့စျေးရှိပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, 120 dollars per month for unlimited classes. Students and seniors get a 10 percent discount.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 5: Meditation Classes -->
+    <div class="conversation-section">
+        <h2>🧠 Meditation Classes / တရားထိုင်သင်တန်းများ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Student:</div>
+                <div class="english">Do you offer meditation classes as well?</div>
+                <div class="burmese">တရားထိုင်သင်တန်းများလည်း ပေးလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you offer meditation classes as well?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Instructor:</div>
+                <div class="english">Yes, we have guided meditation sessions every Wednesday at 7 PM and Sunday at 8 AM.</div>
+                <div class="burmese">ဟုတ်ပါတယ်၊ ဗုဒ္ဓဟူးနေ့တိုင်း ည ၇ နာရီနှင့် တနင်္ဂနွေနေ့ နံနက် ၈ နာရီတွင် လမ်းညွှန်တရားထိုင်ခြင်းအစီအစဉ်များ ရှိပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, we have guided meditation sessions every Wednesday at 7 PM and Sunday at 8 AM.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Student:</div>
+                <div class="english">Is meditation included with the yoga membership?</div>
+                <div class="burmese">တရားထိုင်ခြင်းက ယောဂအသင်းဝင်ခနှင့် ပါဝင်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Is meditation included with the yoga membership?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Instructor:</div>
+                <div class="english">Yes, meditation classes are included in all packages and memberships.</div>
+                <div class="burmese">ဟုတ်ပါတယ်၊ တရားထိုင်သင်တန်းများသည် အထုပ်များနှင့် အသင်းဝင်မှုများတွင် ပါဝင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, meditation classes are included in all packages and memberships.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 6: Online Classes -->
+    <div class="conversation-section">
+        <h2>💻 Online Classes / အွန်လိုင်းသင်တန်းများ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Student:</div>
+                <div class="english">Do you offer online yoga classes?</div>
+                <div class="burmese">အွန်လိုင်းယောဂသင်တန်းများ ပေးလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you offer online yoga classes?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Instructor:</div>
+                <div class="english">Yes, we have live Zoom classes and a library of recorded sessions available 24/7.</div>
+                <div class="burmese">ဟုတ်ပါတယ်၊ ကျွန်တော်တို့မှာ တိုက်ရိုက် Zoom သင်တန်းများနှင့် ၂၄/၇ ရနိုင်သော မှတ်တမ်းတင်ထားသည့် သင်တန်းများစာကြည့်တိုက် ရှိပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, we have live Zoom classes and a library of recorded sessions available 24/7.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Student:</div>
+                <div class="english">Is the online membership cheaper?</div>
+                <div class="burmese">အွန်လိုင်းအသင်းဝင်မှုက ပိုစျေးသက်သာလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Is the online membership cheaper?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Instructor:</div>
+                <div class="english">Yes, online-only membership is $40 per month, or $360 for the year.</div>
+                <div class="burmese">ဟုတ်ပါတယ်၊ အွန်လိုင်းသီးသန့်အသင်းဝင်မှုက တစ်လ ၄၀ ဒေါ်လာ၊ သို့မဟုတ် တစ်နှစ် ၃၆၀ ဒေါ်လာပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, online-only membership is 40 dollars per month, or 360 dollars for the year.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 7: First Class Experience -->
+    <div class="conversation-section">
+        <h2>🧘 First Class Experience / ပထမဆုံးသင်တန်းအတွေ့အကြုံ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Instructor:</div>
+                <div class="english">Since this is your first class, arrive 10-15 minutes early to fill out a waiver and meet the teacher.</div>
+                <div class="burmese">ဒါက သင့်ပထမဆုံးသင်တန်းဖြစ်တာမို့ စာချွန်လွှာဖြည့်ရန်နှင့် ဆရာနှင့်တွေ့ရန် မိနစ် ၁၀-၁၅ စောပြီးရောက်ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Since this is your first class, arrive 10-15 minutes early to fill out a waiver and meet the teacher.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Student:</div>
+                <div class="english">What if I can't do some of the poses?</div>
+                <div class="burmese">တချို့ကိုယ်ဟန်များကို မလုပ်နိုင်ရင် ဘာဖြစ်မလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What if I cannot do some of the poses?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Instructor:</div>
+                <div class="english">Don't worry! Every pose has modifications. Listen to your body and rest when needed.</div>
+                <div class="burmese">စိတ်မပူပါနဲ့။ ကိုယ်ဟန်တိုင်းတွင် ပြုပြင်မွမ်းမံမှုများရှိပါတယ်။ သင့်ခန္ဓာကိုယ်ကို နားထောင်ပြီး လိုအပ်ရင် အနားယူပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do not worry! Every pose has modifications. Listen to your body and rest when needed.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Student:</div>
+                <div class="english">Thank you for the tips. I'm excited!</div>
+                <div class="burmese">အကြံပြုချက်များအတွက် ကျေးဇူးပါ။ ကျွန်တော် စိတ်လှုပ်ရှားမိတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Thank you for the tips. I am excited!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 8: Benefits of Yoga -->
+    <div class="conversation-section">
+        <h2>🌟 Benefits of Yoga / ယောဂ၏အကျိုးကျေးဇူးများ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Student:</div>
+                <div class="english">What are the benefits of practicing yoga regularly?</div>
+                <div class="burmese">ယောဂကို ပုံမှန်လေ့ကျင့်ခြင်းရဲ့ အကျိုးကျေးဇူးတွေက ဘာတွေလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What are the benefits of practicing yoga regularly?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Instructor:</div>
+                <div class="english">Yoga improves flexibility, strength, balance, and reduces stress. Many students also report better sleep.</div>
+                <div class="burmese">ယောဂသည် ကိုယ်ပျော့ပျောင်းမှု၊ ခွန်အား၊ ဟန်ချက်ညီမှုကို တိုးတက်စေပြီး စိတ်ဖိစီးမှုကို လျှော့ချပေးပါတယ်။ ကျောင်းသားအများအပြားက အိပ်စက်မှုပိုကောင်းလာတယ်လို့လည်း အစီရင်ခံပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yoga improves flexibility, strength, balance, and reduces stress. Many students also report better sleep.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Student:</div>
+                <div class="english">How often should I practice?</div>
+                <div class="burmese">ဘယ်နှစ်ခါလောက် လေ့ကျင့်သင့်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('How often should I practice?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Instructor:</div>
+                <div class="english">For beginners, 2-3 times a week is great. Consistency is more important than intensity.</div>
+                <div class="burmese">အစပြုသူများအတွက် တစ်ပတ်လျှင် ၂-၃ ကြိမ် ကောင်းပါတယ်။ ပြင်းထန်မှုထက် ပုံမှန်လုပ်ဆောင်ခြင်းက ပိုအရေးကြီးပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('For beginners, 2-3 times a week is great. Consistency is more important than intensity.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Weekly Schedule -->
+    <div class="conversation-section">
+        <h2>📋 Weekly Class Schedule / အပတ်စဉ်သင်တန်းအချိန်ဇယား</h2>
+        <div class="schedule-table">
+            <div class="schedule-row"><strong>Monday (တနင်္လာ)</strong> - 7AM Hatha | 5PM Vinyasa | 6PM Yin</div>
+            <div class="schedule-row"><strong>Tuesday (အင်္ဂါ)</strong> - 7AM Ashtanga | 5PM Restorative | 6PM Hatha</div>
+            <div class="schedule-row"><strong>Wednesday (ဗုဒ္ဓဟူး)</strong> - 7AM Vinyasa | 5PM Yin | 7PM Meditation</div>
+            <div class="schedule-row"><strong>Thursday (ကြာသပတေး)</strong> - 7AM Hatha | 5PM Ashtanga | 6PM Restorative</div>
+            <div class="schedule-row"><strong>Friday (သောကြာ)</strong> - 7AM Vinyasa | 5PM Yin | 6PM Hatha</div>
+            <div class="schedule-row"><strong>Saturday (စနေ)</strong> - 8AM Vinyasa | 10AM Hatha (Beginner)</div>
+            <div class="schedule-row"><strong>Sunday (တနင်္ဂနွေ)</strong> - 9AM Restorative | 8AM Meditation</div>
+        </div>
+    </div>
+    
+    <!-- Yoga Vocabulary -->
+    <div class="conversation-section">
+        <h2>📚 Yoga Vocabulary / ယောဂသုံးဝေါဟာရများ</h2>
+        <div class="vocab-grid">
+            <div class="vocab-item"><span class="vocab-eng">Asana</span><br><span class="vocab-burmese">ကိုယ်ဟန်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Pranayama</span><br><span class="vocab-burmese">အသက်ရှူလေ့ကျင့်ခန်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Mantra</span><br><span class="vocab-burmese">မန္တန်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Downward dog</span><br><span class="vocab-burmese">ခွေးလှန်ကိုယ်ဟန်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Warrior pose</span><br><span class="vocab-burmese">စစ်သည်ကိုယ်ဟန်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Tree pose</span><br><span class="vocab-burmese">သစ်ပင်ကိုယ်ဟန်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Savasana</span><br><span class="vocab-burmese">အလောင်းကိုယ်ဟန် (အပန်းဖြေခြင်း)</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Chanting</span><br><span class="vocab-burmese">ရွတ်ဆိုခြင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Namaste</span><br><span class="vocab-burmese">နမောစတေး (ဘုရားရှိခိုးခြင်း)</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Mindfulness</span><br><span class="vocab-burmese">သတိတရား</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Alignment</span><br><span class="vocab-burmese">ချိန်ညှိမှု</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Om</span><br><span class="vocab-burmese">ဥုံ</span></div>
+        </div>
+    </div>
+    
+    <!-- Practice Section -->
+    <div class="conversation-section">
+        <h2>✏️ Practice Questions / လေ့ကျင့်ခန်းမေးခွန်းများ</h2>
+        <div class="dialogue-box">
+            <div class="quiz-question">
+                <p><strong>1. How do you ask about yoga class types?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What types of yoga do you offer?')">How much is the membership?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What types of yoga do you offer?')">What types of yoga do you offer?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What types of yoga do you offer?')">Where is the studio?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What types of yoga do you offer?')">When is the class?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>2. "ယောဂဖျာ ယူလာဖို့လိုလား" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Do I need to bring a yoga mat?')">Do I need to bring water?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Do I need to bring a yoga mat?')">Do I need to bring a yoga mat?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Do I need to bring a yoga mat?')">Do I need to bring a towel?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Do I need to bring a yoga mat?')">Do I need to bring food?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. What does "Savasana" mean?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Final relaxation pose')">Breathing exercise</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Final relaxation pose')">Warrior pose</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Final relaxation pose')">Final relaxation pose</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Final relaxation pose')">Tree pose</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. "သင်တန်းမတက်မီ ဘယ်အချိန်ရောက်သင့်လဲ" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What time should I arrive before class?')">What should I wear?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What time should I arrive before class?')">How much does it cost?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What time should I arrive before class?')">What time should I arrive before class?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What time should I arrive before class?')">Who is the teacher?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. What is "Pranayama"?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Breathing exercises')">Physical postures</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Breathing exercises')">Meditation</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Breathing exercises')">Breathing exercises</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Breathing exercises')">Chanting</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p><i class="fas fa-heart" style="color: #9b59b6;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p>
+        <p style="font-size: 0.75rem; margin-top: 0.5rem;">Practice these conversations to join yoga classes with confidence!</p>
+    </footer>
+</div>
+
+<a href="#" class="back-to-top" id="backToTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+<script>
+    function speakEnglish(text) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8;
+        utterance.pitch = 1.0;
+        
+        function setVoice() {
+            const voices = window.speechSynthesis.getVoices();
+            const englishVoice = voices.find(v => v.lang === 'en-US' || v.lang.startsWith('en-'));
+            if (englishVoice) utterance.voice = englishVoice;
+            window.speechSynthesis.speak(utterance);
+        }
+        
+        if (window.speechSynthesis.getVoices().length) setVoice();
+        else window.speechSynthesis.onvoiceschanged = setVoice;
+    }
+    
+    function checkAnswer(element, correctAnswer) {
+        const options = element.parentElement.querySelectorAll('.quiz-option');
+        const isCorrect = element.innerText === correctAnswer;
+        
+        if (isCorrect) {
+            element.style.background = '#2ecc71';
+            element.style.color = 'white';
+            speakEnglish(correctAnswer);
+            setTimeout(() => {
+                options.forEach(opt => {
+                    opt.style.background = '';
+                    opt.style.color = '';
+                });
+            }, 1500);
+        } else {
+            element.style.background = '#e74c3c';
+            element.style.color = 'white';
+            setTimeout(() => {
+                options.forEach(opt => {
+                    opt.style.background = '';
+                    opt.style.color = '';
+                });
+            }, 500);
+        }
+    }
+    
+    (function() {
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        if (backToTopBtn) {
+            window.addEventListener('scroll', function() {
+                backToTopBtn.classList.toggle('show', window.scrollY > 300);
+            });
+            backToTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

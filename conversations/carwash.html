@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Wash - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%); font-family: 'Segoe UI', Roboto, sans-serif; padding: 1rem; }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        .back-btn { display: inline-flex; align-items: center; gap: 8px; background: white; padding: 0.6rem 1.2rem; border-radius: 2rem; text-decoration: none; color: #1e3c72; font-weight: 500; margin-bottom: 1rem; transition: 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        .conversation-section { background: white; border-radius: 1rem; margin-bottom: 2rem; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+        .conversation-section h2 { background: #00cec9; color: white; padding: 1rem; font-size: 1.2rem; }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line { display: grid; grid-template-columns: 70px 1fr 1fr; gap: 0.8rem; padding: 0.8rem; border-bottom: 1px solid #eee; align-items: start; }
+        .speaker { font-weight: bold; color: #00cec9; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.95rem; }
+        .audio-btn { background: #eef4ff; border: none; border-radius: 2rem; padding: 0.3rem 0.8rem; cursor: pointer; transition: 0.2s; margin-top: 0.3rem; }
+        .audio-btn:hover { background: #00cec9; color: white; }
+        .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.8rem; padding: 1rem; }
+        .vocab-item { background: #f8f9fa; padding: 0.8rem; border-radius: 0.8rem; border-left: 3px solid #00cec9; }
+        .vocab-eng { font-weight: bold; color: #00cec9; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        .quiz-question { background: #f8f9fa; padding: 1rem; margin-bottom: 1rem; border-radius: 0.8rem; }
+        .quiz-options { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
+        .quiz-option { background: white; padding: 0.5rem 1rem; border-radius: 2rem; border: 1px solid #ddd; cursor: pointer; transition: 0.2s; }
+        .quiz-option:hover { background: #00cec9; color: white; border-color: #00cec9; }
+        .tips-box { background: #e8f8f5; padding: 1rem; border-radius: 0.8rem; margin: 1rem; border-left: 3px solid #00cec9; }
+        .tips-box i { color: #00cec9; margin-right: 8px; }
+        footer { margin-top: 2rem; text-align: center; padding: 1rem; color: #6c757d; font-size: 0.8rem; }
+        .back-to-top { position: fixed; bottom: 1.5rem; right: 1.5rem; background: #1e3c72; color: white; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 1000; opacity: 0; visibility: hidden; border: 2px solid white; }
+        .back-to-top.show { opacity: 1; visibility: visible; }
+        .back-to-top:hover { background: #f5b042; color: #1e3c72; transform: translateY(-3px); }
+        .back-to-top i { font-size: 1.2rem; }
+        @media (max-width: 768px) { .back-to-top { bottom: 1rem; right: 1rem; width: 42px; height: 42px; } .back-to-top i { font-size: 1rem; } }
+        @media (max-width: 700px) { .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; } }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn"><i class="fas fa-arrow-left"></i> All Conversations</a>
+    <header><h1><i class="fas fa-car-side"></i> Car Wash</h1><p>Learn how to choose car wash services, ask about prices, and clean your car in English</p><p>ကားလေဆေးဝန်ဆောင်မှုများရွေးချယ်နည်း၊ စျေးနှုန်းများမေးမြန်းနည်းနှင့် ကားသန့်ရှင်းရေးလုပ်နည်းကို အင်္ဂလိပ်လို လေ့လာပါ</p></header>
+    
+    <!-- Dialogue 1: Exterior Wash -->
+    <div class="conversation-section"><h2>🧼 Exterior Wash / ကားအပြင်ဘက်လေဆေးခြင်း</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">How much for an exterior wash?</div><div class="burmese">ကားအပြင်ဘက်လေဆေးခြင်း ဘယ်လောက်လဲ။</div><button class="audio-btn" onclick="speakEnglish('How much for an exterior wash?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Attendant:</div><div class="english">Basic exterior wash is $15. It includes soap, rinse, and hand dry.</div><div class="burmese">အခြေခံပြင်ဘက်လေဆေးခြင်းက ၁၅ ဒေါ်လာပါ။ ဆပ်ပြာ၊ ရေဆေး၊ လက်ဖြင့်သုတ်ခြင်းတို့ ပါဝင်ပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('Basic exterior wash is 15 dollars. It includes soap, rinse, and hand dry.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">Does that include tire shine?</div><div class="burmese">ဒါက တာယာတောက်ပစေခြင်း ပါဝင်လား။</div><button class="audio-btn" onclick="speakEnglish('Does that include tire shine?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Attendant:</div><div class="english">No, that's an extra $5. Our deluxe wash at $25 includes tire shine and underbody rinse.</div><div class="burmese">မပါပါဘူး၊ အပို ၅ ဒေါ်လာပါ။ ကျွန်တော်တို့ရဲ့ ၂၅ ဒေါ်လာ ဇိမ်ခံလေဆေးခြင်းမှာ တာယာတောက်ပစေခြင်းနှင့် ကားအောက်ဘက်ရေဆေးခြင်း ပါဝင်ပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('No, that is an extra 5 dollars. Our deluxe wash at 25 dollars includes tire shine and underbody rinse.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 2: Interior Cleaning -->
+    <div class="conversation-section"><h2>🧹 Interior Cleaning / အတွင်းပိုင်းသန့်ရှင်းရေး</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">I need my car vacuumed and the windows cleaned inside.</div><div class="burmese">ကျွန်တော့်ကားကို ဖုန်စုပ်ခြင်းနှင့် အတွင်းမှန်များ သန့်ရှင်းရေးလုပ်ဖို့ လိုအပ်ပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('I need my car vacuumed and the windows cleaned inside.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Attendant:</div><div class="english">Interior cleaning is $30. That includes vacuuming all carpets and seats, window cleaning, and dashboard wipe.</div><div class="burmese">အတွင်းပိုင်းသန့်ရှင်းရေးက ၃၀ ဒေါ်လာပါ။ ကော်ဇောနှင့်ထိုင်ခုံများအားလုံး ဖုန်စုပ်ခြင်း၊ မှန်သန့်ရှင်းခြင်းနှင့် ဒက်ရှ်ဘုတ်သုတ်ခြင်းတို့ ပါဝင်ပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('Interior cleaning is 30 dollars. That includes vacuuming all carpets and seats, window cleaning, and dashboard wipe.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">I have a dog. Can you remove pet hair?</div><div class="burmese">ကျွန်တော်မှာ ခွေးရှိတယ်။ အိမ်မွေးတိရစ္ဆာန်အမွေးတွေ ဖယ်ရှားပေးနိုင်မလား။</div><button class="audio-btn" onclick="speakEnglish('I have a dog. Can you remove pet hair?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Attendant:</div><div class="english">Yes, there's an extra $10 charge for pet hair removal. We use a special brush.</div><div class="burmese">ဟုတ်ပါတယ်၊ အိမ်မွေးတိရစ္ဆာန်အမွေးဖယ်ရှားခြင်းအတွက် အပို ၁၀ ဒေါ်လာပါ။ အထူးစုတ်တံကို သုံးပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('Yes, there is an extra 10 dollar charge for pet hair removal. We use a special brush.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 3: Full Detail -->
+    <div class="conversation-section"><h2>✨ Full Detail Service / အပြည့်အစုံအသေးစိတ်ဝန်ဆောင်မှု</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">What's included in your full detail service?</div><div class="burmese">သင့်တို့ရဲ့ အပြည့်အစုံအသေးစိတ်ဝန်ဆောင်မှုမှာ ဘာတွေပါဝင်လဲ။</div><button class="audio-btn" onclick="speakEnglish('What is included in your full detail service?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Attendant:</div><div class="english">Full detail is $150. It includes exterior wash, wax, interior shampoo, leather treatment, and engine bay cleaning.</div><div class="burmese">အပြည့်အစုံအသေးစိတ်က ၁၅၀ ဒေါ်လာပါ။ အပြင်ဘက်လေဆေး၊ ဖယောင်းသုတ်၊ အတွင်းပိုင်းခေါင်းလျှော်ရည်သန့်ရှင်းရေး၊ သားရေကုသမှုနှင့် အင်ဂျင်အခန်းသန့်ရှင်းရေးတို့ ပါဝင်ပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('Full detail is 150 dollars. It includes exterior wash, wax, interior shampoo, leather treatment, and engine bay cleaning.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">How long does it take?</div><div class="burmese">ဘယ်လောက်ကြာမလဲ။</div><button class="audio-btn" onclick="speakEnglish('How long does it take?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Attendant:</div><div class="english">About 3-4 hours. You can wait in our lounge or come back later.</div><div class="burmese">၃-၄ နာရီခန့်ပါ။ ကျွန်တော်တို့ ဧည့်ခန်းတွင် စောင့်နိုင်သည် သို့မဟုတ် နောက်မှ ပြန်လာနိုင်ပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('About 3-4 hours. You can wait in our lounge or come back later.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 4: Self-Service Car Wash -->
+    <div class="conversation-section"><h2>🪣 Self-Service Car Wash / ကိုယ်တိုင်သုံးကားလေဆေးစက်</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">How does the self-service bay work?</div><div class="burmese">ကိုယ်တိုင်သုံးကားလေဆေးစက် ဘယ်လိုအလုပ်လုပ်လဲ။</div><button class="audio-btn" onclick="speakEnglish('How does the self-service bay work?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Attendant:</div><div class="english">Insert coins or tokens to start. You'll get about 3 minutes per dollar. Select soap, rinse, or wax.</div><div class="burmese">စတင်ရန် ဒင်္ဂါးများ သို့မဟုတ် တိုကင်များ ထည့်ပါ။ တစ်ဒေါ်လာလျှင် ၃ မိနစ်ခန့် ရပါလိမ့်မယ်။ ဆပ်ပြာ၊ ရေဆေး သို့မဟုတ် ဖယောင်းကို ရွေးချယ်ပါ။</div><button class="audio-btn" onclick="speakEnglish('Insert coins or tokens to start. You will get about 3 minutes per dollar. Select soap, rinse, or wax.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">Do you sell tokens here?</div><div class="burmese">ခင်ဗျားတို့ ဒီမှာ တိုကင်တွေ ရောင်းလား။</div><button class="audio-btn" onclick="speakEnglish('Do you sell tokens here?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Attendant:</div><div class="english">Yes, at the change machine. $1, $5, and $10 bills are accepted.</div><div class="burmese">ဟုတ်ပါတယ်၊ အကြွေစေ့လဲစက်မှာပါ။ $၁၊ $၅ နှင့် $၁၀ ငွေစက္ကူများကို လက်ခံပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('Yes, at the change machine. 1, 5, and 10 dollar bills are accepted.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 5: Waxing -->
+    <div class="conversation-section"><h2>🪙 Waxing / ဖယောင်းသုတ်ခြင်း</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">Do you offer hand waxing or machine waxing?</div><div class="burmese">လက်ဖြင့်ဖယောင်းသုတ်ခြင်း သို့မဟုတ် စက်ဖြင့်ဖယောင်းသုတ်ခြင်း ပေးလား။</div><button class="audio-btn" onclick="speakEnglish('Do you offer hand waxing or machine waxing?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Attendant:</div><div class="english">Both. Machine wax is $20 and is faster. Hand wax is $40 and gives better coverage.</div><div class="burmese">နှစ်မျိုးစလုံး။ စက်ဖြင့်ဖယောင်းသုတ်ခြင်းက ၂၀ ဒေါ်လာဖြစ်ပြီး ပိုမြန်ပါတယ်။ လက်ဖြင့်ဖယောင်းသုတ်ခြင်းက ၄၀ ဒေါ်လာဖြစ်ပြီး ပိုကောင်းမွန်တဲ့ဖုံးအုပ်မှုကို ပေးပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('Both. Machine wax is 20 dollars and is faster. Hand wax is 40 dollars and gives better coverage.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">I'll take the hand wax. How long will it last?</div><div class="burmese">လက်ဖြင့်ဖယောင်းသုတ်ခြင်းကို ယူပါမယ်။ ဘယ်လောက်ကြာကြာခံမလဲ။</div><button class="audio-btn" onclick="speakEnglish('I will take the hand wax. How long will it last?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Attendant:</div><div class="english">About 2-3 months with proper care. Avoid automatic car washes that use brushes.</div><div class="burmese">သင့်လျော်သောစောင့်ရှောက်မှုဖြင့် ၂-၃ လခန့်ပါ။ စုတ်တံများသုံးသော အော်တိုကားလေဆေးစက်များကို ရှောင်ပါ။</div><button class="audio-btn" onclick="speakEnglish('About 2-3 months with proper care. Avoid automatic car washes that use brushes.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 6: Headlight Restoration -->
+    <div class="conversation-section"><h2>💡 Headlight Restoration / ရှေ့မီးပြန်လည်ပြုပြင်ခြင်း</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">My headlights are foggy. Can you restore them?</div><div class="burmese">ကျွန်တော့်ရှေ့မီးတွေ မှုန်နေတယ်။ ပြန်လည်ပြုပြင်ပေးနိုင်မလား။</div><button class="audio-btn" onclick="speakEnglish('My headlights are foggy. Can you restore them?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Attendant:</div><div class="english">Yes, we offer headlight restoration for $40 per pair. It takes about 30 minutes.</div><div class="burmese">ဟုတ်ပါတယ်၊ တစ်စုံလျှင် ၄၀ ဒေါ်လာဖြင့် ရှေ့မီးပြန်လည်ပြုပြင်ခြင်း ပေးပါတယ်။ ၃၀ မိနစ်ခန့်ကြာပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('Yes, we offer headlight restoration for 40 dollars per pair. It takes about 30 minutes.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">What does the process involve?</div><div class="burmese">လုပ်ငန်းစဉ်မှာ ဘာတွေပါဝင်လဲ။</div><button class="audio-btn" onclick="speakEnglish('What does the process involve?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Attendant:</div><div class="english">We sand, polish, and apply a UV coating to prevent future yellowing.</div><div class="burmese">ကျွန်တော်တို့ သဲသုတ်၊ တောက်ပအောင်ပြုလုပ်ပြီး အနာဂတ်အဝါရောင်ပြောင်းခြင်းကိုကာကွယ်ရန် UV အလွှာကို လိမ်းပေးပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('We sand, polish, and apply a UV coating to prevent future yellowing.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 7: Membership Plan -->
+    <div class="conversation-section"><h2>📋 Membership Plan / အသင်းဝင်အစီအစဉ်</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">Do you have a monthly unlimited wash plan?</div><div class="burmese">လစဉ်အကန့်အသတ်မဲ့လေဆေးအစီအစဉ် ရှိလား။</div><button class="audio-btn" onclick="speakEnglish('Do you have a monthly unlimited wash plan?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Attendant:</div><div class="english">Yes. $25 per month for unlimited basic exterior washes. $40 includes interior vacuum as well.</div><div class="burmese">ဟုတ်ပါတယ်။ အကန့်အသတ်မဲ့အခြေခံပြင်ဘက်လေဆေးအတွက် တစ်လ ၂၅ ဒေါ်လာပါ။ ၄၀ ဒေါ်လာတွင် အတွင်းပိုင်းဖုန်စုပ်ခြင်းလည်း ပါဝင်ပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('Yes. 25 dollars per month for unlimited basic exterior washes. 40 dollars includes interior vacuum as well.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">Can I cancel anytime?</div><div class="burmese">ဘယ်အချိန်မဆို ဖျက်သိမ်းလို့ရမလား။</div><button class="audio-btn" onclick="speakEnglish('Can I cancel anytime?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Attendant:</div><div class="english">Yes, with no cancellation fee. Just give us a call or stop by.</div><div class="burmese">ဟုတ်ပါတယ်၊ ဖျက်သိမ်းခအခကြေးငွေ မရှိပါဘူး။ ကျွန်တော်တို့ကို ဖုန်းဆက်ပါ သို့မဟုတ် လာခဲ့ပါ။</div><button class="audio-btn" onclick="speakEnglish('Yes, with no cancellation fee. Just give us a call or stop by.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 8: Complaints -->
+    <div class="conversation-section"><h2>😟 Complaint Resolution / တိုင်ကြားချက်ဖြေရှင်းခြင်း</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">I'm not happy with the wash. There are still spots on my car.</div><div class="burmese">လေဆေးခြင်းကို ကျွန်တော် မကျေနပ်ပါဘူး။ ကျွန်တော့်ကားပေါ်မှာ အစက်အပြောက်တွေ ရှိနေသေးတယ်။</div><button class="audio-btn" onclick="speakEnglish('I am not happy with the wash. There are still spots on my car.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Manager:</div><div class="english">I apologize for that. Let me take a look. I'll have our team re-wash it right now at no charge.</div><div class="burmese">အတွက် တောင်းပန်ပါတယ်။ ကြည့်ပါရစေ။ ကျွန်တော်တို့အဖွဲ့ကို အခုချက်ချင်း အခမဲ့ ပြန်လေဆေးခိုင်းပါမယ်။</div><button class="audio-btn" onclick="speakEnglish('I apologize for that. Let me take a look. I will have our team re-wash it right now at no charge.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">Thank you. Also, the vacuum didn't get all the sand from the floor mats.</div><div class="burmese">ကျေးဇူးပါ။ ဖုန်စုပ်စက်က ကြမ်းပြင်ဖျာပေါ်က သဲအားလုံးကို မစုပ်ယူနိုင်ခဲ့ဘူး။</div><button class="audio-btn" onclick="speakEnglish('Thank you. Also, the vacuum did not get all the sand from the floor mats.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Manager:</div><div class="english">We'll make sure to get that too. I'll personally inspect the car after it's done.</div><div class="burmese">အဲဒါကိုလည်း ဖယ်ရှားပေးပါမယ်။ ပြီးရင် ကားကို ကိုယ်တိုင်စစ်ဆေးပါမယ်။</div><button class="audio-btn" onclick="speakEnglish('We will make sure to get that too. I will personally inspect the car after it is done.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <div class="vocab-grid">
+        <div class="vocab-item"><span class="vocab-eng">Detailing</span><br><span class="vocab-burmese">အသေးစိတ်သန့်ရှင်းရေး</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Clay bar treatment</span><br><span class="vocab-burmese">ရွှံ့တုံးကုသမှု</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Ceramic coating</span><br><span class="vocab-burmese">ကြွေထည်အလွှာ</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Microfiber towel</span><br><span class="vocab-burmese">မိုက်ခရိုဖိုက်ဘာအထည်</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Pressure washer</span><br><span class="vocab-burmese">ဖိအားရေသန့်စက်</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Foam cannon</span><br><span class="vocab-burmese">အမြှုပ်ပစ်စက်</span></div>
+    </div>
+    
+    <div class="tips-box"><i class="fas fa-lightbulb"></i> <strong>Tips for Car Care (ကားစောင့်ရှောက်မှုအကြံပြုချက်များ):</strong><br>• Wash your car every 2 weeks to protect the paint (သုတ်ဆေးကိုကာကွယ်ရန် နှစ်ပတ်တစ်ခါ ကားလေဆေးပါ)<br>• Use two buckets to prevent scratching (ခြစ်ရာများကိုကာကွယ်ရန် ပုံးနှစ်လုံးသုံးပါ)<br>• Dry with microfiber towels to avoid water spots (ရေစက်အစွန်းအထင်းများရှောင်ရန် မိုက်ခရိုဖိုက်ဘာအထည်ဖြင့်သုတ်ပါ)<br>• Wax every 3 months for protection (ကာကွယ်ရန်အတွက် သုံးလတစ်ခါ ဖယောင်းသုတ်ပါ)</div>
+    
+    <div class="quiz-question"><p><strong>1. How do you ask about car wash prices?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'How much for a car wash?')">How long does it take?</div><div class="quiz-option" onclick="checkAnswer(this, 'How much for a car wash?')">How much for a car wash?</div><div class="quiz-option" onclick="checkAnswer(this, 'How much for a car wash?')">Do you vacuum inside?</div><div class="quiz-option" onclick="checkAnswer(this, 'How much for a car wash?')">Can you wax my car?</div></div></div>
+    <div class="quiz-question"><p><strong>2. "အတွင်းပိုင်းသန့်ရှင်းရေးလုပ်ပေးနိုင်မလား" in English?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'Can you clean the interior?')">Can you wash the exterior?</div><div class="quiz-option" onclick="checkAnswer(this, 'Can you clean the interior?')">Can you clean the interior?</div><div class="quiz-option" onclick="checkAnswer(this, 'Can you clean the interior?')">Can you vacuum the car?</div><div class="quiz-option" onclick="checkAnswer(this, 'Can you clean the interior?')">Can you dry the car?</div></div></div>
+    <div class="quiz-question"><p><strong>3. What does "full detail" include?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'Exterior and interior deep cleaning')">Exterior wash only</div><div class="quiz-option" onclick="checkAnswer(this, 'Exterior and interior deep cleaning')">Interior vacuum only</div><div class="quiz-option" onclick="checkAnswer(this, 'Exterior and interior deep cleaning')">Exterior and interior deep cleaning</div><div class="quiz-option" onclick="checkAnswer(this, 'Exterior and interior deep cleaning')">Just waxing</div></div></div>
+    <div class="quiz-question"><p><strong>4. "တာယာတောက်ပစေခြင်း ပါဝင်လား" in English?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'Does that include tire shine?')">Does that include wax?</div><div class="quiz-option" onclick="checkAnswer(this, 'Does that include tire shine?')">Does that include interior cleaning?</div><div class="quiz-option" onclick="checkAnswer(this, 'Does that include tire shine?')">Does that include tire shine?</div><div class="quiz-option" onclick="checkAnswer(this, 'Does that include tire shine?')">Does that include underbody wash?</div></div></div>
+    <div class="quiz-question"><p><strong>5. What should you avoid to keep your wax lasting longer?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'Automatic car washes with brushes')">Hand washing</div><div class="quiz-option" onclick="checkAnswer(this, 'Automatic car washes with brushes')">Touchless car washes</div><div class="quiz-option" onclick="checkAnswer(this, 'Automatic car washes with brushes')">Automatic car washes with brushes</div><div class="quiz-option" onclick="checkAnswer(this, 'Automatic car washes with brushes')">Parking in the shade</div></div></div>
+    
+    <footer><p><i class="fas fa-heart" style="color: #00cec9;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p></footer>
+</div>
+<a href="#" class="back-to-top" id="backToTopBtn"><i class="fas fa-arrow-up"></i></a>
+<script>
+    function speakEnglish(text){if(!window.speechSynthesis)return;window.speechSynthesis.cancel();const utterance=new SpeechSynthesisUtterance(text);utterance.lang='en-US';utterance.rate=0.8;utterance.pitch=1.0;function setVoice(){const voices=window.speechSynthesis.getVoices();const englishVoice=voices.find(v=>v.lang==='en-US'||v.lang.startsWith('en-'));if(englishVoice)utterance.voice=englishVoice;window.speechSynthesis.speak(utterance);}if(window.speechSynthesis.getVoices().length)setVoice();else window.speechSynthesis.onvoiceschanged=setVoice;}
+    function checkAnswer(element,correctAnswer){const options=element.parentElement.querySelectorAll('.quiz-option');const isCorrect=element.innerText===correctAnswer;if(isCorrect){element.style.background='#2ecc71';element.style.color='white';speakEnglish(correctAnswer);setTimeout(()=>{options.forEach(opt=>{opt.style.background='';opt.style.color='';});},1500);}else{element.style.background='#e74c3c';element.style.color='white';setTimeout(()=>{options.forEach(opt=>{opt.style.background='';opt.style.color='';});},500);}}
+    (function(){const btn=document.getElementById('backToTopBtn');if(btn){window.addEventListener('scroll',function(){btn.classList.toggle('show',window.scrollY>300);});btn.addEventListener('click',function(e){e.preventDefault();window.scrollTo({top:0,behavior:'smooth'});});}})();
+</script>
+</body>
+</html>

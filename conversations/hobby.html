@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hobbies & Interests - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 1rem;
+        }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        
+        .conversation-section {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .conversation-section h2 {
+            background: #e84393;
+            color: white;
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line {
+            display: grid;
+            grid-template-columns: 70px 1fr 1fr;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            align-items: start;
+        }
+        .speaker { font-weight: bold; color: #e84393; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { 
+            color: #8e6b3c; 
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 0.95rem;
+        }
+        .audio-btn {
+            background: #eef4ff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.3rem;
+        }
+        .audio-btn:hover { background: #e84393; color: white; }
+        
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+            padding: 1rem;
+        }
+        .vocab-item {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            border-left: 3px solid #e84393;
+        }
+        .vocab-eng { font-weight: bold; color: #e84393; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        
+        .quiz-question {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.8rem;
+        }
+        .quiz-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .quiz-option {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .quiz-option:hover { background: #e84393; color: white; border-color: #e84393; }
+        
+        .hobby-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            padding: 1rem;
+            justify-content: center;
+        }
+        .hobby-card {
+            background: #fdf2f8;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            text-align: center;
+            min-width: 90px;
+            border: 1px solid #e84393;
+        }
+        .hobby-icon { font-size: 2rem; }
+        .hobby-name { font-weight: bold; color: #e84393; margin-top: 0.3rem; }
+        
+        .tips-box {
+            background: #fdf2f8;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #e84393;
+        }
+        .tips-box i { color: #e84393; margin-right: 8px; }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1rem;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: #1e3c72;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid white;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: #f5b042;
+            color: #1e3c72;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .back-to-top i {
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 42px;
+                height: 42px;
+            }
+            .back-to-top i {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 700px) {
+            .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> All Conversations
+    </a>
+    
+    <header>
+        <h1><i class="fas fa-palette"></i> Hobbies & Interests</h1>
+        <p>Learn how to talk about your free time activities, hobbies, and interests</p>
+        <p>သင်၏အားလပ်ချိန်လှုပ်ရှားမှုများ၊ ဝါသနာများနှင့် စိတ်ဝင်စားမှုများအကြောင်း ပြောဆိုနည်းကို လေ့လာပါ</p>
+    </header>
+    
+    <!-- Dialogue 1: Talking About Free Time -->
+    <div class="conversation-section">
+        <h2>🎯 Talking About Free Time / အားလပ်ချိန်အကြောင်းပြောဆိုခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">What do you like to do in your free time?</div>
+                <div class="burmese">မင်း အားလပ်ချိန်မှာ ဘာလုပ်ရတာ ကြိုက်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What do you like to do in your free time?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">I enjoy reading books and listening to music.</div>
+                <div class="burmese">စာအုပ်ဖတ်ရတာနဲ့ ဂီတနားထောင်ရတာ ကြိုက်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I enjoy reading books and listening to music.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">That's nice. What kind of books do you like?</div>
+                <div class="burmese">ကောင်းတယ်။ မင်း ဘယ်လိုစာအုပ်မျိုး ကြိုက်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('That is nice. What kind of books do you like?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">I love mystery novels and science fiction.</div>
+                <div class="burmese">ကျွန်တော် လျှို့ဝှက်ဆန်းကြယ်ဝတ္ထုတွေနဲ့ သိပ္ပံဝတ္ထုတွေကို ကြိုက်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I love mystery novels and science fiction.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 2: Sports Hobbies -->
+    <div class="conversation-section">
+        <h2>⚽ Sports Hobbies / အားကစားဝါသနာများ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Do you play any sports?</div>
+                <div class="burmese">မင်း အားကစားတစ်ခုခု လုပ်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you play any sports?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Yes, I play football every weekend with my friends.</div>
+                <div class="burmese">ဟုတ်တယ်၊ စနေတနင်္ဂနွေတိုင်း သူငယ်ချင်းတွေနဲ့ ဘောလုံးကစားတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, I play football every weekend with my friends.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">That sounds fun! Do you also watch sports on TV?</div>
+                <div class="burmese">ပျော်စရာကောင်းတယ်! တီဗီမှာ အားကစားကြည့်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('That sounds fun! Do you also watch sports on TV?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Yes, I'm a big fan of basketball. I never miss a game!</div>
+                <div class="burmese">ဟုတ်တယ်၊ ကျွန်တော် ဘတ်စကတ်ဘော ပရိသတ်ကြီးပါ။ ပွဲတစ်ပွဲမှ မလွတ်စေရ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, I am a big fan of basketball. I never miss a game!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 3: Creative Hobbies -->
+    <div class="conversation-section">
+        <h2>🎨 Creative Hobbies / ဖန်တီးမှုဝါသနာများ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Are you a creative person?</div>
+                <div class="burmese">မင်း ဖန်တီးနိုင်စွမ်းရှိသူလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Are you a creative person?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">I think so! I love painting and drawing in my spare time.</div>
+                <div class="burmese">ထင်ပါတယ်! အားလပ်ချိန်မှာ ပန်းချီဆွဲရတာ ကြိုက်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I think so! I love painting and drawing in my spare time.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">That's wonderful. Do you sell your artwork?</div>
+                <div class="burmese">အလွန်ကောင်းပါတယ်။ မင်းရဲ့ပန်းချီကားတွေ ရောင်းလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('That is wonderful. Do you sell your artwork?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Sometimes. I mostly paint for fun and relaxation.</div>
+                <div class="burmese">တစ်ခါတစ်ရံပေါ့။ အများစုက ပျော်ဖို့နဲ့ အပန်းဖြေဖို့ ပန်းချီဆွဲတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Sometimes. I mostly paint for fun and relaxation.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 4: Outdoor Activities -->
+    <div class="conversation-section">
+        <h2>🏕️ Outdoor Activities / အပြင်ဘက်လှုပ်ရှားမှုများ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Do you enjoy outdoor activities?</div>
+                <div class="burmese">မင်း အပြင်ဘက်လှုပ်ရှားမှုတွေ ကြိုက်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you enjoy outdoor activities?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Absolutely! I love hiking and camping in the mountains.</div>
+                <div class="burmese">လုံးဝကြိုက်တယ်! တောင်တက်တာနဲ့ တောင်ပေါ်မှာ စခန်းချတာ ကြိုက်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Absolutely! I love hiking and camping in the mountains.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">How often do you go hiking?</div>
+                <div class="burmese">ဘယ်နှစ်ခါလောက် တောင်တက်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('How often do you go hiking?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">About twice a month when the weather is good.</div>
+                <div class="burmese">ရာသီဥတုကောင်းရင် တစ်လ နှစ်ကြိမ်လောက်။</div>
+                <button class="audio-btn" onclick="speakEnglish('About twice a month when the weather is good.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 5: Music Interests -->
+    <div class="conversation-section">
+        <h2>🎵 Music Interests / ဂီတစိတ်ဝင်စားမှုများ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">What kind of music do you listen to?</div>
+                <div class="burmese">မင်း ဘယ်လိုဂီတမျိုး နားထောင်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What kind of music do you listen to?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">I love pop and rock music. My favorite band is Coldplay.</div>
+                <div class="burmese">ပေါ့ပ်ဂီတနဲ့ ရော့ခ်ဂီတကို ကြိုက်တယ်။ ကျွန်တော့်အကြိုက်ဆုံးတီးဝိုင်းက Coldplay ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('I love pop and rock music. My favorite band is Coldplay.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Do you play any musical instruments?</div>
+                <div class="burmese">မင်း ဂီတတူရိယာတစ်ခုခု တီးတတ်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you play any musical instruments?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Yes, I play the guitar. I've been learning for two years.</div>
+                <div class="burmese">ဟုတ်တယ်၊ ဂစ်တာတီးတယ်။ နှစ်နှစ်လေ့လာနေပြီ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, I play the guitar. I have been learning for two years.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 6: Cooking as a Hobby -->
+    <div class="conversation-section">
+        <h2>👩‍🍳 Cooking as a Hobby / ဝါသနာအဖြစ်ချက်ပြုတ်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Do you like cooking?</div>
+                <div class="burmese">မင်း ချက်ပြုတ်ရတာ ကြိုက်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you like cooking?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">I love cooking! It's one of my biggest hobbies.</div>
+                <div class="burmese">ချက်ပြုတ်ရတာ ကြိုက်တယ်! ဒါက ကျွန်တော့်ရဲ့ အကြီးဆုံးဝါသနာတစ်ခုပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('I love cooking! It is one of my biggest hobbies.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">What's your favorite dish to cook?</div>
+                <div class="burmese">မင်း ချက်ရတာအကြိုက်ဆုံးဟင်းက ဘာလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What is your favorite dish to cook?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">I enjoy making traditional Myanmar curry and rice.</div>
+                <div class="burmese">မြန်မာဟင်းနဲ့ ထမင်းချက်ရတာ ကြိုက်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I enjoy making traditional Myanmar curry and rice.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">You'll have to cook for me someday!</div>
+                <div class="burmese">တစ်နေ့ ငါ့အတွက် ချက်ပေးရမယ်!</div>
+                <button class="audio-btn" onclick="speakEnglish('You will have to cook for me someday!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 7: Learning New Skills -->
+    <div class="conversation-section">
+        <h2>📚 Learning New Skills / အရည်အချင်းအသစ်များသင်ယူခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Are you learning any new hobbies these days?</div>
+                <div class="burmese">ဒီရက်ပိုင်း ဝါသနာအသစ်တစ်ခုခု သင်ယူနေလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Are you learning any new hobbies these days?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Yes, I'm learning photography and video editing.</div>
+                <div class="burmese">ဟုတ်တယ်၊ ဓာတ်ပုံရိုက်တာနဲ့ ဗီဒီယိုတည်းဖြတ်တာ သင်ယူနေတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, I am learning photography and video editing.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">That sounds interesting! Do you use a professional camera?</div>
+                <div class="burmese">စိတ်ဝင်စားစရာကောင်းတယ်! ပရော်ဖက်ရှင်နယ်ကင်မရာသုံးလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('That sounds interesting! Do you use a professional camera?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Not yet. I'm practicing with my phone first. Maybe I'll buy a camera later.</div>
+                <div class="burmese">မသုံးသေးဘူး။ အရင်ဆုံး ဖုန်းနဲ့ လေ့ကျင့်နေတယ်။ နောက်မှ ကင်မရာဝယ်ဖြစ်မယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Not yet. I am practicing with my phone first. Maybe I will buy a camera later.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 8: Inviting Someone to Join -->
+    <div class="conversation-section">
+        <h2>🤝 Inviting Someone to Join / တစ်စုံတစ်ဦးကို ဖိတ်ကြားခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Would you like to join our book club?</div>
+                <div class="burmese">ငါတို့ စာအုပ်စုကို ပါဝင်ချင်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Would you like to join our book club?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">That sounds great! When do you meet?</div>
+                <div class="burmese">ကောင်းတယ်! ဘယ်အချိန်တွေ့လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('That sounds great! When do you meet?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">We meet every Wednesday evening at 7 PM at the coffee shop.</div>
+                <div class="burmese">ဗုဒ္ဓဟူးနေ့တိုင်း ညနေ ၇ နာရီမှာ ကော်ဖီဆိုင်မှာ တွေ့ကြတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('We meet every Wednesday evening at 7 PM at the coffee shop.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">I'd love to join! See you there.</div>
+                <div class="burmese">ပါဝင်ချင်ပါတယ်! အဲဒီမှာ တွေ့မယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I would love to join! See you there.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Common Hobbies List -->
+    <div class="conversation-section">
+        <h2>🎯 Popular Hobbies / လူကြိုက်များသောဝါသနာများ</h2>
+        <div class="hobby-grid">
+            <div class="hobby-card">
+                <div class="hobby-icon">📖</div>
+                <div class="hobby-name">Reading</div>
+                <div>စာဖတ်</div>
+            </div>
+            <div class="hobby-card">
+                <div class="hobby-icon">🎵</div>
+                <div class="hobby-name">Music</div>
+                <div>ဂီတ</div>
+            </div>
+            <div class="hobby-card">
+                <div class="hobby-icon">⚽</div>
+                <div class="hobby-name">Sports</div>
+                <div>အားကစား</div>
+            </div>
+            <div class="hobby-card">
+                <div class="hobby-icon">🎨</div>
+                <div class="hobby-name">Painting</div>
+                <div>ပန်းချီ</div>
+            </div>
+            <div class="hobby-card">
+                <div class="hobby-icon">🎮</div>
+                <div class="hobby-name">Gaming</div>
+                <div>ဂိမ်းဆော့</div>
+            </div>
+            <div class="hobby-card">
+                <div class="hobby-icon">📸</div>
+                <div class="hobby-name">Photography</div>
+                <div>ဓာတ်ပုံရိုက်</div>
+            </div>
+            <div class="hobby-card">
+                <div class="hobby-icon">🏊</div>
+                <div class="hobby-name">Swimming</div>
+                <div>ရေကူး</div>
+            </div>
+            <div class="hobby-card">
+                <div class="hobby-icon">🍳</div>
+                <div class="hobby-name">Cooking</div>
+                <div>ချက်ပြုတ်</div>
+            </div>
+            <div class="hobby-card">
+                <div class="hobby-icon">✈️</div>
+                <div class="hobby-name">Travel</div>
+                <div>ခရီးသွား</div>
+            </div>
+            <div class="hobby-card">
+                <div class="hobby-icon">💃</div>
+                <div class="hobby-name">Dancing</div>
+                <div>အက</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Vocabulary Section -->
+    <div class="conversation-section">
+        <h2>📚 Hobbies Vocabulary / ဝါသနာသုံးဝေါဟာရများ</h2>
+        <div class="vocab-grid">
+            <div class="vocab-item"><span class="vocab-eng">Hobby</span><br><span class="vocab-burmese">ဝါသနာ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Interest</span><br><span class="vocab-burmese">စိတ်ဝင်စားမှု</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Free time / Spare time</span><br><span class="vocab-burmese">အားလပ်ချိန်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Relaxation</span><br><span class="vocab-burmese">အပန်းဖြေခြင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Talent</span><br><span class="vocab-burmese">ပါရမီ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Skill</span><br><span class="vocab-burmese">ကျွမ်းကျင်မှု</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Practice</span><br><span class="vocab-burmese">လေ့ကျင့်ခြင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Club / Group</span><br><span class="vocab-burmese">အသင်း / အုပ်စု</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Beginner</span><br><span class="vocab-burmese">အစပြုသူ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Expert</span><br><span class="vocab-burmese">ကျွမ်းကျင်သူ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Collect</span><br><span class="vocab-burmese">စုဆောင်းခြင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Volunteer</span><br><span class="vocab-burmese">စေတနာ့ဝန်ထမ်း</span></div>
+        </div>
+    </div>
+    
+    <!-- Useful Hobby Phrases -->
+    <div class="conversation-section">
+        <h2>💡 Useful Hobby Phrases / အသုံးဝင်သောဝါသနာစကားစုများ</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Questions About Hobbies (ဝါသနာအကြောင်းမေးခွန်းများ):</strong><br>
+            • "What do you do for fun?" (ပျော်ရွှင်မှုအတွက် ဘာလုပ်လဲ။)<br>
+            • "How did you get into that hobby?" (အဲဒီဝါသနာကို ဘယ်လိုစတင်ဖြစ်ခဲ့တာလဲ။)<br>
+            • "How long have you been doing that?" (အဲဒါကို ဘယ်လောက်ကြာကြာ လုပ်နေပြီလဲ။)<br>
+            • "Do you prefer indoor or outdoor activities?" (အိမ်တွင်း လှုပ်ရှားမှုလား၊ အပြင်ဘက်လှုပ်ရှားမှုလား ပိုကြိုက်လဲ။)<br>
+            <br>
+            <i class="fas fa-lightbulb"></i>
+            <strong>Expressing Likes (ကြိုက်နှစ်သက်မှုဖော်ပြခြင်း):</strong><br>
+            • "I'm really into photography." (ကျွန်တော် ဓာတ်ပုံရိုက်ရတာ အရမ်းကြိုက်တယ်။)<br>
+            • "I'm passionate about music." (ဂီတကို စိတ်အားထက်သန်တယ်။)<br>
+            • "It's a great way to relax after work." (အလုပ်ပြီးရင် အပန်းဖြေဖို့ အကောင်းဆုံးနည်းလမ်းပါ။)<br>
+            • "I find it very rewarding." (ကျွန်တော် အဲဒါကို အလွန်အကျိုးရှိတယ်လို့ ထင်တယ်။)<br>
+        </div>
+    </div>
+    
+    <!-- Practice Section -->
+    <div class="conversation-section">
+        <h2>✏️ Practice Questions / လေ့ကျင့်ခန်းမေးခွန်းများ</h2>
+        <div class="dialogue-box">
+            <div class="quiz-question">
+                <p><strong>1. How do you ask someone about their free time activities?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What do you like to do in your free time?')">Where do you work?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What do you like to do in your free time?')">What do you like to do in your free time?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What do you like to do in your free time?')">How old are you?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What do you like to do in your free time?')">What is your name?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>2. "ကျွန်တော် ဘတ်စကတ်ဘော ပရိသတ်ကြီးပါ" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I am a big fan of basketball.')">I play basketball.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I am a big fan of basketball.')">I hate basketball.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I am a big fan of basketball.')">I am a big fan of basketball.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I am a big fan of basketball.')">Basketball is boring.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. What do you call someone who plays the guitar?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Guitarist')">Pianist</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Guitarist')">Drummer</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Guitarist')">Guitarist</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Guitarist')">Singer</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. "မင်း ဘယ်လိုဝါသနာမျိုး ကြိုက်လဲ" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What kind of hobbies do you like?')">What is your job?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What kind of hobbies do you like?')">Where do you live?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What kind of hobbies do you like?')">What kind of hobbies do you like?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What kind of hobbies do you like?')">How are you?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. What does "outdoor activity" mean?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Activity done outside')">Activity done inside</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Activity done outside')">Activity done at home</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Activity done outside')">Activity done outside</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Activity done outside')">Activity done at work</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p><i class="fas fa-heart" style="color: #e84393;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p>
+        <p style="font-size: 0.75rem; margin-top: 0.5rem;">Practice these conversations to talk about your hobbies and interests confidently!</p>
+    </footer>
+</div>
+
+<!-- Back to Top Button -->
+<a href="#" class="back-to-top" id="backToTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+<script>
+    function speakEnglish(text) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8;
+        utterance.pitch = 1.0;
+        
+        function setVoice() {
+            const voices = window.speechSynthesis.getVoices();
+            const englishVoice = voices.find(v => v.lang === 'en-US' || v.lang.startsWith('en-'));
+            if (englishVoice) utterance.voice = englishVoice;
+            window.speechSynthesis.speak(utterance);
+        }
+        
+        if (window.speechSynthesis.getVoices().length) setVoice();
+        else window.speechSynthesis.onvoiceschanged = setVoice;
+    }
+    
+    function checkAnswer(element, correctAnswer) {
+        const options = element.parentElement.querySelectorAll('.quiz-option');
+        const isCorrect = element.innerText === correctAnswer;
+        
+        if (isCorrect) {
+            element.style.background = '#2ecc71';
+            element.style.color = 'white';
+            speakEnglish(correctAnswer);
+            setTimeout(() => {
+                options.forEach(opt => {
+                    opt.style.background = '';
+                    opt.style.color = '';
+                });
+            }, 1500);
+        } else {
+            element.style.background = '#e74c3c';
+            element.style.color = 'white';
+            setTimeout(() => {
+                element.style.background = '';
+                element.style.color = '';
+            }, 500);
+        }
+    }
+    
+    // Back to Top Button Functionality
+    (function() {
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        
+        if (backToTopBtn) {
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

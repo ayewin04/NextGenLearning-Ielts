@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Meetings - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 1rem;
+        }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        
+        .conversation-section {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .conversation-section h2 {
+            background: #2c3e50;
+            color: white;
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line {
+            display: grid;
+            grid-template-columns: 70px 1fr 1fr;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            align-items: start;
+        }
+        .speaker { font-weight: bold; color: #2c3e50; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { 
+            color: #8e6b3c; 
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 0.95rem;
+        }
+        .audio-btn {
+            background: #eef4ff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.3rem;
+        }
+        .audio-btn:hover { background: #2c3e50; color: white; }
+        
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+            padding: 1rem;
+        }
+        .vocab-item {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            border-left: 3px solid #2c3e50;
+        }
+        .vocab-eng { font-weight: bold; color: #2c3e50; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        
+        .quiz-question {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.8rem;
+        }
+        .quiz-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .quiz-option {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .quiz-option:hover { background: #2c3e50; color: white; border-color: #2c3e50; }
+        
+        .tips-box {
+            background: #e8f0f8;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #2c3e50;
+        }
+        .tips-box i { color: #2c3e50; margin-right: 8px; }
+        
+        .agenda-box {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border: 1px solid #2c3e50;
+        }
+        .agenda-item {
+            padding: 0.3rem 0;
+            border-bottom: 1px dashed #ddd;
+        }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1rem;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: #1e3c72;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid white;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: #f5b042;
+            color: #1e3c72;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .back-to-top i {
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 42px;
+                height: 42px;
+            }
+            .back-to-top i {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 700px) {
+            .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> All Conversations
+    </a>
+    
+    <header>
+        <h1><i class="fas fa-briefcase"></i> Business Meetings</h1>
+        <p>Learn how to schedule meetings, make presentations, discuss projects, and give feedback</p>
+        <p>အစည်းအဝေးများစီစဉ်နည်း၊ တင်ဆက်မှုများပြုလုပ်နည်း၊ ပရောဂျက်များဆွေးနွေးနည်းနှင့် တုံ့ပြန်ချက်ပေးနည်းတို့ကို လေ့လာပါ</p>
+    </header>
+    
+    <!-- Dialogue 1: Scheduling a Meeting -->
+    <div class="conversation-section">
+        <h2>📅 Scheduling a Meeting / အစည်းအဝေးစီစဉ်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Manager:</div>
+                <div class="english">Let's schedule a meeting to discuss the new project. When are you free?</div>
+                <div class="burmese">ပရောဂျက်အသစ်ကိုဆွေးနွေးဖို့ အစည်းအဝေးတစ်ခုစီစဉ်ကြရအောင်။ ဘယ်အချိန်အားလပ်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Let us schedule a meeting to discuss the new project. When are you free?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Employee:</div>
+                <div class="english">I'm free on Wednesday afternoon. How about 2 PM?</div>
+                <div class="burmese">ဗုဒ္ဓဟူးနေ့ နေ့လယ်ပိုင်း အားလပ်တယ်။ နေ့လယ် ၂ နာရီက ဘယ်လိုလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am free on Wednesday afternoon. How about 2 PM?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Manager:</div>
+                <div class="english">Wednesday at 2 PM works for me. I'll send you a calendar invite.</div>
+                <div class="burmese">ဗုဒ္ဓဟူး နေ့လယ် ၂ နာရီ အဆင်ပြေတယ်။ ပြက္ခဒိန်ဖိတ်ကြားချက် ပို့ပေးပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Wednesday at 2 PM works for me. I will send you a calendar invite.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Employee:</div>
+                <div class="english">Great. Should I prepare anything for the meeting?</div>
+                <div class="burmese">ကောင်းပါတယ်။ အစည်းအဝေးအတွက် ဘာတစ်ခုခု ပြင်ဆင်သင့်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Great. Should I prepare anything for the meeting?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 2: Starting a Meeting -->
+    <div class="conversation-section">
+        <h2>🚀 Starting a Meeting / အစည်းအဝေးစတင်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Chairperson:</div>
+                <div class="english">Good morning, everyone. Let's get started.</div>
+                <div class="burmese">မင်္ဂလာနံနက်ခင်းပါ အားလုံး။ စတင်ကြရအောင်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Good morning, everyone. Let us get started.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Chairperson:</div>
+                <div class="english">First, let me go over the agenda for today's meeting.</div>
+                <div class="burmese">ပထမဆုံး၊ ဒီနေ့အစည်းအဝေးရဲ့ အစီအစဉ်ကို သွားကြည့်ရအောင်။</div>
+                <button class="audio-btn" onclick="speakEnglish('First, let me go over the agenda for today\'s meeting.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Chairperson:</div>
+                <div class="english">We have three main topics: budget update, marketing strategy, and timeline.</div>
+                <div class="burmese">ကျွန်တော်တို့မှာ အဓိကအကြောင်းအရာ သုံးခုရှိတယ်- ဘတ်ဂျက်မွမ်းမံမှု၊ စျေးကွက်ရှာဖွေရေးမဟာဗျူဟာ၊ နှင့် အချိန်ဇယား။</div>
+                <button class="audio-btn" onclick="speakEnglish('We have three main topics: budget update, marketing strategy, and timeline.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 3: Presenting an Idea -->
+    <div class="conversation-section">
+        <h2>💡 Presenting an Idea / အကြံဉာဏ်တင်ပြခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Employee:</div>
+                <div class="english">I'd like to share an idea for improving our customer service.</div>
+                <div class="burmese">ကျွန်တော်တို့ရဲ့ ဖောက်သည်ဝန်ဆောင်မှု မြှင့်တင်ရန် အကြံဉာဏ်တစ်ခုကို မျှဝေချင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I would like to share an idea for improving our customer service.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Manager:</div>
+                <div class="english">Please go ahead. We'd love to hear it.</div>
+                <div class="burmese">ကျေးဇူးပြု၍ ဆက်ပြောပါ။ ကြားချင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Please go ahead. We would love to hear it.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Employee:</div>
+                <div class="english">What if we implemented a live chat feature on our website?</div>
+                <div class="burmese">ကျွန်တော်တို့ ဝက်ဘ်ဆိုက်မှာ တိုက်ရိုက်ချတ်အင်္ဂါရပ်ကို အကောင်အထည်ဖော်ရင် ဘယ်လိုလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What if we implemented a live chat feature on our website?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Employee:</div>
+                <div class="english">It would allow customers to get immediate answers to their questions.</div>
+                <div class="burmese">ဒါက ဖောက်သည်တွေအတွက် သူတို့မေးခွန်းတွေအတွက် ချက်ချင်းအဖြေရစေမှာပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('It would allow customers to get immediate answers to their questions.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 4: Discussing a Proposal -->
+    <div class="conversation-section">
+        <h2>📊 Discussing a Proposal / အဆိုပြုချက်ဆွေးနွေးခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Manager:</div>
+                <div class="english">Let's discuss the budget proposal for next quarter.</div>
+                <div class="burmese">လာမယ့်သုံးလပတ်အတွက် ဘတ်ဂျက်အဆိုပြုချက်ကို ဆွေးနွေးကြရအောင်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Let us discuss the budget proposal for next quarter.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Team Member:</div>
+                <div class="english">I think we need to allocate more resources to marketing.</div>
+                <div class="burmese">ကျွန်တော်တို့ စျေးကွက်ရှာဖွေရေးအတွက် အရင်းအမြစ်များ ပိုမိုခွဲဝေပေးဖို့ လိုအပ်တယ်လို့ ထင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I think we need to allocate more resources to marketing.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Manager:</div>
+                <div class="english">I agree, but we also have to stay within budget. What are your suggestions?</div>
+                <div class="burmese">သဘောတူပါတယ်၊ ဒါပေမယ့် ဘတ်ဂျက်အတွင်းလည်း နေရမယ်။ သင့်အကြံပြုချက်တွေက ဘာတွေလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('I agree, but we also have to stay within budget. What are your suggestions?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Team Member:</div>
+                <div class="english">We could reduce spending on office supplies and travel.</div>
+                <div class="burmese">ရုံးသုံးပစ္စည်းများနှင့် ခရီးသွားလာမှုအတွက် အသုံးစရိတ်ကို လျှော့ချနိုင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('We could reduce spending on office supplies and travel.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 5: Giving Feedback -->
+    <div class="conversation-section">
+        <h2>💬 Giving Feedback / တုံ့ပြန်ချက်ပေးခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Manager:</div>
+                <div class="english">I'd like to give some feedback on your presentation. Overall, it was excellent.</div>
+                <div class="burmese">သင့်တင်ဆက်မှုအတွက် တုံ့ပြန်ချက်အချို့ပေးချင်ပါတယ်။ ခြုံငုံကြည့်ရင် အလွန်ကောင်းပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I would like to give some feedback on your presentation. Overall, it was excellent.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Employee:</div>
+                <div class="english">Thank you. Is there anything I can improve?</div>
+                <div class="burmese">ကျေးဇူးပါ။ ကျွန်တော် ပိုကောင်းအောင်လုပ်နိုင်တဲ့အရာတစ်ခုခုရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Thank you. Is there anything I can improve?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Manager:</div>
+                <div class="english">Try to speak a bit slower. Some parts felt rushed. But your data was very clear.</div>
+                <div class="burmese">နည်းနည်းနှေးနှေးပြောဖို့ ကြိုးစားပါ။ အချို့အပိုင်းတွေ သွက်သွက်ဖြစ်နေတယ်။ ဒါပေမယ့် သင့်ဒေတာက အရမ်းရှင်းပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Try to speak a bit slower. Some parts felt rushed. But your data was very clear.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Employee:</div>
+                <div class="english">That's helpful. I'll work on my pacing. Thank you.</div>
+                <div class="burmese">အထောက်အကူဖြစ်ပါတယ်။ ကျွန်တော် အရှိန်ကို လေ့ကျင့်ပါမယ်။ ကျေးဇူးပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('That is helpful. I will work on my pacing. Thank you.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 6: Delegating Tasks -->
+    <div class="conversation-section">
+        <h2>📋 Delegating Tasks / တာဝန်များခွဲဝေခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Project Manager:</div>
+                <div class="english">Let me assign tasks for this week.</div>
+                <div class="burmese">ဒီတစ်ပတ်အတွက် တာဝန်များကို ခွဲဝေပေးပါရစေ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Let me assign tasks for this week.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Project Manager:</div>
+                <div class="english">John, please finish the market research report by Friday.</div>
+                <div class="burmese">ဂျွန်၊ ကျေးဇူးပြု၍ သောကြာနေ့အတွင်း စျေးကွက်သုတေသနအစီရင်ခံစာ အပြီးသတ်ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('John, please finish the market research report by Friday.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 John:</div>
+                <div class="english">Got it. I'll have it ready by Thursday.</div>
+                <div class="burmese">နားလည်းပါပြီ။ ကြာသပတေးနေ့အတွင်း အဆင်သင့်ဖြစ်အောင်လုပ်ပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Got it. I will have it ready by Thursday.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Project Manager:</div>
+                <div class="english">Sarah, can you update the client presentation?</div>
+                <div class="burmese">ဆာရာ၊ ဖောက်သည်တင်ဆက်မှုကို မွမ်းမံနိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Sarah, can you update the client presentation?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Sarah:</div>
+                <div class="english">Sure. I'll work on it today and share it with the team tomorrow.</div>
+                <div class="burmese">ရပါတယ်။ ဒီနေ့လုပ်ပြီး မနက်ဖြန် အသင်းနဲ့မျှဝေပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Sure. I will work on it today and share it with the team tomorrow.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 7: Virtual Meeting -->
+    <div class="conversation-section">
+        <h2>💻 Virtual Meeting / အွန်လိုင်းအစည်းအဝေး</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Host:</div>
+                <div class="english">Hello everyone, can you hear me clearly?</div>
+                <div class="burmese">မင်္ဂလာပါအားလုံး၊ ကျွန်တော့်အသံ ရှင်းရှင်းကြားရလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Hello everyone, can you hear me clearly?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Participant 1:</div>
+                <div class="english">Yes, loud and clear.</div>
+                <div class="burmese">ဟုတ်ကဲ့၊ ကျယ်ကျယ်ရှင်းရှင်းကြားရတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, loud and clear.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Participant 2:</div>
+                <div class="english">You're breaking up a little. Can you speak closer to the microphone?</div>
+                <div class="burmese">ခင်ဗျားအသံ နည်းနည်းပြတ်တောင်းပြတ်တောင်းဖြစ်နေတယ်။ မိုက်ခရိုဖုန်းနဲ့ နီးနီးပြောလို့ရမလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('You are breaking up a little. Can you speak closer to the microphone?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Host:</div>
+                <div class="english">Is this better?</div>
+                <div class="burmese">ဒါ ပိုကောင်းလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Is this better?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Participant 2:</div>
+                <div class="english">Much better. Thank you.</div>
+                <div class="burmese">အများကြီးကောင်းတယ်။ ကျေးဇူးပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Much better. Thank you.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 8: Ending a Meeting -->
+    <div class="conversation-section">
+        <h2>🏁 Ending a Meeting / အစည်းအဝေးအဆုံးသတ်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Chairperson:</div>
+                <div class="english">Before we wrap up, let me summarize what we've discussed.</div>
+                <div class="burmese">မဆုံးခင်၊ ကျွန်တော်တို့ ဆွေးနွေးခဲ့တာတွေကို အကျဉ်းချုပ်ပါရစေ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Before we wrap up, let me summarize what we have discussed.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Chairperson:</div>
+                <div class="english">We agreed to increase the marketing budget by 10% and launch the campaign next month.</div>
+                <div class="burmese">စျေးကွက်ရှာဖွေရေးဘတ်ဂျက်ကို ၁၀ ရာခိုင်နှုန်းတိုးမြှင့်ရန် နှင့် လာမယ့်လတွင် လှုပ်ရှားမှုစတင်ရန် သဘောတူခဲ့ကြပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('We agreed to increase the marketing budget by 10 percent and launch the campaign next month.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Chairperson:</div>
+                <div class="english">Thanks everyone for your input. Meeting adjourned.</div>
+                <div class="burmese">အားလုံးရဲ့ ထည့်ဝင်မှုအတွက် ကျေးဇူးပါ။ အစည်းအဝေးပြီးပါပြီ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Thanks everyone for your input. Meeting adjourned.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Sample Meeting Agenda -->
+    <div class="conversation-section">
+        <h2>📑 Sample Meeting Agenda / နမူနာအစည်းအဝေးအစီအစဉ်</h2>
+        <div class="agenda-box">
+            <div class="agenda-item"><strong>📌 1. Welcome & Introductions</strong> (5 min) - ကြိုဆိုခြင်းနှင့် မိတ်ဆက်ခြင်း</div>
+            <div class="agenda-item"><strong>📌 2. Review of Previous Meeting Minutes</strong> (10 min) - ယခင်အစည်းအဝေးမှတ်တမ်းပြန်လည်သုံးသပ်ခြင်း</div>
+            <div class="agenda-item"><strong>📌 3. Budget Update</strong> (15 min) - ဘတ်ဂျက်မွမ်းမံချက်</div>
+            <div class="agenda-item"><strong>📌 4. New Project Discussion</strong> (20 min) - ပရောဂျက်အသစ်ဆွေးနွေးခြင်း</div>
+            <div class="agenda-item"><strong>📌 5. Action Items & Deadlines</strong> (10 min) - လုပ်ဆောင်ရမည့်အရာများနှင့် နောက်ဆုံးရက်များ</div>
+            <div class="agenda-item"><strong>📌 6. Q&A / Open Floor</strong> (5 min) - အမေးအဖြေ/အဖွင့်အခန်း</div>
+            <div class="agenda-item"><strong>📌 7. Next Meeting Date</strong> (5 min) - နောက်အစည်းအဝေးရက်စွဲ</div>
+        </div>
+    </div>
+    
+    <!-- Vocabulary Section -->
+    <div class="conversation-section">
+        <h2>📚 Business Vocabulary / စီးပွားရေးသုံးဝေါဟာရများ</h2>
+        <div class="vocab-grid">
+            <div class="vocab-item"><span class="vocab-eng">Agenda</span><br><span class="vocab-burmese">အစီအစဉ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Minutes</span><br><span class="vocab-burmese">မှတ်တမ်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Stakeholder</span><br><span class="vocab-burmese">အစုရှယ်ယာရှင်/သက်ဆိုင်သူ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Action item</span><br><span class="vocab-burmese">လုပ်ဆောင်ရမည့်အရာ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Deadline</span><br><span class="vocab-burmese">နောက်ဆုံးရက်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Deliverable</span><br><span class="vocab-burmese">ပေးအပ်နိုင်သောအရာ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Brainstorming</span><br><span class="vocab-burmese">အတွေးအကြံစုဆောင်းခြင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Q&A (Questions & Answers)</span><br><span class="vocab-burmese">အမေးအဖြေ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Follow-up</span><br><span class="vocab-burmese">နောက်ဆက်တွဲ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Breakout session</span><br><span class="vocab-burmese">အုပ်စုခွဲအစည်းအဝေး</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Consensus</span><br><span class="vocab-burmese">သဘောတူညီမှု</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Adjourn</span><br><span class="vocab-burmese">ရပ်ဆိုင်းသည်/ဆိုင်းငံ့သည်</span></div>
+        </div>
+    </div>
+    
+    <!-- Useful Business Phrases -->
+    <div class="conversation-section">
+        <h2>💡 Useful Business Phrases / အသုံးဝင်သောစီးပွားရေးစကားစုများ</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>During a Meeting (အစည်းအဝေးအတွင်း):</strong><br>
+            • "Could you please elaborate on that point?" (အဲဒီအချက်ကို ကျေးဇူးပြု၍ အသေးစိတ်ရှင်းပြနိုင်မလား။)<br>
+            • "I see your point, but I have a different perspective." (သင့်အချက်ကို နားလည်းပါတယ်၊ ဒါပေမယ့် ကျွန်တော့်မှာ မတူညီတဲ့ရှုထောင့်ရှိတယ်။)<br>
+            • "Let's take a 10-minute break." (၁၀ မိနစ် အနားယူကြရအောင်။)<br>
+            • "I'd like to add something to that." (အဲဒါကို ထပ်ပြီး ထည့်ပြောချင်ပါတယ်။)<br>
+            • "Let's table this discussion for now and revisit it next week." (ဒီဆွေးနွေးမှုကို ယာယီရပ်ထားပြီး လာမယ့်အပတ် ပြန်လည်သုံးသပ်ကြရအောင်။)<br>
+            <br>
+            <i class="fas fa-lightbulb"></i>
+            <strong>Polite Interruptions (ဖော်ရွေစွာကြားဖြတ်ခြင်း):</strong><br>
+            • "Sorry to interrupt, but I have a quick question." (ကြားဖြတ်တဲ့အတွက် စိတ်မကောင်းပါဘူး၊ မေးခွန်းအမြန်တစ်ခုရှိလို့ပါ။)<br>
+            • "May I jump in here?" (ဒီမှာ ကြားဖြတ်လို့ရမလား။)<br>
+        </div>
+    </div>
+    
+    <!-- Practice Section -->
+    <div class="conversation-section">
+        <h2>✏️ Practice Questions / လေ့ကျင့်ခန်းမေးခွန်းများ</h2>
+        <div class="dialogue-box">
+            <div class="quiz-question">
+                <p><strong>1. How do you suggest scheduling a meeting?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Let us schedule a meeting.')">Let us cancel the meeting.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Let us schedule a meeting.')">Let us schedule a meeting.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Let us schedule a meeting.')">The meeting is over.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Let us schedule a meeting.')">I don't like meetings.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>2. "ကျေးဇူးပြု၍ အစီအစဉ်ကို သွားကြည့်ရအောင်" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Let me go over the agenda.')">Let me cancel the agenda.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Let me go over the agenda.')">Let me go over the agenda.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Let me go over the agenda.')">Let me ignore the agenda.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Let me go over the agenda.')">I lost the agenda.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. What do you call a list of topics to discuss in a meeting?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Agenda')">Budget</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Agenda')">Report</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Agenda')">Agenda</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Agenda')">Presentation</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. "ဒီအစည်းအဝေးအတွက် ကျေးဇူးပါ" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Thank you for this meeting.')">Thank you for this meeting.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Thank you for this meeting.')">I hate this meeting.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Thank you for this meeting.')">This meeting is long.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Thank you for this meeting.')">Cancel the meeting.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. When a meeting ends, what does the chairperson say?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Meeting adjourned.')">Meeting started.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Meeting adjourned.')">Meeting adjourned.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Meeting adjourned.')">Meeting delayed.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Meeting adjourned.')">Meeting canceled.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p><i class="fas fa-heart" style="color: #2c3e50;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p>
+        <p style="font-size: 0.75rem; margin-top: 0.5rem;">Practice these conversations to participate confidently in business meetings!</p>
+    </footer>
+</div>
+
+<!-- Back to Top Button -->
+<a href="#" class="back-to-top" id="backToTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+<script>
+    function speakEnglish(text) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8;
+        utterance.pitch = 1.0;
+        
+        function setVoice() {
+            const voices = window.speechSynthesis.getVoices();
+            const englishVoice = voices.find(v => v.lang === 'en-US' || v.lang.startsWith('en-'));
+            if (englishVoice) utterance.voice = englishVoice;
+            window.speechSynthesis.speak(utterance);
+        }
+        
+        if (window.speechSynthesis.getVoices().length) setVoice();
+        else window.speechSynthesis.onvoiceschanged = setVoice;
+    }
+    
+    function checkAnswer(element, correctAnswer) {
+        const options = element.parentElement.querySelectorAll('.quiz-option');
+        const isCorrect = element.innerText === correctAnswer;
+        
+        if (isCorrect) {
+            element.style.background = '#2ecc71';
+            element.style.color = 'white';
+            speakEnglish(correctAnswer);
+            setTimeout(() => {
+                options.forEach(opt => {
+                    opt.style.background = '';
+                    opt.style.color = '';
+                });
+            }, 1500);
+        } else {
+            element.style.background = '#e74c3c';
+            element.style.color = 'white';
+            setTimeout(() => {
+                element.style.background = '';
+                element.style.color = '';
+            }, 500);
+        }
+    }
+    
+    // Back to Top Button Functionality
+    (function() {
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        
+        if (backToTopBtn) {
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

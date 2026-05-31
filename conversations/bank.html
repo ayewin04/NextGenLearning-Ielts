@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banking - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 1rem;
+        }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        
+        .conversation-section {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .conversation-section h2 {
+            background: #27ae60;
+            color: white;
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line {
+            display: grid;
+            grid-template-columns: 70px 1fr 1fr;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            align-items: start;
+        }
+        .speaker { font-weight: bold; color: #27ae60; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { 
+            color: #8e6b3c; 
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 0.95rem;
+        }
+        .audio-btn {
+            background: #eef4ff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.3rem;
+        }
+        .audio-btn:hover { background: #27ae60; color: white; }
+        
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+            padding: 1rem;
+        }
+        .vocab-item {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            border-left: 3px solid #27ae60;
+        }
+        .vocab-eng { font-weight: bold; color: #27ae60; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        
+        .quiz-question {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.8rem;
+        }
+        .quiz-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .quiz-option {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .quiz-option:hover { background: #27ae60; color: white; border-color: #27ae60; }
+        
+        .tips-box {
+            background: #e8f5e9;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #27ae60;
+        }
+        .tips-box i { color: #27ae60; margin-right: 8px; }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1rem;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: #1e3c72;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid white;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: #f5b042;
+            color: #1e3c72;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .back-to-top i {
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 42px;
+                height: 42px;
+            }
+            .back-to-top i {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 700px) {
+            .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> All Conversations
+    </a>
+    
+    <header>
+        <h1><i class="fas fa-building-columns"></i> Banking</h1>
+        <p>Learn how to open an account, withdraw money, exchange currency, and use banking services</p>
+        <p>ဘဏ်အကောင့်ဖွင့်နည်း၊ ငွေထုတ်နည်း၊ ငွေလဲနည်းနှင့် ဘဏ်ဝန်ဆောင်မှုများ အသုံးပြုနည်းကို လေ့လာပါ</p>
+    </header>
+    
+    <!-- Dialogue 1: Opening a Bank Account -->
+    <div class="conversation-section">
+        <h2>🏦 Opening a Bank Account / ဘဏ်အကောင့်ဖွင့်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Hello, I'd like to open a bank account.</div>
+                <div class="burmese">မင်္ဂလာပါ၊ ဘဏ်အကောင့်တစ်ခု ဖွင့်ချင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Hello, I would like to open a bank account.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Teller:</div>
+                <div class="english">Certainly. What type of account would you like? Savings or checking?</div>
+                <div class="burmese">ရပါတယ်။ ဘယ်လိုအကောင့်အမျိုးအစား လိုချင်လဲ။ စုငွေအကောင့်လား၊ လက်ရှိအကောင့်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Certainly. What type of account would you like? Savings or checking?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">A savings account, please.</div>
+                <div class="burmese">စုငွေအကောင့် ဖွင့်ပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('A savings account, please.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Teller:</div>
+                <div class="english">May I see your identification and proof of address?</div>
+                <div class="burmese">သင်၏သက်သေခံနှင့် နေရပ်လိပ်စာအထောက်အထား ကြည့်လို့ရမလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('May I see your identification and proof of address?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Here is my passport and a utility bill.</div>
+                <div class="burmese">ဒီမှာ ကျွန်တော့်ပတ်စပို့နဲ့ မီတာခေါက်ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Here is my passport and a utility bill.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Teller:</div>
+                <div class="english">Great. Please fill out this form. What is your occupation?</div>
+                <div class="burmese">ကောင်းပါတယ်။ ဒီဖောင်ကို ဖြည့်ပါ။ သင့်အလုပ်က ဘာလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Great. Please fill out this form. What is your occupation?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 2: Depositing Money -->
+    <div class="conversation-section">
+        <h2>💰 Depositing Money / ငွေသွင်းခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I'd like to deposit some money into my account.</div>
+                <div class="burmese">ကျွန်တော့်အကောင့်ထဲကို ငွေအချို့သွင်းချင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I would like to deposit some money into my account.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Teller:</div>
+                <div class="english">Sure. Please fill out this deposit slip. How much would you like to deposit?</div>
+                <div class="burmese">ရပါတယ်။ ဒီငွေသွင်းဖောင်ကို ဖြည့်ပါ။ ဘယ်လောက်သွင်းချင်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Sure. Please fill out this deposit slip. How much would you like to deposit?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I want to deposit $500.</div>
+                <div class="burmese">ဒေါ်လာ ၅၀၀ သွင်းချင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I want to deposit 500 dollars.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Teller:</div>
+                <div class="english">Here is your receipt. Your new balance is $2,500.</div>
+                <div class="burmese">ဒီမှာ ပြေစာပါ။ သင့်ရဲ့အသစ်လက်ကျန်ငွေက ၂၅၀၀ ဒေါ်လာပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Here is your receipt. Your new balance is 2,500 dollars.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 3: Withdrawing Money -->
+    <div class="conversation-section">
+        <h2>💵 Withdrawing Money / ငွေထုတ်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I need to withdraw some money, please.</div>
+                <div class="burmese">ငွေအချို့ထုတ်ယူဖို့ လိုအပ်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I need to withdraw some money, please.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Teller:</div>
+                <div class="english">How much would you like to withdraw?</div>
+                <div class="burmese">ဘယ်လောက်ထုတ်ချင်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('How much would you like to withdraw?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">$200, please. In 20-dollar bills.</div>
+                <div class="burmese">ဒေါ်လာ ၂၀၀ ပါ။ ၂၀ ဒေါ်လာတန် ငွေစက္ကူတွေနဲ့ ပေးပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('200 dollars, please. In 20-dollar bills.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Teller:</div>
+                <div class="english">Please enter your PIN. Here is your money. Would you like a receipt?</div>
+                <div class="burmese">ကျေးဇူးပြု၍ သင်၏ PIN ထည့်ပါ။ ဒီမှာ သင့်ငွေပါ။ ပြေစာလိုချင်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Please enter your PIN. Here is your money. Would you like a receipt?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 4: Exchanging Currency -->
+    <div class="conversation-section">
+        <h2>💱 Exchanging Currency / ငွေကြေးလဲလှယ်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I'd like to exchange some currency, please.</div>
+                <div class="burmese">ငွေကြေးအချို့လဲလှယ်ချင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I would like to exchange some currency, please.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Teller:</div>
+                <div class="english">What currency do you have?</div>
+                <div class="burmese">ဘယ်ငွေကြေး ရှိလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What currency do you have?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I have US dollars. I need Myanmar kyat.</div>
+                <div class="burmese">ကျွန်တော်မှာ အမေရိကန်ဒေါ်လာ ရှိတယ်။ မြန်မာကျပ် လိုအပ်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I have US dollars. I need Myanmar kyat.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Teller:</div>
+                <div class="english">Today's exchange rate is 2,100 kyat per dollar. How much do you want to exchange?</div>
+                <div class="burmese">ဒီနေ့ ငွေလဲနှုန်းက တစ်ဒေါ်လာ ၂၁၀၀ ကျပ်ပါ။ ဘယ်လောက်လဲလှယ်ချင်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Today\'s exchange rate is 2,100 kyat per dollar. How much do you want to exchange?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I'd like to exchange $100, please.</div>
+                <div class="burmese">ဒေါ်လာ ၁၀၀ လဲလှယ်ချင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I would like to exchange 100 dollars, please.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Teller:</div>
+                <div class="english">That will be 210,000 kyat. Please sign here.</div>
+                <div class="burmese">ဒါက ၂၁၀,၀၀၀ ကျပ် ရပါမယ်။ ဒီမှာ လက်မှတ်ထိုးပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('That will be 210,000 kyat. Please sign here.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 5: Transferring Money -->
+    <div class="conversation-section">
+        <h2>📲 Transferring Money / ငွေလွှဲခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I need to transfer money to another account.</div>
+                <div class="burmese">အခြားအကောင့်တစ်ခုသို့ ငွေလွှဲဖို့ လိုအပ်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I need to transfer money to another account.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Teller:</div>
+                <div class="english">Is it within the same bank or to a different bank?</div>
+                <div class="burmese">ဘဏ်တူကိုလား၊ အခြားဘဏ်ကိုလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Is it within the same bank or to a different bank?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Same bank. I have the account number.</div>
+                <div class="burmese">ဘဏ်တူပါ။ ကျွန်တော်မှာ အကောင့်နံပါတ်ရှိပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Same bank. I have the account number.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Teller:</div>
+                <div class="english">Please fill out this transfer form. How much would you like to transfer?</div>
+                <div class="burmese">ဒီငွေလွှဲဖောင်ကို ဖြည့်ပါ။ ဘယ်လောက်လွှဲချင်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Please fill out this transfer form. How much would you like to transfer?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">$150, please. Is there a transfer fee?</div>
+                <div class="burmese">ဒေါ်လာ ၁၅၀ ပါ။ ငွေလွှဲကြေးရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('150 dollars, please. Is there a transfer fee?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Teller:</div>
+                <div class="english">There is a $2 fee for transfers within the same bank.</div>
+                <div class="burmese">ဘဏ်တူငွေလွှဲအတွက် အခကြေးငွေ ၂ ဒေါ်လာ ကျပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('There is a 2 dollar fee for transfers within the same bank.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 6: Using the ATM -->
+    <div class="conversation-section">
+        <h2>🏧 Using the ATM / အေတီအမ်အသုံးပြုခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Friend A:</div>
+                <div class="english">I need to use the ATM. Do you know where it is?</div>
+                <div class="burmese">ကျွန်တော် ATM သုံးဖို့လိုတယ်။ ဘယ်မှာလဲသိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('I need to use the ATM. Do you know where it is?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Friend B:</div>
+                <div class="english">It's right outside the bank. Insert your card first.</div>
+                <div class="burmese">ဘဏ်ရဲ့အပြင်ဘက်မှာပါ။ အရင်ဆုံး သင့်ကဒ်ထည့်ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('It is right outside the bank. Insert your card first.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Friend A:</div>
+                <div class="english">Then I need to enter my PIN, right?</div>
+                <div class="burmese">ပြီးရင် ကျွန်တော် PIN ထည့်ဖို့လိုတယ်ဟုတ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Then I need to enter my PIN, right?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Friend B:</div>
+                <div class="english">Yes, then select "withdrawal" and choose the amount. Don't forget to take your card!</div>
+                <div class="burmese">ဟုတ်တယ်၊ ပြီးရင် "withdrawal" ကိုရွေးပြီး ငွေပမာဏကိုရွေးပါ။ သင့်ကဒ်ကို ပြန်ယူဖို့ မမေ့ပါနဲ့။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, then select withdrawal and choose the amount. Do not forget to take your card!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 7: Lost or Stolen Card -->
+    <div class="conversation-section">
+        <h2>🔒 Lost or Stolen Card / ကဒ်ပျောက်ဆုံး သို့မဟုတ် ခိုးယူခံရခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I need to report a lost debit card.</div>
+                <div class="burmese">ပျောက်ဆုံးသွားတဲ့ ဒက်ဘစ်ကဒ်ကို အကြောင်းကြားဖို့ လိုအပ်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I need to report a lost debit card.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Teller:</div>
+                <div class="english">Don't worry. We can block the card immediately. When did you last use it?</div>
+                <div class="burmese">စိတ်မပူပါနဲ့။ ကဒ်ကို ချက်ချင်း ပိတ်ပေးနိုင်ပါတယ်။ နောက်ဆုံး ဘယ်အချိန်သုံးခဲ့လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do not worry. We can block the card immediately. When did you last use it?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Yesterday at the supermarket.</div>
+                <div class="burmese">မနေ့က ကုန်စုံဆိုင်မှာပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yesterday at the supermarket.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Teller:</div>
+                <div class="english">I've blocked your card. A new one will be sent to you within 5-7 business days.</div>
+                <div class="burmese">သင့်ကဒ်ကို ပိတ်လိုက်ပါပြီ။ အသစ်တစ်ခုကို လုပ်ငန်းရက် ၅-၇ ရက်အတွင်း သင့်ထံ ပို့ပေးပါမည်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I have blocked your card. A new one will be sent to you within 5-7 business days.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 8: Asking About Interest Rates -->
+    <div class="conversation-section">
+        <h2>📈 Interest Rates / အတိုးနှုန်းများ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">What is the interest rate on savings accounts?</div>
+                <div class="burmese">စုငွေအကောင့်အတွက် အတိုးနှုန်းက ဘယ်လောက်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What is the interest rate on savings accounts?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Teller:</div>
+                <div class="english">The current rate is 3% per year. Interest is calculated daily and paid monthly.</div>
+                <div class="burmese">လက်ရှိအတိုးနှုန်းက တစ်နှစ် ၃ ရာခိုင်နှုန်းပါ။ အတိုးကို နေ့စဉ်တွက်ပြီး လစဉ်ပေးပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('The current rate is 3 percent per year. Interest is calculated daily and paid monthly.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Do you offer any accounts with higher interest?</div>
+                <div class="burmese">အတိုးနှုန်းပိုမြင့်တဲ့ အကောင့်တွေ ရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you offer any accounts with higher interest?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Teller:</div>
+                <div class="english">Yes, our fixed deposit account offers 5% interest for a 12-month term.</div>
+                <div class="burmese">ဟုတ်ကဲ့၊ ကျွန်တော်တို့ရဲ့ ငွေသွင်းလျှင်ရသည့်အကောင့်က ၁၂ လအတွက် ၅ ရာခိုင်နှုန်း အတိုးပေးပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, our fixed deposit account offers 5 percent interest for a 12-month term.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Vocabulary Section -->
+    <div class="conversation-section">
+        <h2>📚 Banking Vocabulary / ဘဏ်သုံးဝေါဟာရများ</h2>
+        <div class="vocab-grid">
+            <div class="vocab-item"><span class="vocab-eng">Bank account</span><br><span class="vocab-burmese">ဘဏ်အကောင့်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Savings account</span><br><span class="vocab-burmese">စုငွေအကောင့်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Checking account</span><br><span class="vocab-burmese">လက်ရှိအကောင့်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Deposit / Withdrawal</span><br><span class="vocab-burmese">ငွေသွင်း/ငွေထုတ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Balance</span><br><span class="vocab-burmese">လက်ကျန်ငွေ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Transfer</span><br><span class="vocab-burmese">ငွေလွှဲ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Exchange rate</span><br><span class="vocab-burmese">ငွေလဲနှုန်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Interest rate</span><br><span class="vocab-burmese">အတိုးနှုန်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">ATM</span><br><span class="vocab-burmese">အေတီအမ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">PIN</span><br><span class="vocab-burmese">ကိုယ်ပိုင်နံပါတ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Teller</span><br><span class="vocab-burmese">ဘဏ်ဝန်ထမ်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Receipt</span><br><span class="vocab-burmese">ပြေစာ</span></div>
+        </div>
+    </div>
+    
+    <!-- Useful Banking Phrases -->
+    <div class="conversation-section">
+        <h2>💡 Useful Banking Phrases / အသုံးဝင်သောဘဏ်စကားစုများ</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Common Banking Questions (အမေးများသောဘဏ်မေးခွန်းများ):</strong><br>
+            • "What is my current balance?" (ကျွန်တော့်ရဲ့ လက်ရှိလက်ကျန်ငွေက ဘယ်လောက်လဲ။)<br>
+            • "Can I check my account online?" (အွန်လိုင်းကနေ ကျွန်တော့်အကောင့်ကို စစ်လို့ရမလား။)<br>
+            • "What documents do I need to open an account?" (အကောင့်ဖွင့်ဖို့ ဘယ်စာရွက်စာတမ်းတွေ လိုအပ်လဲ။)<br>
+            • "Is there a minimum balance requirement?" (အနည်းဆုံးလက်ကျန်ငွေ လိုအပ်ချက်ရှိလား။)<br>
+            • "How long does a transfer take?" (ငွေလွှဲတစ်ခုက ဘယ်လောက်ကြာလဲ။)<br>
+            <br>
+            <i class="fas fa-lightbulb"></i>
+            <strong>ATM Instructions (အေတီအမ်ညွှန်ကြားချက်များ):</strong><br>
+            • "Please enter your PIN." (ကျေးဇူးပြု၍ သင်၏ PIN ထည့်ပါ။)<br>
+            • "Select the type of transaction." (ငွေလွှဲအမျိုးအစားကို ရွေးပါ။)<br>
+            • "Please take your money." (ကျေးဇူးပြု၍ သင့်ငွေကို ယူပါ။)<br>
+            • "Would you like another transaction?" (နောက်ထပ်ငွေလွှဲလုပ်ချင်လား။)<br>
+        </div>
+    </div>
+    
+    <!-- Practice Section -->
+    <div class="conversation-section">
+        <h2>✏️ Practice Questions / လေ့ကျင့်ခန်းမေးခွန်းများ</h2>
+        <div class="dialogue-box">
+            <div class="quiz-question">
+                <p><strong>1. How do you ask to open a bank account?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like to open a bank account.')">Where is the bank?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like to open a bank account.')">I would like to open a bank account.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like to open a bank account.')">How much is this?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like to open a bank account.')">I need a loan.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>2. "ငွေထုတ်ချင်ပါတယ်" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like to withdraw money.')">I would like to deposit money.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like to withdraw money.')">I would like to withdraw money.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like to withdraw money.')">I would like to transfer money.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like to withdraw money.')">I would like to exchange money.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. What does ATM stand for?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Automated Teller Machine')">Automatic Time Machine</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Automated Teller Machine')">Automated Teller Machine</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Automated Teller Machine')">All Time Money</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Automated Teller Machine')">Auto Transfer Machine</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. "သင့်ရဲ့လက်ကျန်ငွေက ဘယ်လောက်လဲ" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What is your balance?')">What is your name?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What is your balance?')">Where is your card?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What is your balance?')">What is your balance?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What is your balance?')">How much is this?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. What should you do if your bank card is lost or stolen?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Report it to the bank immediately')">Wait and hope</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Report it to the bank immediately')">Ignore it</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Report it to the bank immediately')">Report it to the bank immediately</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Report it to the bank immediately')">Use another card</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p><i class="fas fa-heart" style="color: #27ae60;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p>
+        <p style="font-size: 0.75rem; margin-top: 0.5rem;">Practice these conversations to handle all your banking needs in English!</p>
+    </footer>
+</div>
+
+<!-- Back to Top Button -->
+<a href="#" class="back-to-top" id="backToTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+<script>
+    function speakEnglish(text) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8;
+        utterance.pitch = 1.0;
+        
+        function setVoice() {
+            const voices = window.speechSynthesis.getVoices();
+            const englishVoice = voices.find(v => v.lang === 'en-US' || v.lang.startsWith('en-'));
+            if (englishVoice) utterance.voice = englishVoice;
+            window.speechSynthesis.speak(utterance);
+        }
+        
+        if (window.speechSynthesis.getVoices().length) setVoice();
+        else window.speechSynthesis.onvoiceschanged = setVoice;
+    }
+    
+    function checkAnswer(element, correctAnswer) {
+        const options = element.parentElement.querySelectorAll('.quiz-option');
+        const isCorrect = element.innerText === correctAnswer;
+        
+        if (isCorrect) {
+            element.style.background = '#2ecc71';
+            element.style.color = 'white';
+            speakEnglish(correctAnswer);
+            setTimeout(() => {
+                options.forEach(opt => {
+                    opt.style.background = '';
+                    opt.style.color = '';
+                });
+            }, 1500);
+        } else {
+            element.style.background = '#e74c3c';
+            element.style.color = 'white';
+            setTimeout(() => {
+                element.style.background = '';
+                element.style.color = '';
+            }, 500);
+        }
+    }
+    
+    // Back to Top Button Functionality
+    (function() {
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        
+        if (backToTopBtn) {
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Rental - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 1rem;
+        }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        
+        .conversation-section {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .conversation-section h2 {
+            background: #e17055;
+            color: white;
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line {
+            display: grid;
+            grid-template-columns: 70px 1fr 1fr;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            align-items: start;
+        }
+        .speaker { font-weight: bold; color: #e17055; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { 
+            color: #8e6b3c; 
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 0.95rem;
+        }
+        .audio-btn {
+            background: #eef4ff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.3rem;
+        }
+        .audio-btn:hover { background: #e17055; color: white; }
+        
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+            padding: 1rem;
+        }
+        .vocab-item {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            border-left: 3px solid #e17055;
+        }
+        .vocab-eng { font-weight: bold; color: #e17055; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        
+        .quiz-question {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.8rem;
+        }
+        .quiz-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .quiz-option {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .quiz-option:hover { background: #e17055; color: white; border-color: #e17055; }
+        
+        .tips-box {
+            background: #fef5e7;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #e17055;
+        }
+        .tips-box i { color: #e17055; margin-right: 8px; }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1rem;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: #1e3c72;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid white;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: #f5b042;
+            color: #1e3c72;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .back-to-top i {
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 42px;
+                height: 42px;
+            }
+            .back-to-top i {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 700px) {
+            .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> All Conversations
+    </a>
+    
+    <header>
+        <h1><i class="fas fa-car"></i> Car Rental</h1>
+        <p>Learn how to rent cars, ask about insurance, and return vehicles in English</p>
+        <p>ကားများငှားရမ်းနည်း၊ အာမခံအကြောင်းမေးမြန်းနည်းနှင့် ယာဉ်များပြန်အပ်နည်းကို အင်္ဂလိပ်လို လေ့လာပါ</p>
+    </header>
+    
+    <!-- Dialogue 1: Booking a Car -->
+    <div class="conversation-section">
+        <h2>📅 Booking a Car / ကားကြိုမှာယူခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Hello, I'd like to rent a car for three days starting tomorrow.</div>
+                <div class="burmese">မင်္ဂလာပါ၊ မနက်ဖြန်စပြီး သုံးရက်အတွက် ကားတစ်စီးငှားချင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Hello, I would like to rent a car for three days starting tomorrow.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">What type of car are you looking for? Economy, compact, or SUV?</div>
+                <div class="burmese">ဘယ်လိုကားအမျိုးအစား ရှာနေတာလဲ။ Economy, compact, ဒါမှမဟုတ် SUV?</div>
+                <button class="audio-btn" onclick="speakEnglish('What type of car are you looking for? Economy, compact, or SUV?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">An economy car is fine. What's the daily rate?</div>
+                <div class="burmese">Economy ကားက အဆင်ပြေပါတယ်။ တစ်ရက်ချုပ်က ဘယ်လောက်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('An economy car is fine. What is the daily rate?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">Economy cars are $35 per day. The total for three days would be $105 plus taxes and fees.</div>
+                <div class="burmese">Economy ကားများသည် တစ်ရက် ၃၅ ဒေါ်လာဖြစ်ပါသည်။ သုံးရက်အတွက် စုစုပေါင်း ၁၀၅ ဒေါ်လာ အခွန်နှင့်အခကြေးငွေများအပိုပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Economy cars are 35 dollars per day. The total for three days would be 105 dollars plus taxes and fees.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 2: Insurance Options -->
+    <div class="conversation-section">
+        <h2>🛡️ Insurance Options / အာမခံရွေးချယ်စရာများ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Does the rental come with insurance?</div>
+                <div class="burmese">ငှားရမ်းခမှာ အာမခံပါဝင်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Does the rental come with insurance?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">Basic liability is included. However, I recommend collision damage waiver for full protection. It's an extra $15 per day.</div>
+                <div class="burmese">အခြေခံတာဝန်ခံမှုပါဝင်ပါတယ်။ သို့သော် အပြည့်အဝကာကွယ်ရေးအတွက် collision damage waiver ကို အကြံပြုပါတယ်။ အပို တစ်ရက် ၁၅ ဒေါ်လာပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Basic liability is included. However, I recommend collision damage waiver for full protection. It is an extra 15 dollars per day.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">What does the collision damage waiver cover?</div>
+                <div class="burmese">Collision damage waiver က ဘာအကျုံးဝင်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What does the collision damage waiver cover?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">It covers damage to the rental car in case of an accident. It also includes theft protection.</div>
+                <div class="burmese">မတော်တဆမှုဖြစ်လျှင် ငှားရမ်းထားသောကားပျက်စီးမှုကို အကျုံးဝင်ပါတယ်။ ခိုးယူခံရမှုကာကွယ်ရေးလည်း ပါဝင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('It covers damage to the rental car in case of an accident. It also includes theft protection.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 3: Picking Up the Car -->
+    <div class="conversation-section">
+        <h2>🔑 Picking Up the Car / ကားလက်ခံယူခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I'm here to pick up my rental car. I have a reservation under the name Aung.</div>
+                <div class="burmese">ကျွန်တော် ငှားရမ်းထားတဲ့ကားကို လက်ခံယူရန် ဒီမှာရှိပါတယ်။ အောင်ဆိုတဲ့နာမည်နဲ့ ကြိုမှာထားပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am here to pick up my rental car. I have a reservation under the name Aung.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">May I see your driver's license and credit card?</div>
+                <div class="burmese">သင့်ကားမောင်းလိုင်စင်နှင့် ခရက်ဒစ်ကဒ်ကို ကြည့်လို့ရမလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('May I see your driver\'s license and credit card?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Here you go. I also have my passport for identification.</div>
+                <div class="burmese">ဒီမှာပါ။ သက်သေခံရန် ကျွန်တော့်ပတ်စ်ပို့လည်း ရှိပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Here you go. I also have my passport for identification.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">Great. Please review and sign the rental agreement. Your car is parked in spot 12.</div>
+                <div class="burmese">ကောင်းပါတယ်။ ကျေးဇူးပြု၍ ငှားရမ်းစာချုပ်ကို ပြန်လည်သုံးသပ်ပြီး လက်မှတ်ထိုးပါ။ သင့်ကားက နေရာ ၁၂ တွင် ရပ်ထားပါသည်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Great. Please review and sign the rental agreement. Your car is parked in spot 12.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 4: Inspecting the Car -->
+    <div class="conversation-section">
+        <h2>🔍 Inspecting the Car / ကားစစ်ဆေးခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I noticed a scratch on the passenger door. I want to document it before I drive away.</div>
+                <div class="burmese">ခရီးသည်တံခါးပေါ်မှာ ခြစ်ရာတစ်ခု သတိထားမိတယ်။ မမောင်းမီ မှတ်တမ်းတင်ချင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I noticed a scratch on the passenger door. I want to document it before I drive away.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">Let me note that on the inspection form. You can also take photos for your records.</div>
+                <div class="burmese">စစ်ဆေးရေးပုံစံတွင် မှတ်သားပါရစေ။ သင့်မှတ်တမ်းများအတွက် ဓာတ်ပုံများလည်း ရိုက်နိုင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Let me note that on the inspection form. You can also take photos for your records.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Thank you. I'll take photos of the odometer and fuel level too.</div>
+                <div class="burmese">ကျေးဇူးပါ။ ခရီးမိုင်တိုင်းကိရိယာနှင့် လောင်စာပမာဏကိုလည်း ဓာတ်ပုံရိုက်ပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Thank you. I will take photos of the odometer and fuel level too.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">Smart idea. The tank is full. Please return it with a full tank to avoid extra charges.</div>
+                <div class="burmese">အကြံကောင်းပါတယ်။ လောင်စာဆီတိုင်ကီ အပြည့်ရှိပါတယ်။ အပိုအခကြေးငွေများရှောင်ရှားရန် လောင်စာဆီတိုင်ကီအပြည့်ဖြင့် ပြန်အပ်ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Smart idea. The tank is full. Please return it with a full tank to avoid extra charges.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 5: Extending Rental Period -->
+    <div class="conversation-section">
+        <h2>⏰ Extending Rental Period / ငှားရမ်းကာလတိုးခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I need to extend my rental for two more days. Is that possible?</div>
+                <div class="burmese">ကျွန်တော် ကျွန်တော့်ငှားရမ်းချိန်ကို နောက်ထပ် နှစ်ရက်ထပ်တိုးဖို့ လိုအပ်ပါတယ်။ ဖြစ်နိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('I need to extend my rental for two more days. Is that possible?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">Let me check availability. Yes, we can extend it. The rate will be the same, $35 per day.</div>
+                <div class="burmese">ရနိုင်မရှိ စစ်ကြည့်ပါရစေ။ ဟုတ်ကဲ့၊ တိုးပေးနိုင်ပါတယ်။ နှုန်းထားက အတိုင်းသာဖြစ်ပြီး တစ်ရက် ၃၅ ဒေါ်လာပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Let me check availability. Yes, we can extend it. The rate will be the same, 35 dollars per day.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Great. I'll come back on Friday instead of Wednesday.</div>
+                <div class="burmese">ကောင်းပါတယ်။ ဗုဒ္ဓဟူးနေ့အစား သောကြာနေ့မှာ ပြန်လာပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Great. I will come back on Friday instead of Wednesday.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">Perfect. I've updated your reservation. Is there anything else I can help with?</div>
+                <div class="burmese">ပြီးပြည့်စုံပါတယ်။ သင့်ကြိုမှာယူမှုကို မွမ်းမံလိုက်ပါပြီ။ နောက်ထပ်ကူညီစရာတစ်ခုခုရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Perfect. I have updated your reservation. Is there anything else I can help with?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 6: Returning the Car -->
+    <div class="conversation-section">
+        <h2>🔄 Returning the Car / ကားပြန်အပ်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I'm returning the car. Here are the keys.</div>
+                <div class="burmese">ကျွန်တော် ကားပြန်အပ်ပါတယ်။ ဒီမှာ သော့များပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am returning the car. Here are the keys.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">Let me inspect the car quickly. No new damage. The tank is full. Everything looks good.</div>
+                <div class="burmese">ကားကို အမြန်စစ်ဆေးပါရစေ။ ပျက်စီးမှုအသစ်မရှိပါ။ လောင်စာဆီတိုင်ကီအပြည့်ရှိပါတယ်။ အားလုံး အဆင်ပြေပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Let me inspect the car quickly. No new damage. The tank is full. Everything looks good.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">What's the final total?</div>
+                <div class="burmese">နောက်ဆုံးစုစုပေါင်းက ဘယ်လောက်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What is the final total?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">Five days at $35 per day is $175, plus $75 for insurance, plus taxes. Total is $265. I'll email you the receipt.</div>
+                <div class="burmese">၃၅ ဒေါ်လာနှုန်းဖြင့် ငါးရက်မှာ ၁၇၅ ဒေါ်လာ၊ အာမခံအတွက် ၇၅ ဒေါ်လာ၊ အခွန်များအပိုပါ။ စုစုပေါင်း ၂၆၅ ဒေါ်လာပါ။ ပြေစာကို အီးမေးလ်ပို့ပေးပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Five days at 35 dollars per day is 175 dollars, plus 75 dollars for insurance, plus taxes. Total is 265 dollars. I will email you the receipt.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 7: Late Return Fee -->
+    <div class="conversation-section">
+        <h2>⚠️ Late Return Fee / နောက်ကျပြန်အပ်ခြင်းကြေး</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I'm sorry I'm late returning the car. My flight was delayed.</div>
+                <div class="burmese">ကားပြန်အပ်ဖို့ နောက်ကျသွားတဲ့အတွက် စိတ်မကောင်းပါဘူး။ ကျွန်တော့်လေယာဉ် နောက်ကျခဲ့တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am sorry I am late returning the car. My flight was delayed.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">No problem. There will be a late fee of $25 for being 4 hours past the return time.</div>
+                <div class="burmese">ပြဿနာမရှိပါဘူး။ ပြန်အပ်ချိန်ကျော်လွန်၍ ၄ နာရီအတွက် နောက်ကျကြေး ၂၅ ဒေါ်လာ ကျပါလိမ့်မယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('No problem. There will be a late fee of 25 dollars for being 4 hours past the return time.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">That's reasonable. I understand. Please add it to my bill.</div>
+                <div class="burmese">သင့်တော်ပါတယ်။ နားလည်းပါတယ်။ ကျေးဇူးပြု၍ ကျွန်တော့်ငွေတောင်းခံလွှာတွင် ထည့်ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('That is reasonable. I understand. Please add it to my bill.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 8: Additional Driver -->
+    <div class="conversation-section">
+        <h2>👥 Additional Driver / နောက်ထပ်ယာဉ်မောင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">My spouse will also be driving. Can I add her as an additional driver?</div>
+                <div class="burmese">ကျွန်တော့်အိမ်ထောင်ဖက်လည်း ကားမောင်းပါလိမ့်မယ်။ သူမကို နောက်ထပ်ယာဉ်မောင်းအဖြစ် ထည့်နိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('My spouse will also be driving. Can I add her as an additional driver?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">Yes, there is an additional driver fee of $10 per day. She'll need to present her driver's license.</div>
+                <div class="burmese">ဟုတ်ပါတယ်၊ နောက်ထပ်ယာဉ်မောင်းအခကြေးငွေ တစ်ရက် ၁၀ ဒေါ်လာ ရှိပါတယ်။ သူမသည် သူမ၏ကားမောင်းလိုင်စင်ကို တင်ပြရပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, there is an additional driver fee of 10 dollars per day. She will need to present her driver\'s license.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">That's fine. Here's her license. We'll both be driving.</div>
+                <div class="burmese">အဆင်ပြေပါတယ်။ ဒီမှာ သူမရဲ့လိုင်စင်ပါ။ ကျွန်တော်တို့ နှစ်ယောက်စလုံး မောင်းပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('That is fine. Here is her license. We will both be driving.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">She's now added to the rental agreement. Please both sign here.</div>
+                <div class="burmese">သူမကို ငှားရမ်းစာချုပ်တွင် ထည့်သွင်းလိုက်ပါပြီ။ ကျေးဇူးပြု၍ နှစ်ယောက်စလုံး ဒီမှာ လက်မှတ်ထိုးပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('She is now added to the rental agreement. Please both sign here.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Car Rental Tips -->
+    <div class="conversation-section">
+        <h2>💡 Car Rental Tips / ကားငှားရမ်းခြင်းအကြံပြုချက်များ</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Tips for Renting a Car (ကားငှားရမ်းရန် အကြံပြုချက်များ):</strong><br>
+            • Book in advance for better rates (ပိုမိုကောင်းမွန်သောနှုန်းထားများအတွက် ကြိုတင်မှာယူပါ)<br>
+            • Check your personal auto insurance and credit card benefits first (သင့်ကိုယ်ပိုင်ကားအာမခံနှင့် ခရက်ဒစ်ကဒ်အကျိုးခံစားခွင့်များကို အရင်စစ်ဆေးပါ)<br>
+            • Take photos of the car before driving away (မမောင်းမီ ကား၏ဓာတ်ပုံများရိုက်ပါ)<br>
+            • Fill up the tank before returning (မပြန်အပ်မီ လောင်စာဆီတိုင်ကီဖြည့်ပါ)<br>
+            • Return the car on time to avoid late fees (နောက်ကျကြေးများရှောင်ရှားရန် ကားကို အချိန်မီပြန်အပ်ပါ)<br>
+            • Understand the fuel policy (လောင်စာဆီမူဝါဒကို နားလည်ပါ)<br>
+            • Ask about mileage limits (ခရီးမိုင်ကန့်သတ်ချက်များအကြောင်းမေးမြန်းပါ)<br>
+        </div>
+    </div>
+    
+    <!-- Car Rental Vocabulary -->
+    <div class="conversation-section">
+        <h2>📚 Car Rental Vocabulary / ကားငှားရမ်းသုံးဝေါဟာရများ</h2>
+        <div class="vocab-grid">
+            <div class="vocab-item"><span class="vocab-eng">Rental agreement</span><br><span class="vocab-burmese">ငှားရမ်းစာချုပ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Mileage limit</span><br><span class="vocab-burmese">ခရီးမိုင်ကန့်သတ်ချက်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Unlimited mileage</span><br><span class="vocab-burmese">အကန့်အသတ်မဲ့ခရီးမိုင်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Pick-up location</span><br><span class="vocab-burmese">ကားယူမည့်နေရာ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Drop-off location</span><br><span class="vocab-burmese">ကားပြန်အပ်မည့်နေရာ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">One-way rental</span><br><span class="vocab-burmese">တစ်လမ်းမောင်းငှားရမ်းခြင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">GPS navigation</span><br><span class="vocab-burmese">GPS လမ်းညွှန်စနစ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Child seat</span><br><span class="vocab-burmese">ကလေးထိုင်ခုံ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Underage driver fee</span><br><span class="vocab-burmese">အသက်မပြည့်သေးသောယာဉ်မောင်းအခကြေးငွေ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Security deposit</span><br><span class="vocab-burmese">အာမခံအပ်ငွေ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Prepaid fuel option</span><br><span class="vocab-burmese">ကြိုတင်ပေးချေသည့်လောင်စာဆီရွေးချယ်မှု</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Toll pass</span><br><span class="vocab-burmese">အခွန်လမ်းကြေးပေးဆောင်ခွင့်</span></div>
+        </div>
+    </div>
+    
+    <!-- Car Types Guide -->
+    <div class="conversation-section">
+        <h2>🚗 Car Types Guide / ကားအမျိုးအစားများလမ်းညွှန်</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Types of Rental Cars (ငှားရမ်းနိုင်သောကားအမျိုးအစားများ):</strong><br>
+            • <strong>Economy</strong> - Small, fuel-efficient, cheap (သေး၊ လောင်စာသက်သာ၊ စျေးသက်သာ)<br>
+            • <strong>Compact</strong> - Slightly larger than economy, good for cities (Economy ထက် အနည်းငယ်ကြီး၊ မြို့များအတွက်ကောင်း)<br>
+            • <strong>Intermediate / Standard</strong> - Mid-size, comfortable for 4-5 people (အလတ်စား၊ လူ ၄-၅ ယောက်အတွက် သက်တောင့်သက်သာရှိ)<br>
+            • <strong>Full-size</strong> - Large sedan, spacious (ဆလွန်းကားကြီး၊ ကျယ်ဝန်း)<br>
+            • <strong>SUV</strong> - Sport utility vehicle, good for rough roads and families (အားကစားသုံးယာဉ်၊ ကြမ်းတမ်းသောလမ်းများနှင့် မိသားစုများအတွက်ကောင်း)<br>
+            • <strong>Minivan</strong> - Seats 7-8 people, great for large groups (လူ ၇-၈ ယောက်ဆန့်၊ အဖွဲ့ကြီးများအတွက်ကောင်း)<br>
+            • <strong>Luxury</strong> - Premium cars, higher price (ဇိမ်ခံကားများ၊ စျေးပိုကြီး)<br>
+            • <strong>Convertible</strong> - Open top, fun for vacations (ခေါင်းမိုးဖွင့်နိုင်၊ အားလပ်ရက်များအတွက် ပျော်စရာ)<br>
+        </div>
+    </div>
+    
+    <!-- Practice Section -->
+    <div class="conversation-section">
+        <h2>✏️ Practice Questions / လေ့ကျင့်ခန်းမေးခွန်းများ</h2>
+        <div class="dialogue-box">
+            <div class="quiz-question">
+                <p><strong>1. How do you ask to rent a car?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like to rent a car.')">I would like to buy a car.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like to rent a car.')">I would like to rent a car.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like to rent a car.')">I would like to sell my car.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like to rent a car.')">I would like to repair my car.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>2. "ကားငှားရမ်းခအတွက် အာမခံပါလား" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Does the rental come with insurance?')">Does the rental include GPS?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Does the rental come with insurance?')">Does the rental come with insurance?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Does the rental come with insurance?')">Does the rental have a full tank?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Does the rental come with insurance?')">Does the rental have a child seat?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. What should you do before driving away a rental car?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Inspect the car and take photos')">Sign the contract only</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Inspect the car and take photos')">Inspect the car and take photos</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Inspect the car and take photos')">Pay the total amount</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Inspect the car and take photos')">Fill up the gas tank</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. "နောက်ထပ်မောင်းနှင်သူတစ်ဦးကို ထည့်သွင်းနိုင်မလား" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can I add an additional driver?')">Can I get a discount?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can I add an additional driver?')">Can I return the car late?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can I add an additional driver?')">Can I add an additional driver?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can I add an additional driver?')">Can I change the car type?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. What is "collision damage waiver"?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Insurance that covers damage to the rental car')">Insurance for other drivers</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Insurance that covers damage to the rental car')">Insurance that covers damage to the rental car</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Insurance that covers damage to the rental car')">Insurance for theft only</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Insurance that covers damage to the rental car')">Insurance for medical expenses</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p><i class="fas fa-heart" style="color: #e17055;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p>
+        <p style="font-size: 0.75rem; margin-top: 0.5rem;">Practice these conversations to rent cars with confidence!</p>
+    </footer>
+</div>
+
+<!-- Back to Top Button -->
+<a href="#" class="back-to-top" id="backToTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+<script>
+    function speakEnglish(text) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8;
+        utterance.pitch = 1.0;
+        
+        function setVoice() {
+            const voices = window.speechSynthesis.getVoices();
+            const englishVoice = voices.find(v => v.lang === 'en-US' || v.lang.startsWith('en-'));
+            if (englishVoice) utterance.voice = englishVoice;
+            window.speechSynthesis.speak(utterance);
+        }
+        
+        if (window.speechSynthesis.getVoices().length) setVoice();
+        else window.speechSynthesis.onvoiceschanged = setVoice;
+    }
+    
+    function checkAnswer(element, correctAnswer) {
+        const options = element.parentElement.querySelectorAll('.quiz-option');
+        const isCorrect = element.innerText === correctAnswer;
+        
+        if (isCorrect) {
+            element.style.background = '#2ecc71';
+            element.style.color = 'white';
+            speakEnglish(correctAnswer);
+            setTimeout(() => {
+                options.forEach(opt => {
+                    opt.style.background = '';
+                    opt.style.color = '';
+                });
+            }, 1500);
+        } else {
+            element.style.background = '#e74c3c';
+            element.style.color = 'white';
+            setTimeout(() => {
+                element.style.background = '';
+                element.style.color = '';
+            }, 500);
+        }
+    }
+    
+    // Back to Top Button Functionality
+    (function() {
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        
+        if (backToTopBtn) {
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

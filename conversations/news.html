@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News & Current Events - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 1rem;
+        }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        
+        .conversation-section {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .conversation-section h2 {
+            background: #d63031;
+            color: white;
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line {
+            display: grid;
+            grid-template-columns: 70px 1fr 1fr;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            align-items: start;
+        }
+        .speaker { font-weight: bold; color: #d63031; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { 
+            color: #8e6b3c; 
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 0.95rem;
+        }
+        .audio-btn {
+            background: #eef4ff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.3rem;
+        }
+        .audio-btn:hover { background: #d63031; color: white; }
+        
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+            padding: 1rem;
+        }
+        .vocab-item {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            border-left: 3px solid #d63031;
+        }
+        .vocab-eng { font-weight: bold; color: #d63031; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        
+        .quiz-question {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.8rem;
+        }
+        .quiz-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .quiz-option {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .quiz-option:hover { background: #d63031; color: white; border-color: #d63031; }
+        
+        .tips-box {
+            background: #fdeaea;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #d63031;
+        }
+        .tips-box i { color: #d63031; margin-right: 8px; }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1rem;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: #1e3c72;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid white;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: #f5b042;
+            color: #1e3c72;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .back-to-top i {
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 42px;
+                height: 42px;
+            }
+            .back-to-top i {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 700px) {
+            .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> All Conversations
+    </a>
+    
+    <header>
+        <h1><i class="fas fa-newspaper"></i> News & Current Events</h1>
+        <p>Learn how to talk about daily news, politics, sports, and world events</p>
+        <p>နေ့စဉ်သတင်းများ၊ နိုင်ငံရေး၊ အားကစားနှင့် ကမ္ဘာ့ဖြစ်ရပ်များအကြောင်း ပြောဆိုနည်းကို လေ့လာပါ</p>
+    </header>
+    
+    <!-- Dialogue 1: Talking About the Morning News -->
+    <div class="conversation-section">
+        <h2>📰 Morning News / နံနက်ခင်းသတင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Did you watch the news this morning?</div>
+                <div class="burmese">မနက်ဖြန် သတင်းကြည့်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Did you watch the news this morning?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Yes, I saw it. There was a big story about the new hospital opening.</div>
+                <div class="burmese">ဟုတ်တယ်၊ ကျွန်တော်ကြည့်လိုက်တယ်။ ဆေးရုံအသစ်ဖွင့်တဲ့ သတင်းကြီးတစ်ပုဒ်ရှိတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, I saw it. There was a big story about the new hospital opening.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Really? I missed that part. What else happened?</div>
+                <div class="burmese">တကယ်လား? အဲဒီအပိုင်းကို ကျွန်တော်လွတ်သွားတယ်။ ဘာများထပ်ဖြစ်သေးလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Really? I missed that part. What else happened?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">The mayor also announced a new plan to improve public transportation.</div>
+                <div class="burmese">မြို့တော်ဝန်က အများသုံးယာဉ်များ မြှင့်တင်ရန် အစီအစဉ်အသစ်ကိုလည်း ကြေညာခဲ့တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('The mayor also announced a new plan to improve public transportation.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 2: Discussing Breaking News -->
+    <div class="conversation-section">
+        <h2>🚨 Breaking News / အရေးပေါ်သတင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Did you hear about the earthquake in the neighboring country?</div>
+                <div class="burmese">အိမ်နီးချင်းနိုင်ငံမှာ ငလျင်လှုပ်တဲ့သတင်း ကြားဖူးလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Did you hear about the earthquake in the neighboring country?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Yes, it was all over the news. It was a magnitude 6.5 earthquake.</div>
+                <div class="burmese">ဟုတ်တယ်၊ သတင်းတွေ အနှံ့ပါ။ ပြင်းအား ၆.၅ ရှိတဲ့ ငလျင်ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, it was all over the news. It was a magnitude 6.5 earthquake.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">That's terrible. Are there many casualties?</div>
+                <div class="burmese">အရမ်းဆိုးတယ်။ အသေအပျောက်များလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('That is terrible. Are there many casualties?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">They're still assessing the damage. Rescue teams are on the way.</div>
+                <div class="burmese">သူတို့ ပျက်စီးဆုံးရှုံးမှုတွေ ဆက်လက်အကဲဖြတ်နေတယ်။ ကယ်ဆယ်ရေးအဖွဲ့တွေ လမ်းပေါ်ရောက်နေပြီ။</div>
+                <button class="audio-btn" onclick="speakEnglish('They are still assessing the damage. Rescue teams are on the way.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 3: Sports News -->
+    <div class="conversation-section">
+        <h2>⚽ Sports News / အားကစားသတင်းများ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Did you watch the football match last night? It was incredible!</div>
+                <div class="burmese">မနေ့ညက ဘောလုံးပွဲကြည့်လား။ အံ့သြစရာကောင်းတယ်!</div>
+                <button class="audio-btn" onclick="speakEnglish('Did you watch the football match last night? It was incredible!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">No, I missed it. Who won?</div>
+                <div class="burmese">မကြည့်ဖူးဘူး။ ဘယ်သူနိုင်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('No, I missed it. Who won?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Our team won 3-1 in the final minutes. It was a comeback victory!</div>
+                <div class="burmese">ငါတို့အသင်း နောက်ဆုံးမိနစ်ပိုင်းမှာ ၃-၁ နဲ့ အနိုင်ရတယ်။ နောက်ပြန်လှည့်အနိုင်ရတာပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Our team won 3-1 in the final minutes. It was a comeback victory!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">That's amazing! I'll have to watch the highlights.</div>
+                <div class="burmese">အံ့သြစရာကောင်းတယ်! အနှစ်ချုပ်တွေကြည့်ဖို့လိုမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('That is amazing! I will have to watch the highlights.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 4: Weather News -->
+    <div class="conversation-section">
+        <h2>🌡️ Weather News / မိုးလေဝသသတင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Did you see the weather forecast? A big storm is coming this weekend.</div>
+                <div class="burmese">မိုးလေဝသခန့်မှန်းချက်ကြည့်လား။ ဒီစနေ၊ တနင်္ဂနွေမှာ မုန်တိုင်းကြီးတစ်ခုလာနေတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Did you see the weather forecast? A big storm is coming this weekend.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Yes, they're predicting heavy rain and strong winds.</div>
+                <div class="burmese">ဟုတ်တယ်၊ သူတို့ မိုးသည်းထန်စွာရွာပြီး လေပြင်းတိုက်မယ်လို့ ခန့်မှန်းထားတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, they are predicting heavy rain and strong winds.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">We should cancel our outdoor plans then.</div>
+                <div class="burmese">ဒါဆို ငါတို့ အပြင်ဘက်အစီအစဉ်တွေ ဖျက်သင့်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('We should cancel our outdoor plans then.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Good idea. Let's stay home and watch movies instead.</div>
+                <div class="burmese">အကြံကောင်းပါတယ်။ အိမ်မှာနေပြီး ရုပ်ရှင်ကြည့်ကြရအောင်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Good idea. Let us stay home and watch movies instead.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 5: Economic News -->
+    <div class="conversation-section">
+        <h2>📈 Economic News / စီးပွားရေးသတင်းများ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Did you hear about the stock market today? It dropped sharply.</div>
+                <div class="burmese">ဒီနေ့ စတော့ဈေးကွက်သတင်းကြားလား။ သိသိသာသာကျသွားတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Did you hear about the stock market today? It dropped sharply.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Yes, I saw that. Oil prices are also going up.</div>
+                <div class="burmese">ဟုတ်တယ်၊ ကျွန်တော်မြင်လိုက်တယ်။ ရေနံဈေးနှုန်းတွေလည်း တက်နေတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, I saw that. Oil prices are also going up.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">That means everything will become more expensive.</div>
+                <div class="burmese">ဆိုလိုတာက အရာအားလုံး ပိုစျေးကြီးလာမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('That means everything will become more expensive.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">I hope the economy recovers soon. It's affecting everyone.</div>
+                <div class="burmese">စီးပွားရေး မကြာခင်ပြန်ကောင်းလာမယ်လို့ မျှော်လင့်ပါတယ်။ လူတိုင်းကို ထိခိုက်နေတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I hope the economy recovers soon. It is affecting everyone.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 6: Technology News -->
+    <div class="conversation-section">
+        <h2>📱 Technology News / နည်းပညာသတင်းများ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Did you read about the new smartphone release?</div>
+                <div class="burmese">စမတ်ဖုန်းအသစ်ထွက်ရှိမှု သတင်းဖတ်ဖူးလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Did you read about the new smartphone release?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Yes, the camera looks amazing. It has 100x zoom!</div>
+                <div class="burmese">ဟုတ်တယ်၊ ကင်မရာက အံ့သြစရာကောင်းပုံရတယ်။ 100x zoom ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, the camera looks amazing. It has 100x zoom!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Are you planning to buy it?</div>
+                <div class="burmese">မင်း အဲဒါဝယ်ဖို့ စီစဉ်နေလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Are you planning to buy it?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Maybe, but it's very expensive. I'll wait for the price to drop.</div>
+                <div class="burmese">ဖြစ်နိုင်တယ်၊ ဒါပေမယ့် အရမ်းဈေးကြီးတယ်။ စျေးကျဖို့စောင့်ပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Maybe, but it is very expensive. I will wait for the price to drop.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 7: Political News -->
+    <div class="conversation-section">
+        <h2>🏛️ Political News / နိုင်ငံရေးသတင်းများ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">The president gave a speech about education reform yesterday.</div>
+                <div class="burmese">သမ္မတက မနေ့က ပညာရေးပြုပြင်ပြောင်းလဲမှုအကြောင်း မိန့်ခွန်းပြောတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('The president gave a speech about education reform yesterday.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">What did he say?</div>
+                <div class="burmese">သူဘာပြောလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What did he say?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">He promised to increase funding for schools and raise teacher salaries.</div>
+                <div class="burmese">ကျောင်းများအတွက် ရန်ပုံငွေတိုးမြှင့်ပေးပြီး ဆရာလစာများ တိုးမြှင့်ပေးမယ်လို့ ကတိပေးတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('He promised to increase funding for schools and raise teacher salaries.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">That sounds promising. I hope he keeps his promise.</div>
+                <div class="burmese">အလားအလာကောင်းပုံရတယ်။ သူ သူ့ကတိကို စောင့်သိမယ်လို့ မျှော်လင့်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('That sounds promising. I hope he keeps his promise.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 8: Entertainment News -->
+    <div class="conversation-section">
+        <h2>🎬 Entertainment News / ဖျော်ဖြေရေးသတင်းများ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Did you hear that a famous actor is coming to our city?</div>
+                <div class="burmese">နာမည်ကြီးသရုပ်ဆောင်တစ်ယောက် ငါတို့မြို့ကို လာမယ်ဆိုတာ ကြားဖူးလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Did you hear that a famous actor is coming to our city?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">No, I didn't! Which actor?</div>
+                <div class="burmese">မကြားဖူးဘူး။ ဘယ်သရုပ်ဆောင်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('No, I did not! Which actor?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Leonardo DiCaprio! He's coming to promote his new environmental documentary.</div>
+                <div class="burmese">Leonardo DiCaprio! သူ့ရဲ့ ပတ်ဝန်းကျင်ထိန်းသိမ်းရေးမှတ်တမ်းရုပ်ရှင်အသစ်ကို ကြော်ငြာဖို့ လာနေတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Leonardo DiCaprio! He is coming to promote his new environmental documentary.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">That's amazing! We should try to get tickets.</div>
+                <div class="burmese">အံ့သြစရာကောင်းတယ်! လက်မှတ်တွေဝယ်ဖို့ကြိုးစားသင့်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('That is amazing! We should try to get tickets.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Vocabulary Section -->
+    <div class="conversation-section">
+        <h2>📚 News Vocabulary / သတင်းသုံးဝေါဟာရများ</h2>
+        <div class="vocab-grid">
+            <div class="vocab-item"><span class="vocab-eng">Headline</span><br><span class="vocab-burmese">ခေါင်းကြီးသတင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Breaking news</span><br><span class="vocab-burmese">အရေးပေါ်သတင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Journalist / Reporter</span><br><span class="vocab-burmese">သတင်းထောက်/သတင်းသမား</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Live coverage</span><br><span class="vocab-burmese">တိုက်ရိုက်လွှင့်မှု</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Source</span><br><span class="vocab-burmese">ရင်းမြစ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Fake news</span><br><span class="vocab-burmese">သတင်းအတု</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Interview</span><br><span class="vocab-burmese">အင်တာဗျူး</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Press conference</span><br><span class="vocab-burmese">သတင်းစာရှင်းလင်းပွဲ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Editorial</span><br><span class="vocab-burmese">သတင်းတည်းဖြတ်သူ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Subscription</span><br><span class="vocab-burmese">စာရင်းသွင်းခြင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Prime time</span><br><span class="vocab-burmese">အဓိကအချိန်ဇယား</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Anchor</span><br><span class="vocab-burmese">သတင်းကြေညာသူ</span></div>
+        </div>
+    </div>
+    
+    <!-- Useful News Phrases -->
+    <div class="conversation-section">
+        <h2>💡 Useful News Phrases / အသုံးဝင်သောသတင်းစကားစုများ</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Questions About News (သတင်းအကြောင်းမေးခွန်းများ):</strong><br>
+            • "What's in the news today?" (ဒီနေ့သတင်းမှာ ဘာတွေပါလဲ။)<br>
+            • "Did you see the front page?" (ရှေ့စာမျက်နှာကြည့်လား။)<br>
+            • "What channel do you usually watch?" (မင်း ဘယ်ချန်နယ်ကို ပုံမှန်ကြည့်လဲ။)<br>
+            • "Is it reliable news?" (ဒါက ယုံကြည်ရတဲ့သတင်းလား။)<br>
+            • "I read it online this morning." (မနက်က အွန်လိုင်းမှာ ဖတ်လိုက်တယ်။)<br>
+            <br>
+            <i class="fas fa-lightbulb"></i>
+            <strong>Expressing Reactions (တုံ့ပြန်မှုဖော်ပြခြင်း):</strong><br>
+            • "That's shocking!" (အံ့သြစရာကောင်းတယ်။)<br>
+            • "I can't believe it." (မယုံနိုင်စရာပါ။)<br>
+            • "That's great news!" (သတင်းကောင်းပါတယ်။)<br>
+            • "What a tragedy." (ဝမ်းနည်းဖွယ်ရာပါ။)<br>
+            • "Finally, some good news." (နောက်ဆုံးတော့ သတင်းကောင်းတစ်ပုဒ်။)<br>
+        </div>
+    </div>
+    
+    <!-- Practice Section -->
+    <div class="conversation-section">
+        <h2>✏️ Practice Questions / လေ့ကျင့်ခန်းမေးခွန်းများ</h2>
+        <div class="dialogue-box">
+            <div class="quiz-question">
+                <p><strong>1. How do you ask if someone watched the news?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Did you watch the news?')">Did you read a book?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Did you watch the news?')">Did you watch the news?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Did you watch the news?')">Did you go to work?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Did you watch the news?')">Did you eat breakfast?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>2. "ဒါအံ့သြစရာသတင်းပဲ" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'That is shocking news.')">That is boring news.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'That is shocking news.')">That is shocking news.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'That is shocking news.')">That is old news.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'That is shocking news.')">That is fake news.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. What do you call the person who reports the news on TV?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Anchor')">Doctor</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Anchor')">Anchor</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Anchor')">Teacher</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Anchor')">Pilot</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. "မင်း အားကစားသတင်းကြားဖူးလား" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Did you hear the sports news?')">Did you hear the weather news?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Did you hear the sports news?')">Did you hear the business news?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Did you hear the sports news?')">Did you hear the sports news?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Did you hear the sports news?')">Did you hear the political news?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. What does "fake news" mean?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'False information presented as news')">True information</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'False information presented as news')">Old information</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'False information presented as news')">False information presented as news</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'False information presented as news')">Boring information</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p><i class="fas fa-heart" style="color: #d63031;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p>
+        <p style="font-size: 0.75rem; margin-top: 0.5rem;">Practice these conversations to discuss news and current events with confidence!</p>
+    </footer>
+</div>
+
+<!-- Back to Top Button -->
+<a href="#" class="back-to-top" id="backToTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+<script>
+    function speakEnglish(text) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8;
+        utterance.pitch = 1.0;
+        
+        function setVoice() {
+            const voices = window.speechSynthesis.getVoices();
+            const englishVoice = voices.find(v => v.lang === 'en-US' || v.lang.startsWith('en-'));
+            if (englishVoice) utterance.voice = englishVoice;
+            window.speechSynthesis.speak(utterance);
+        }
+        
+        if (window.speechSynthesis.getVoices().length) setVoice();
+        else window.speechSynthesis.onvoiceschanged = setVoice;
+    }
+    
+    function checkAnswer(element, correctAnswer) {
+        const options = element.parentElement.querySelectorAll('.quiz-option');
+        const isCorrect = element.innerText === correctAnswer;
+        
+        if (isCorrect) {
+            element.style.background = '#2ecc71';
+            element.style.color = 'white';
+            speakEnglish(correctAnswer);
+            setTimeout(() => {
+                options.forEach(opt => {
+                    opt.style.background = '';
+                    opt.style.color = '';
+                });
+            }, 1500);
+        } else {
+            element.style.background = '#e74c3c';
+            element.style.color = 'white';
+            setTimeout(() => {
+                element.style.background = '';
+                element.style.color = '';
+            }, 500);
+        }
+    }
+    
+    // Back to Top Button Functionality
+    (function() {
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        
+        if (backToTopBtn) {
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

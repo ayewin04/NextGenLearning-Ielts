@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jewelry Store - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 1rem;
+        }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        
+        .conversation-section {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .conversation-section h2 {
+            background: #f1c40f;
+            color: #1e3c72;
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line {
+            display: grid;
+            grid-template-columns: 70px 1fr 1fr;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            align-items: start;
+        }
+        .speaker { font-weight: bold; color: #d4a017; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { 
+            color: #8e6b3c; 
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 0.95rem;
+        }
+        .audio-btn {
+            background: #eef4ff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.3rem;
+        }
+        .audio-btn:hover { background: #f1c40f; color: #1e3c72; }
+        
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+            padding: 1rem;
+        }
+        .vocab-item {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            border-left: 3px solid #f1c40f;
+        }
+        .vocab-eng { font-weight: bold; color: #d4a017; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        
+        .quiz-question {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.8rem;
+        }
+        .quiz-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .quiz-option {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .quiz-option:hover { background: #f1c40f; color: #1e3c72; border-color: #f1c40f; }
+        
+        .metal-chart {
+            background: #fef9e7;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #f1c40f;
+        }
+        .metal-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.3rem 0;
+            border-bottom: 1px dashed #ddd;
+        }
+        
+        .tips-box {
+            background: #fef9e7;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #f1c40f;
+        }
+        .tips-box i { color: #d4a017; margin-right: 8px; }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1rem;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: #1e3c72;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid white;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: #f5b042;
+            color: #1e3c72;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .back-to-top i {
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 42px;
+                height: 42px;
+            }
+            .back-to-top i {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 700px) {
+            .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> All Conversations
+    </a>
+    
+    <header>
+        <h1><i class="fas fa-gem"></i> Jewelry Store</h1>
+        <p>Learn how to buy rings, necklaces, and ask about precious metals and gemstones</p>
+        <p>လက်စွပ်များ၊ လည်ဆွဲများဝယ်ယူနည်းနှင့် အဖိုးတန်သတ္တုများနှင့် ကျောက်မျက်ရတနာများအကြောင်း မေးမြန်းနည်းကို အင်္ဂလိပ်လို လေ့လာပါ</p>
+    </header>
+    
+    <!-- Dialogue 1: Looking for an Engagement Ring -->
+    <div class="conversation-section">
+        <h2>💍 Engagement Ring / လက်ထပ်လက်စွပ်</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Hello, I'm looking for an engagement ring for my girlfriend.</div>
+                <div class="burmese">မင်္ဂလာပါ၊ ကျွန်တော့်ရည်းစားအတွက် လက်ထပ်လက်စွပ်ရှာနေပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Hello, I am looking for an engagement ring for my girlfriend.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Salesperson:</div>
+                <div class="english">Congratulations! What's your budget and what style does she like?</div>
+                <div class="burmese">ဂုဏ်ယူပါတယ်! သင့်ဘတ်ဂျက်နဲ့ သူမကြိုက်တဲ့ပုံစံက ဘာလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Congratulations! What is your budget and what style does she like?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Around $2,000. She likes simple, classic designs.</div>
+                <div class="burmese">၂၀၀၀ ဒေါ်လာလောက်။ ရိုးရှင်းပြီး ဂန္ထဝင်ပုံစံတွေကို ကြိုက်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Around 2,000 dollars. She likes simple, classic designs.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Salesperson:</div>
+                <div class="english">This solitaire diamond ring is very popular. It's 0.5 carat, set in white gold.</div>
+                <div class="burmese">ဒီ solitaire စိန်လက်စွပ်က အရမ်းလူကြိုက်များပါတယ်။ ၀.၅ ကရက်၊ ဖြူရွှေနဲ့ပြုလုပ်ထားပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('This solitaire diamond ring is very popular. It is 0.5 carat, set in white gold.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 2: Buying a Necklace -->
+    <div class="conversation-section">
+        <h2>📿 Buying a Necklace / လည်ဆွဲဝယ်ယူခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I'm looking for a gold necklace for my mother's birthday.</div>
+                <div class="burmese">ကျွန်မအမေရဲ့မွေးနေ့အတွက် ရွှေလည်ဆွဲရှာနေပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am looking for a gold necklace for my mother\'s birthday.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Salesperson:</div>
+                <div class="english">What karat of gold do you prefer? We have 14k, 18k, and 24k.</div>
+                <div class="burmese">ရွှေဘယ်ကရက်ကို ပိုကြိုက်လဲ။ 14k၊ 18k နဲ့ 24k ရှိပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('What karat of gold do you prefer? We have 14k, 18k, and 24k.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">What's the difference?</div>
+                <div class="burmese">ကွာခြားချက်က ဘာလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What is the difference?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Salesperson:</div>
+                <div class="english">Higher karat means more pure gold. 18k is good balance between purity and durability.</div>
+                <div class="burmese">ကရက်ပိုမြင့်လေ ရွှေစစ်စစ်ပိုများလေပါ။ 18k က စစ်စစ်နဲ့ တာရှည်ခံမှုကြားက ဟန်ချက်ညီပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Higher karat means more pure gold. 18k is good balance between purity and durability.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 3: Buying Earrings -->
+    <div class="conversation-section">
+        <h2>💎 Buying Earrings / နားကပ်ဝယ်ယူခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I need silver earrings as a gift for my sister.</div>
+                <div class="burmese">ကျွန်မညီမအတွက် လက်ဆောင်အဖြစ် ငွေနားကပ်လိုအပ်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I need silver earrings as a gift for my sister.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Salesperson:</div>
+                <div class="english">We have stud earrings, hoop earrings, and dangling earrings. What does she prefer?</div>
+                <div class="burmese">ကျွန်တော်တို့မှာ စတပ်နားကပ်၊ ဟုပ်နားကပ် နဲ့ ဆွဲထားနားကပ်တွေ ရှိပါတယ်။ သူမဘာပိုကြိုက်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('We have stud earrings, hoop earrings, and dangling earrings. What does she prefer?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Stud earrings, I think. Do you have any with gemstones?</div>
+                <div class="burmese">စတပ်နားကပ်လို့ထင်တယ်။ ကျောက်မျက်ရတနာပါတာ ရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Stud earrings, I think. Do you have any with gemstones?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Salesperson:</div>
+                <div class="english">Yes, these have small sapphires. They're very elegant.</div>
+                <div class="burmese">ဟုတ်ပါတယ်၊ ဒါတွေမှာ နီလာအသေးစားတွေပါတယ်။ အရမ်းသပ်ရပ်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, these have small sapphires. They are very elegant.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 4: Engraving Service -->
+    <div class="conversation-section">
+        <h2>✍️ Engraving Service / ထွင်းထုဝန်ဆောင်မှု</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Do you offer engraving services?</div>
+                <div class="burmese">ခင်ဗျားတို့ ထွင်းထုဝန်ဆောင်မှု ပေးလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you offer engraving services?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Salesperson:</div>
+                <div class="english">Yes, we can engrave names, dates, or short messages on most jewelry.</div>
+                <div class="burmese">ဟုတ်ကဲ့၊ နာမည်များ၊ ရက်စွဲများ၊ သို့မဟုတ် စာတိုများကို လက်ဝတ်ရတနာအများစုပေါ် ထွင်းထုပေးနိုင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, we can engrave names, dates, or short messages on most jewelry.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">How much does it cost?</div>
+                <div class="burmese">ဘယ်လောက်ကုန်ကျလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('How much does it cost?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Salesperson:</div>
+                <div class="english">It's $15 for up to 20 characters. Takes about 2-3 days.</div>
+                <div class="burmese">အက္ခရာ ၂၀ အထိ ၁၅ ဒေါ်လာပါ။ ၂-၃ ရက်ခန့်ကြာပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('It is 15 dollars for up to 20 characters. Takes about 2-3 days.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 5: Wedding Bands -->
+    <div class="conversation-section">
+        <h2>💒 Wedding Bands / မင်္ဂလာလက်စွပ်</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Couple:</div>
+                <div class="english">We're getting married next month and need wedding bands.</div>
+                <div class="burmese">ကျွန်တော်တို့ လာမယ့်လမှာ လက်ထပ်တော့မှာ ဖြစ်လို့ မင်္ဂလာလက်စွပ်တွေ လိုအပ်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('We are getting married next month and need wedding bands.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Salesperson:</div>
+                <div class="english">Congratulations! Do you want matching bands or different styles?</div>
+                <div class="burmese">ဂုဏ်ယူပါတယ်! တူတဲ့လက်စွပ်တွေလား ဒါမှမဟုတ် မတူတဲ့ပုံစံတွေလား လိုချင်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Congratulations! Do you want matching bands or different styles?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Couple:</div>
+                <div class="english">Matching would be nice. We like platinum.</div>
+                <div class="burmese">တူတာက ကောင်းပါတယ်။ ပလက်တီနမ်ကို ကြိုက်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Matching would be nice. We like platinum.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Salesperson:</div>
+                <div class="english">These classic platinum bands are very popular. They never go out of style.</div>
+                <div class="burmese">ဒီဂန္ထဝင်ပလက်တီနမ်လက်စွပ်တွေက အရမ်းလူကြိုက်များပါတယ်။ ဘယ်တော့မှ ဖက်ရှင်မခေတ်နောက်ကျပါဘူး။</div>
+                <button class="audio-btn" onclick="speakEnglish('These classic platinum bands are very popular. They never go out of style.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 6: Resizing a Ring -->
+    <div class="conversation-section">
+        <h2>📏 Resizing a Ring / လက်စွပ်အရွယ်အစားပြင်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">This ring is too tight. Can you resize it?</div>
+                <div class="burmese">ဒီလက်စွပ်က အရမ်းကျပ်တယ်။ အရွယ်အစားပြင်ပေးနိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('This ring is too tight. Can you resize it?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Jeweler:</div>
+                <div class="english">Yes, we can. What size do you need?</div>
+                <div class="burmese">ရပါတယ်။ ဘယ်အရွယ်အစား လိုချင်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, we can. What size do you need?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I need to go from size 6 to size 7.</div>
+                <div class="burmese">အရွယ်အစား ၆ ကနေ ၇ ကို ပြောင်းဖို့လိုတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I need to go from size 6 to size 7.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Jeweler:</div>
+                <div class="english">That's possible. It will cost $25 and take about a week.</div>
+                <div class="burmese">လုပ်လို့ရပါတယ်။ ၂၅ ဒေါ်လာကျပြီး တစ်ပတ်လောက်ကြာပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('That is possible. It will cost 25 dollars and take about a week.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 7: Cleaning and Maintenance -->
+    <div class="conversation-section">
+        <h2>🧼 Cleaning and Maintenance / သန့်ရှင်းရေးနှင့်ထိန်းသိမ်းခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">How should I clean my diamond ring at home?</div>
+                <div class="burmese">အိမ်မှာ ကျွန်မရဲ့စိန်လက်စွပ်ကို ဘယ်လိုသန့်ရှင်းရမလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('How should I clean my diamond ring at home?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Jeweler:</div>
+                <div class="english">Mix warm water with mild dish soap. Soak for 20 minutes, then gently brush with a soft toothbrush.</div>
+                <div class="burmese">ရေနွေးနွေးနဲ့ ပန်းကန်ဆေးဆပ်ပြာပျော့ပျော့ ရောပါ။ ၂၀ မိနစ်စိမ်ပြီး ပျော့တဲ့သွားတိုက်တံနဲ့ ညင်သာစွာပွတ်ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Mix warm water with mild dish soap. Soak for 20 minutes, then gently brush with a soft toothbrush.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Do you offer professional cleaning?</div>
+                <div class="burmese">ပရော်ဖက်ရှင်နယ်သန့်ရှင်းရေး ပေးလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you offer professional cleaning?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Jeweler:</div>
+                <div class="english">Yes, free cleaning for life with any purchase over $500.</div>
+                <div class="burmese">ဟုတ်ပါတယ်၊ ဒေါ်လာ ၅၀၀ ကျော်ဝယ်ယူမှုအတွက် တစ်သက်တာအခမဲ့သန့်ရှင်းရေး။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, free cleaning for life with any purchase over 500 dollars.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 8: Appraisal and Insurance -->
+    <div class="conversation-section">
+        <h2>📄 Appraisal and Insurance / အကဲဖြတ်ခြင်းနှင့်အာမခံ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Do you provide appraisal certificates for insurance?</div>
+                <div class="burmese">အာမခံအတွက် အကဲဖြတ်လက်မှတ်တွေ ပေးလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you provide appraisal certificates for insurance?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Salesperson:</div>
+                <div class="english">Yes, all our items come with a certified appraisal.</div>
+                <div class="burmese">ဟုတ်ပါတယ်၊ ကျွန်တော်တို့ရဲ့ပစ္စည်းအားလုံးက အသိအမှတ်ပြုအကဲဖြတ်ချက်ပါပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, all our items come with a certified appraisal.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Is there an extended warranty available?</div>
+                <div class="burmese">တိုးချဲ့အာမခံ ရနိုင်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Is there an extended warranty available?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Salesperson:</div>
+                <div class="english">We offer a lifetime warranty against manufacturing defects. Accidental damage coverage is extra.</div>
+                <div class="burmese">ထုတ်လုပ်မှုချို့ယွင်းချက်များအတွက် တစ်သက်တာအာမခံ ပေးထားပါတယ်။ မတော်တဆပျက်စီးမှုအကျုံးဝင်မှုက အပိုပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('We offer a lifetime warranty against manufacturing defects. Accidental damage coverage is extra.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Precious Metals Guide -->
+    <div class="conversation-section">
+        <h2>📊 Precious Metals Guide / အဖိုးတန်သတ္တုလမ်းညွှန်</h2>
+        <div class="metal-chart">
+            <div class="metal-row"><strong>Gold (ရွှေ)</strong> - Yellow, white, rose (အဝါ၊ အဖြူ၊ နှင်းဆီရောင်)</div>
+            <div class="metal-row"><strong>Platinum (ပလက်တီနမ်)</strong> - Very durable, hypoallergenic (အလွန်တာရှည်ခံ၊ ဓာတ်မတည့်မှုနည်း)</div>
+            <div class="metal-row"><strong>Silver (ငွေ)</strong> - Affordable, requires regular polishing (စျေးသက်သာ၊ ပုံမှန်ပွတ်တိုက်ရန် လိုအပ်)</div>
+            <div class="metal-row"><strong>Palladium (ပါလေဒီယမ်)</strong> - Lightweight, similar to platinum (ပေါ့ပါး၊ ပလက်တီနမ်နှင့်ဆင်တူ)</div>
+        </div>
+    </div>
+    
+    <!-- Vocabulary Section -->
+    <div class="conversation-section">
+        <h2>📚 Jewelry Vocabulary / လက်ဝတ်ရတနာသုံးဝေါဟာရများ</h2>
+        <div class="vocab-grid">
+            <div class="vocab-item"><span class="vocab-eng">Diamond</span><br><span class="vocab-burmese">စိန်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Ruby</span><br><span class="vocab-burmese">ပတ္တမြား</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Sapphire</span><br><span class="vocab-burmese">နီလာ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Emerald</span><br><span class="vocab-burmese">မြကျောက်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Karat (gold purity)</span><br><span class="vocab-burmese">ကရက် (ရွှေစင်ရာခိုင်နှုန်း)</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Carat (gem weight)</span><br><span class="vocab-burmese">ကရက် (ကျောက်အလေးချိန်)</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Pendant</span><br><span class="vocab-burmese">ဆွဲသီး</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Bracelet</span><br><span class="vocab-burmese">လက်ကောက်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Appraisal</span><br><span class="vocab-burmese">အကဲဖြတ်ခြင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Clasp</span><br><span class="vocab-burmese">ချိတ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Prong</span><br><span class="vocab-burmese">ကြိုး/ဖမ်းကြိုး</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Hallmark</span><br><span class="vocab-burmese">အမှတ်အသား</span></div>
+        </div>
+    </div>
+    
+    <!-- Useful Jewelry Phrases -->
+    <div class="conversation-section">
+        <h2>💡 Useful Jewelry Phrases / အသုံးဝင်သောလက်ဝတ်ရတနာစကားစုများ</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Shopping for Jewelry (လက်ဝတ်ရတနာဈေးဝယ်ခြင်း):</strong><br>
+            • "Is this real gold or gold-plated?" (ဒါက ရွှေစစ်လား ရွှေသုတ်ထားတာလား။)<br>
+            • "Can I see the certification?" (လက်မှတ်ကြည့်လို့ရမလား။)<br>
+            • "What is the return policy for gifts?" (လက်ဆောင်များအတွက် ပြန်အပ်မူဝါဒက ဘာလဲ။)<br>
+            • "Does this come in a gift box?" (လက်ဆောင်သေတ္တာပါလား။)<br>
+            • "Can you gift wrap this for me?" (ဒါကို လက်ဆောင်ထုပ်စည်းပေးနိုင်မလား။)<br>
+            <br>
+            <i class="fas fa-lightbulb"></i>
+            <strong>The 4 Cs of Diamonds (စိန်၏ ၄ ချက်):</strong><br>
+            • <strong>Cut</strong> - How well it's shaped (ပုံသဏ္ဍာန်)<br>
+            • <strong>Color</strong> - From colorless to yellow (အရောင်)<br>
+            • <strong>Clarity</strong> - Presence of flaws (ကြည်လင်မှု)<br>
+            • <strong>Carat</strong> - Weight (အလေးချိန်)<br>
+        </div>
+    </div>
+    
+    <!-- Practice Section -->
+    <div class="conversation-section">
+        <h2>✏️ Practice Questions / လေ့ကျင့်ခန်းမေးခွန်းများ</h2>
+        <div class="dialogue-box">
+            <div class="quiz-question">
+                <p><strong>1. How do you ask for an engagement ring?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I am looking for an engagement ring.')">I am looking for a necklace.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I am looking for an engagement ring.')">I am looking for an engagement ring.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I am looking for an engagement ring.')">I am looking for earrings.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I am looking for an engagement ring.')">I am looking for a bracelet.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>2. "ဒါက ဘယ်ကရက်ရွှေလဲ" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What karat is this gold?')">How much is this gold?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What karat is this gold?')">What karat is this gold?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What karat is this gold?')">Is this real gold?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What karat is this gold?')">Where is this gold from?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. What is the hardest natural substance used in jewelry?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Diamond')">Gold</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Diamond')">Silver</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Diamond')">Diamond</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Diamond')">Platinum</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. "လက်စွပ်အရွယ်အစားပြင်ပေးနိုင်မလား" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can you resize this ring?')">Can you clean this ring?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can you resize this ring?')">Can you resize this ring?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can you resize this ring?')">Can you repair this ring?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can you resize this ring?')">Can you sell this ring?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. What does "carat" measure for diamonds?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Weight')">Color</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Weight')">Clarity</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Weight')">Weight</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Weight')">Cut</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p><i class="fas fa-heart" style="color: #f1c40f;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p>
+        <p style="font-size: 0.75rem; margin-top: 0.5rem;">Practice these conversations to shop for jewelry with confidence!</p>
+    </footer>
+</div>
+
+<!-- Back to Top Button -->
+<a href="#" class="back-to-top" id="backToTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+<script>
+    function speakEnglish(text) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8;
+        utterance.pitch = 1.0;
+        
+        function setVoice() {
+            const voices = window.speechSynthesis.getVoices();
+            const englishVoice = voices.find(v => v.lang === 'en-US' || v.lang.startsWith('en-'));
+            if (englishVoice) utterance.voice = englishVoice;
+            window.speechSynthesis.speak(utterance);
+        }
+        
+        if (window.speechSynthesis.getVoices().length) setVoice();
+        else window.speechSynthesis.onvoiceschanged = setVoice;
+    }
+    
+    function checkAnswer(element, correctAnswer) {
+        const options = element.parentElement.querySelectorAll('.quiz-option');
+        const isCorrect = element.innerText === correctAnswer;
+        
+        if (isCorrect) {
+            element.style.background = '#2ecc71';
+            element.style.color = 'white';
+            speakEnglish(correctAnswer);
+            setTimeout(() => {
+                options.forEach(opt => {
+                    opt.style.background = '';
+                    opt.style.color = '';
+                });
+            }, 1500);
+        } else {
+            element.style.background = '#e74c3c';
+            element.style.color = 'white';
+            setTimeout(() => {
+                element.style.background = '';
+                element.style.color = '';
+            }, 500);
+        }
+    }
+    
+    // Back to Top Button Functionality
+    (function() {
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        
+        if (backToTopBtn) {
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

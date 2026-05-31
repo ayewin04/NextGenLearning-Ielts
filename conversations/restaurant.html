@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant & Food - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 1rem;
+        }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        
+        .conversation-section {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: #1e3c72;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid white;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: #f5b042;
+            color: #1e3c72;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .back-to-top i {
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 42px;
+                height: 42px;
+            }
+            .back-to-top i {
+                font-size: 1rem;
+            }
+        }
+        .conversation-section h2 {
+            background: #27ae60;
+            color: white;
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line {
+            display: grid;
+            grid-template-columns: 70px 1fr 1fr;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            align-items: start;
+        }
+        .speaker { font-weight: bold; color: #27ae60; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { 
+            color: #8e6b3c; 
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 0.95rem;
+        }
+        .audio-btn {
+            background: #eef4ff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.3rem;
+        }
+        .audio-btn:hover { background: #27ae60; color: white; }
+        
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+            padding: 1rem;
+        }
+        .vocab-item {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            border-left: 3px solid #27ae60;
+        }
+        .vocab-eng { font-weight: bold; color: #27ae60; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        
+        .quiz-question {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.8rem;
+        }
+        .quiz-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .quiz-option {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .quiz-option:hover { background: #27ae60; color: white; border-color: #27ae60; }
+        
+        .menu-box {
+            background: #fff8f0;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #27ae60;
+        }
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px dashed #ddd;
+        }
+        .menu-name { font-weight: bold; }
+        .menu-price { color: #27ae60; }
+        
+        .tips-box {
+            background: #e8f5e9;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #27ae60;
+        }
+        .tips-box i { color: #27ae60; margin-right: 8px; }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1rem;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        @media (max-width: 700px) {
+            .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> All Conversations
+    </a>
+    
+    <header>
+        <h1><i class="fas fa-utensils"></i> Restaurant & Food</h1>
+        <p>Learn how to order food, ask about the menu, and pay at a restaurant</p>
+        <p>စားသောက်ဆိုင်တွင် အစားအသောက်မှာယူနည်း၊ မီနူးမေးမြန်းနည်းနှင့် ငွေရှင်းနည်းတို့ကို လေ့လာပါ</p>
+    </header>
+    
+    <!-- Dialogue 1: Arriving at the Restaurant -->
+    <div class="conversation-section">
+        <h2>🚪 Arriving at the Restaurant / စားသောက်ဆိုင်သို့ရောက်ရှိခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Waiter:</div>
+                <div class="english">Good evening! Welcome to our restaurant. How many people?</div>
+                <div class="burmese">မင်္ဂလာညနေခင်းပါ။ ကျွန်တော်တို့ စားသောက်ဆိုင်မှ ကြိုဆိုပါတယ်။ လူဘယ်နှစ်ယောက်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Good evening! Welcome to our restaurant. How many people?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Table for two, please.</div>
+                <div class="burmese">နှစ်ယောက်စာ စားပွဲပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Table for two, please.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Waiter:</div>
+                <div class="english">Right this way, please. Here's your menu.</div>
+                <div class="burmese">ဒီဘက်ကို လိုက်ခဲ့ပါ။ ဒီမှာ မီနူးပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Right this way, please. Here is your menu.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Thank you. Can we have some water, please?</div>
+                <div class="burmese">ကျေးဇူးပါ။ ရေနည်းနည်းရနိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Thank you. Can we have some water, please?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 2: Ordering Food -->
+    <div class="conversation-section">
+        <h2>📋 Ordering Food / အစားအသောက်မှာယူခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Waiter:</div>
+                <div class="english">Are you ready to order?</div>
+                <div class="burmese">မှာယူဖို့ အဆင်သင့်ဖြစ်ပြီလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Are you ready to order?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Yes, I'd like the chicken curry, please.</div>
+                <div class="burmese">ဟုတ်ကဲ့၊ ကြက်သားဟင်းတစ်ခွက် မှာချင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, I would like the chicken curry, please.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Waiter:</div>
+                <div class="english">Great choice! Would you like it spicy or mild?</div>
+                <div class="burmese">ကောင်းတဲ့ရွေးချယ်မှုပါ။ စပ်တာလား၊ အရသာညှင်းတာလား ကြိုက်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Great choice! Would you like it spicy or mild?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Mild, please. And I'll have fried rice as well.</div>
+                <div class="burmese">အရသာညှင်းတာပါ။ ကြော်ထမင်းလည်းထည့်ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Mild, please. And I will have fried rice as well.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer 2:</div>
+                <div class="english">What do you recommend?</div>
+                <div class="burmese">ဘာအကြံပေးချင်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What do you recommend?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Waiter:</div>
+                <div class="english">Our specialty is the grilled fish. It's very fresh today.</div>
+                <div class="burmese">ကျွန်တော်တို့ရဲ့ အထူးဟင်းက ငါးကင်ပါ။ ဒီနေ့ အရမ်းလန်းတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Our specialty is the grilled fish. It is very fresh today.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 3: Asking About the Menu -->
+    <div class="conversation-section">
+        <h2>❓ Asking About the Menu / မီနူးအကြောင်းမေးမြန်းခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">What is this dish?</div>
+                <div class="burmese">ဒီဟင်းက ဘာလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What is this dish?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Waiter:</div>
+                <div class="english">That's Tom Yum soup. It's a spicy and sour Thai soup.</div>
+                <div class="burmese">ဒါက Tom Yum စွပ်ပြုတ်ပါ။ စပ်ပြီးချဉ်တဲ့ ထိုင်းစွပ်ပြုတ်ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('That is Tom Yum soup. It is a spicy and sour Thai soup.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Does it contain shrimp?</div>
+                <div class="burmese">ပုစွန်ပါလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Does it contain shrimp?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Waiter:</div>
+                <div class="english">Yes, it does. But we can make it without shrimp if you prefer.</div>
+                <div class="burmese">ဟုတ်ကဲ့ ပါပါတယ်။ ဒါပေမယ့် သင်ကြိုက်ရင် ပုစွန်မပါဘဲ လုပ်ပေးလို့ရပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, it does. But we can make it without shrimp if you prefer.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 4: During the Meal -->
+    <div class="conversation-section">
+        <h2>🍽️ During the Meal / ထမင်းစားနေစဉ်</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Waiter:</div>
+                <div class="english">How is everything?</div>
+                <div class="burmese">အားလုံး ဘယ်လိုလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('How is everything?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Everything is delicious! Thank you.</div>
+                <div class="burmese">အားလုံး အရမ်းအရသာရှိတယ်။ ကျေးဇူးပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Everything is delicious! Thank you.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Could we have more napkins, please?</div>
+                <div class="burmese">လက်သုတ်ပုဝါ ထပ်ရနိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Could we have more napkins, please?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Waiter:</div>
+                <div class="english">Of course, right away.</div>
+                <div class="burmese">ရပါတယ်၊ ချက်ချင်းယူလာပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Of course, right away.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 5: Dessert and Drinks -->
+    <div class="conversation-section">
+        <h2>🍰 Dessert & Drinks / အချိုပွဲနှင့်အဖျော်ယမကာများ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Waiter:</div>
+                <div class="english">Would you like to see the dessert menu?</div>
+                <div class="burmese">အချိုပွဲမီနူး ကြည့်ချင်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Would you like to see the dessert menu?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Yes, please. I'd like some ice cream.</div>
+                <div class="burmese">ဟုတ်ကဲ့။ ရေခဲမုန့်အနည်းငယ် စားချင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, please. I would like some ice cream.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer 2:</div>
+                <div class="english">I'll have a cup of coffee, please.</div>
+                <div class="burmese">ကော်ဖီတစ်ခွက် သောက်ချင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I will have a cup of coffee, please.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Waiter:</div>
+                <div class="english">Coming right up!</div>
+                <div class="burmese">ချက်ချင်းယူလာပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Coming right up!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 6: Paying the Bill -->
+    <div class="conversation-section">
+        <h2>💰 Paying the Bill / ငွေရှင်းခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Could we have the bill, please?</div>
+                <div class="burmese">ငွေရှင်းရန် ပြေစာရနိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Could we have the bill, please?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Waiter:</div>
+                <div class="english">Sure, here you go. Would you like to pay separately or together?</div>
+                <div class="burmese">ရပါတယ်၊ ဒီမှာပါ။ သီးသန့်ခွဲပေးချင်လား၊ အတူတူပေးချင်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Sure, here you go. Would you like to pay separately or together?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Together, please. Can I pay by credit card?</div>
+                <div class="burmese">အတူတူပေးပါမယ်။ ခရက်ဒစ်ကဒ်နဲ့ ပေးလို့ရမလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Together, please. Can I pay by credit card?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Waiter:</div>
+                <div class="english">Yes, we accept all major cards. Just insert your card here.</div>
+                <div class="burmese">ရပါတယ်၊ ကဒ်အမျိုးအစားအားလုံးကို လက်ခံပါတယ်။ ဒီမှာ ကဒ်ထည့်ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, we accept all major cards. Just insert your card here.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Here's a tip for you. Thank you for the great service!</div>
+                <div class="burmese">ဒါက ခင်ဗျားအတွက် အကြံပြုငွေပါ။ ကောင်းမွန်တဲ့ ဝန်ဆောင်မှုအတွက် ကျေးဇူးပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Here is a tip for you. Thank you for the great service!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Sample Menu -->
+    <div class="conversation-section">
+        <h2>📖 Sample Menu / နမူနာမီနူး</h2>
+        <div class="menu-box">
+            <div class="menu-item">
+                <span class="menu-name">🍛 Chicken Curry</span>
+                <span class="menu-price">$12.99</span>
+            </div>
+            <div class="menu-item">
+                <span class="menu-name">🐟 Grilled Fish</span>
+                <span class="menu-price">$15.99</span>
+            </div>
+            <div class="menu-item">
+                <span class="menu-name">🍜 Tom Yum Soup</span>
+                <span class="menu-price">$8.99</span>
+            </div>
+            <div class="menu-item">
+                <span class="menu-name">🍚 Fried Rice</span>
+                <span class="menu-price">$9.99</span>
+            </div>
+            <div class="menu-item">
+                <span class="menu-name">🥗 Fresh Salad</span>
+                <span class="menu-price">$7.99</span>
+            </div>
+            <div class="menu-item">
+                <span class="menu-name">🍰 Chocolate Cake</span>
+                <span class="menu-price">$6.99</span>
+            </div>
+            <div class="menu-item">
+                <span class="menu-name">🍦 Ice Cream</span>
+                <span class="menu-price">$4.99</span>
+            </div>
+            <div class="menu-item">
+                <span class="menu-name">☕ Coffee / 🍵 Tea</span>
+                <span class="menu-price">$3.99</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Vocabulary Section -->
+    <div class="conversation-section">
+        <h2>📚 Restaurant Vocabulary / စားသောက်ဆိုင်သုံးဝေါဟာရများ</h2>
+        <div class="vocab-grid">
+            <div class="vocab-item"><span class="vocab-eng">Menu</span><br><span class="vocab-burmese">မီနူး</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Waiter / Waitress</span><br><span class="vocab-burmese">စားပွဲထိုး (ကျား/မ)</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Appetizer</span><br><span class="vocab-burmese">အဆာပြေ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Main course</span><br><span class="vocab-burmese">ပင်ဟင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Dessert</span><br><span class="vocab-burmese">အချိုပွဲ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Beverage</span><br><span class="vocab-burmese">အဖျော်ယမကာ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">The bill / check</span><br><span class="vocab-burmese">ငွေရှင်းပြေစာ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Tip</span><br><span class="vocab-burmese">အကြံပြုငွေ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Spicy</span><br><span class="vocab-burmese">စပ်သော</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Mild</span><br><span class="vocab-burmese">အရသာညှင်းသော</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Delicious</span><br><span class="vocab-burmese">အရသာရှိသော</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Reservation</span><br><span class="vocab-burmese">ကြိုစာရင်းသွင်းခြင်း</span></div>
+        </div>
+    </div>
+    
+    <!-- Useful Restaurant Phrases -->
+    <div class="conversation-section">
+        <h2>💡 Useful Restaurant Phrases / အသုံးဝင်သောစားသောက်ဆိုင်စကားစုများ</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Customer Phrases (စားသုံးသူစကားစုများ):</strong><br>
+            • "I have a reservation under the name Aung." (အောင်ဆိုတဲ့နာမည်နဲ့ ကြိုစာရင်းသွင်းထားပါတယ်။)<br>
+            • "What do you recommend?" (ဘာအကြံပေးချင်လဲ။)<br>
+            • "I'm vegetarian. Do you have vegetarian options?" (ကျွန်တော် သက်သတ်လွတ်စားတယ်။ သက်သတ်လွတ်စားစရာတွေ ရှိလား။)<br>
+            • "Is service charge included?" (ဝန်ဆောင်မှုကြေး ပါလား။)<br>
+            • "Can I have a doggy bag?" (ကျန်တာတွေ ထုပ်ပို့လို့ရမလား။)<br>
+            • "This is not what I ordered." (ဒါငါမှာတာမဟုတ်ဘူး။)<br>
+            <br>
+            <i class="fas fa-lightbulb"></i>
+            <strong>Waiter Phrases (စားပွဲထိုးစကားစုများ):</strong><br>
+            • "Are you ready to order?" (မှာဖို့ အဆင်သင့်ဖြစ်ပြီလား။)<br>
+            • "Would you like anything to drink?" (သောက်စရာတစ်ခုခု လိုချင်လား။)<br>
+            • "How would you like your steak?" (သင် အင်္ဂါသားကို ဘယ်လိုကြိုက်လဲ။)<br>
+            • "I'll be right back with your order." (သင်မှာတာကို ချက်ချင်းယူလာပါမယ်။)<br>
+            • "Is everything okay with your meal?" (ထမင်းစရာတွေ အဆင်ပြေရဲ့လား။)<br>
+        </div>
+    </div>
+    
+    <!-- Practice Section -->
+    <div class="conversation-section">
+        <h2>✏️ Practice Questions / လေ့ကျင့်ခန်းမေးခွန်းများ</h2>
+        <div class="dialogue-box">
+            <div class="quiz-question">
+                <p><strong>1. How do you ask for the bill in a restaurant?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Could we have the bill, please?')">Where is the kitchen?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Could we have the bill, please?')">Could we have the bill, please?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Could we have the bill, please?')">I want to leave now.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Could we have the bill, please?')">Is the food ready?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>2. What do you say if you want food without shrimp?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can you make it without shrimp?')">More shrimp, please.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can you make it without shrimp?')">Can you make it without shrimp?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can you make it without shrimp?')">I love shrimp.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can you make it without shrimp?')">Where is the shrimp?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. How do you ask the waiter for a recommendation?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What do you recommend?')">I don't like this.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What do you recommend?')">What do you recommend?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What do you recommend?')">Give me the menu.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What do you recommend?')">The food is cold.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. "ဒီဟင်းက အရမ်းစပ်တယ်" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'This dish is very spicy.')">This dish is sweet.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'This dish is very spicy.')">This dish is salty.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'This dish is very spicy.')">This dish is very spicy.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'This dish is very spicy.')">This dish is cold.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. What do you leave for good service in many countries?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A tip')">A gift</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A tip')">A letter</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A tip')">A tip</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A tip')">A photo</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p><i class="fas fa-heart" style="color: #27ae60;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p>
+        <p style="font-size: 0.75rem; margin-top: 0.5rem;">Practice these conversations to feel confident ordering food at any restaurant!</p>
+    </footer>
+</div>
+
+<script>
+    function speakEnglish(text) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8;
+        utterance.pitch = 1.0;
+        
+        function setVoice() {
+            const voices = window.speechSynthesis.getVoices();
+            const englishVoice = voices.find(v => v.lang === 'en-US' || v.lang.startsWith('en-'));
+            if (englishVoice) utterance.voice = englishVoice;
+            window.speechSynthesis.speak(utterance);
+        }
+        
+        if (window.speechSynthesis.getVoices().length) setVoice();
+        else window.speechSynthesis.onvoiceschanged = setVoice;
+    }
+    
+    function checkAnswer(element, correctAnswer) {
+        const options = element.parentElement.querySelectorAll('.quiz-option');
+        const isCorrect = element.innerText === correctAnswer;
+        
+        if (isCorrect) {
+            element.style.background = '#2ecc71';
+            element.style.color = 'white';
+            speakEnglish(correctAnswer);
+            setTimeout(() => {
+                options.forEach(opt => {
+                    opt.style.background = '';
+                    opt.style.color = '';
+                });
+            }, 1500);
+        } else {
+            element.style.background = '#e74c3c';
+            element.style.color = 'white';
+            setTimeout(() => {
+                element.style.background = '';
+                element.style.color = '';
+            }, 500);
+        }
+    }
+</script>
+
+
+
+<!-- Back to Top Button -->
+<a href="#" class="back-to-top" id="backToTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+<script>
+// Back to Top Button Functionality
+(function() {
+    const backToTopBtn = document.getElementById('backToTopBtn');
+    
+    if (backToTopBtn) {
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+        
+        backToTopBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
+})();
+</script>
+
+</body>
+</html>

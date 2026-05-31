@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital & Health - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 1rem;
+        }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        
+        .conversation-section {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .conversation-section h2 {
+            background: #e74c3c;
+            color: white;
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line {
+            display: grid;
+            grid-template-columns: 70px 1fr 1fr;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            align-items: start;
+        }
+        .speaker { font-weight: bold; color: #e74c3c; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { 
+            color: #8e6b3c; 
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 0.95rem;
+        }
+        .audio-btn {
+            background: #eef4ff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.3rem;
+        }
+        .audio-btn:hover { background: #e74c3c; color: white; }
+        
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+            padding: 1rem;
+        }
+        .vocab-item {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            border-left: 3px solid #e74c3c;
+        }
+        .vocab-eng { font-weight: bold; color: #e74c3c; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        
+        .quiz-question {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.8rem;
+        }
+        .quiz-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .quiz-option {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .quiz-option:hover { background: #e74c3c; color: white; border-color: #e74c3c; }
+        
+        .symptoms-box {
+            background: #fdf2f0;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #e74c3c;
+        }
+        .symptom-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .symptom-tag {
+            background: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 2rem;
+            font-size: 0.85rem;
+            border: 1px solid #e74c3c;
+        }
+        
+        .tips-box {
+            background: #fef9e7;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #e74c3c;
+        }
+        .tips-box i { color: #e74c3c; margin-right: 8px; }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1rem;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: #1e3c72;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid white;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: #f5b042;
+            color: #1e3c72;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .back-to-top i {
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 42px;
+                height: 42px;
+            }
+            .back-to-top i {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 700px) {
+            .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> All Conversations
+    </a>
+    
+    <header>
+        <h1><i class="fas fa-hospital"></i> Hospital & Health</h1>
+        <p>Learn how to describe symptoms, see a doctor, and buy medicine</p>
+        <p>ရောဂါလက္ခဏာများဖော်ပြနည်း၊ ဆရာဝန်ပြသခြင်းနှင့် ဆေးဝယ်ယူနည်းတို့ကို လေ့လာပါ</p>
+    </header>
+    
+    <!-- Dialogue 1: Describing Symptoms -->
+    <div class="conversation-section">
+        <h2>🤒 Describing Symptoms / ရောဂါလက္ခဏာများဖော်ပြခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Patient:</div>
+                <div class="english">Doctor, I don't feel well.</div>
+                <div class="burmese">ဆရာဝန်၊ ကျွန်တော် နေထိုင်မကောင်းဘူး။</div>
+                <button class="audio-btn" onclick="speakEnglish('Doctor, I do not feel well.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Doctor:</div>
+                <div class="english">What seems to be the problem?</div>
+                <div class="burmese">ဘာဖြစ်နေတာလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What seems to be the problem?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Patient:</div>
+                <div class="english">I have a headache and a sore throat.</div>
+                <div class="burmese">ခေါင်းကိုက်ပြီး လည်ချောင်းနာတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I have a headache and a sore throat.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Doctor:</div>
+                <div class="english">Do you have a fever?</div>
+                <div class="burmese">အဖျားရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you have a fever?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Patient:</div>
+                <div class="english">Yes, I think so. I feel very hot.</div>
+                <div class="burmese">ဟုတ်တယ် ထင်တယ်။ ကျွန်တော် အရမ်းပူနေတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, I think so. I feel very hot.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 2: At the Pharmacy -->
+    <div class="conversation-section">
+        <h2>💊 At the Pharmacy / ဆေးဆိုင်တွင်</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Hello, I need something for a cough.</div>
+                <div class="burmese">မင်္ဂလာပါ၊ ချောင်းဆိုးတာအတွက် ဆေးလိုအပ်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Hello, I need something for a cough.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Pharmacist:</div>
+                <div class="english">Do you have any other symptoms?</div>
+                <div class="burmese">အခြားရောဂါလက္ခဏာတွေ ရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you have any other symptoms?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I also have a runny nose.</div>
+                <div class="burmese">နှာရည်ယိုလည်းပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I also have a runny nose.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Pharmacist:</div>
+                <div class="english">This cough syrup should help. Take 10ml three times a day after meals.</div>
+                <div class="burmese">ဒီချောင်းဆိုးရည်က သက်သာစေပါလိမ့်မယ်။ တစ်နေ့ သုံးကြိမ် အစားစားပြီးတိုင်း ၁၀ မီလီလီတာ သောက်ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('This cough syrup should help. Take 10ml three times a day after meals.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 3: Making an Appointment -->
+    <div class="conversation-section">
+        <h2>📅 Making an Appointment / ဆေးရုံချိန်းယူခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Patient:</div>
+                <div class="english">I'd like to make an appointment to see the doctor.</div>
+                <div class="burmese">ဆရာဝန်ပြဖို့ ချိန်းယူချင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I would like to make an appointment to see the doctor.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Receptionist:</div>
+                <div class="english">When would you like to come in?</div>
+                <div class="burmese">ဘယ်အချိန်လာချင်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('When would you like to come in?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Patient:</div>
+                <div class="english">Is tomorrow morning available?</div>
+                <div class="burmese">မနက်ဖြန် မနက်ခင်း ရနိုင်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Is tomorrow morning available?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Receptionist:</div>
+                <div class="english">Yes, the doctor is available at 10:00 AM. What's your name?</div>
+                <div class="burmese">ရပါတယ်၊ ဆရာဝန် မနက် ၁၀ နာရီမှာ ရပါတယ်။ နာမည်ဘာလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, the doctor is available at 10:00 AM. What is your name?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Patient:</div>
+                <div class="english">My name is Aung. Thank you!</div>
+                <div class="burmese">နာမည် အောင်ပါ။ ကျေးဇူးပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('My name is Aung. Thank you!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 4: Seeing the Doctor -->
+    <div class="conversation-section">
+        <h2>🩺 Seeing the Doctor / ဆရာဝန်ပြသခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Doctor:</div>
+                <div class="english">How long have you been feeling this way?</div>
+                <div class="burmese">ဒီလိုခံစားရတာ ဘယ်လောက်ကြာပြီလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('How long have you been feeling this way?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Patient:</div>
+                <div class="english">For about three days now.</div>
+                <div class="burmese">သုံးရက်လောက်ရှိပြီ။</div>
+                <button class="audio-btn" onclick="speakEnglish('For about three days now.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Doctor:</div>
+                <div class="english">Let me check your temperature. Open your mouth, please.</div>
+                <div class="burmese">အပူချိန်စစ်ပါရစေ။ ကျေးဇူးပြု၍ ပါးစပ်ဖွင့်ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Let me check your temperature. Open your mouth, please.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Doctor:</div>
+                <div class="english">You have a mild fever. I'll prescribe some antibiotics.</div>
+                <div class="burmese">မင်းမှာ အဖျားအနည်းငယ်ရှိတယ်။ ပဋိဇီဝဆေးတွေ ညွှန်းပေးပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('You have a mild fever. I will prescribe some antibiotics.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Patient:</div>
+                <div class="english">Should I rest?</div>
+                <div class="burmese">ငါ အနားယူသင့်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Should I rest?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Doctor:</div>
+                <div class="english">Yes, drink plenty of water and get lots of rest. Come back if you don't feel better in three days.</div>
+                <div class="burmese">ဟုတ်တယ်၊ ရေများများသောက်ပြီး အနားယူပါ။ သုံးရက်အတွင်း မသက်သာရင် ပြန်လာပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, drink plenty of water and get lots of rest. Come back if you do not feel better in three days.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 5: Emergency Situation -->
+    <div class="conversation-section">
+        <h2>🚨 Emergency Situation / အရေးပေါ်အခြေအနေ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Caller:</div>
+                <div class="english">I need an ambulance! My father is having chest pain.</div>
+                <div class="burmese">လူနာတင်ယာဉ် လိုအပ်ပါတယ်! ကျွန်တော့်အဖေ ရင်ဘတ်အောင့်နေတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I need an ambulance! My father is having chest pain.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Operator:</div>
+                <div class="english">Please stay calm. Where are you located?</div>
+                <div class="burmese">ကျေးဇူးပြု၍ စိတ်အေးအေးထားပါ။ မင်းဘယ်မှာရှိလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Please stay calm. Where are you located?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Caller:</div>
+                <div class="english">We are at 123 Main Street. Please hurry!</div>
+                <div class="burmese">Main Street ၁၂၃ မှာရှိတယ်။ ကျေးဇူးပြု၍ မြန်မြန်လာပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('We are at 123 Main Street. Please hurry!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Operator:</div>
+                <div class="english">An ambulance is on its way. Is he conscious?</div>
+                <div class="burmese">လူနာတင်ယာဉ် လာနေပါပြီ။ သူ သတိရနေလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('An ambulance is on its way. Is he conscious?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Caller:</div>
+                <div class="english">Yes, but he's in a lot of pain.</div>
+                <div class="burmese">ဟုတ်တယ်၊ ဒါပေမယ့် သူ အရမ်းနာနေတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, but he is in a lot of pain.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 6: At the Dentist -->
+    <div class="conversation-section">
+        <h2>🦷 At the Dentist / သွားဆရာဝန်ပြခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Patient:</div>
+                <div class="english">I have a terrible toothache.</div>
+                <div class="burmese">ကျွန်တော့်သွားက အရမ်းကိုက်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I have a terrible toothache.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Dentist:</div>
+                <div class="english">Let me take a look. Open wide, please.</div>
+                <div class="burmese">ကြည့်ပါရစေ။ ကျေးဇူးပြု၍ ကျယ်ကျယ်ဖွင့်ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Let me take a look. Open wide, please.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Dentist:</div>
+                <div class="english">You have a cavity. We need to fill it.</div>
+                <div class="burmese">မင်းမှာ သွားပိုးရှိတယ်။ ဖြည့်ဖို့လိုတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('You have a cavity. We need to fill it.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Patient:</div>
+                <div class="english">Will it hurt?</div>
+                <div class="burmese">နာမှာလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Will it hurt?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Dentist:</div>
+                <div class="english">I'll give you a local anesthetic. You won't feel a thing.</div>
+                <div class="burmese">ထုံဆေးထိုးပေးပါမယ်။ ဘာမှ မခံစားရပါဘူး။</div>
+                <button class="audio-btn" onclick="speakEnglish('I will give you a local anesthetic. You will not feel a thing.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Common Symptoms List -->
+    <div class="conversation-section">
+        <h2>🤧 Common Symptoms / အဖြစ်များသောရောဂါလက္ခဏာများ</h2>
+        <div class="symptoms-box">
+            <div class="symptom-list">
+                <span class="symptom-tag">Headache (ခေါင်းကိုက်)</span>
+                <span class="symptom-tag">Fever (အဖျား)</span>
+                <span class="symptom-tag">Cough (ချောင်းဆိုး)</span>
+                <span class="symptom-tag">Sore throat (လည်ချောင်းနာ)</span>
+                <span class="symptom-tag">Runny nose (နှာရည်ယို)</span>
+                <span class="symptom-tag">Stomachache (ဗိုက်နာ)</span>
+                <span class="symptom-tag">Nausea (ပျို့ချင်)</span>
+                <span class="symptom-tag">Dizziness (မူး)</span>
+                <span class="symptom-tag">Back pain (နောက်ကျောနာ)</span>
+                <span class="symptom-tag">Toothache (သွားကိုက်)</span>
+                <span class="symptom-tag">Chest pain (ရင်ဘတ်အောင့်)</span>
+                <span class="symptom-tag">Allergy (မတည့်ခြင်း)</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Vocabulary Section -->
+    <div class="conversation-section">
+        <h2>📚 Health Vocabulary / ကျန်းမာရေးသုံးဝေါဟာရများ</h2>
+        <div class="vocab-grid">
+            <div class="vocab-item"><span class="vocab-eng">Doctor</span><br><span class="vocab-burmese">ဆရာဝန်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Nurse</span><br><span class="vocab-burmese">သူနာပြု</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Pharmacist</span><br><span class="vocab-burmese">ဆေးဆိုင်သမား</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Prescription</span><br><span class="vocab-burmese">ဆေးညွှန်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Medicine / Medication</span><br><span class="vocab-burmese">ဆေး</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Appointment</span><br><span class="vocab-burmese">ချိန်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Emergency</span><br><span class="vocab-burmese">အရေးပေါ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Ambulance</span><br><span class="vocab-burmese">လူနာတင်ယာဉ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Fever</span><br><span class="vocab-burmese">အဖျား</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Cough syrup</span><br><span class="vocab-burmese">ချောင်းဆိုးရည်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Antibiotics</span><br><span class="vocab-burmese">ပဋိဇီဝဆေး</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Painkiller</span><br><span class="vocab-burmese">အကိုက်အခဲပျောက်ဆေး</span></div>
+        </div>
+    </div>
+    
+    <!-- Useful Health Phrases -->
+    <div class="conversation-section">
+        <h2>💡 Useful Health Phrases / အသုံးဝင်သောကျန်းမာရေးစကားစုများ</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Common Patient Phrases (လူနာစကားစုများ):</strong><br>
+            • "I feel dizzy and weak." (မူးပြီး အားနည်းနေတယ်။)<br>
+            • "I've been vomiting since last night." (မနေ့ညက စပြီး အန်နေတယ်။)<br>
+            • "I'm allergic to penicillin." (ကျွန်တော် ပင်နီဆီလင်နဲ့ မတည့်ဘူး။)<br>
+            • "Where is the nearest hospital?" (အနီးဆုံးဆေးရုံက ဘယ်မှာလဲ။)<br>
+            • "Can you call a doctor for me?" (ငါ့အတွက် ဆရာဝန်ခေါ်ပေးနိုင်မလား။)<br>
+            <br>
+            <i class="fas fa-lightbulb"></i>
+            <strong>Doctor Phrases (ဆရာဝန်စကားစုများ):</strong><br>
+            • "Take this medicine twice a day." (ဒီဆေးကို တစ်နေ့နှစ်ကြိမ် သောက်ပါ။)<br>
+            • "You need to get some rest." (မင်း အနားယူဖို့လိုတယ်။)<br>
+            • "I'm going to take your blood pressure." (သွေးဖိအားတိုင်းမယ်။)<br>
+            • "You should see a specialist." (မင်း အထူးကုဆရာဝန်ပြသင့်တယ်။)<br>
+        </div>
+    </div>
+    
+    <!-- Practice Section -->
+    <div class="conversation-section">
+        <h2>✏️ Practice Questions / လေ့ကျင့်ခန်းမေးခွန်းများ</h2>
+        <div class="dialogue-box">
+            <div class="quiz-question">
+                <p><strong>1. How do you say "ခေါင်းကိုက်တယ်" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I have a headache.')">I have a toothache.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I have a headache.')">I have a stomachache.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I have a headache.')">I have a headache.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I have a headache.')">I have a fever.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>2. Where do you buy medicine?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Pharmacy')">Hospital</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Pharmacy')">Clinic</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Pharmacy')">Pharmacy</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Pharmacy')">School</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. What do you call a vehicle that takes sick people to the hospital?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Ambulance')">Taxi</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Ambulance')">Bus</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Ambulance')">Ambulance</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Ambulance')">Train</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. "ဆရာဝန်ချိန်းယူချင်ပါတယ်" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like to make an appointment.')">I need medicine.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like to make an appointment.')">Where is the doctor?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like to make an appointment.')">I would like to make an appointment.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like to make an appointment.')">I am sick.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. What does a doctor give you to buy medicine?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Prescription')">Receipt</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Prescription')">Prescription</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Prescription')">Ticket</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Prescription')">Bill</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p><i class="fas fa-heart" style="color: #e74c3c;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p>
+        <p style="font-size: 0.75rem; margin-top: 0.5rem;">Practice these conversations to communicate about health issues confidently!</p>
+    </footer>
+</div>
+
+<!-- Back to Top Button -->
+<a href="#" class="back-to-top" id="backToTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+<script>
+    function speakEnglish(text) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8;
+        utterance.pitch = 1.0;
+        
+        function setVoice() {
+            const voices = window.speechSynthesis.getVoices();
+            const englishVoice = voices.find(v => v.lang === 'en-US' || v.lang.startsWith('en-'));
+            if (englishVoice) utterance.voice = englishVoice;
+            window.speechSynthesis.speak(utterance);
+        }
+        
+        if (window.speechSynthesis.getVoices().length) setVoice();
+        else window.speechSynthesis.onvoiceschanged = setVoice;
+    }
+    
+    function checkAnswer(element, correctAnswer) {
+        const options = element.parentElement.querySelectorAll('.quiz-option');
+        const isCorrect = element.innerText === correctAnswer;
+        
+        if (isCorrect) {
+            element.style.background = '#2ecc71';
+            element.style.color = 'white';
+            speakEnglish(correctAnswer);
+            setTimeout(() => {
+                options.forEach(opt => {
+                    opt.style.background = '';
+                    opt.style.color = '';
+                });
+            }, 1500);
+        } else {
+            element.style.background = '#e74c3c';
+            element.style.color = 'white';
+            setTimeout(() => {
+                element.style.background = '';
+                element.style.color = '';
+            }, 500);
+        }
+    }
+    
+    // Back to Top Button Functionality
+    (function() {
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        
+        if (backToTopBtn) {
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

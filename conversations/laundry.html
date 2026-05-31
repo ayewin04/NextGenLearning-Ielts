@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laundry Service - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 1rem;
+        }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        
+        .conversation-section {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .conversation-section h2 {
+            background: #0984e3;
+            color: white;
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line {
+            display: grid;
+            grid-template-columns: 70px 1fr 1fr;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            align-items: start;
+        }
+        .speaker { font-weight: bold; color: #0984e3; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { 
+            color: #8e6b3c; 
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 0.95rem;
+        }
+        .audio-btn {
+            background: #eef4ff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.3rem;
+        }
+        .audio-btn:hover { background: #0984e3; color: white; }
+        
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+            padding: 1rem;
+        }
+        .vocab-item {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            border-left: 3px solid #0984e3;
+        }
+        .vocab-eng { font-weight: bold; color: #0984e3; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        
+        .quiz-question {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.8rem;
+        }
+        .quiz-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .quiz-option {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .quiz-option:hover { background: #0984e3; color: white; border-color: #0984e3; }
+        
+        .service-table {
+            background: #e3f2fd;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+        }
+        .service-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px dashed #ddd;
+        }
+        
+        .tips-box {
+            background: #e3f2fd;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #0984e3;
+        }
+        .tips-box i { color: #0984e3; margin-right: 8px; }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1rem;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: #1e3c72;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid white;
+        }
+        .back-to-top.show { opacity: 1; visibility: visible; }
+        .back-to-top:hover { background: #f5b042; color: #1e3c72; transform: translateY(-3px); }
+        .back-to-top i { font-size: 1.2rem; }
+        
+        @media (max-width: 768px) {
+            .back-to-top { bottom: 1rem; right: 1rem; width: 42px; height: 42px; }
+            .back-to-top i { font-size: 1rem; }
+        }
+        @media (max-width: 700px) {
+            .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> All Conversations
+    </a>
+    
+    <header>
+        <h1><i class="fas fa-tshirt"></i> Laundry Service</h1>
+        <p>Learn how to get clothes cleaned, ask about prices, and pick up items in English</p>
+        <p>အဝတ်အစားများသန့်ရှင်းရေးလုပ်နည်း၊ စျေးနှုန်းများမေးမြန်းနည်းနှင့် ပစ္စည်းများလက်ခံယူနည်းကို အင်္ဂလိပ်လို လေ့လာပါ</p>
+    </header>
+    
+    <!-- Dialogue 1: Dropping Off Laundry -->
+    <div class="conversation-section">
+        <h2>🧺 Dropping Off Laundry / အဝတ်လျှော်ရန်ပေးအပ်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Hello, I'd like to drop off my laundry.</div>
+                <div class="burmese">မင်္ဂလာပါ၊ ကျွန်တော့်အဝတ်အစားများ လျှော်ရန် ပေးအပ်ချင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Hello, I would like to drop off my laundry.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Attendant:</div>
+                <div class="english">Welcome. Do you have a laundry bag? How many items do you have?</div>
+                <div class="burmese">ကြိုဆိုပါတယ်။ အဝတ်လျှော်အိတ်ရှိလား။ ပစ္စည်းဘယ်နှစ်ခုရှိလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Welcome. Do you have a laundry bag? How many items do you have?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Yes, here is my bag. I have 10 shirts, 5 pants, and 2 jackets.</div>
+                <div class="burmese">ဟုတ်ကဲ့၊ ဒီမှာ ကျွန်တော့်အိတ်ပါ။ ရှပ်အင်္ကျီ ၁၀ ထည်၊ ဘောင်းဘီ ၅ ထည်၊ ဂျာကင် ၂ ထည်ရှိပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, here is my bag. I have 10 shirts, 5 pants, and 2 jackets.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Attendant:</div>
+                <div class="english">I'll weigh them. The total weight is 8 pounds. That will be $12 for wash and fold.</div>
+                <div class="burmese">အလေးချိန်တိုင်းပါမယ်။ စုစုပေါင်းအလေးချိန် ၈ ပေါင်ပါ။ လျှော်ပြီးခေါက်ရန် ၁၂ ဒေါ်လာကျပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I will weigh them. The total weight is 8 pounds. That will be 12 dollars for wash and fold.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 2: Dry Cleaning -->
+    <div class="conversation-section">
+        <h2>👔 Dry Cleaning / ဒရိုင်ကလင်းန်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I need to dry clean this suit. Can you do it?</div>
+                <div class="burmese">ဒီဝတ်စုံကို ဒရိုင်ကလင်းန်း လုပ်ဖို့လိုပါတယ်။ လုပ်ပေးနိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('I need to dry clean this suit. Can you do it?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Attendant:</div>
+                <div class="english">Yes, we offer dry cleaning services. The price is $12 for a two-piece suit.</div>
+                <div class="burmese">ဟုတ်ပါတယ်၊ ဒရိုင်ကလင်းန်းဝန်ဆောင်မှုများ ပေးပါတယ်။ နှစ်ပိုင်းဝတ်စုံအတွက် စျေးနှုန်းက ၁၂ ဒေါ်လာပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, we offer dry cleaning services. The price is 12 dollars for a two-piece suit.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">There's a stain on the jacket. Can you remove it?</div>
+                <div class="burmese">ဂျာကင်ပေါ်မှာ အစွန်းအထင်းရှိတယ်။ ဖယ်ရှားပေးနိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('There is a stain on the jacket. Can you remove it?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Attendant:</div>
+                <div class="english">We'll do our best. There's an extra $3 charge for stain treatment.</div>
+                <div class="burmese">ကျွန်တော်တို့ အကောင်းဆုံးကြိုးစားပါမယ်။ အစွန်းအထင်းဖယ်ရှားခြင်းအတွက် အပို ၃ ဒေါ်လာကျပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('We will do our best. There is an extra 3 dollar charge for stain treatment.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 3: Wash and Fold Service -->
+    <div class="conversation-section">
+        <h2>🧺 Wash and Fold Service / လျှော်ပြီးခေါက်ခြင်းဝန်ဆောင်မှု</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">What's included in the wash and fold service?</div>
+                <div class="burmese">လျှော်ပြီးခေါက်ခြင်းဝန်ဆောင်မှုတွင် ဘာတွေပါဝင်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What is included in the wash and fold service?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Attendant:</div>
+                <div class="english">We wash, dry, and fold all regular laundry. We use mild detergent. Let us know if you have any allergies.</div>
+                <div class="burmese">ပုံမှန်အဝတ်အစားများအားလုံးကို လျှော်၊ ခြောက်၊ ခေါက်ပေးပါတယ်။ ကျွန်တော်တို့ နူးညံ့သောဆပ်ပြာကို သုံးပါတယ်။ ဓာတ်မတည့်မှုရှိရင် ပြောပြပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('We wash, dry, and fold all regular laundry. We use mild detergent. Let us know if you have any allergies.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Do you separate colors from whites?</div>
+                <div class="burmese">အရောင်များကို အဖြူရောင်များနှင့် ခွဲခြားလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you separate colors from whites?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Attendant:</div>
+                <div class="english">Yes, absolutely. We always separate light and dark colors to prevent bleeding.</div>
+                <div class="burmese">ဟုတ်ကဲ့၊ သေချာပါတယ်။ အရောင်များ ကူးစက်ခြင်းကိုကာကွယ်ရန် အရောင်ဖျော့များနှင့် ရင့်များကို အမြဲခွဲခြားပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, absolutely. We always separate light and dark colors to prevent bleeding.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 4: Pickup and Delivery -->
+    <div class="conversation-section">
+        <h2>🚚 Pickup and Delivery / လာရောက်ယူခြင်းနှင့် ပို့ဆောင်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Do you offer pickup and delivery service?</div>
+                <div class="burmese">လာရောက်ယူခြင်းနှင့် ပို့ဆောင်ခြင်းဝန်ဆောင်မှု ပေးလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you offer pickup and delivery service?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Attendant:</div>
+                <div class="english">Yes, we do. Pickup and delivery is $5 extra per order within a 5-mile radius.</div>
+                <div class="burmese">ဟုတ်ပါတယ်။ မိုင် ၅ အကွာအဝေးအတွင်း အော်ဒါတစ်ခုလျှင် လာရောက်ယူခြင်းနှင့် ပို့ဆောင်ခြင်းမှာ အပို ၅ ဒေါ်လာပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, we do. Pickup and delivery is 5 dollars extra per order within a 5-mile radius.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">What's the turnaround time?</div>
+                <div class="burmese">ပြန်ရရှိချိန်က ဘယ်လောက်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What is the turnaround time?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Attendant:</div>
+                <div class="english">Standard service is 2-3 days. Same-day service is available for an additional $10.</div>
+                <div class="burmese">စံဝန်ဆောင်မှုက ၂-၃ ရက်ပါ။ တစ်ရက်တည်းဝန်ဆောင်မှုက အပို ၁၀ ဒေါ်လာဖြင့် ရနိုင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Standard service is 2-3 days. Same-day service is available for an additional 10 dollars.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 5: Special Instructions -->
+    <div class="conversation-section">
+        <h2>📝 Special Instructions / အထူးညွှန်ကြားချက်များ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">These are delicate items. Please use cold water and gentle cycle.</div>
+                <div class="burmese">ဒါတွေက နူးညံ့သောပစ္စည်းများပါ။ ကျေးဇူးပြု၍ ရေအေးနှင့် ညင်သာစက်ဝန်းကို သုံးပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('These are delicate items. Please use cold water and gentle cycle.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Attendant:</div>
+                <div class="english">Understood. We'll handle them with extra care. Would you like them hung or folded?</div>
+                <div class="burmese">နားလည်းပါတယ်။ အထူးဂရုစိုက်ပါမယ်။ ဆွဲချိတ်ထားခြင်း သို့မဟုတ် ခေါက်ခြင်းကို လိုချင်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Understood. We will handle them with extra care. Would you like them hung or folded?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Please hang the shirts and fold the rest.</div>
+                <div class="burmese">ရှပ်အင်္ကျီများကို ဆွဲချိတ်ထားပြီး ကျန်တာများကို ခေါက်ပေးပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Please hang the shirts and fold the rest.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Attendant:</div>
+                <div class="english">Noted. Any other special requests?</div>
+                <div class="burmese">မှတ်သားပါပြီ။ အခြားအထူးတောင်းဆိုချက်များ ရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Noted. Any other special requests?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 6: Picking Up Laundry -->
+    <div class="conversation-section">
+        <h2>✅ Picking Up Laundry / အဝတ်အစားများလာရောက်ယူခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I'm here to pick up my laundry. My ticket number is 247.</div>
+                <div class="burmese">ကျွန်တော် ကျွန်တော့်အဝတ်အစားများကို လာရောက်ယူပါတယ်။ ကျွန်တော့်လက်မှတ်နံပါတ်က ၂၄၇ ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am here to pick up my laundry. My ticket number is 247.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Attendant:</div>
+                <div class="english">Let me get your order. Everything looks good. Please check your items.</div>
+                <div class="burmese">သင့်အော်ဒါကို ယူပါရစေ။ အားလုံး အဆင်ပြေပါတယ်။ သင့်ပစ္စည်းများကို စစ်ဆေးပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Let me get your order. Everything looks good. Please check your items.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Everything is perfect. Thank you.</div>
+                <div class="burmese">အားလုံး ပြီးပြည့်စုံပါတယ်။ ကျေးဇူးပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Everything is perfect. Thank you.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Attendant:</div>
+                <div class="english">Your total is $15. Would you like to pay by cash or card?</div>
+                <div class="burmese">သင့်စုစုပေါင်းက ၁၅ ဒေါ်လာပါ။ ငွေသား သို့မဟုတ် ကဒ်ဖြင့် ပေးချင်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Your total is 15 dollars. Would you like to pay by cash or card?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 7: Complaint Resolution -->
+    <div class="conversation-section">
+        <h2>😟 Complaint Resolution / တိုင်ကြားချက်ဖြေရှင်းခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I'm not happy with the service. My white shirt has a pink tint now.</div>
+                <div class="burmese">ဝန်ဆောင်မှုကို ကျွန်တော် မကျေနပ်ပါဘူး။ ကျွန်တော့်အင်္ကျီဖြူမှာ ပန်းရောင်အရောင်တက်နေတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am not happy with the service. My white shirt has a pink tint now.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Manager:</div>
+                <div class="english">I apologize for the mistake. Let me see if we can fix it. We'll re-wash it for free.</div>
+                <div class="burmese">အမှားအတွက် တောင်းပန်ပါတယ်။ ပြင်ဆင်နိုင်မလား ကြည့်ပါရစေ။ အခမဲ့ ပြန်လျှော်ပေးပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I apologize for the mistake. Let me see if we can fix it. We will re-wash it for free.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">If it doesn't come out, will you compensate me?</div>
+                <div class="burmese">မပျောက်ရင် လျော်ကြေးပေးမလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('If it does not come out, will you compensate me?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Manager:</div>
+                <div class="english">Yes, we will reimburse you for the item's value. Please give us one more chance to fix it.</div>
+                <div class="burmese">ဟုတ်ပါတယ်၊ ပစ္စည်း၏တန်ဖိုးကို ပြန်အမ်းပေးပါမယ်။ ပြင်ဆင်ရန် နောက်တစ်ကြိမ် အခွင့်အရေးပေးပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, we will reimburse you for the item\'s value. Please give us one more chance to fix it.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 8: Subscription Service -->
+    <div class="conversation-section">
+        <h2>📋 Subscription Service / စာရင်းသွင်းဝန်ဆောင်မှု</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Do you have a monthly subscription plan?</div>
+                <div class="burmese">လစဉ်စာရင်းသွင်းအစီအစဉ် ရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you have a monthly subscription plan?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Attendant:</div>
+                <div class="english">Yes, we have a laundry subscription for $50 per month. That includes two 10-pound bags per week.</div>
+                <div class="burmese">ဟုတ်ပါတယ်၊ တစ်လ ၅၀ ဒေါ်လာဖြင့် အဝတ်လျှော်စာရင်းသွင်းမှုရှိပါတယ်။ အဲဒါမှာ တစ်ပတ်လျှင် ၁၀ ပေါင်အိတ် နှစ်လုံးပါဝင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, we have a laundry subscription for 50 dollars per month. That includes two 10-pound bags per week.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Can I cancel anytime?</div>
+                <div class="burmese">ဘယ်အချိန်မဆို ဖျက်သိမ်းလို့ရမလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Can I cancel anytime?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Attendant:</div>
+                <div class="english">Yes, with 30 days' notice. There's no cancellation fee.</div>
+                <div class="burmese">ဟုတ်ပါတယ်၊ ၃၀ ရက်ကြိုအကြောင်းကြားခြင်းဖြင့် ဖျက်သိမ်းနိုင်ပါတယ်။ ဖျက်သိမ်းခအခကြေးငွေ မရှိပါဘူး။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, with 30 days notice. There is no cancellation fee.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Price List -->
+    <div class="conversation-section">
+        <h2>💰 Laundry Price List / အဝတ်လျှော်စျေးနှုန်းစာရင်း</h2>
+        <div class="service-table">
+            <div class="service-row"><strong>Wash & Fold (လျှော်ပြီးခေါက်)</strong> - $1.50 per pound</div>
+            <div class="service-row"><strong>Dry Cleaning - Shirt (ဒရိုင်ကလင်းန်း - ရှပ်အင်္ကျီ)</strong> - $4.50 each</div>
+            <div class="service-row"><strong>Dry Cleaning - Pants (ဒရိုင်ကလင်းန်း - ဘောင်းဘီ)</strong> - $6.00 each</div>
+            <div class="service-row"><strong>Dry Cleaning - Suit (ဒရိုင်ကလင်းန်း - ဝတ်စုံ)</strong> - $12.00</div>
+            <div class="service-row"><strong>Dry Cleaning - Dress (ဒရိုင်ကလင်းန်း - ဝတ်စုံအမျိုးသမီး)</strong> - $8.00</div>
+            <div class="service-row"><strong>Comforter (မွေ့ရာဖုံး)</strong> - $15.00</div>
+            <div class="service-row"><strong>Ironing Only (သံပူတိုက်ခြင်းသာ)</strong> - $2.00 per item</div>
+            <div class="service-row"><strong>Stain Treatment (အစွန်းအထင်းဖယ်ရှားခြင်း)</strong> - $3.00 extra</div>
+            <div class="service-row"><strong>Same-Day Service (တစ်ရက်တည်းဝန်ဆောင်မှု)</strong> - +$10.00</div>
+            <div class="service-row"><strong>Pickup & Delivery (လာရောက်ယူခြင်းနှင့်ပို့ဆောင်ခြင်း)</strong> - $5.00</div>
+        </div>
+    </div>
+    
+    <!-- Laundry Care Symbols -->
+    <div class="conversation-section">
+        <h2>📋 Laundry Care Symbols / အဝတ်လျှော်စောင့်ရှောက်မှုသင်္ကေတများ</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Common Care Symbols (အသုံးများသောစောင့်ရှောက်မှုသင်္ကေတများ):</strong><br>
+            • 🧺 Machine Wash (စက်ဖြင့်လျှော်ရန်)<br>
+            • 🚫 Do Not Wash (မလျှော်ရန်)<br>
+            • 🧴 Hand Wash Only (လက်ဖြင့်သာလျှော်ရန်)<br>
+            • 🔥 Tumble Dry (စက်ဖြင့်ခြောက်ရန်)<br>
+            • 🌬️ Line Dry (လိုင်းပေါ်တွင်ခြောက်ရန်)<br>
+            • 🚫 Do Not Dry Clean (ဒရိုင်ကလင်းန်းမလုပ်ရန်)<br>
+            • 🔥 Low Heat Iron (အပူသင့်သံပူတိုက်ရန်)<br>
+            • 🧪 Bleach Allowed (ကြော်ငြာဆေးသုံးခွင့်ပြု)<br>
+        </div>
+    </div>
+    
+    <!-- Practice Section -->
+    <div class="conversation-section">
+        <h2>✏️ Practice Questions / လေ့ကျင့်ခန်းမေးခွန်းများ</h2>
+        <div class="dialogue-box">
+            <div class="quiz-question">
+                <p><strong>1. How do you ask about dropping off laundry?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like to drop off my laundry.')">I need to pick up my laundry.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like to drop off my laundry.')">I would like to drop off my laundry.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like to drop off my laundry.')">How much does it cost?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like to drop off my laundry.')">When will it be ready?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>2. "ဒရိုင်ကလင်းန်းဝန်ဆောင်မှု ရှိလား" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Do you offer dry cleaning?')">Do you offer dry cleaning?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Do you offer dry cleaning?')">Do you offer wash and fold?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Do you offer dry cleaning?')">Do you offer ironing?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Do you offer dry cleaning?')">Do you offer pickup?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. What does "turnaround time" mean?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'How long it takes to complete the service')">The price of the service</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'How long it takes to complete the service')">The quality of the service</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'How long it takes to complete the service')">How long it takes to complete the service</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'How long it takes to complete the service')">The location of the service</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. "အရောင်များကို အဖြူရောင်များနှင့် ခွဲခြားလား" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Do you separate colors from whites?')">Do you use hot water?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Do you separate colors from whites?')">Do you separate colors from whites?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Do you separate colors from whites?')">Do you use fabric softener?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Do you separate colors from whites?')">Do you hang the shirts?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. What is "wash and fold" service?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Laundry that is washed, dried, and folded')">Dry cleaning only</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Laundry that is washed, dried, and folded')">Ironing service</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Laundry that is washed, dried, and folded')">Laundry that is washed, dried, and folded</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Laundry that is washed, dried, and folded')">Pickup and delivery</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p><i class="fas fa-heart" style="color: #0984e3;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p>
+        <p style="font-size: 0.75rem; margin-top: 0.5rem;">Practice these conversations to use laundry services with confidence!</p>
+    </footer>
+</div>
+
+<a href="#" class="back-to-top" id="backToTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+<script>
+    function speakEnglish(text) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8;
+        utterance.pitch = 1.0;
+        
+        function setVoice() {
+            const voices = window.speechSynthesis.getVoices();
+            const englishVoice = voices.find(v => v.lang === 'en-US' || v.lang.startsWith('en-'));
+            if (englishVoice) utterance.voice = englishVoice;
+            window.speechSynthesis.speak(utterance);
+        }
+        
+        if (window.speechSynthesis.getVoices().length) setVoice();
+        else window.speechSynthesis.onvoiceschanged = setVoice;
+    }
+    
+    function checkAnswer(element, correctAnswer) {
+        const options = element.parentElement.querySelectorAll('.quiz-option');
+        const isCorrect = element.innerText === correctAnswer;
+        
+        if (isCorrect) {
+            element.style.background = '#2ecc71';
+            element.style.color = 'white';
+            speakEnglish(correctAnswer);
+            setTimeout(() => {
+                options.forEach(opt => {
+                    opt.style.background = '';
+                    opt.style.color = '';
+                });
+            }, 1500);
+        } else {
+            element.style.background = '#e74c3c';
+            element.style.color = 'white';
+            setTimeout(() => {
+                options.forEach(opt => {
+                    opt.style.background = '';
+                    opt.style.color = '';
+                });
+            }, 500);
+        }
+    }
+    
+    (function() {
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        if (backToTopBtn) {
+            window.addEventListener('scroll', function() {
+                backToTopBtn.classList.toggle('show', window.scrollY > 300);
+            });
+            backToTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

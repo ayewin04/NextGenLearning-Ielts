@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 1rem;
+        }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        
+        .conversation-section {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .conversation-section h2 {
+            background: #e84393;
+            color: white;
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line {
+            display: grid;
+            grid-template-columns: 70px 1fr 1fr;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            align-items: start;
+        }
+        .speaker { font-weight: bold; color: #e84393; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { 
+            color: #8e6b3c; 
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 0.95rem;
+        }
+        .audio-btn {
+            background: #eef4ff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.3rem;
+        }
+        .audio-btn:hover { background: #e84393; color: white; }
+        
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+            padding: 1rem;
+        }
+        .vocab-item {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            border-left: 3px solid #e84393;
+        }
+        .vocab-eng { font-weight: bold; color: #e84393; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        
+        .quiz-question {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.8rem;
+        }
+        .quiz-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .quiz-option {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .quiz-option:hover { background: #e84393; color: white; border-color: #e84393; }
+        
+        .tips-box {
+            background: #fdf2f8;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #e84393;
+        }
+        .tips-box i { color: #e84393; margin-right: 8px; }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1rem;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: #1e3c72;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid white;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: #f5b042;
+            color: #1e3c72;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .back-to-top i {
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 42px;
+                height: 42px;
+            }
+            .back-to-top i {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 700px) {
+            .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> All Conversations
+    </a>
+    
+    <header>
+        <h1><i class="fas fa-music"></i> Music</h1>
+        <p>Learn how to discuss music genres, favorite artists, concerts, and instruments in English</p>
+        <p>ဂီတအမျိုးအစားများ၊ အကြိုက်ဆုံးအနုပညာရှင်များ၊ ဖျော်ဖြေပွဲများနှင့် တူရိယာများအကြောင်း အင်္ဂလိပ်လို ပြောဆိုနည်းကို လေ့လာပါ</p>
+    </header>
+    
+    <!-- Dialogue 1: Favorite Music Genre -->
+    <div class="conversation-section">
+        <h2>🎵 Favorite Music Genre / အကြိုက်ဆုံးဂီတအမျိုးအစား</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">What kind of music do you like?</div>
+                <div class="burmese">မင်း ဘယ်လိုဂီတမျိုး ကြိုက်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What kind of music do you like?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">I'm really into pop and rock music. What about you?</div>
+                <div class="burmese">ငါ ပေါ့ပ်နဲ့ ရော့ခ်ဂီတကို တကယ်ကြိုက်တယ်။ မင်းကရော။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am really into pop and rock music. What about you?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">I prefer classical and jazz. They help me relax.</div>
+                <div class="burmese">ငါ ဂန္ထဝင်နဲ့ ဂျက်ဇ်ကို ပိုကြိုက်တယ်။ ငါ့ကို အပန်းဖြေစေတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I prefer classical and jazz. They help me relax.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Classical is nice, especially when I'm studying.</div>
+                <div class="burmese">ဂန္ထဝင်က ကောင်းတယ်၊ အထူးသဖြင့် စာကျက်တဲ့အခါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Classical is nice, especially when I am studying.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 2: Favorite Artist/Band -->
+    <div class="conversation-section">
+        <h2>🎤 Favorite Artist or Band / အကြိုက်ဆုံးအနုပညာရှင် သို့မဟုတ် တီးဝိုင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Who's your favorite singer or band?</div>
+                <div class="burmese">မင်းရဲ့ အကြိုက်ဆုံး အဆိုတော် ဒါမှမဟုတ် တီးဝိုင်းက ဘယ်သူလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Who is your favorite singer or band?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">I love Coldplay. Their music is so uplifting and meaningful.</div>
+                <div class="burmese">Coldplay ကို ကြိုက်တယ်။ သူတို့ရဲ့ဂီတက အရမ်းအားတက်စရာကောင်းပြီး အဓိပ္ပာယ်ရှိတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I love Coldplay. Their music is so uplifting and meaningful.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">I agree! Have you seen them live?</div>
+                <div class="burmese">သဘောတူတယ်! တိုက်ရိုက်ဖျော်ဖြေပွဲကြည့်ဖူးလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('I agree! Have you seen them live?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Not yet, but it's on my bucket list. Their concerts look amazing.</div>
+                <div class="burmese">မကြည့်ရသေးဘူး၊ ဒါပေမယ့် ငါ့ရဲ့လုပ်စရာစာရင်းမှာရှိတယ်။ သူတို့ရဲ့ဖျော်ဖြေပွဲတွေ အံ့သြစရာကောင်းပုံရတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Not yet, but it is on my bucket list. Their concerts look amazing.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 3: Playing an Instrument -->
+    <div class="conversation-section">
+        <h2>🎸 Playing an Instrument / တူရိယာတီးခတ်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Do you play any musical instruments?</div>
+                <div class="burmese">မင်း ဂီတတူရိယာတစ်ခုခု တီးတတ်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you play any musical instruments?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Yes, I play the guitar. I've been learning for three years.</div>
+                <div class="burmese">ဟုတ်တယ်၊ ဂစ်တာတီးတယ်။ သုံးနှစ်လေ့လာနေပြီ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, I play the guitar. I have been learning for three years.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">That's awesome! Can you play any songs?</div>
+                <div class="burmese">ကောင်းပါတယ်! သီချင်းတွေ တီးတတ်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('That is awesome! Can you play any songs?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">A few. I can play some pop songs and classical pieces. What about you?</div>
+                <div class="burmese">အနည်းငယ်။ ပေါ့ပ်သီချင်းတချို့နဲ့ ဂန္ထဝင်တေးသွားတချို့ တီးနိုင်တယ်။ မင်းကရော။</div>
+                <button class="audio-btn" onclick="speakEnglish('A few. I can play some pop songs and classical pieces. What about you?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 4: Learning an Instrument -->
+    <div class="conversation-section">
+        <h2>🎹 Learning an Instrument / တူရိယာသင်ယူခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">I've always wanted to learn the piano. Is it hard?</div>
+                <div class="burmese">ငါ စန္ဒရားသင်ယူဖို့ အမြဲစိတ်ကူးထားတယ်။ ခက်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('I have always wanted to learn the piano. Is it hard?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">It takes practice, but it's never too late to start. I can teach you some basics.</div>
+                <div class="burmese">လေ့ကျင့်မှုလိုတယ်၊ ဒါပေမယ့် စဖို့ ဘယ်တော့မှ နောက်မကျဘူး။ အခြေခံတချို့ သင်ပေးနိုင်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('It takes practice, but it is never too late to start. I can teach you some basics.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Really? That would be wonderful!</div>
+                <div class="burmese">တကယ်လား? အရမ်းကောင်းပါလိမ့်မယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Really? That would be wonderful!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Sure! Let's start with learning the notes and basic finger positions.</div>
+                <div class="burmese">ရပါတယ်! မှတ်စုတွေနဲ့ အခြေခံလက်ချောင်းနေရာချထားမှုတွေနဲ့ စလိုက်ရအောင်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Sure! Let us start with learning the notes and basic finger positions.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 5: Going to a Concert -->
+    <div class="conversation-section">
+        <h2>🎟️ Going to a Concert / ဖျော်ဖြေပွဲသွားခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">There's a concert this weekend. Do you want to go?</div>
+                <div class="burmese">ဒီစနေ၊ တနင်္ဂနွေမှာ ဖျော်ဖြေပွဲတစ်ခုရှိတယ်။ သွားချင်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('There is a concert this weekend. Do you want to go?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Who's performing?</div>
+                <div class="burmese">ဘယ်သူ ဖျော်ဖြေမလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Who is performing?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">A local band. I've heard they're really good live.</div>
+                <div class="burmese">ဒေသခံတီးဝိုင်း။ သူတို့ တိုက်ရိုက်ဖျော်ဖြေတာ တကယ်ကောင်းတယ်လို့ ကြားတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('A local band. I have heard they are really good live.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Sounds fun! How much are the tickets?</div>
+                <div class="burmese">ပျော်စရာကောင်းပုံရတယ်! လက်မှတ်စျေးနှုန်းက ဘယ်လောက်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Sounds fun! How much are the tickets?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 6: Music and Mood -->
+    <div class="conversation-section">
+        <h2>🎧 Music and Mood / ဂီတနှင့်စိတ်ခံစားချက်</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Do you listen to different music depending on your mood?</div>
+                <div class="burmese">မင်းစိတ်ခံစားချက်အပေါ်မူတည်ပြီး မတူညီတဲ့ဂီတကို နားထောင်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you listen to different music depending on your mood?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Definitely! When I'm happy, I listen to upbeat pop music.</div>
+                <div class="burmese">သေချာပါတယ်! ပျော်တဲ့အခါ ရွှင်မြူးတဲ့ပေါ့ပ်ဂီတကို နားထောင်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Definitely! When I am happy, I listen to upbeat pop music.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">What about when you're sad?</div>
+                <div class="burmese">ဝမ်းနည်းတဲ့အခါကရော။</div>
+                <button class="audio-btn" onclick="speakEnglish('What about when you are sad?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">I listen to soft acoustic or classical music. It helps me feel better.</div>
+                <div class="burmese">ပျော့ပျောင်းတဲ့ အကောက်စတစ် ဒါမှမဟုတ် ဂန္ထဝင်ဂီတကို နားထောင်တယ်။ ငါ့ကို ပိုကောင်းလာစေတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I listen to soft acoustic or classical music. It helps me feel better.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 7: Music Streaming -->
+    <div class="conversation-section">
+        <h2>📱 Music Streaming / ဂီတစတြီမင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Do you use Spotify or Apple Music?</div>
+                <div class="burmese">မင်း Spotify လား Apple Music သုံးလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you use Spotify or Apple Music?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">I use Spotify. I love their playlists and recommendations.</div>
+                <div class="burmese">ငါ Spotify သုံးတယ်။ သူတို့ရဲ့သီချင်းစာရင်းတွေနဲ့ အကြံပြုချက်တွေကို ကြိုက်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I use Spotify. I love their playlists and recommendations.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Same here. Do you pay for premium?</div>
+                <div class="burmese">ငါလည်း အတူတူပဲ။ premium အတွက် ပေးလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Same here. Do you pay for premium?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Yes, it's worth it. No ads and I can download songs offline.</div>
+                <div class="burmese">ဟုတ်တယ်၊ တန်တယ်။ ကြော်ငြာမရှိဘူး၊ အင်တာနက်မပါဘဲ သီချင်းတွေ ဒေါင်းလုဒ်လုပ်နိုင်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, it is worth it. No ads and I can download songs offline.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 8: Music and Culture -->
+    <div class="conversation-section">
+        <h2>🌏 Music and Culture / ဂီတနှင့်ယဉ်ကျေးမှု</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Do you listen to music from other countries?</div>
+                <div class="burmese">မင်း တခြားနိုင်ငံတွေက ဂီတကို နားထောင်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you listen to music from other countries?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Yes! I love K-pop and Latin music. It's so energetic.</div>
+                <div class="burmese">ဟုတ်တယ်! K-pop နဲ့ လက်တင်ဂီတကို ကြိုက်တယ်။ အရမ်းစွမ်းအင်ပြည့်ဝတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes! I love K-pop and Latin music. It is so energetic.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">I like exploring world music too. It's interesting to hear different instruments.</div>
+                <div class="burmese">ငါလည်း ကမ္ဘာ့ဂီတကို စူးစမ်းရတာ ကြိုက်တယ်။ မတူညီတဲ့တူရိယာတွေကို ကြားရတာ စိတ်ဝင်စားစရာကောင်းတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I like exploring world music too. It is interesting to hear different instruments.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Music really connects people across cultures.</div>
+                <div class="burmese">ဂီတက ယဉ်ကျေးမှုတစ်ခုနဲ့တစ်ခု လူတွေကို တကယ်ဆက်သွယ်ပေးတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Music really connects people across cultures.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Music Genres List -->
+    <div class="conversation-section">
+        <h2>🎶 Music Genres / ဂီတအမျိုးအစားများ</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Popular Music Genres (လူကြိုက်များသော ဂီတအမျိုးအစားများ):</strong><br>
+            • Pop - ပေါ့ပ်<br>
+            • Rock - ရော့ခ်<br>
+            • Hip Hop / Rap - ဟစ်ဟော့/ရက်ပ်<br>
+            • Jazz - ဂျက်ဇ်<br>
+            • Classical - ဂန္ထဝင်<br>
+            • Electronic / EDM - အီလက်ထရွန်းနစ်<br>
+            • Country - ကောင်တီ<br>
+            • Blues - ဘလူး<br>
+            • Reggae - ရက်ဂေး<br>
+            • Latin - လက်တင်<br>
+            • R&B - အာန်ဘီ<br>
+            • Folk - ရိုးရာ<br>
+        </div>
+    </div>
+    
+    <!-- Vocabulary Section -->
+    <div class="conversation-section">
+        <h2>📚 Music Vocabulary / ဂီတသုံးဝေါဟာရများ</h2>
+        <div class="vocab-grid">
+            <div class="vocab-item"><span class="vocab-eng">Melody</span><br><span class="vocab-burmese">တေးသွား</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Rhythm</span><br><span class="vocab-burmese">စည်းချက်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Harmony</span><br><span class="vocab-burmese">သံစဉ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Lyrics</span><br><span class="vocab-burmese">သီချင်းစာသား</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Concert / Live show</span><br><span class="vocab-burmese">ဖျော်ဖြေပွဲ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Album</span><br><span class="vocab-burmese">အယ်လ်ဘမ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Playlist</span><br><span class="vocab-burmese">သီချင်းစာရင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Singer / Vocalist</span><br><span class="vocab-burmese">အဆိုတော်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Guitarist / Drummer</span><br><span class="vocab-burmese">ဂစ်တာသမား/ဒရမ်သမား</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Orchestra</span><br><span class="vocab-burmese">သံစုံတီးဝိုင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Festival</span><br><span class="vocab-burmese">ဂီတပွဲတော်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Beat</span><br><span class="vocab-burmese">စည်းချက်ကျသောအသံ</span></div>
+        </div>
+    </div>
+    
+    <!-- Practice Section -->
+    <div class="conversation-section">
+        <h2>✏️ Practice Questions / လေ့ကျင့်ခန်းမေးခွန်းများ</h2>
+        <div class="dialogue-box">
+            <div class="quiz-question">
+                <p><strong>1. How do you ask someone about their music taste?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What kind of music do you like?')">What is your name?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What kind of music do you like?')">What kind of music do you like?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What kind of music do you like?')">Where do you work?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What kind of music do you like?')">How old are you?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>2. "ငါ ဂစ်တာတီးတတ်တယ်" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I play the guitar.')">I play the piano.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I play the guitar.')">I play the drums.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I play the guitar.')">I play the guitar.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I play the guitar.')">I play the violin.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. What is a person who sings called?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Singer')">Dancer</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Singer')">Actor</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Singer')">Singer</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Singer')">Writer</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. "ငါပေါ့ပ်ဂီတကိုကြိုက်တယ်" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I like pop music.')">I like rock music.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I like pop music.')">I like classical music.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I like pop music.')">I like pop music.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I like pop music.')">I like jazz music.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. What does "live concert" mean?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A performance in front of an audience')">A recorded performance</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A performance in front of an audience')">A performance in front of an audience</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A performance in front of an audience')">A rehearsal</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A performance in front of an audience')">A music video</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p><i class="fas fa-heart" style="color: #e84393;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p>
+        <p style="font-size: 0.75rem; margin-top: 0.5rem;">Practice these conversations to talk about music and instruments with confidence!</p>
+    </footer>
+</div>
+
+<!-- Back to Top Button -->
+<a href="#" class="back-to-top" id="backToTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+<script>
+    function speakEnglish(text) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8;
+        utterance.pitch = 1.0;
+        
+        function setVoice() {
+            const voices = window.speechSynthesis.getVoices();
+            const englishVoice = voices.find(v => v.lang === 'en-US' || v.lang.startsWith('en-'));
+            if (englishVoice) utterance.voice = englishVoice;
+            window.speechSynthesis.speak(utterance);
+        }
+        
+        if (window.speechSynthesis.getVoices().length) setVoice();
+        else window.speechSynthesis.onvoiceschanged = setVoice;
+    }
+    
+    function checkAnswer(element, correctAnswer) {
+        const options = element.parentElement.querySelectorAll('.quiz-option');
+        const isCorrect = element.innerText === correctAnswer;
+        
+        if (isCorrect) {
+            element.style.background = '#2ecc71';
+            element.style.color = 'white';
+            speakEnglish(correctAnswer);
+            setTimeout(() => {
+                options.forEach(opt => {
+                    opt.style.background = '';
+                    opt.style.color = '';
+                });
+            }, 1500);
+        } else {
+            element.style.background = '#e74c3c';
+            element.style.color = 'white';
+            setTimeout(() => {
+                element.style.background = '';
+                element.style.color = '';
+            }, 500);
+        }
+    }
+    
+    // Back to Top Button Functionality
+    (function() {
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        
+        if (backToTopBtn) {
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

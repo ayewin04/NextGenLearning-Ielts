@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Year Celebration - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 1rem;
+        }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        
+        .conversation-section {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .conversation-section h2 {
+            background: #d63031;
+            color: white;
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line {
+            display: grid;
+            grid-template-columns: 70px 1fr 1fr;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            align-items: start;
+        }
+        .speaker { font-weight: bold; color: #d63031; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { 
+            color: #8e6b3c; 
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 0.95rem;
+        }
+        .audio-btn {
+            background: #eef4ff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.3rem;
+        }
+        .audio-btn:hover { background: #d63031; color: white; }
+        
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+            padding: 1rem;
+        }
+        .vocab-item {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            border-left: 3px solid #d63031;
+        }
+        .vocab-eng { font-weight: bold; color: #d63031; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        
+        .quiz-question {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.8rem;
+        }
+        .quiz-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .quiz-option {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .quiz-option:hover { background: #d63031; color: white; border-color: #d63031; }
+        
+        .tips-box {
+            background: #fdeaea;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #d63031;
+        }
+        .tips-box i { color: #d63031; margin-right: 8px; }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1rem;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: #1e3c72;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid white;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: #f5b042;
+            color: #1e3c72;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .back-to-top i {
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 42px;
+                height: 42px;
+            }
+            .back-to-top i {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 700px) {
+            .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> All Conversations
+    </a>
+    
+    <header>
+        <h1><i class="fas fa-glass-cheers"></i> New Year Celebration</h1>
+        <p>Learn how to talk about New Year resolutions and celebration plans in English</p>
+        <p>နှစ်သစ်ကတိများနှင့် အခမ်းအနားအစီအစဉ်များအကြောင်း အင်္ဂလိပ်လို ပြောဆိုနည်းကို လေ့လာပါ</p>
+    </header>
+    
+    <!-- Dialogue 1: New Year Plans -->
+    <div class="conversation-section">
+        <h2>🎆 New Year Plans / နှစ်သစ်အစီအစဉ်များ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">What are your plans for New Year's Eve?</div>
+                <div class="burmese">နှစ်ဆန်းတစ်ရက်အတွက် မင်းရဲ့အစီအစဉ်တွေက ဘာတွေလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What are your plans for New Year\'s Eve?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">I'm going to a party downtown. They're having fireworks at midnight.</div>
+                <div class="burmese">မြို့လယ်က ပါတီတစ်ခုသွားမယ်။ သန်းခေါင်ယံမှာ မီးရှူးမီးပန်းတွေ ပစ်မယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am going to a party downtown. They are having fireworks at midnight.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">That sounds fun! I'm staying home with my family this year.</div>
+                <div class="burmese">ပျော်စရာကောင်းပုံရတယ်! ငါ ဒီနှစ် မိသားစုနဲ့အတူ အိမ်မှာနေမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('That sounds fun! I am staying home with my family this year.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">That's nice too. Quality time with family is important.</div>
+                <div class="burmese">အဲဒါလည်း ကောင်းပါတယ်။ မိသားစုနဲ့ အရည်အသွေးရှိတဲ့အချိန်က အရေးကြီးတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('That is nice too. Quality time with family is important.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 2: New Year Resolutions -->
+    <div class="conversation-section">
+        <h2>📝 New Year Resolutions / နှစ်သစ်ကတိများ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Do you make New Year's resolutions?</div>
+                <div class="burmese">မင်း နှစ်သစ်ကတိတွေ လုပ်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you make New Year\'s resolutions?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Yes, I try to every year. This year I want to exercise more and eat healthier.</div>
+                <div class="burmese">ဟုတ်တယ်၊ နှစ်စဉ်ကြိုးစားတယ်။ ဒီနှစ် ပိုလေ့ကျင့်ခန်းလုပ်ပြီး ကျန်းမာရေးနဲ့ညီညွတ်အောင်စားချင်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, I try to every year. This year I want to exercise more and eat healthier.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Those are great goals. I want to learn a new language and save more money.</div>
+                <div class="burmese">ဒါတွေက ကောင်းတဲ့ပန်းတိုင်တွေပါ။ ငါ ဘာသာစကားအသစ်တစ်ခုသင်ယူပြီး ပိုက်ဆံပိုချွေတာချင်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Those are great goals. I want to learn a new language and save more money.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Good luck! I hope we both keep our resolutions this year.</div>
+                <div class="burmese">ကံကောင်းပါစေ! ဒီနှစ် ငါတို့နှစ်ဦးစလုံး ကတိတွေကို စောင့်သိနိုင်မယ်လို့ မျှော်လင့်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Good luck! I hope we both keep our resolutions this year.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 3: New Year Traditions -->
+    <div class="conversation-section">
+        <h2>🎍 New Year Traditions / နှစ်သစ်ထုံးတမ်းများ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">What are some New Year traditions in your culture?</div>
+                <div class="burmese">မင်းယဉ်ကျေးမှုမှာ နှစ်သစ်ထုံးတမ်းအချို့က ဘာတွေလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What are some New Year traditions in your culture?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">We eat 12 grapes at midnight, one for each month of the new year for good luck.</div>
+                <div class="burmese">ငါတို့ သန်းခေါင်ယံမှာ စပျစ်သီး ၁၂ လုံးစားကြတယ်၊ နှစ်သစ်ရဲ့လတိုင်းအတွက် ကံကောင်းခြင်းဖြစ်စေဖို့။</div>
+                <button class="audio-btn" onclick="speakEnglish('We eat 12 grapes at midnight, one for each month of the new year for good luck.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">That's interesting! In my culture, we wear new clothes and visit the temple.</div>
+                <div class="burmese">စိတ်ဝင်စားစရာကောင်းတယ်! ငါ့ယဉ်ကျေးမှုမှာ ငါတို့ အဝတ်အသစ်ဝတ်ပြီး ဘုရားကျောင်းသွားတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('That is interesting! In my culture, we wear new clothes and visit the temple.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Every culture celebrates differently. That's what makes it special.</div>
+                <div class="burmese">ယဉ်ကျေးမှုတိုင်း မတူညီတဲ့နည်းနဲ့ ကျင်းပကြတယ်။ အဲဒါက ထူးခြားစေတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Every culture celebrates differently. That is what makes it special.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 4: Reflecting on the Past Year -->
+    <div class="conversation-section">
+        <h2>🔄 Reflecting on the Past Year / လွန်ခဲ့သည့်နှစ်ကို ပြန်လည်သုံးသပ်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">What was the best thing that happened to you this year?</div>
+                <div class="burmese">ဒီနှစ်မှာ မင်းအတွက် အကောင်းဆုံးအဖြစ်အပျက်က ဘာလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What was the best thing that happened to you this year?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">I got a promotion at work! I've been waiting for it for a long time.</div>
+                <div class="burmese">ငါ အလုပ်မှာ ရာထူးတိုးလိုက်တယ်! အကြာကြီးစောင့်နေရတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I got a promotion at work! I have been waiting for it for a long time.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Congratulations! That's amazing. For me, traveling to Japan was unforgettable.</div>
+                <div class="burmese">ဂုဏ်ယူပါတယ်! အံ့သြစရာကောင်းတယ်။ ငါ့အတွက် ဂျပန်ကိုခရီးသွားတာ မေ့မရနိုင်ဘူး။</div>
+                <button class="audio-btn" onclick="speakEnglish('Congratulations! That is amazing. For me, traveling to Japan was unforgettable.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Here's to more great memories in the new year!</div>
+                <div class="burmese">နှစ်သစ်မှာ ပိုမိုကောင်းမွန်တဲ့အမှတ်တရတွေ ရရှိဖို့ ခွက်ခတ်လိုက်ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Here is to more great memories in the new year!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 5: New Year's Eve Party -->
+    <div class="conversation-section">
+        <h2>🎊 New Year's Eve Party / နှစ်ဆန်းတစ်ရက်ပါတီ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Are you going to the New Year's Eve party?</div>
+                <div class="burmese">မင်း နှစ်ဆန်းတစ်ရက်ပါတီကို သွားမလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Are you going to the New Year\'s Eve party?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Yes, I already bought my ticket. I heard there will be a live band.</div>
+                <div class="burmese">ဟုတ်တယ်၊ လက်မှတ်ဝယ်ပြီးပြီ။ တိုက်ရိုက်တီးဝိုင်းရှိမယ်လို့ ကြားတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, I already bought my ticket. I heard there will be a live band.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">A live band? That sounds amazing! Who's performing?</div>
+                <div class="burmese">တိုက်ရိုက်တီးဝိုင်းလား? အံ့သြစရာကောင်းပုံရတယ်! ဘယ်သူ ဖျော်ဖြေမလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('A live band? That sounds amazing! Who is performing?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">A local band called Midnight Echo. They're really popular.</div>
+                <div class="burmese">Midnight Echo လို့ခေါ်တဲ့ ဒေသခံတီးဝိုင်း။ သူတို့ တကယ်လူကြိုက်များတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('A local band called Midnight Echo. They are really popular.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 6: Countdown to Midnight -->
+    <div class="conversation-section">
+        <h2>⏰ Countdown to Midnight / သန်းခေါင်ယံအချိန်ရေတွက်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Crowd:</div>
+                <div class="english">10, 9, 8, 7, 6, 5, 4, 3, 2, 1... Happy New Year!</div>
+                <div class="burmese">၁၀၊ ၉၊ ၈၊ ၇၊ ၆၊ ၅၊ ၄၊ ၃၊ ၂၊ ၁... နှစ်သစ်မှာ ပျော်ရွှင်ပါစေ။</div>
+                <button class="audio-btn" onclick="speakEnglish('10, 9, 8, 7, 6, 5, 4, 3, 2, 1... Happy New Year!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Happy New Year! I can't believe it's already 2025!</div>
+                <div class="burmese">နှစ်သစ်မှာ ပျော်ရွှင်ပါစေ! ၂၀၂၅ ခုနှစ်ရောက်ပြီဆိုတာ မယုံနိုင်စရာပါပဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Happy New Year! I cannot believe it is already 2025!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Time flies so fast! Here's to a wonderful year ahead.</div>
+                <div class="burmese">အချိန်က အရမ်းမြန်တယ်။ ရှေ့လာမယ့် ကောင်းမွန်တဲ့နှစ်အတွက် ခွက်ခတ်လိုက်ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Time flies so fast! Here is to a wonderful year ahead.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Look at the fireworks! They're so beautiful.</div>
+                <div class="burmese">မီးရှူးမီးပန်းတွေကို ကြည့်စမ်း။ အရမ်းလှတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Look at the fireworks! They are so beautiful.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 7: New Year's Day -->
+    <div class="conversation-section">
+        <h2>🥂 New Year's Day / နှစ်သစ်ကူးနေ့</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">What are you doing on New Year's Day?</div>
+                <div class="burmese">နှစ်သစ်ကူးနေ့မှာ မင်းဘာလုပ်နေလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What are you doing on New Year\'s Day?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">I'm going to my parents' house for a traditional New Year's lunch.</div>
+                <div class="burmese">ရိုးရာနှစ်သစ်ကူးနေ့လည်စာအတွက် မိဘအိမ်ကို သွားမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am going to my parents\' house for a traditional New Year\'s lunch.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">That sounds lovely. We're having a family brunch at my place.</div>
+                <div class="burmese">ချစ်စရာကောင်းပုံရတယ်။ ငါတို့ ငါ့အိမ်မှာ မိသားစုနေ့လယ်စာ စားကြတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('That sounds lovely. We are having a family brunch at my place.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Enjoy your time with family. Happy New Year again!</div>
+                <div class="burmese">မိသားစုနဲ့အတူ အချိန်ဖြုန်းပါ။ နောက်တစ်ခါ နှစ်သစ်မှာ ပျော်ရွှင်ပါစေ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Enjoy your time with family. Happy New Year again!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 8: Sending New Year Wishes -->
+    <div class="conversation-section">
+        <h2>💌 Sending New Year Wishes / နှစ်သစ်ဆုမွန်ကောင်းတောင်းခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">I want to send New Year's wishes to my friends and family.</div>
+                <div class="burmese">ငါ့ရဲ့သူငယ်ချင်းတွေနဲ့ မိသားစုဆီကို နှစ်သစ်ဆုမွန်ကောင်းတောင်းစာတွေ ပို့ချင်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I want to send New Year\'s wishes to my friends and family.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">That's thoughtful. What will you write?</div>
+                <div class="burmese">စဉ်းစားပေးတဲ့သူပါ။ ဘာရေးမလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('That is thoughtful. What will you write?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">"Wishing you health, happiness, and success in the new year."</div>
+                <div class="burmese">"နှစ်သစ်မှာ ကျန်းမာခြင်း၊ ပျော်ရွှင်ခြင်းနှင့် အောင်မြင်ခြင်းများ ဖြစ်ပါစေ။"</div>
+                <button class="audio-btn" onclick="speakEnglish('Wishing you health, happiness, and success in the new year.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">That's perfect. I usually send text messages or post on social media.</div>
+                <div class="burmese">ပြီးပြည့်စုံတယ်။ ငါ အများအားဖြင့် စာတိုတွေ ဒါမှမဟုတ် လူမှုမီဒီယာမှာ တင်လေ့ရှိတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('That is perfect. I usually send text messages or post on social media.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- New Year Traditions Around the World -->
+    <div class="conversation-section">
+        <h2>🌍 New Year Traditions Around the World / ကမ္ဘာတစ်ဝှမ်း နှစ်သစ်ထုံးတမ်းများ</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Interesting New Year Traditions (စိတ်ဝင်စားဖွယ် နှစ်သစ်ထုံးတမ်းများ):</strong><br>
+            • <strong>Spain:</strong> Eat 12 grapes at midnight (စပိန် - သန်းခေါင်ယံမှာ စပျစ်သီး ၁၂ လုံးစားသည်)<br>
+            • <strong>Japan:</strong> Ring bells 108 times (ဂျပန် - ခေါင်းလောင်း ၁၀၈ ကြိမ်ခေါက်သည်)<br>
+            • <strong>Denmark:</strong> Break plates on friends' doors (ဒိန်းမတ် - သူငယ်ချင်းများ၏တံခါးတွင် ပန်းကန်များခွဲသည်)<br>
+            • <strong>Philippines:</strong> Wear polka dots and eat round fruits (ဖိလစ်ပိုင် - အစက်အပြောက်များဝတ်ပြီး အဝိုင်းသစ်သီးများစားသည်)<br>
+            • <strong>Brazil:</strong> Jump over 7 waves for good luck (ဘရာဇီး - ကံကောင်းခြင်းအတွက် လှိုင်း ၇ ခုခုန်ကျော်သည်)<br>
+            • <strong>Greece:</strong> Hang an onion on the door (ဂရိ - တံခါးပေါ်တွင် ကြက်သွန်နီတစ်လုံးချိတ်ဆွဲသည်)<br>
+        </div>
+    </div>
+    
+    <!-- New Year Resolution Ideas -->
+    <div class="conversation-section">
+        <h2>💡 Popular New Year Resolutions / လူကြိုက်များသော နှစ်သစ်ကတိများ</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Common Resolutions for the New Year (နှစ်သစ်အတွက် အများသုံးကတိများ):</strong><br>
+            • Exercise more (လေ့ကျင့်ခန်းပိုလုပ်ပါ)<br>
+            • Eat healthier (ကျန်းမာရေးနှင့်ညီညွတ်အောင်စားပါ)<br>
+            • Save money (ငွေချွေတာပါ)<br>
+            • Learn a new skill (ကျွမ်းကျင်မှုအသစ်တစ်ခုသင်ယူပါ)<br>
+            • Read more books (စာအုပ်ပိုဖတ်ပါ)<br>
+            • Travel more (ခရီးပိုသွားပါ)<br>
+            • Spend more time with family (မိသားစုနှင့် အချိန်ပိုကုန်ဆုံးပါ)<br>
+            • Quit bad habits (အကျင့်ဆိုးများဖြတ်ပါ)<br>
+            • Get organized (စနစ်ကျအောင်လုပ်ပါ)<br>
+            • Be more positive (ပိုမိုအပြုသဘောဆောင်ပါ)<br>
+        </div>
+    </div>
+    
+    <!-- Vocabulary Section -->
+    <div class="conversation-section">
+        <h2>📚 New Year Vocabulary / နှစ်သစ်သုံးဝေါဟာရများ</h2>
+        <div class="vocab-grid">
+            <div class="vocab-item"><span class="vocab-eng">Countdown</span><br><span class="vocab-burmese">အချိန်ရေတွက်ခြင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Fireworks</span><br><span class="vocab-burmese">မီးရှူးမီးပန်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Midnight</span><br><span class="vocab-burmese">သန်းခေါင်ယံ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Celebration</span><br><span class="vocab-burmese">အခမ်းအနား</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Resolution</span><br><span class="vocab-burmese">နှစ်သစ်ကတိ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Ball drop</span><br><span class="vocab-burmese">ဘောလုံးကျခြင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Champagne</span><br><span class="vocab-burmese">ရှန်ပိန်ဝိုင်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Toast</span><br><span class="vocab-burmese">ခွက်ခတ်ခြင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Calendar</span><br><span class="vocab-burmese">ပြက္ခဒိန်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Fresh start</span><br><span class="vocab-burmese">အစအသစ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Prosperity</span><br><span class="vocab-burmese">ကြွယ်ဝချမ်းသာမှု</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Fortune</span><br><span class="vocab-burmese">ကံကြမ္မာ</span></div>
+        </div>
+    </div>
+    
+    <!-- Practice Section -->
+    <div class="conversation-section">
+        <h2>✏️ Practice Questions / လေ့ကျင့်ခန်းမေးခွန်းများ</h2>
+        <div class="dialogue-box">
+            <div class="quiz-question">
+                <p><strong>1. How do you say "နှစ်သစ်မှာ ပျော်ရွှင်ပါစေ" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Happy New Year!')">Merry Christmas!</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Happy New Year!')">Happy birthday!</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Happy New Year!')">Happy New Year!</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Happy New Year!')">Happy anniversary!</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>2. "နှစ်သစ်ကတိတွေ လုပ်လား" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Do you make New Year\'s resolutions?')">Do you make birthday wishes?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Do you make New Year\'s resolutions?')">Do you make New Year's resolutions?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Do you make New Year\'s resolutions?')">Do you make Christmas plans?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Do you make New Year\'s resolutions?')">Do you make holiday gifts?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. What happens at midnight on New Year's Eve?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Fireworks and countdown')">Church service</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Fireworks and countdown')">Fireworks and countdown</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Fireworks and countdown')">School starts</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Fireworks and countdown')">Work begins</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. "ငါ လေ့ကျင့်ခန်းပိုလုပ်ချင်တယ်" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I want to exercise more.')">I want to eat more.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I want to exercise more.')">I want to sleep more.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I want to exercise more.')">I want to exercise more.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I want to exercise more.')">I want to work more.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. What do people often say when they raise their glasses at midnight?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Cheers!')">Good luck!</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Cheers!')">Thank you!</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Cheers!')">Cheers!</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Cheers!')">Hello!</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p><i class="fas fa-heart" style="color: #d63031;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p>
+        <p style="font-size: 0.75rem; margin-top: 0.5rem;">Practice these conversations to celebrate the New Year with confidence!</p>
+    </footer>
+</div>
+
+<!-- Back to Top Button -->
+<a href="#" class="back-to-top" id="backToTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+<script>
+    function speakEnglish(text) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8;
+        utterance.pitch = 1.0;
+        
+        function setVoice() {
+            const voices = window.speechSynthesis.getVoices();
+            const englishVoice = voices.find(v => v.lang === 'en-US' || v.lang.startsWith('en-'));
+            if (englishVoice) utterance.voice = englishVoice;
+            window.speechSynthesis.speak(utterance);
+        }
+        
+        if (window.speechSynthesis.getVoices().length) setVoice();
+        else window.speechSynthesis.onvoiceschanged = setVoice;
+    }
+    
+    function checkAnswer(element, correctAnswer) {
+        const options = element.parentElement.querySelectorAll('.quiz-option');
+        const isCorrect = element.innerText === correctAnswer;
+        
+        if (isCorrect) {
+            element.style.background = '#2ecc71';
+            element.style.color = 'white';
+            speakEnglish(correctAnswer);
+            setTimeout(() => {
+                options.forEach(opt => {
+                    opt.style.background = '';
+                    opt.style.color = '';
+                });
+            }, 1500);
+        } else {
+            element.style.background = '#e74c3c';
+            element.style.color = 'white';
+            setTimeout(() => {
+                element.style.background = '';
+                element.style.color = '';
+            }, 500);
+        }
+    }
+    
+    // Back to Top Button Functionality
+    (function() {
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        
+        if (backToTopBtn) {
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

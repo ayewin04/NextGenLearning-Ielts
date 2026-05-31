@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Estate - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 1rem;
+        }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        
+        .conversation-section {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .conversation-section h2 {
+            background: #fdcb6e;
+            color: #1e3c72;
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line {
+            display: grid;
+            grid-template-columns: 70px 1fr 1fr;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            align-items: start;
+        }
+        .speaker { font-weight: bold; color: #e67e22; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { 
+            color: #8e6b3c; 
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 0.95rem;
+        }
+        .audio-btn {
+            background: #eef4ff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.3rem;
+        }
+        .audio-btn:hover { background: #fdcb6e; color: #1e3c72; }
+        
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+            padding: 1rem;
+        }
+        .vocab-item {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            border-left: 3px solid #fdcb6e;
+        }
+        .vocab-eng { font-weight: bold; color: #e67e22; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        
+        .quiz-question {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.8rem;
+        }
+        .quiz-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .quiz-option {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .quiz-option:hover { background: #fdcb6e; color: #1e3c72; border-color: #fdcb6e; }
+        
+        .tips-box {
+            background: #fef9e7;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #fdcb6e;
+        }
+        .tips-box i { color: #e67e22; margin-right: 8px; }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1rem;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: #1e3c72;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid white;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: #f5b042;
+            color: #1e3c72;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .back-to-top i {
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 42px;
+                height: 42px;
+            }
+            .back-to-top i {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 700px) {
+            .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> All Conversations
+    </a>
+    
+    <header>
+        <h1><i class="fas fa-home"></i> Real Estate</h1>
+        <p>Learn how to rent or buy houses, ask about prices, and inspect properties in English</p>
+        <p>အိမ်များငှားရမ်းခြင်း သို့မဟုတ် ဝယ်ယူခြင်း၊ စျေးနှုန်းများမေးမြန်းခြင်းနှင့် အိမ်ခြံမြေများစစ်ဆေးခြင်းတို့ကို အင်္ဂလိပ်လို လေ့လာပါ</p>
+    </header>
+    
+    <!-- Dialogue 1: Looking for an Apartment -->
+    <div class="conversation-section">
+        <h2>🔍 Looking for an Apartment / တိုက်ခန်းရှာဖွေခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Tenant:</div>
+                <div class="english">Hello, I'm looking for a one-bedroom apartment for rent.</div>
+                <div class="burmese">မင်္ဂလာပါ၊ ငှားရန်အတွက် အိပ်ခန်းတစ်ခန်းပါ တိုက်ခန်းရှာနေပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Hello, I am looking for a one-bedroom apartment for rent.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">What's your budget? And which area do you prefer?</div>
+                <div class="burmese">သင့်ဘတ်ဂျက်က ဘယ်လောက်လဲ။ ဘယ်ဧရိယာကို ပိုကြိုက်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What is your budget? And which area do you prefer?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Tenant:</div>
+                <div class="english">Around $1,000 per month. I'd like to live near the city center.</div>
+                <div class="burmese">တစ်လ ၁၀၀၀ ဒေါ်လာလောက်။ မြို့လယ်အနားမှာ နေချင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Around 1,000 dollars per month. I would like to live near the city center.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">I have a few options that might interest you. Let me show you.</div>
+                <div class="burmese">သင့်ကို စိတ်ဝင်စားစေနိုင်တဲ့ ရွေးစရာအနည်းငယ်ရှိပါတယ်။ ပြပါရစေ။</div>
+                <button class="audio-btn" onclick="speakEnglish('I have a few options that might interest you. Let me show you.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 2: Viewing a Property -->
+    <div class="conversation-section">
+        <h2>🏠 Viewing a Property / အိမ်ခြံမြေလှည့်လည်ကြည့်ရှုခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">This apartment has two bedrooms, a living room, and a modern kitchen.</div>
+                <div class="burmese">ဒီတိုက်ခန်းမှာ အိပ်ခန်းနှစ်ခန်း၊ ဧည့်ခန်း၊ ခေတ်မီမီးဖိုချောင်ပါရှိပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('This apartment has two bedrooms, a living room, and a modern kitchen.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Tenant:</div>
+                <div class="english">Is the rent inclusive of utilities?</div>
+                <div class="burmese">အသုံးစရိတ်တွေ ငှားရမ်းခနဲ့အတူ ပါဝင်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Is the rent inclusive of utilities?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">Water and trash are included, but electricity and internet are separate.</div>
+                <div class="burmese">ရေနဲ့ အမှိုက်ခြွင်းချက်ပါဝင်ပါတယ်၊ ဒါပေမယ့် လျှပ်စစ်နဲ့ အင်တာနက်က သီးသန့်ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Water and trash are included, but electricity and internet are separate.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Tenant:</div>
+                <div class="english">Can I see the bedrooms and the bathroom?</div>
+                <div class="burmese">အိပ်ခန်းများနဲ့ ရေချိုးခန်းကို ကြည့်လို့ရမလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Can I see the bedrooms and the bathroom?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 3: Asking About Amenities -->
+    <div class="conversation-section">
+        <h2>🏋️ Asking About Amenities / သာယာအဆင်ပြေမှုများအကြောင်းမေးခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Tenant:</div>
+                <div class="english">Does the building have parking?</div>
+                <div class="burmese">အဆောက်အအုံမှာ ကားပါကင်ရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Does the building have parking?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">Yes, there's a secure underground parking garage. It's an additional $50 per month.</div>
+                <div class="burmese">ဟုတ်ပါတယ်၊ လုံခြုံတဲ့ မြေအောက်ကားပါကင်ရှိပါတယ်။ တစ်လ အပို ၅၀ ဒေါ်လာပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, there is a secure underground parking garage. It is an additional 50 dollars per month.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Tenant:</div>
+                <div class="english">Is there a gym or swimming pool?</div>
+                <div class="burmese">အားကစားခန်း သို့မဟုတ် ရေကူးကန် ရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Is there a gym or swimming pool?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">Yes, both are available for residents free of charge. The gym is open 24/7.</div>
+                <div class="burmese">ဟုတ်ပါတယ်၊ နှစ်ခုစလုံး နေထိုင်သူများအတွက် အခမဲ့ရနိုင်ပါတယ်။ အားကစားခန်းက ၂၄ နာရီဖွင့်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, both are available for residents free of charge. The gym is open 24/7.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 4: Negotiating Rent -->
+    <div class="conversation-section">
+        <h2>💰 Negotiating Rent / ငှားရမ်းခနှုန်းညှိနှိုင်းခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Tenant:</div>
+                <div class="english">The rent is $1,200 per month. Can you lower it a bit?</div>
+                <div class="burmese">ငှားရမ်းခက တစ်လ ၁၂၀၀ ဒေါ်လာပါ။ နည်းနည်းလျှော့ပေးနိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('The rent is 1,200 dollars per month. Can you lower it a bit?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">What price were you thinking?</div>
+                <div class="burmese">ဘယ်စျေးနှုန်းကို စဉ်းစားထားလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What price were you thinking?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Tenant:</div>
+                <div class="english">$1,100 per month, and I'm willing to sign a one-year lease.</div>
+                <div class="burmese">တစ်လ ၁၁၀၀ ဒေါ်လာ၊ ပြီးတော့ ကျွန်တော် တစ်နှစ်စာချုပ်ချုပ်ဖို့ ဆန္ဒရှိပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('1,100 dollars per month, and I am willing to sign a one-year lease.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">Let me talk to the landlord. I think we can agree on $1,150 with a one-year lease.</div>
+                <div class="burmese">အိမ်ရှင်နဲ့ ပြောကြည့်ပါရစေ။ တစ်နှစ်စာချုပ်နဲ့ ၁၁၅၀ ဒေါ်လာ သဘောတူနိုင်တယ်ထင်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Let me talk to the landlord. I think we can agree on 1,150 dollars with a one-year lease.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 5: Buying a House -->
+    <div class="conversation-section">
+        <h2>🏡 Buying a House / အိမ်ဝယ်ယူခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Buyer:</div>
+                <div class="english">I'm interested in buying a house with three bedrooms and a garden.</div>
+                <div class="burmese">အိပ်ခန်းသုံးခန်းပါပြီး ဥယျာဉ်ပါတဲ့ အိမ်တစ်လုံးဝယ်ဖို့ စိတ်ဝင်စားပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am interested in buying a house with three bedrooms and a garden.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">What's your budget for a home purchase?</div>
+                <div class="burmese">အိမ်ဝယ်ယူရန် သင့်ဘတ်ဂျက်က ဘယ်လောက်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What is your budget for a home purchase?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Buyer:</div>
+                <div class="english">Around $250,000. I have pre-approval for a mortgage.</div>
+                <div class="burmese">၂၅၀,၀၀၀ ဒေါ်လာလောက်။ ကျွန်တော်မှာ ပေါင်နှံအတွက် ကြိုခွင့်ပြုချက်ရှိပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Around 250,000 dollars. I have pre-approval for a mortgage.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">Great. There's a lovely house in a good neighborhood that fits your criteria.</div>
+                <div class="burmese">ကောင်းပါတယ်။ သင့်သတ်မှတ်ချက်နဲ့ ကိုက်ညီတဲ့ ရပ်ကွက်ကောင်းမှာ ချစ်စရာအိမ်တစ်လုံးရှိပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Great. There is a lovely house in a good neighborhood that fits your criteria.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 6: Home Inspection -->
+    <div class="conversation-section">
+        <h2>🔧 Home Inspection / အိမ်စစ်ဆေးခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Buyer:</div>
+                <div class="english">I'd like to schedule a home inspection before making an offer.</div>
+                <div class="burmese">ကမ်းလှမ်းချက်မပြုလုပ်မီ အိမ်စစ်ဆေးမှုတစ်ခု အချိန်ဇယားဆွဲချင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I would like to schedule a home inspection before making an offer.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">That's a smart decision. I'll arrange an inspection for Thursday.</div>
+                <div class="burmese">အကြံကောင်းပါတယ်။ ကြာသပတေးနေ့အတွက် စစ်ဆေးမှုတစ်ခု စီစဉ်ပေးပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('That is a smart decision. I will arrange an inspection for Thursday.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Inspector:</div>
+                <div class="english">The roof needs some repairs, and the water heater is old. Otherwise, the house is in good condition.</div>
+                <div class="burmese">ခေါင်မိုးက ပြုပြင်မှုအချို့လိုအပ်ပြီး ရေအပူပေးစက်က အဟောင်းဖြစ်ပါတယ်။ ကျန်တာတော့ အိမ်က အခြေအနေကောင်းပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('The roof needs some repairs, and the water heater is old. Otherwise, the house is in good condition.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Buyer:</div>
+                <div class="english">Thank you. I'll use this information to negotiate the price.</div>
+                <div class="burmese">ကျေးဇူးပါ။ စျေးနှုန်းညှိနှိုင်းရန် ဒီအချက်အလက်ကို သုံးပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Thank you. I will use this information to negotiate the price.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 7: Signing a Lease -->
+    <div class="conversation-section">
+        <h2>📝 Signing a Lease / ငှားရမ်းစာချုပ်ချုပ်ဆိုခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Landlord:</div>
+                <div class="english">Please review the lease agreement carefully before signing.</div>
+                <div class="burmese">မချုပ်ဆိုမီ ငှားရမ်းစာချုပ်ကို သေချာပြန်လည်သုံးသပ်ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Please review the lease agreement carefully before signing.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Tenant:</div>
+                <div class="english">I see that pets are not allowed. Is that negotiable?</div>
+                <div class="burmese">အိမ်မွေးတိရစ္ဆာန်တွေ ခွင့်မပြုဘူးလို့ မြင်ရတယ်။ ညှိနှိုင်းလို့ရလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('I see that pets are not allowed. Is that negotiable?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Landlord:</div>
+                <div class="english">I can allow a small dog with an additional pet deposit of $200.</div>
+                <div class="burmese">အိမ်မွေးတိရစ္ဆာန်အပိုအပ်ငွေ ၂၀၀ ဒေါ်လာနဲ့ ခွေးအသေးစားကို ခွင့်ပြုနိုင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I can allow a small dog with an additional pet deposit of 200 dollars.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Tenant:</div>
+                <div class="english">That's fair. I'm ready to sign.</div>
+                <div class="burmese">သင့်တော်ပါတယ်။ လက်မှတ်ထိုးဖို့ အဆင်သင့်ဖြစ်ပါပြီ။</div>
+                <button class="audio-btn" onclick="speakEnglish('That is fair. I am ready to sign.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 8: Property Maintenance -->
+    <div class="conversation-section">
+        <h2>🔨 Property Maintenance / အိမ်ခြံမြေပြုပြင်ထိန်းသိမ်းမှု</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Tenant:</div>
+                <div class="english">The air conditioner is not working. Can you send someone to fix it?</div>
+                <div class="burmese">လေအေးပေးစက် အလုပ်မလုပ်ဘူး။ ပြင်ဖို့လူတစ်ယောက် စေလွှတ်ပေးနိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('The air conditioner is not working. Can you send someone to fix it?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Landlord:</div>
+                <div class="english">I'm sorry to hear that. I'll contact a technician right away.</div>
+                <div class="burmese">ကြားရတာ စိတ်မကောင်းပါဘူး။ နည်းပညာရှင်ကို ချက်ချင်းဆက်သွယ်ပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am sorry to hear that. I will contact a technician right away.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Landlord:</div>
+                <div class="english">The technician will come tomorrow morning between 9 and 11 AM. Will you be home?</div>
+                <div class="burmese">နည်းပညာရှင် မနက်ဖြန် နံနက် ၉ နာရီနဲ့ ၁၁ နာရီကြားမှာ လာပါလိမ့်မယ်။ အိမ်မှာရှိမလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('The technician will come tomorrow morning between 9 and 11 AM. Will you be home?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Tenant:</div>
+                <div class="english">Yes, I'll be there. Thank you for your prompt response.</div>
+                <div class="burmese">ဟုတ်ကဲ့၊ ကျွန်တော်ရှိပါမယ်။ အမြန်တုံ့ပြန်တဲ့အတွက် ကျေးဇူးပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, I will be there. Thank you for your prompt response.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Property Types -->
+    <div class="conversation-section">
+        <h2>🏘️ Property Types / အိမ်ခြံမြေအမျိုးအစားများ</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Types of Properties (အိမ်ခြံမြေအမျိုးအစားများ):</strong><br>
+            • <strong>Apartment / Condo</strong> - တိုက်ခန်း<br>
+            • <strong>Single-family home</strong> - တစ်အိမ်တည်းအိမ်<br>
+            • <strong>Townhouse</strong> - တွဲအိမ်<br>
+            • <strong>Duplex / Triplex</strong> - အိမ်နှစ်လုံးတွဲ/သုံးလုံးတွဲ<br>
+            • <strong>Studio apartment</strong> - အခန်းတစ်ခုတည်းတိုက်ခန်း<br>
+            • <strong>Penthouse</strong> - အပေါ်ဆုံးထပ်တိုက်ခန်း<br>
+            • <strong>Villa</strong> - အိမ်ကြီး/အိမ်အကြီးအကဲ<br>
+            • <strong>Land / Lot</strong> - မြေ<br>
+        </div>
+    </div>
+    
+    <!-- Real Estate Vocabulary -->
+    <div class="conversation-section">
+        <h2>📚 Real Estate Vocabulary / အိမ်ခြံမြေသုံးဝေါဟာရများ</h2>
+        <div class="vocab-grid">
+            <div class="vocab-item"><span class="vocab-eng">Lease agreement</span><br><span class="vocab-burmese">ငှားရမ်းစာချုပ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Security deposit</span><br><span class="vocab-burmese">အပ်ငွေ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Landlord / Tenant</span><br><span class="vocab-burmese">အိမ်ရှင်/ငှားရမ်းသူ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Mortgage</span><br><span class="vocab-burmese">ပေါင်နှံ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Down payment</span><br><span class="vocab-burmese">ကြိုငွေ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Closing costs</span><br><span class="vocab-burmese">ပိတ်သိမ်းစရိတ်များ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Appraisal</span><br><span class="vocab-burmese">အကဲဖြတ်ခြင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Utilities</span><br><span class="vocab-burmese">အသုံးစရိတ်များ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">HOA fees</span><br><span class="vocab-burmese">အိမ်ရာပိုင်ဆိုင်သူများအသင်းကြေး</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Foreclosure</span><br><span class="vocab-burmese">ပေါင်နှံသိမ်းဆည်းခြင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Equity</span><br><span class="vocab-burmese">ပိုင်ဆိုင်မှုတန်ဖိုး</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Realtor</span><br><span class="vocab-burmese">အိမ်ခြံမြေအကျိုးဆောင်</span></div>
+        </div>
+    </div>
+    
+    <!-- Real Estate Tips -->
+    <div class="conversation-section">
+        <h2>💡 Real Estate Tips / အိမ်ခြံမြေအကြံပြုချက်များ</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Tips for Renters (ငှားရမ်းသူများအတွက် အကြံပြုချက်များ):</strong><br>
+            • Read the lease carefully before signing (မချုပ်ဆိုခင် စာချုပ်ကို သေချာဖတ်ပါ)<br>
+            • Take photos of the property before moving in (မပြောင်းမီ အိမ်ခြံမြေကို ဓာတ်ပုံရိုက်ပါ)<br>
+            • Document any existing damage (ရှိပြီးသားပျက်စီးမှုများကို မှတ်တမ်းတင်ပါ)<br>
+            • Know your rights as a tenant (ငှားရမ်းသူအဖြစ် သင့်အခွင့်အရေးများကိုသိပါ)<br>
+            • Get everything in writing (အရာအားလုံးကို စာဖြင့်ရယူပါ)<br>
+            <br>
+            <strong>Tips for Buyers (ဝယ်ယူသူများအတွက် အကြံပြုချက်များ):</strong><br>
+            • Get pre-approved for a mortgage before house hunting (အိမ်မရှာမီ ပေါင်နှံအတွက် ကြိုခွင့်ပြုချက်ရယူပါ)<br>
+            • Don't skip the home inspection (အိမ်စစ်ဆေးခြင်းကို မကျော်ပါနှင့်)<br>
+            • Research the neighborhood (ရပ်ကွက်ကို သုတေသနလုပ်ပါ)<br>
+            • Factor in additional costs (property taxes, insurance, maintenance) (အပိုကုန်ကျစရိတ်များထည့်သွင်းစဉ်းစားပါ)<br>
+            • Work with a trusted real estate agent (ယုံကြည်ရတဲ့ အိမ်ခြံမြေအကျိုးဆောင်နဲ့ အလုပ်လုပ်ပါ)<br>
+        </div>
+    </div>
+    
+    <!-- Practice Section -->
+    <div class="conversation-section">
+        <h2>✏️ Practice Questions / လေ့ကျင့်ခန်းမေးခွန်းများ</h2>
+        <div class="dialogue-box">
+            <div class="quiz-question">
+                <p><strong>1. How do you ask about utilities in a rental?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Are utilities included in the rent?')">Are pets allowed?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Are utilities included in the rent?')">Are utilities included in the rent?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Are utilities included in the rent?')">Is parking available?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Are utilities included in the rent?')">Is there a gym?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>2. "ငှားရမ်းခကို ညှိနှိုင်းလို့ရမလား" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can you negotiate the rent?')">Can you lower the deposit?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can you negotiate the rent?')">Can you negotiate the rent?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can you negotiate the rent?')">Can you extend the lease?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can you negotiate the rent?')">Can you end the lease early?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. What is a "security deposit"?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Money paid upfront to cover potential damages')">Monthly rent payment</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Money paid upfront to cover potential damages')">Money paid upfront to cover potential damages</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Money paid upfront to cover potential damages')">Parking fee</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Money paid upfront to cover potential damages')">Utility bill</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. "အိမ်စစ်ဆေးမှုတစ်ခု အချိန်ဇယားဆွဲချင်ပါတယ်" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like to schedule a home inspection.')">I would like to buy a home.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like to schedule a home inspection.')">I would like to schedule a home inspection.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like to schedule a home inspection.')">I would like to sell my home.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like to schedule a home inspection.')">I would like to rent a home.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. What does "pre-approval for a mortgage" mean?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A lender has agreed in principle to lend you money')">You have paid off your mortgage</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A lender has agreed in principle to lend you money')">You have been denied a loan</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A lender has agreed in principle to lend you money')">A lender has agreed in principle to lend you money</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A lender has agreed in principle to lend you money')">You need more savings</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p><i class="fas fa-heart" style="color: #fdcb6e;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p>
+        <p style="font-size: 0.75rem; margin-top: 0.5rem;">Practice these conversations to navigate real estate situations with confidence!</p>
+    </footer>
+</div>
+
+<!-- Back to Top Button -->
+<a href="#" class="back-to-top" id="backToTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+<script>
+    function speakEnglish(text) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8;
+        utterance.pitch = 1.0;
+        
+        function setVoice() {
+            const voices = window.speechSynthesis.getVoices();
+            const englishVoice = voices.find(v => v.lang === 'en-US' || v.lang.startsWith('en-'));
+            if (englishVoice) utterance.voice = englishVoice;
+            window.speechSynthesis.speak(utterance);
+        }
+        
+        if (window.speechSynthesis.getVoices().length) setVoice();
+        else window.speechSynthesis.onvoiceschanged = setVoice;
+    }
+    
+    function checkAnswer(element, correctAnswer) {
+        const options = element.parentElement.querySelectorAll('.quiz-option');
+        const isCorrect = element.innerText === correctAnswer;
+        
+        if (isCorrect) {
+            element.style.background = '#2ecc71';
+            element.style.color = 'white';
+            speakEnglish(correctAnswer);
+            setTimeout(() => {
+                options.forEach(opt => {
+                    opt.style.background = '';
+                    opt.style.color = '';
+                });
+            }, 1500);
+        } else {
+            element.style.background = '#e74c3c';
+            element.style.color = 'white';
+            setTimeout(() => {
+                element.style.background = '';
+                element.style.color = '';
+            }, 500);
+        }
+    }
+    
+    // Back to Top Button Functionality
+    (function() {
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        
+        if (backToTopBtn) {
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

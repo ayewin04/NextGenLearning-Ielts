@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parking Garage - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%); font-family: 'Segoe UI', Roboto, sans-serif; padding: 1rem; }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        .back-btn { display: inline-flex; align-items: center; gap: 8px; background: white; padding: 0.6rem 1.2rem; border-radius: 2rem; text-decoration: none; color: #1e3c72; font-weight: 500; margin-bottom: 1rem; transition: 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        .conversation-section { background: white; border-radius: 1rem; margin-bottom: 2rem; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+        .conversation-section h2 { background: #2c3e50; color: white; padding: 1rem; font-size: 1.2rem; }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line { display: grid; grid-template-columns: 70px 1fr 1fr; gap: 0.8rem; padding: 0.8rem; border-bottom: 1px solid #eee; align-items: start; }
+        .speaker { font-weight: bold; color: #2c3e50; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.95rem; }
+        .audio-btn { background: #eef4ff; border: none; border-radius: 2rem; padding: 0.3rem 0.8rem; cursor: pointer; transition: 0.2s; margin-top: 0.3rem; }
+        .audio-btn:hover { background: #2c3e50; color: white; }
+        .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.8rem; padding: 1rem; }
+        .vocab-item { background: #f8f9fa; padding: 0.8rem; border-radius: 0.8rem; border-left: 3px solid #2c3e50; }
+        .vocab-eng { font-weight: bold; color: #2c3e50; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        .quiz-question { background: #f8f9fa; padding: 1rem; margin-bottom: 1rem; border-radius: 0.8rem; }
+        .quiz-options { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
+        .quiz-option { background: white; padding: 0.5rem 1rem; border-radius: 2rem; border: 1px solid #ddd; cursor: pointer; transition: 0.2s; }
+        .quiz-option:hover { background: #2c3e50; color: white; border-color: #2c3e50; }
+        .tips-box { background: #e8f0f8; padding: 1rem; border-radius: 0.8rem; margin: 1rem; border-left: 3px solid #2c3e50; }
+        .tips-box i { color: #2c3e50; margin-right: 8px; }
+        footer { margin-top: 2rem; text-align: center; padding: 1rem; color: #6c757d; font-size: 0.8rem; }
+        .back-to-top { position: fixed; bottom: 1.5rem; right: 1.5rem; background: #1e3c72; color: white; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 1000; opacity: 0; visibility: hidden; border: 2px solid white; }
+        .back-to-top.show { opacity: 1; visibility: visible; }
+        .back-to-top:hover { background: #f5b042; color: #1e3c72; transform: translateY(-3px); }
+        .back-to-top i { font-size: 1.2rem; }
+        @media (max-width: 768px) { .back-to-top { bottom: 1rem; right: 1rem; width: 42px; height: 42px; } .back-to-top i { font-size: 1rem; } }
+        @media (max-width: 700px) { .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; } }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn"><i class="fas fa-arrow-left"></i> All Conversations</a>
+    <header><h1><i class="fas fa-parking"></i> Parking Garage</h1><p>Learn how to find parking, pay for parking, and locate your car in English</p><p>ကားရပ်နားရန်နေရာရှာဖွေနည်း၊ ကားရပ်နားခပေးချေနည်းနှင့် သင့်ကားကိုရှာဖွေနည်းကို အင်္ဂလိပ်လို လေ့လာပါ</p></header>
+    
+    <!-- Dialogue 1: Entering the Garage -->
+    <div class="conversation-section"><h2>🚪 Entering the Garage / ကားရပ်နားရုံသို့ဝင်ခြင်း</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">How do I get a parking ticket?</div><div class="burmese">ကားရပ်နားလက်မှတ် ဘယ်လိုရလဲ။</div><button class="audio-btn" onclick="speakEnglish('How do I get a parking ticket?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Attendant:</div><div class="english">Press the button at the entrance gate. It will give you a ticket with the entry time.</div><div class="burmese">ဝင်ပေါက်ဂိတ်မှာ ခလုတ်ကိုနှိပ်ပါ။ ဝင်ချိန်ပါတဲ့ လက်မှတ်တစ်ခု ထွက်လာပါလိမ့်မယ်။</div><button class="audio-btn" onclick="speakEnglish('Press the button at the entrance gate. It will give you a ticket with the entry time.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">Do I need to take the ticket with me?</div><div class="burmese">လက်မှတ်ကို ကျွန်တော် ယူသွားဖို့ လိုအပ်လား။</div><button class="audio-btn" onclick="speakEnglish('Do I need to take the ticket with me?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Attendant:</div><div class="english">Yes, you'll need it to pay before exiting. Keep it in a safe place.</div><div class="burmese">ဟုတ်ပါတယ်၊ မထွက်ခင် ပေးချေဖို့ လိုအပ်ပါလိမ့်မယ်။ လုံခြုံတဲ့နေရာမှာ သိမ်းထားပါ။</div><button class="audio-btn" onclick="speakEnglish('Yes, you will need it to pay before exiting. Keep it in a safe place.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 2: Finding a Spot -->
+    <div class="conversation-section"><h2>🅿️ Finding a Spot / နေရာရှာဖွေခြင်း</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">Is there any available parking on the lower level?</div><div class="burmese">အောက်ထပ်မှာ ကားရပ်နားရန်နေရာ ရှိလား။</div><button class="audio-btn" onclick="speakEnglish('Is there any available parking on the lower level?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Attendant:</div><div class="english">The lower level is full. Try the third floor. The sign shows how many spots are available.</div><div class="burmese">အောက်ထပ် ပြည့်နေပါတယ်။ တတိယထပ် စမ်းကြည့်ပါ။ ဆိုင်းဘုတ်က နေရာဘယ်နှစ်ခုရနိုင်လဲ ပြသပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('The lower level is full. Try the third floor. The sign shows how many spots are available.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">Where are the EV charging stations?</div><div class="burmese">EV အားသွင်းစခန်းတွေ ဘယ်မှာလဲ။</div><button class="audio-btn" onclick="speakEnglish('Where are the EV charging stations?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Attendant:</div><div class="english">They're on the second floor near the elevator. There are 8 charging spots.</div><div class="burmese">ဓာတ်လှေကားအနားမှာ ဒုတိယထပ်မှာပါ။ အားသွင်းနေရာ ၈ ခုရှိပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('They are on the second floor near the elevator. There are 8 charging spots.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 3: Parking Rates -->
+    <div class="conversation-section"><h2>💰 Parking Rates / ကားရပ်နားခနှုန်းထားများ</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">What are the parking rates?</div><div class="burmese">ကားရပ်နားခနှုန်းထားတွေက ဘာတွေလဲ။</div><button class="audio-btn" onclick="speakEnglish('What are the parking rates?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Attendant:</div><div class="english">$3 per hour, $15 daily maximum. Lost ticket fee is $30.</div><div class="burmese">တစ်နာရီ ၃ ဒေါ်လာ၊ တစ်နေ့အများဆုံး ၁၅ ဒေါ်လာ။ လက်မှတ်ပျောက်ခကြေး ၃၀ ဒေါ်လာပါ။</div><button class="audio-btn" onclick="speakEnglish('3 dollars per hour, 15 dollars daily maximum. Lost ticket fee is 30 dollars.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">Is there an early bird special?</div><div class="burmese">စောစောဝင်သူအထူးလျှော့စျေးရှိလား။</div><button class="audio-btn" onclick="speakEnglish('Is there an early bird special?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Attendant:</div><div class="english">Yes, enter before 9 AM and exit after 3 PM for a flat rate of $10.</div><div class="burmese">ဟုတ်ပါတယ်၊ နံနက် ၉ နာရီမတိုင်မီဝင်ပြီး ညနေ ၃ နာရီအကြာတွင်ထွက်ပါက ပုံသေနှုန်း ၁၀ ဒေါ်လာပါ။</div><button class="audio-btn" onclick="speakEnglish('Yes, enter before 9 AM and exit after 3 PM for a flat rate of 10 dollars.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 4: Paying at the Machine -->
+    <div class="conversation-section"><h2>💳 Paying at the Machine / စက်တွင်ငွေရှင်းခြင်း</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">Where do I pay for parking?</div><div class="burmese">ကားရပ်နားခ ဘယ်မှာပေးရမလဲ။</div><button class="audio-btn" onclick="speakEnglish('Where do I pay for parking?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Attendant:</div><div class="english">There are pay stations on every floor near the elevators. Insert your ticket and follow the instructions.</div><div class="burmese">ဓာတ်လှေကားအနားရှိ ထပ်တိုင်းတွင် ငွေရှင်းစက်များရှိပါတယ်။ သင့်လက်မှတ်ထည့်ပြီး ညွှန်ကြားချက်များကို လိုက်နာပါ။</div><button class="audio-btn" onclick="speakEnglish('There are pay stations on every floor near the elevators. Insert your ticket and follow the instructions.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">The machine says $12. Does it take credit cards?</div><div class="burmese">စက်က ၁၂ ဒေါ်လာလို့ပြောတယ်။ ခရက်ဒစ်ကဒ် လက်ခံလား။</div><button class="audio-btn" onclick="speakEnglish('The machine says 12 dollars. Does it take credit cards?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Attendant:</div><div class="english">Yes, tap or insert your card. It will also accept cash and mobile payments.</div><div class="burmese">ဟုတ်ပါတယ်၊ သင့်ကဒ်ကို ထိပါ သို့မဟုတ် ထည့်ပါ။ ငွေသားနှင့် မိုဘိုင်းငွေပေးချေမှုကိုလည်း လက်ခံပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('Yes, tap or insert your card. It will also accept cash and mobile payments.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 5: Exiting -->
+    <div class="conversation-section"><h2>🚗 Exiting / ထွက်ခြင်း</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">Do I need to insert my ticket at the exit gate?</div><div class="burmese">ထွက်ပေါက်ဂိတ်မှာ ကျွန်တော် လက်မှတ်ထည့်ဖို့ လိုအပ်လား။</div><button class="audio-btn" onclick="speakEnglish('Do I need to insert my ticket at the exit gate?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Attendant:</div><div class="english">Yes, insert your validated ticket. The gate will open automatically.</div><div class="burmese">ဟုတ်ပါတယ်၊ သင့်အတည်ပြုပြီးသားလက်မှတ်ကို ထည့်ပါ။ ဂိတ်က အလိုအလျောက် ပွင့်ပါလိမ့်မယ်။</div><button class="audio-btn" onclick="speakEnglish('Yes, insert your validated ticket. The gate will open automatically.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">What if I lost my ticket?</div><div class="burmese">လက်မှတ်ပျောက်ရင် ဘာလုပ်ရမလဲ။</div><button class="audio-btn" onclick="speakEnglish('What if I lost my ticket?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Attendant:</div><div class="english">Press the help button at the exit. We'll verify your entry time and charge the daily maximum.</div><div class="burmese">ထွက်ပေါက်မှာ အကူအညီခလုတ်ကိုနှိပ်ပါ။ သင့်ဝင်ချိန်ကို အတည်ပြုပြီး တစ်နေ့အများဆုံးကို ကောက်ခံပါမယ်။</div><button class="audio-btn" onclick="speakEnglish('Press the help button at the exit. We will verify your entry time and charge the daily maximum.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 6: Monthly Parking -->
+    <div class="conversation-section"><h2>📅 Monthly Parking / လစဉ်ကားရပ်နားခြင်း</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">Do you offer monthly parking passes?</div><div class="burmese">လစဉ်ကားရပ်နားလက်မှတ်များ ပေးလား။</div><button class="audio-btn" onclick="speakEnglish('Do you offer monthly parking passes?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Attendant:</div><div class="english">Yes, monthly parking is $150 for unreserved, $200 for reserved spot.</div><div class="burmese">ဟုတ်ပါတယ်၊ လစဉ်ကားရပ်နားခြင်းက သတ်မှတ်မထားသောနေရာအတွက် ၁၅၀ ဒေါ်လာ၊ သတ်မှတ်ထားသောနေရာအတွက် ၂၀၀ ဒေါ်လာပါ။</div><button class="audio-btn" onclick="speakEnglish('Yes, monthly parking is 150 dollars for unreserved, 200 dollars for reserved spot.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">How do I sign up for monthly parking?</div><div class="burmese">လစဉ်ကားရပ်နားခြင်းအတွက် ဘယ်လိုစာရင်းသွင်းရမလဲ။</div><button class="audio-btn" onclick="speakEnglish('How do I sign up for monthly parking?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Attendant:</div><div class="english">Fill out an application at the management office. You'll receive a gate card for entry and exit.</div><div class="burmese">စီမံခန့်ခွဲရေးရုံးတွင် လျှောက်လွှာဖြည့်ပါ။ ဝင်ရန်နှင့်ထွက်ရန်အတွက် ဂိတ်ကတ်တစ်ခု ရရှိပါလိမ့်မယ်။</div><button class="audio-btn" onclick="speakEnglish('Fill out an application at the management office. You will receive a gate card for entry and exit.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 7: Finding Your Car -->
+    <div class="conversation-section"><h2>🔍 Finding Your Car / သင့်ကားရှာဖွေခြင်း</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">I forgot where I parked. Can you help me find my car?</div><div class="burmese">ကျွန်တော် ဘယ်မှာရပ်ထားမှန်း မေ့သွားတယ်။ ကားရှာဖွေဖို့ ကူညီနိုင်မလား။</div><button class="audio-btn" onclick="speakEnglish('I forgot where I parked. Can you help me find my car?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Attendant:</div><div class="english">Do you remember the level or any nearby landmark?</div><div class="burmese">ထပ် သို့မဟုတ် အနီးအနားက အထင်ကရနေရာတစ်ခုခု မှတ်မိလား။</div><button class="audio-btn" onclick="speakEnglish('Do you remember the level or any nearby landmark?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">I think I parked on level 2 near the elevator.</div><div class="burmese">ကျွန်တော် ဓာတ်လှေကားအနားမှာ ဒုတိယထပ်မှာ ရပ်ထားတယ်ထင်တယ်။</div><button class="audio-btn" onclick="speakEnglish('I think I parked on level 2 near the elevator.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Attendant:</div><div class="english">Let me check the security cameras. What's your license plate number?</div><div class="burmese">လုံခြုံရေးကင်မရာများကို စစ်ကြည့်ပါရစေ။ သင့်ကားနံပါတ်ပြားက ဘာလဲ။</div><button class="audio-btn" onclick="speakEnglish('Let me check the security cameras. What is your license plate number?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 8: Car Damaged in Garage -->
+    <div class="conversation-section"><h2>🚨 Car Damaged in Garage / ကားရပ်နားရုံတွင် ကားပျက်စီးခြင်း</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">Someone hit my car while it was parked here. What should I do?</div><div class="burmese">ဒီမှာရပ်ထားစဉ် တစ်ယောက်ယောက် ကျွန်တော့်ကားကို တိုက်မိသွားတယ်။ ကျွန်တော် ဘာလုပ်ရမလဲ။</div><button class="audio-btn" onclick="speakEnglish('Someone hit my car while it was parked here. What should I do?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Attendant:</div><div class="english">I'm sorry to hear that. Please fill out an incident report. Do you want to review the security footage?</div><div class="burmese">ကြားရတာ စိတ်မကောင်းပါဘူး။ ကျေးဇူးပြု၍ ဖြစ်ရပ်မှတ်တမ်းဖောင်ကို ဖြည့်ပါ။ လုံခြုံရေးဗီဒီယိုကို ပြန်ကြည့်ချင်လား။</div><button class="audio-btn" onclick="speakEnglish('I am sorry to hear that. Please fill out an incident report. Do you want to review the security footage?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">Yes, I need the license plate of the other car for my insurance claim.</div><div class="burmese">ဟုတ်ကဲ့၊ ကျွန်တော့်အာမခံတောင်းဆိုမှုအတွက် အခြားကားရဲ့ ကားနံပါတ်ပြား လိုအပ်ပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('Yes, I need the license plate of the other car for my insurance claim.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Attendant:</div><div class="english">We'll review the footage and provide you with the information. Please leave your contact details.</div><div class="burmese">ဗီဒီယိုကို ပြန်ကြည့်ပြီး အချက်အလက်များ ပေးပါမယ်။ ကျေးဇူးပြု၍ သင့်ဆက်သွယ်ရန်အသေးစိတ်များ ထားခဲ့ပါ။</div><button class="audio-btn" onclick="speakEnglish('We will review the footage and provide you with the information. Please leave your contact details.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <div class="vocab-grid">
+        <div class="vocab-item"><span class="vocab-eng">Valet parking</span><br><span class="vocab-burmese">ကားဝန်ထမ်းရပ်ပေးခြင်း</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Self parking</span><br><span class="vocab-burmese">ကိုယ်တိုင်ရပ်ခြင်း</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Handicap parking</span><br><span class="vocab-burmese">မသန်စွမ်းသူကားရပ်နားရန်</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Compact car only</span><br><span class="vocab-burmese">ကားသေးသေးသာ</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Time limit</span><br><span class="vocab-burmese">အချိန်ကန့်သတ်ချက်</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Oversized vehicle</span><br><span class="vocab-burmese">အရွယ်ကြီးမားသောယာဉ်</span></div>
+    </div>
+    
+    <div class="tips-box"><i class="fas fa-lightbulb"></i> <strong>Tips for Parking Garages (ကားရပ်နားရုံများအတွက် အကြံပြုချက်များ):</strong><br>• Take a photo of your parking spot number (သင့်ကားရပ်နားနေရာနံပါတ်ကို ဓာတ်ပုံရိုက်ပါ)<br>• Remember the floor color or section (ထပ်အရောင် သို့မဟုတ် အပိုင်းကို မှတ်ထားပါ)<br>• Keep your parking ticket in a safe place (သင့်ကားရပ်နားလက်မှတ်ကို လုံခြုံတဲ့နေရာမှာ သိမ်းထားပါ)<br>• Note the garage name and address (ကားရပ်နားရုံအမည်နှင့် လိပ်စာကို မှတ်သားထားပါ)<br>• Use a parking app to pay and extend time (ငွေပေးချေရန်နှင့် အချိန်တိုးရန် ကားရပ်နားအက်ပ်ကို သုံးပါ)</div>
+    
+    <div class="quiz-question"><p><strong>1. How do you get a parking ticket?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'Press the button at the entrance')">Ask the attendant</div><div class="quiz-option" onclick="checkAnswer(this, 'Press the button at the entrance')">Press the button at the entrance</div><div class="quiz-option" onclick="checkAnswer(this, 'Press the button at the entrance')">Pay at the machine</div><div class="quiz-option" onclick="checkAnswer(this, 'Press the button at the entrance')">Use a credit card</div></div></div>
+    <div class="quiz-question"><p><strong>2. "ကားရပ်နားခနှုန်းထားက ဘယ်လောက်လဲ" in English?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'What are the parking rates?')">Where is the parking garage?</div><div class="quiz-option" onclick="checkAnswer(this, 'What are the parking rates?')">What are the parking rates?</div><div class="quiz-option" onclick="checkAnswer(this, 'What are the parking rates?')">Is there free parking?</div><div class="quiz-option" onclick="checkAnswer(this, 'What are the parking rates?')">Do you have valet parking?</div></div></div>
+    <div class="quiz-question"><p><strong>3. What happens if you lose your parking ticket?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'You pay the daily maximum rate')">You park for free</div><div class="quiz-option" onclick="checkAnswer(this, 'You pay the daily maximum rate')">You pay the hourly rate</div><div class="quiz-option" onclick="checkAnswer(this, 'You pay the daily maximum rate')">You pay the daily maximum rate</div><div class="quiz-option" onclick="checkAnswer(this, 'You pay the daily maximum rate')">You get a new ticket</div></div></div>
+    <div class="quiz-question"><p><strong>4. "ကျွန်တော် ကားဘယ်မှာရပ်ထားမှန်း မေ့သွားတယ်" in English?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'I forgot where I parked.')">I lost my keys.</div><div class="quiz-option" onclick="checkAnswer(this, 'I forgot where I parked.')">I forgot where I parked.</div><div class="quiz-option" onclick="checkAnswer(this, 'I forgot where I parked.')">My car is damaged.</div><div class="quiz-option" onclick="checkAnswer(this, 'I forgot where I parked.')">I need a jump start.</div></div></div>
+    <div class="quiz-question"><p><strong>5. What does "early bird special" mean for parking?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'Reduced rate for entering early and leaving late')">Free parking for early arrivals</div><div class="quiz-option" onclick="checkAnswer(this, 'Reduced rate for entering early and leaving late')">Higher rate for early birds</div><div class="quiz-option" onclick="checkAnswer(this, 'Reduced rate for entering early and leaving late')">Reduced rate for entering early and leaving late</div><div class="quiz-option" onclick="checkAnswer(this, 'Reduced rate for entering early and leaving late')">No parking before 9 AM</div></div></div>
+    
+    <footer><p><i class="fas fa-heart" style="color: #2c3e50;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p></footer>
+</div>
+<a href="#" class="back-to-top" id="backToTopBtn"><i class="fas fa-arrow-up"></i></a>
+<script>
+    function speakEnglish(text){if(!window.speechSynthesis)return;window.speechSynthesis.cancel();const utterance=new SpeechSynthesisUtterance(text);utterance.lang='en-US';utterance.rate=0.8;utterance.pitch=1.0;function setVoice(){const voices=window.speechSynthesis.getVoices();const englishVoice=voices.find(v=>v.lang==='en-US'||v.lang.startsWith('en-'));if(englishVoice)utterance.voice=englishVoice;window.speechSynthesis.speak(utterance);}if(window.speechSynthesis.getVoices().length)setVoice();else window.speechSynthesis.onvoiceschanged=setVoice;}
+    function checkAnswer(element,correctAnswer){const options=element.parentElement.querySelectorAll('.quiz-option');const isCorrect=element.innerText===correctAnswer;if(isCorrect){element.style.background='#2ecc71';element.style.color='white';speakEnglish(correctAnswer);setTimeout(()=>{options.forEach(opt=>{opt.style.background='';opt.style.color='';});},1500);}else{element.style.background='#e74c3c';element.style.color='white';setTimeout(()=>{options.forEach(opt=>{opt.style.background='';opt.style.color='';});},500);}}
+    (function(){const btn=document.getElementById('backToTopBtn');if(btn){window.addEventListener('scroll',function(){btn.classList.toggle('show',window.scrollY>300);});btn.addEventListener('click',function(e){e.preventDefault();window.scrollTo({top:0,behavior:'smooth'});});}})();
+</script>
+</body>
+</html>

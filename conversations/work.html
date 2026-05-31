@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Interview - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 1rem;
+        }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        
+        .conversation-section {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .conversation-section h2 {
+            background: #2c3e50;
+            color: white;
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line {
+            display: grid;
+            grid-template-columns: 70px 1fr 1fr;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            align-items: start;
+        }
+        .speaker { font-weight: bold; color: #2c3e50; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { 
+            color: #8e6b3c; 
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 0.95rem;
+        }
+        .audio-btn {
+            background: #eef4ff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.3rem;
+        }
+        .audio-btn:hover { background: #2c3e50; color: white; }
+        
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+            padding: 1rem;
+        }
+        .vocab-item {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            border-left: 3px solid #2c3e50;
+        }
+        .vocab-eng { font-weight: bold; color: #2c3e50; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        
+        .quiz-question {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.8rem;
+        }
+        .quiz-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .quiz-option {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .quiz-option:hover { background: #2c3e50; color: white; border-color: #2c3e50; }
+        
+        .tips-box {
+            background: #e8f0f8;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #2c3e50;
+        }
+        .tips-box i { color: #2c3e50; margin-right: 8px; }
+        
+        .dos-donts {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            padding: 1rem;
+        }
+        .dos { background: #e8f5e9; padding: 1rem; border-radius: 0.8rem; border-left: 3px solid #27ae60; }
+        .donts { background: #ffebee; padding: 1rem; border-radius: 0.8rem; border-left: 3px solid #e74c3c; }
+        .dos h4 i { color: #27ae60; }
+        .donts h4 i { color: #e74c3c; }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1rem;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: #1e3c72;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid white;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: #f5b042;
+            color: #1e3c72;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .back-to-top i {
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 42px;
+                height: 42px;
+            }
+            .back-to-top i {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 700px) {
+            .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; }
+            .dos-donts { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> All Conversations
+    </a>
+    
+    <header>
+        <h1><i class="fas fa-briefcase"></i> Job Interview</h1>
+        <p>Learn how to answer common interview questions and talk about your skills</p>
+        <p>အလုပ်အင်တာဗျူးမေးခွန်းများကို ဖြေဆိုနည်းနှင့် သင်၏အရည်အချင်းများအကြောင်း ပြောဆိုနည်းကို လေ့လာပါ</p>
+    </header>
+    
+    <!-- Dialogue 1: Greeting and Introduction -->
+    <div class="conversation-section">
+        <h2>👋 Greeting & Introduction / နှုတ်ဆက်ခြင်းနှင့် မိတ်ဆက်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Interviewer:</div>
+                <div class="english">Good morning. Please come in and have a seat.</div>
+                <div class="burmese">မင်္ဂလာနံနက်ခင်းပါ။ ကျေးဇူးပြု၍ ဝင်ပြီး ထိုင်ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Good morning. Please come in and have a seat.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Candidate:</div>
+                <div class="english">Good morning. Thank you for having me.</div>
+                <div class="burmese">မင်္ဂလာနံနက်ခင်းပါ။ ကျွန်တော့်ကို ခေါ်ယူတဲ့အတွက် ကျေးဇူးပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Good morning. Thank you for having me.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Interviewer:</div>
+                <div class="english">Could you please introduce yourself?</div>
+                <div class="burmese">ကျေးဇူးပြု၍ ကိုယ့်ကိုယ်ကို မိတ်ဆက်ပေးနိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Could you please introduce yourself?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Candidate:</div>
+                <div class="english">Certainly. My name is Aung. I'm 25 years old and I live in Yangon.</div>
+                <div class="burmese">ရပါတယ်။ ကျွန်တော့်နာမည် အောင်ပါ။ အသက် ၂၅ နှစ်ရှိပြီး ရန်ကုန်မှာနေပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Certainly. My name is Aung. I am 25 years old and I live in Yangon.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 2: Education Background -->
+    <div class="conversation-section">
+        <h2>🎓 Education Background / ပညာရေးနောက်ခံ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Interviewer:</div>
+                <div class="english">What is your educational background?</div>
+                <div class="burmese">ခင်ဗျားရဲ့ ပညာအရည်အချင်းက ဘာလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What is your educational background?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Candidate:</div>
+                <div class="english">I have a bachelor's degree in Business Administration from Yangon University.</div>
+                <div class="burmese">ကျွန်တော် ရန်ကုန်တက္ကသိုလ်ကနေ စီးပွားရေးစီမံခန့်ခွဲမှုဘွဲ့ ရရှိထားပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I have a bachelor\'s degree in Business Administration from Yangon University.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Interviewer:</div>
+                <div class="english">Did you do any internships?</div>
+                <div class="burmese">အလုပ်သင် သင်တန်း တက်ဖူးလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Did you do any internships?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Candidate:</div>
+                <div class="english">Yes, I completed a three-month internship at a local bank.</div>
+                <div class="burmese">ဟုတ်ကဲ့၊ ဒေသခံဘဏ်တစ်ခုမှာ သုံးလကြာ အလုပ်သင် ပြီးခဲ့ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, I completed a three-month internship at a local bank.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 3: Work Experience -->
+    <div class="conversation-section">
+        <h2>💼 Work Experience / အလုပ်အတွေ့အကြုံ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Interviewer:</div>
+                <div class="english">Do you have any previous work experience?</div>
+                <div class="burmese">ခင်ဗျားမှာ အရင်က အလုပ်အတွေ့အကြုံ ရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you have any previous work experience?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Candidate:</div>
+                <div class="english">Yes, I worked as a customer service representative for two years.</div>
+                <div class="burmese">ဟုတ်ကဲ့၊ ကျွန်တော် နှစ်နှစ်ကြာ ဖောက်သည်ဝန်ဆောင်မှုကိုယ်စားလှယ်အဖြစ် လုပ်ခဲ့ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, I worked as a customer service representative for two years.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Interviewer:</div>
+                <div class="english">Why did you leave that job?</div>
+                <div class="burmese">အဲဒီအလုပ်က ဘာလို့ထွက်ခဲ့တာလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Why did you leave that job?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Candidate:</div>
+                <div class="english">I left because I wanted to find new challenges and grow my career.</div>
+                <div class="burmese">စိန်ခေါ်မှုအသစ်တွေ ရှာဖွေပြီး ကျွန်တော့်အသက်မွေးဝမ်းကြောင်းကို တိုးတက်စေချင်လို့ ထွက်ခဲ့တာပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('I left because I wanted to find new challenges and grow my career.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 4: Skills and Strengths -->
+    <div class="conversation-section">
+        <h2>⭐ Skills & Strengths / အရည်အချင်းများနှင့် အားသာချက်များ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Interviewer:</div>
+                <div class="english">What are your greatest strengths?</div>
+                <div class="burmese">သင့်ရဲ့ အကြီးမားဆုံး အားသာချက်တွေက ဘာတွေလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What are your greatest strengths?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Candidate:</div>
+                <div class="english">I am hardworking, punctual, and a team player.</div>
+                <div class="burmese">ကျွန်တော်ဟာ အလုပ်ကြိုးစား၊ အချိန်မှန်ပြီး အသင်းအဖွဲ့နဲ့ လုပ်တတ်သူပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am hardworking, punctual, and a team player.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Interviewer:</div>
+                <div class="english">What computer skills do you have?</div>
+                <div class="burmese">ခင်ဗျားမှာ ဘယ်လိုကွန်ပျူတာအရည်အချင်းတွေ ရှိလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What computer skills do you have?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Candidate:</div>
+                <div class="english">I am proficient in Microsoft Office, Excel, and basic programming.</div>
+                <div class="burmese">ကျွန်တော် Microsoft Office၊ Excel နဲ့ အခြေခံပရိုဂရမ်းမင်းတို့ကို ကျွမ်းကျင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am proficient in Microsoft Office, Excel, and basic programming.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 5: Why This Company -->
+    <div class="conversation-section">
+        <h2>🏢 Why This Company? / ဘာကြောင့်ဒီကုမ္ပဏီကို ရွေးချယ်တာလဲ။</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Interviewer:</div>
+                <div class="english">Why do you want to work for our company?</div>
+                <div class="burmese">ဘာကြောင့် ကျွန်တော်တို့ ကုမ္ပဏီမှာ အလုပ်လုပ်ချင်တာလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Why do you want to work for our company?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Candidate:</div>
+                <div class="english">I admire your company's reputation and values. I want to be part of your success.</div>
+                <div class="burmese">ခင်ဗျားတို့ကုမ္ပဏီရဲ့ ဂုဏ်သတင်းနဲ့ တန်ဖိုးများကို ကျွန်တော် အလေးစားပါတယ်။ သင့်ရဲ့အောင်မြင်မှုမှာ ပါဝင်ချင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I admire your company\'s reputation and values. I want to be part of your success.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Interviewer:</div>
+                <div class="english">Where do you see yourself in five years?</div>
+                <div class="burmese">ငါးနှစ်အတွင်း ကိုယ့်ကိုယ်ကို ဘယ်မှာမြင်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Where do you see yourself in five years?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Candidate:</div>
+                <div class="english">I hope to grow within this company and take on more responsibilities.</div>
+                <div class="burmese">ဒီကုမ္ပဏီအတွင်းမှာ တိုးတက်ပြီး တာဝန်များကို ပိုမိုယူလိုပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I hope to grow within this company and take on more responsibilities.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 6: Weaknesses and Challenges -->
+    <div class="conversation-section">
+        <h2>📉 Weaknesses & Challenges / အားနည်းချက်များနှင့် စိန်ခေါ်မှုများ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Interviewer:</div>
+                <div class="english">What is your biggest weakness?</div>
+                <div class="burmese">သင့်ရဲ့ အကြီးမားဆုံး အားနည်းချက်က ဘာလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What is your biggest weakness?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Candidate:</div>
+                <div class="english">Sometimes I am too detail-oriented, which can slow me down, but I'm working on being more efficient.</div>
+                <div class="burmese">တစ်ခါတစ်ရံ အသေးစိတ်ကို အလွန်အကျွံ အာရုံစိုက်မိတာက ကျွန်တော့်ကို နှေးစေတတ်ပေမယ့် ပိုမိုထိရောက်အောင် ကြိုးစားနေပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Sometimes I am too detail-oriented, which can slow me down, but I am working on being more efficient.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Interviewer:</div>
+                <div class="english">How do you handle pressure?</div>
+                <div class="burmese">ဖိအားတွေကို ဘယ်လိုကိုင်တွယ်ဖြေရှင်းလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('How do you handle pressure?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Candidate:</div>
+                <div class="english">I stay calm and prioritize my tasks. I also ask for help when needed.</div>
+                <div class="burmese">စိတ်တည်ငြိမ်အောင်နေပြီး အလုပ်တွေကို အရေးကြီးစဉ်အလိုက် စီစဉ်ပါတယ်။ လိုအပ်ရင် အကူအညီတောင်းပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I stay calm and prioritize my tasks. I also ask for help when needed.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 7: Salary and Questions -->
+    <div class="conversation-section">
+        <h2>💰 Salary & Questions / လစာနှင့်မေးခွန်းများ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Interviewer:</div>
+                <div class="english">What are your salary expectations?</div>
+                <div class="burmese">ဘယ်လောက်လစာ မျှော်လင့်ထားလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What are your salary expectations?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Candidate:</div>
+                <div class="english">Based on my experience, I'm looking for around $800 per month.</div>
+                <div class="burmese">ကျွန်တော့်အတွေ့အကြုံအရ တစ်လ ၈၀၀ ဒေါ်လာဝန်းကျင်ကို မျှော်လင့်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Based on my experience, I am looking for around 800 dollars per month.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Interviewer:</div>
+                <div class="english">Do you have any questions for us?</div>
+                <div class="burmese">ခင်ဗျားမှာ ကျွန်တော်တို့ကို မေးစရာမေးခွန်းများ ရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you have any questions for us?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Candidate:</div>
+                <div class="english">Yes, what is the company culture like? And when can I expect to hear back?</div>
+                <div class="burmese">ဟုတ်ကဲ့၊ ကုမ္ပဏီရဲ့ ယဉ်ကျေးမှုက ဘယ်လိုလဲ။ ဘယ်အချိန်မှာ အကြောင်းပြန်ကြားမလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, what is the company culture like? And when can I expect to hear back?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Interviewer:</div>
+                <div class="english">We have a friendly and collaborative culture. You'll hear from us by next week.</div>
+                <div class="burmese">ကျွန်တော်တို့မှာ ဖော်ရွေပြီး ပူးပေါင်းလုပ်ဆောင်တဲ့ ယဉ်ကျေးမှုရှိပါတယ်။ လာမယ့်အပတ်အတွင်း အကြောင်းပြန်ကြားပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('We have a friendly and collaborative culture. You will hear from us by next week.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 8: Closing the Interview -->
+    <div class="conversation-section">
+        <h2>👋 Closing the Interview / အင်တာဗျူးနိဂုံးချုပ်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Interviewer:</div>
+                <div class="english">Thank you for coming today. It was nice meeting you.</div>
+                <div class="burmese">ဒီနေ့လာတဲ့အတွက် ကျေးဇူးပါ။ တွေ့ရတာ ဝမ်းသာပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Thank you for coming today. It was nice meeting you.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Candidate:</div>
+                <div class="english">Thank you for your time. I look forward to hearing from you.</div>
+                <div class="burmese">ခင်ဗျားတို့ရဲ့ အချိန်အတွက် ကျေးဇူးပါ။ ခင်ဗျားတို့ဆီက အကြောင်းပြန်ကြားချက်ကို မျှော်လင့်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Thank you for your time. I look forward to hearing from you.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Interviewer:</div>
+                <div class="english">Have a great day!</div>
+                <div class="burmese">နေ့လယ်ကောင်းကောင်းဖြတ်သန်းပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Have a great day!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Do's and Don'ts -->
+    <div class="conversation-section">
+        <h2>✅ Interview Tips / အင်တာဗျူး အကြံပြုချက်များ</h2>
+        <div class="dos-donts">
+            <div class="dos">
+                <h4><i class="fas fa-check-circle"></i> DO's (လုပ်သင့်သောအရာများ)</h4>
+                <ul style="margin-top: 0.5rem; padding-left: 1.2rem;">
+                    <li>Dress professionally (ကျေကျေနပ်နပ် ဝတ်ဆင်ပါ)</li>
+                    <li>Arrive 10-15 minutes early (၁၀-၁၅ မိနစ်စောစောရောက်ပါ)</li>
+                    <li>Make eye contact (မျက်လုံးချင်းဆုံအောင်ပြောပါ)</li>
+                    <li>Ask questions at the end (အဆုံးမှာ မေးခွန်းများမေးပါ)</li>
+                    <li>Send a thank-you email (ကျေးဇူးတင်စာ အီးမေးလ်ပို့ပါ)</li>
+                </ul>
+            </div>
+            <div class="donts">
+                <h4><i class="fas fa-times-circle"></i> DON'Ts (မလုပ်သင့်သောအရာများ)</h4>
+                <ul style="margin-top: 0.5rem; padding-left: 1.2rem;">
+                    <li>Don't be late (နောက်မကျပါနှင့်)</li>
+                    <li>Don't interrupt (စကားမဖြတ်ပါနှင့်)</li>
+                    <li>Don't lie about your skills (အရည်အချင်းတွေ လိမ်မပြောပါနှင့်)</li>
+                    <li>Don't use your phone (ဖုန်းမသုံးပါနှင့်)</li>
+                    <li>Don't speak negatively about past employers (အလုပ်ရှင်ဟောင်းအကြောင်း အပျက်မပြောပါနှင့်)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Vocabulary Section -->
+    <div class="conversation-section">
+        <h2>📚 Job Interview Vocabulary / အလုပ်အင်တာဗျူးသုံးဝေါဟာရများ</h2>
+        <div class="vocab-grid">
+            <div class="vocab-item"><span class="vocab-eng">Interviewer</span><br><span class="vocab-burmese">အင်တာဗျူးသူ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Candidate / Applicant</span><br><span class="vocab-burmese">လျှောက်ထားသူ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Resume / CV</span><br><span class="vocab-burmese">ကိုယ်ရေးရာဇဝင်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Cover letter</span><br><span class="vocab-burmese">နိဒါန်းစာ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Qualifications</span><br><span class="vocab-burmese">အရည်အချင်းများ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Experience</span><br><span class="vocab-burmese">အတွေ့အကြုံ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Strengths</span><br><span class="vocab-burmese">အားသာချက်များ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Weaknesses</span><br><span class="vocab-burmese">အားနည်းချက်များ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Salary</span><br><span class="vocab-burmese">လစာ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Benefits</span><br><span class="vocab-burmese">ခံစားခွင့်များ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Reference</span><br><span class="vocab-burmese">အကိုးအကား</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Full-time / Part-time</span><br><span class="vocab-burmese">အချိန်ပြည့်/အချိန်ပိုင်း</span></div>
+        </div>
+    </div>
+    
+    <!-- Useful Interview Phrases -->
+    <div class="conversation-section">
+        <h2>💡 Useful Interview Phrases / အသုံးဝင်သောအင်တာဗျူးစကားစုများ</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Common Interview Questions (အမေးများသောအင်တာဗျူးမေးခွန်းများ):</strong><br>
+            • "Tell me about yourself." (ကိုယ့်အကြောင်း ပြောပြပါ။)<br>
+            • "Why should we hire you?" (ဘာကြောင့် သင့်ကို ငှားရမ်းသင့်တာလဲ။)<br>
+            • "What are your career goals?" (သင့်ရဲ့ အသက်မွေးဝမ်းကျောင်း ပန်းတိုင်က ဘာလဲ။)<br>
+            • "Describe a challenge you overcame." (သင်ကျော်လွှားခဲ့တဲ့ စိန်ခေါ်မှုတစ်ခုကို ဖော်ပြပါ။)<br>
+            • "Why is there a gap in your employment?" (အလုပ်လုပ်ကိုင်ချိန်မှာ ကွက်လပ်ဖြစ်ရတဲ့ အကြောင်းရင်းက ဘာလဲ။)<br>
+            <br>
+            <i class="fas fa-lightbulb"></i>
+            <strong>Good Questions to Ask (မေးသင့်သောမေးခွန်းများ):</strong><br>
+            • "What does a typical day look like?" (ပုံမှန်နေ့တစ်နေ့က ဘယ်လိုလဲ။)<br>
+            • "What are the opportunities for growth?" (တိုးတက်မှုအတွက် အခွင့်အလမ်းတွေက ဘာတွေလဲ။)<br>
+            • "What is the next step in the hiring process?" (ငှားရမ်းခြင်းလုပ်ငန်းစဉ်ရဲ့ နောက်အဆင့်က ဘာလဲ။)<br>
+        </div>
+    </div>
+    
+    <!-- Practice Section -->
+    <div class="conversation-section">
+        <h2>✏️ Practice Questions / လေ့ကျင့်ခန်းမေးခွန်းများ</h2>
+        <div class="dialogue-box">
+            <div class="quiz-question">
+                <p><strong>1. How do you introduce yourself in an interview?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'My name is...')">Goodbye</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'My name is...')">I don't know</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'My name is...')">My name is...</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'My name is...')">Where is the bathroom?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>2. "ကျွန်တော့်ရဲ့ အားသာချက်က ဘာလဲ" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What are my strengths?')">What is my weakness?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What are my strengths?')">What are my strengths?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What are my strengths?')">How much is the salary?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What are my strengths?')">Where do I work?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. What document lists your work history and education?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Resume / CV')">Menu</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Resume / CV')">Receipt</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Resume / CV')">Resume / CV</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Resume / CV')">Ticket</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. "ငါးနှစ်အတွင်း ကိုယ့်ကိုယ်ကို ဘယ်မှာမြင်လဲ" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Where do you see yourself in five years?')">What is your name?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Where do you see yourself in five years?')">How old are you?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Where do you see yourself in five years?')">Where do you see yourself in five years?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Where do you see yourself in five years?')">What is your job?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. What should you send after an interview to show appreciation?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Thank-you email')">Resume</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Thank-you email')">Complaint letter</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Thank-you email')">Thank-you email</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Thank-you email')">Gift</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p><i class="fas fa-heart" style="color: #2c3e50;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p>
+        <p style="font-size: 0.75rem; margin-top: 0.5rem;">Practice these conversations to succeed in your next job interview!</p>
+    </footer>
+</div>
+
+<!-- Back to Top Button -->
+<a href="#" class="back-to-top" id="backToTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+<script>
+    function speakEnglish(text) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8;
+        utterance.pitch = 1.0;
+        
+        function setVoice() {
+            const voices = window.speechSynthesis.getVoices();
+            const englishVoice = voices.find(v => v.lang === 'en-US' || v.lang.startsWith('en-'));
+            if (englishVoice) utterance.voice = englishVoice;
+            window.speechSynthesis.speak(utterance);
+        }
+        
+        if (window.speechSynthesis.getVoices().length) setVoice();
+        else window.speechSynthesis.onvoiceschanged = setVoice;
+    }
+    
+    function checkAnswer(element, correctAnswer) {
+        const options = element.parentElement.querySelectorAll('.quiz-option');
+        const isCorrect = element.innerText === correctAnswer;
+        
+        if (isCorrect) {
+            element.style.background = '#2ecc71';
+            element.style.color = 'white';
+            speakEnglish(correctAnswer);
+            setTimeout(() => {
+                options.forEach(opt => {
+                    opt.style.background = '';
+                    opt.style.color = '';
+                });
+            }, 1500);
+        } else {
+            element.style.background = '#e74c3c';
+            element.style.color = 'white';
+            setTimeout(() => {
+                element.style.background = '';
+                element.style.color = '';
+            }, 500);
+        }
+    }
+    
+    // Back to Top Button Functionality
+    (function() {
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        
+        if (backToTopBtn) {
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

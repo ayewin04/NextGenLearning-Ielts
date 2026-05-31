@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electronics Store - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 1rem;
+        }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        
+        .conversation-section {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .conversation-section h2 {
+            background: #00b894;
+            color: white;
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line {
+            display: grid;
+            grid-template-columns: 70px 1fr 1fr;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            align-items: start;
+        }
+        .speaker { font-weight: bold; color: #00b894; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { 
+            color: #8e6b3c; 
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 0.95rem;
+        }
+        .audio-btn {
+            background: #eef4ff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.3rem;
+        }
+        .audio-btn:hover { background: #00b894; color: white; }
+        
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+            padding: 1rem;
+        }
+        .vocab-item {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            border-left: 3px solid #00b894;
+        }
+        .vocab-eng { font-weight: bold; color: #00b894; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        
+        .quiz-question {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.8rem;
+        }
+        .quiz-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .quiz-option {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .quiz-option:hover { background: #00b894; color: white; border-color: #00b894; }
+        
+        .specs-box {
+            background: #e8f8f5;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #00b894;
+        }
+        .spec-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.3rem 0;
+            border-bottom: 1px dashed #ddd;
+        }
+        
+        .tips-box {
+            background: #e8f8f5;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #00b894;
+        }
+        .tips-box i { color: #00b894; margin-right: 8px; }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1rem;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: #1e3c72;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid white;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: #f5b042;
+            color: #1e3c72;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .back-to-top i {
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 42px;
+                height: 42px;
+            }
+            .back-to-top i {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 700px) {
+            .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> All Conversations
+    </a>
+    
+    <header>
+        <h1><i class="fas fa-laptop"></i> Electronics Store</h1>
+        <p>Learn how to ask about product features, compare specifications, and buy electronics</p>
+        <p>ထုတ်ကုန်အင်္ဂါရပ်များမေးမြန်းနည်း၊ သတ်မှတ်ချက်များနှိုင်းယှဉ်နည်းနှင့် အီလက်ထရွန်းနစ်ပစ္စည်းများဝယ်ယူနည်းကို အင်္ဂလိပ်လို လေ့လာပါ</p>
+    </header>
+    
+    <!-- Dialogue 1: Asking About a Laptop -->
+    <div class="conversation-section">
+        <h2>💻 Asking About a Laptop / လက်ပ်တော့အကြောင်းမေးမြန်းခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Hello, I'm looking for a new laptop for school work.</div>
+                <div class="burmese">မင်္ဂလာပါ၊ ကျောင်းအလုပ်အတွက် လက်ပ်တော့အသစ်တစ်လုံး ရှာနေပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Hello, I am looking for a new laptop for school work.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Salesperson:</div>
+                <div class="english">What's your budget? We have options from $300 to $1500.</div>
+                <div class="burmese">သင့်ဘတ်ဂျက်ကဘယ်လောက်လဲ။ ၃၀၀ ဒေါ်လာကနေ ၁၅၀၀ ဒေါ်လာအထိ ရွေးစရာတွေရှိပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('What is your budget? We have options from 300 dollars to 1500 dollars.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Around $600. What do you recommend?</div>
+                <div class="burmese">၆၀၀ ဒေါ်လာလောက်။ ဘာအကြံပြုလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Around 600 dollars. What do you recommend?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Salesperson:</div>
+                <div class="english">This model has an Intel i5 processor, 8GB RAM, and a 256GB SSD. It's perfect for students.</div>
+                <div class="burmese">ဒီမော်ဒယ်မှာ Intel i5 ပရိုဆက်ဆာ၊ 8GB RAM နဲ့ 256GB SSD ပါတယ်။ ကျောင်းသားတွေအတွက် ပြီးပြည့်စုံပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('This model has an Intel i5 processor, 8GB RAM, and a 256GB SSD. It is perfect for students.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 2: Comparing Phones -->
+    <div class="conversation-section">
+        <h2>📱 Comparing Phones / ဖုန်းများနှိုင်းယှဉ်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">What's the difference between these two phones?</div>
+                <div class="burmese">ဒီဖုန်းနှစ်လုံးကြားက ကွာခြားချက်က ဘာလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What is the difference between these two phones?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Salesperson:</div>
+                <div class="english">This one has a better camera with 50 megapixels and a larger battery.</div>
+                <div class="burmese">ဒီတစ်လုံးမှာ 50 megapixel နဲ့ ပိုကောင်းတဲ့ကင်မရာနဲ့ ဘက်ထရီပိုကြီးတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('This one has a better camera with 50 megapixels and a larger battery.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">How about storage?</div>
+                <div class="burmese">သိုလှောင်မှုကရော။</div>
+                <button class="audio-btn" onclick="speakEnglish('How about storage?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Salesperson:</div>
+                <div class="english">Both have 128GB storage, but the more expensive one has expandable memory up to 1TB.</div>
+                <div class="burmese">နှစ်မျိုးစလုံးမှာ 128GB သိုလှောင်မှုရှိပေမယ့် စျေးကြီးတာက 1TB အထိ တိုးချဲ့လို့ရတဲ့မမ်မိုရီရှိတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Both have 128GB storage, but the more expensive one has expandable memory up to 1TB.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 3: Buying a TV -->
+    <div class="conversation-section">
+        <h2>📺 Buying a TV / တီဗွီဝယ်ယူခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I'm looking for a 55-inch TV. What do you have?</div>
+                <div class="burmese">ငါ ၅၅ လက်မ တီဗွီရှာနေတယ်။ ဘာတွေရှိလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am looking for a 55-inch TV. What do you have?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Salesperson:</div>
+                <div class="english">We have 4K and 8K models. This one is 4K Smart TV with HDR.</div>
+                <div class="burmese">ကျွန်တော်တို့မှာ 4K နဲ့ 8K မော်ဒယ်တွေရှိပါတယ်။ ဒီတစ်လုံးက HDR ပါတဲ့ 4K Smart TV ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('We have 4K and 8K models. This one is 4K Smart TV with HDR.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Does it come with a warranty?</div>
+                <div class="burmese">အာမခံပါလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Does it come with a warranty?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Salesperson:</div>
+                <div class="english">Yes, one-year manufacturer warranty. You can also buy an extended warranty for two more years.</div>
+                <div class="burmese">ဟုတ်ပါတယ်၊ တစ်နှစ် ထုတ်လုပ်သူအာမခံပါတယ်။ နောက်ထပ် နှစ်နှစ်အတွက် တိုးချဲ့အာမခံလည်းဝယ်လို့ရပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, one-year manufacturer warranty. You can also buy an extended warranty for two more years.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 4: Asking About Headphones -->
+    <div class="conversation-section">
+        <h2>🎧 Asking About Headphones / နားကြပ်အကြောင်းမေးမြန်းခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I need wireless headphones for running. Any recommendations?</div>
+                <div class="burmese">အပြေးအတွက် ကြိုးမဲ့နားကြပ်လိုအပ်တယ်။ အကြံပြုချက်ရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('I need wireless headphones for running. Any recommendations?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Salesperson:</div>
+                <div class="english">These are our best-selling sports headphones. They're waterproof and have 10 hours of battery life.</div>
+                <div class="burmese">ဒါတွေက ကျွန်တော်တို့ရဲ့ အရောင်းရဆုံး အားကစားနားကြပ်တွေပါ။ ရေစိုခံပြီး ဘက်ထရီ ၁၀ နာရီကြာခံပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('These are our best-selling sports headphones. They are waterproof and have 10 hours of battery life.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Can I test them?</div>
+                <div class="burmese">စမ်းကြည့်လို့ရမလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Can I test them?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Salesperson:</div>
+                <div class="english">Sure, we have a demo unit here. The sound quality is excellent.</div>
+                <div class="burmese">ရပါတယ်၊ ဒီမှာ သရုပ်ပြယူနစ်ရှိပါတယ်။ အသံအရည်အသွေးက အကောင်းဆုံးပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Sure, we have a demo unit here. The sound quality is excellent.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 5: Warranty and Return Policy -->
+    <div class="conversation-section">
+        <h2>📄 Warranty and Return Policy / အာမခံနှင့်ပြန်အပ်မူဝါဒ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">What's your return policy if something doesn't work?</div>
+                <div class="burmese">တစ်ခုခုအလုပ်မလုပ်ရင် ပြန်အပ်မူဝါဒက ဘာလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What is your return policy if something does not work?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Salesperson:</div>
+                <div class="english">You can return any defective item within 30 days for a full refund.</div>
+                <div class="burmese">ချို့ယွင်းနေတဲ့ပစ္စည်းကို ၃၀ ရက်အတွင်း ငွေအပြည့်ပြန်အမ်းဖို့ ပြန်အပ်နိုင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('You can return any defective item within 30 days for a full refund.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">What about accidental damage?</div>
+                <div class="burmese">မတော်တဆပျက်စီးမှုကရော။</div>
+                <button class="audio-btn" onclick="speakEnglish('What about accidental damage?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Salesperson:</div>
+                <div class="english">Accidental damage is not covered under standard warranty, but we offer protection plans.</div>
+                <div class="burmese">မတော်တဆပျက်စီးမှုကို စံအာမခံတွင် အကျုံးမဝင်ပါ၊ ဒါပေမယ့် အကာအကွယ်အစီအစဉ်တွေ ပေးထားပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Accidental damage is not covered under standard warranty, but we offer protection plans.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 6: Buying a Tablet -->
+    <div class="conversation-section">
+        <h2>📱 Buying a Tablet / တက်ဘလက်ဝယ်ယူခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I'm thinking about buying a tablet for reading and watching videos.</div>
+                <div class="burmese">စာဖတ်ဖို့နဲ့ ဗီဒီယိုကြည့်ဖို့ တက်ဘလက်တစ်လုံးဝယ်ဖို့ စဉ်းစားနေတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am thinking about buying a tablet for reading and watching videos.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Salesperson:</div>
+                <div class="english">This 10-inch tablet has a high-resolution display and 64GB of storage.</div>
+                <div class="burmese">ဒီ ၁၀ လက်မ တက်ဘလက်မှာ ကြည်လင်ပြတ်သားမှုမြင့်မားတဲ့ display နဲ့ 64GB သိုလှောင်မှုရှိတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('This 10-inch tablet has a high-resolution display and 64GB of storage.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Does it come with a stylus?</div>
+                <div class="burmese">စတိုင်လပ်စ် ပါလာလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Does it come with a stylus?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Salesperson:</div>
+                <div class="english">No, but we sell them separately for $30. Would you like to add one?</div>
+                <div class="burmese">မပါပါဘူး၊ ဒါပေမယ့် သီးသန့် ၃၀ ဒေါ်လာနဲ့ ရောင်းပါတယ်။ တစ်ခုထည့်ချင်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('No, but we sell them separately for 30 dollars. Would you like to add one?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 7: Price Negotiation -->
+    <div class="conversation-section">
+        <h2>💰 Price Negotiation / စျေးနှုန်းညှိနှိုင်းခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">This is a bit over my budget. Can you give me a discount?</div>
+                <div class="burmese">ဒါက ငါ့ဘတ်ဂျက်နဲနဲကျော်တယ်။ လျှော့ပေးလို့ရမလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('This is a bit over my budget. Can you give me a discount?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Salesperson:</div>
+                <div class="english">I can offer you 10% off if you buy it today.</div>
+                <div class="burmese">ဒီနေ့ဝယ်ရင် ၁၀ ရာခိုင်နှုန်းလျှော့ပေးနိုင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I can offer you 10 percent off if you buy it today.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">How about 15%?</div>
+                <div class="burmese">၁၅ ရာခိုင်နှုန်းကရော။</div>
+                <button class="audio-btn" onclick="speakEnglish('How about 15 percent?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Salesperson:</div>
+                <div class="english">Sorry, 10% is the best I can do. It's already on sale.</div>
+                <div class="burmese">စိတ်မကောင်းပါဘူး၊ ၁၀ ရာခိုင်နှုန်းက ကျွန်တော်လုပ်နိုင်တဲ့ အကောင်းဆုံးပါ။ ဈေးချပြီးသားပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Sorry, 10 percent is the best I can do. It is already on sale.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 8: Accessories -->
+    <div class="conversation-section">
+        <h2>🖱️ Accessories / ဆက်စပ်ပစ္စည်းများ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Do you have cases for this phone model?</div>
+                <div class="burmese">ဒီဖုန်းမော်ဒယ်အတွက် ဖုန်းအိတ်တွေ ရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you have cases for this phone model?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Salesperson:</div>
+                <div class="english">Yes, we have many colors and styles. Clear case, leather case, and rugged case.</div>
+                <div class="burmese">ဟုတ်ပါတယ်၊ အရောင်နဲ့ပုံစံအမျိုးမျိုးရှိပါတယ်။ ကြည်လင်အိတ်၊ သားရေအိတ်၊ နဲ့ ကြမ်းတမ်းအိတ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, we have many colors and styles. Clear case, leather case, and rugged case.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I'll take the leather one in black. Also, do you sell screen protectors?</div>
+                <div class="burmese">အနက်ရောင် သားရေအိတ်ကို ယူမယ်။ မျက်နှာပြင်အကာအကွယ်ပါးလွှာတွေလည်း ရောင်းလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('I will take the leather one in black. Also, do you sell screen protectors?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Salesperson:</div>
+                <div class="english">Yes, glass screen protectors are $10 each.</div>
+                <div class="burmese">ဟုတ်ပါတယ်၊ ဖန်မျက်နှာပြင်အကာအကွယ်ပါးလွှာတွေ တစ်ခုကို ၁၀ ဒေါ်လာပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, glass screen protectors are 10 dollars each.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Product Specifications -->
+    <div class="conversation-section">
+        <h2>📋 Sample Product Specifications / နမူနာထုတ်ကုန်သတ်မှတ်ချက်များ</h2>
+        <div class="specs-box">
+            <div class="spec-item"><strong>Model:</strong> Laptop Pro X5</div>
+            <div class="spec-item"><strong>Processor:</strong> Intel Core i7 (ပရိုဆက်ဆာ)</div>
+            <div class="spec-item"><strong>RAM:</strong> 16GB (မမ်မိုရီ)</div>
+            <div class="spec-item"><strong>Storage:</strong> 512GB SSD (သိုလှောင်မှု)</div>
+            <div class="spec-item"><strong>Display:</strong> 15.6" 4K (မျက်နှာပြင်)</div>
+            <div class="spec-item"><strong>Battery Life:</strong> Up to 12 hours (ဘက်ထရီသက်တမ်း)</div>
+            <div class="spec-item"><strong>Weight:</strong> 1.8 kg (အလေးချိန်)</div>
+            <div class="spec-item"><strong>OS:</strong> Windows 11 (လည်ပတ်မှုစနစ်)</div>
+            <div class="spec-item"><strong>Warranty:</strong> 2 years (အာမခံ)</div>
+        </div>
+    </div>
+    
+    <!-- Vocabulary Section -->
+    <div class="conversation-section">
+        <h2>📚 Electronics Vocabulary / အီလက်ထရွန်းနစ်သုံးဝေါဟာရများ</h2>
+        <div class="vocab-grid">
+            <div class="vocab-item"><span class="vocab-eng">Processor (CPU)</span><br><span class="vocab-burmese">ပရိုဆက်ဆာ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">RAM (Memory)</span><br><span class="vocab-burmese">မမ်မိုရီ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Storage (SSD/HDD)</span><br><span class="vocab-burmese">သိုလှောင်မှု</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Display / Screen</span><br><span class="vocab-burmese">မျက်နှာပြင်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Resolution</span><br><span class="vocab-burmese">ကြည်လင်ပြတ်သားမှု</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Warranty</span><br><span class="vocab-burmese">အာမခံ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Refurbished</span><br><span class="vocab-burmese">ပြန်လည်ပြင်ဆင်ထားသော</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Charger / Adapter</span><br><span class="vocab-burmese">အားသွင်းကိရိယာ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Bluetooth</span><br><span class="vocab-burmese">ဘလူးတုသ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Waterproof</span><br><span class="vocab-burmese">ရေစိုခံ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Megapixel (MP)</span><br><span class="vocab-burmese">မီဂါပစ်ဆယ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Demo unit</span><br><span class="vocab-burmese">သရုပ်ပြယူနစ်</span></div>
+        </div>
+    </div>
+    
+    <!-- Useful Electronics Phrases -->
+    <div class="conversation-section">
+        <h2>💡 Useful Electronics Phrases / အသုံးဝင်သောအီလက်ထရွန်းနစ်စကားစုများ</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Asking About Products (ထုတ်ကုန်များအကြောင်းမေးခြင်း):</strong><br>
+            • "What are the specifications?" (သတ်မှတ်ချက်တွေက ဘာတွေလဲ။)<br>
+            • "How long is the battery life?" (ဘက်ထရီသက်တမ်းက ဘယ်လောက်လဲ။)<br>
+            • "Does it come with a charger?" (အားသွင်းကိရိယာပါလား။)<br>
+            • "Is this compatible with my device?" (ဒါက ကျွန်တော့်ပစ္စည်းနဲ့ တွဲဖက်သုံးလို့ရလား။)<br>
+            • "What's the return policy?" (ပြန်အပ်မူဝါဒက ဘာလဲ။)<br>
+            <br>
+            <i class="fas fa-lightbulb"></i>
+            <strong>Technical Terms (နည်းပညာဝေါဟာရများ):</strong><br>
+            • "The screen is cracked." (မျက်နှာပြင်ကွဲနေတယ်။)<br>
+            • "The battery isn't holding a charge." (ဘက်ထရီက အားမဝင်ဘူး။)<br>
+            • "It keeps freezing." (ဆက်တိုက်ရပ်နေတယ်။)<br>
+            • "The sound is distorted." (အသံပေါက်နေတယ်။)<br>
+        </div>
+    </div>
+    
+    <!-- Practice Section -->
+    <div class="conversation-section">
+        <h2>✏️ Practice Questions / လေ့ကျင့်ခန်းမေးခွန်းများ</h2>
+        <div class="dialogue-box">
+            <div class="quiz-question">
+                <p><strong>1. How do you ask about a product's warranty?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Does it come with a warranty?')">How much is it?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Does it come with a warranty?')">What color is it?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Does it come with a warranty?')">Does it come with a warranty?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Does it come with a warranty?')">Where is it made?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>2. "ဒီဖုန်းရဲ့ ကင်မရာက ဘယ်လောက်မီဂါပစ်ဆယ်လဲ" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'How many megapixels is the camera?')">How big is the screen?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'How many megapixels is the camera?')">How much storage does it have?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'How many megapixels is the camera?')">How many megapixels is the camera?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'How many megapixels is the camera?')">How long is the battery life?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. What does "refurbished" mean?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Restored to working condition')">Brand new</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Restored to working condition')">Broken</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Restored to working condition')">Restored to working condition</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Restored to working condition')">Used only once</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. "ငါ ကြိုးမဲ့နားကြပ်လိုတယ်" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I need wireless headphones.')">I need wired headphones.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I need wireless headphones.')">I need wireless headphones.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I need wireless headphones.')">I need speakers.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I need wireless headphones.')">I need a microphone.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. What does "waterproof" mean for electronics?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Resistant to water damage')">Easily damaged by water</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Resistant to water damage')">Cannot get wet</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Resistant to water damage')">Resistant to water damage</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Resistant to water damage')">Must be kept dry</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p><i class="fas fa-heart" style="color: #00b894;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p>
+        <p style="font-size: 0.75rem; margin-top: 0.5rem;">Practice these conversations to shop for electronics with confidence!</p>
+    </footer>
+</div>
+
+<!-- Back to Top Button -->
+<a href="#" class="back-to-top" id="backToTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+<script>
+    function speakEnglish(text) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8;
+        utterance.pitch = 1.0;
+        
+        function setVoice() {
+            const voices = window.speechSynthesis.getVoices();
+            const englishVoice = voices.find(v => v.lang === 'en-US' || v.lang.startsWith('en-'));
+            if (englishVoice) utterance.voice = englishVoice;
+            window.speechSynthesis.speak(utterance);
+        }
+        
+        if (window.speechSynthesis.getVoices().length) setVoice();
+        else window.speechSynthesis.onvoiceschanged = setVoice;
+    }
+    
+    function checkAnswer(element, correctAnswer) {
+        const options = element.parentElement.querySelectorAll('.quiz-option');
+        const isCorrect = element.innerText === correctAnswer;
+        
+        if (isCorrect) {
+            element.style.background = '#2ecc71';
+            element.style.color = 'white';
+            speakEnglish(correctAnswer);
+            setTimeout(() => {
+                options.forEach(opt => {
+                    opt.style.background = '';
+                    opt.style.color = '';
+                });
+            }, 1500);
+        } else {
+            element.style.background = '#e74c3c';
+            element.style.color = 'white';
+            setTimeout(() => {
+                element.style.background = '';
+                element.style.color = '';
+            }, 500);
+        }
+    }
+    
+    // Back to Top Button Functionality
+    (function() {
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        
+        if (backToTopBtn) {
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

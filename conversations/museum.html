@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Museum - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 1rem;
+        }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        
+        .conversation-section {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .conversation-section h2 {
+            background: #6c5ce7;
+            color: white;
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line {
+            display: grid;
+            grid-template-columns: 70px 1fr 1fr;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            align-items: start;
+        }
+        .speaker { font-weight: bold; color: #6c5ce7; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { 
+            color: #8e6b3c; 
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 0.95rem;
+        }
+        .audio-btn {
+            background: #eef4ff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.3rem;
+        }
+        .audio-btn:hover { background: #6c5ce7; color: white; }
+        
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+            padding: 1rem;
+        }
+        .vocab-item {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            border-left: 3px solid #6c5ce7;
+        }
+        .vocab-eng { font-weight: bold; color: #6c5ce7; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        
+        .quiz-question {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.8rem;
+        }
+        .quiz-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .quiz-option {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .quiz-option:hover { background: #6c5ce7; color: white; border-color: #6c5ce7; }
+        
+        .info-box {
+            background: #f3e5f5;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #6c5ce7;
+        }
+        .info-box i { color: #6c5ce7; margin-right: 8px; }
+        
+        .tips-box {
+            background: #f3e5f5;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #6c5ce7;
+        }
+        .tips-box i { color: #6c5ce7; margin-right: 8px; }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1rem;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: #1e3c72;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid white;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: #f5b042;
+            color: #1e3c72;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .back-to-top i {
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 42px;
+                height: 42px;
+            }
+            .back-to-top i {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 700px) {
+            .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> All Conversations
+    </a>
+    
+    <header>
+        <h1><i class="fas fa-landmark"></i> Museum</h1>
+        <p>Learn how to ask about exhibits, buy tickets, and talk about art and history in English</p>
+        <p>ပြတိုက်ပြပွဲများအကြောင်းမေးမြန်းနည်း၊ လက်မှတ်များဝယ်ယူနည်းနှင့် အနုပညာနှင့်သမိုင်းအကြောင်း အင်္ဂလိပ်လို ပြောဆိုနည်းကို လေ့လာပါ</p>
+    </header>
+    
+    <!-- Dialogue 1: Buying Tickets -->
+    <div class="conversation-section">
+        <h2>🎫 Buying Tickets / လက်မှတ်များဝယ်ယူခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Visitor:</div>
+                <div class="english">Hello, how much are the tickets?</div>
+                <div class="burmese">မင်္ဂလာပါ၊ လက်မှတ်စျေးနှုန်းက ဘယ်လောက်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Hello, how much are the tickets?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Cashier:</div>
+                <div class="english">Adults are $15, seniors and students are $10, and children under 12 are free.</div>
+                <div class="burmese">လူကြီး ၁၅ ဒေါ်လာ၊ သက်ကြီးရွယ်အိုများနှင့် ကျောင်းသားများ ၁၀ ဒေါ်လာ၊ အသက် ၁၂ နှစ်အောက်ကလေးများ အခမဲ့ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Adults are 15 dollars, seniors and students are 10 dollars, and children under 12 are free.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Visitor:</div>
+                <div class="english">Two adults, please. Do you offer any discounts for families?</div>
+                <div class="burmese">လူကြီးနှစ်ယောက်ပါ။ မိသားစုလျှော့စျေးတွေ ပေးလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Two adults, please. Do you offer any discounts for families?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Cashier:</div>
+                <div class="english">Yes, a family pass for two adults and two children is $35.</div>
+                <div class="burmese">ဟုတ်ပါတယ်၊ လူကြီးနှစ်ယောက်နဲ့ ကလေးနှစ်ယောက်အတွက် မိသားစုလက်မှတ်က ၃၅ ဒေါ်လာပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, a family pass for two adults and two children is 35 dollars.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 2: Asking About Exhibits -->
+    <div class="conversation-section">
+        <h2>🖼️ Asking About Exhibits / ပြပွဲများအကြောင်းမေးမြန်းခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Visitor:</div>
+                <div class="english">What exhibitions are currently on display?</div>
+                <div class="burmese">လက်ရှိပြသထားတဲ့ ပြပွဲတွေက ဘာတွေလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What exhibitions are currently on display?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Staff:</div>
+                <div class="english">We have a special exhibition on ancient Egypt on the second floor, and a modern art collection on the third floor.</div>
+                <div class="burmese">ဒုတိယထပ်မှာ ရှေးခေတ်အီဂျစ်ပြပွဲအထူးနဲ့ တတိယထပ်မှာ ခေတ်သစ်အနုပညာစုဆောင်းမှုတွေ ရှိပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('We have a special exhibition on ancient Egypt on the second floor, and a modern art collection on the third floor.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Visitor:</div>
+                <div class="english">Which one would you recommend?</div>
+                <div class="burmese">ဘယ်ဟာကို အကြံပြုချင်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Which one would you recommend?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Staff:</div>
+                <div class="english">The ancient Egypt exhibit is very popular. It includes real mummies and artifacts from the pyramids.</div>
+                <div class="burmese">ရှေးခေတ်အီဂျစ်ပြပွဲက အရမ်းလူကြိုက်များပါတယ်။ တကယ့်လူခေါင်းအလောင်းတွေနဲ့ ပိရမစ်တွေဆီက ရှေးဟောင်းပစ္စည်းတွေ ပါဝင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('The ancient Egypt exhibit is very popular. It includes real mummies and artifacts from the pyramids.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 3: Audio Guide -->
+    <div class="conversation-section">
+        <h2>🎧 Audio Guide / အသံလမ်းညွှန်</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Visitor:</div>
+                <div class="english">Do you have audio guides available?</div>
+                <div class="burmese">အသံလမ်းညွှန်တွေ ရနိုင်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you have audio guides available?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Staff:</div>
+                <div class="english">Yes, we do. They are $5 per person. They're available in English, Spanish, French, Chinese, and Japanese.</div>
+                <div class="burmese">ဟုတ်ကဲ့ ရှိပါတယ်။ တစ်ဦးလျှင် ၅ ဒေါ်လာပါ။ အင်္ဂလိပ်၊ စပိန်၊ ပြင်သစ်၊ တရုတ်၊ ဂျပန်ဘာသာတို့နဲ့ ရနိုင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, we do. They are 5 dollars per person. They are available in English, Spanish, French, Chinese, and Japanese.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Visitor:</div>
+                <div class="english">I'll take one in English. How does it work?</div>
+                <div class="burmese">အင်္ဂလိပ်တစ်ခုယူမယ်။ ဘယ်လိုအလုပ်လုပ်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('I will take one in English. How does it work?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Staff:</div>
+                <div class="english">Just enter the number on the display next to each exhibit. It will explain the history and significance.</div>
+                <div class="burmese">ပြပွဲတစ်ခုစီဘေးက display ပေါ်က နံပါတ်ကို ရိုက်ထည့်ရုံပါပဲ။ သမိုင်းနဲ့ အရေးပါပုံကို ရှင်းပြပေးပါလိမ့်မယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Just enter the number on the display next to each exhibit. It will explain the history and significance.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 4: At the Art Gallery -->
+    <div class="conversation-section">
+        <h2>🎨 At the Art Gallery / အနုပညာပြခန်းတွင်</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Look at this painting. It's beautiful!</div>
+                <div class="burmese">ဒီပန်းချီကားကို ကြည့်စမ်း။ အရမ်းလှတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Look at this painting. It is beautiful!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">That's by Vincent van Gogh. I love his use of color.</div>
+                <div class="burmese">ဒါ Vincent van Gogh ရဲ့ကားပါ။ သူ့ရဲ့အရောင်အသုံးပြုပုံကို ကြိုက်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('That is by Vincent van Gogh. I love his use of color.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">What style is this?</div>
+                <div class="burmese">ဒါက ဘယ်ပုံစံလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What style is this?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">It's post-impressionism. The brushstrokes are very distinctive.</div>
+                <div class="burmese">ဒါက post-impressionism ပါ။ စုတ်ချက်တွေက အရမ်းထူးခြားတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('It is post-impressionism. The brushstrokes are very distinctive.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 5: History Museum -->
+    <div class="conversation-section">
+        <h2>🏛️ History Museum / သမိုင်းပြတိုက်</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">This dinosaur skeleton is enormous!</div>
+                <div class="burmese">ဒီဒိုင်နိုဆောအရိုးစုက ဧရာမကြီးပဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('This dinosaur skeleton is enormous!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">It's a Tyrannosaurus Rex. They lived about 68 million years ago.</div>
+                <div class="burmese">ဒါက Tyrannosaurus Rex ပါ။ လွန်ခဲ့တဲ့နှစ်ပေါင်း ၆၈ သန်းလောက်က နေထိုင်ခဲ့ကြတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('It is a Tyrannosaurus Rex. They lived about 68 million years ago.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">I can't imagine how big they were in real life!</div>
+                <div class="burmese">သူတို့ တကယ့်ဘဝမှာ ဘယ်လောက်ကြီးခဲ့လဲ စိတ်ကူးမရဘူး။</div>
+                <button class="audio-btn" onclick="speakEnglish('I cannot imagine how big they were in real life!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Up to 40 feet long. Let's go see the fossil room next.</div>
+                <div class="burmese">ပေ ၄၀ အထိရှည်တယ်။ နောက်ထပ် ရုပ်ကြွင်းအခန်းကို သွားကြည့်ရအောင်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Up to 40 feet long. Let us go see the fossil room next.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 6: Special Event -->
+    <div class="conversation-section">
+        <h2>🎉 Special Event / အထူးပွဲ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Visitor:</div>
+                <div class="english">Are there any special events happening this week?</div>
+                <div class="burmese">ဒီသီတင်းပတ်အတွင်း အထူးပွဲတွေ ရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Are there any special events happening this week?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Staff:</div>
+                <div class="english">Yes, there's a lecture on ancient Roman architecture on Thursday at 3 PM.</div>
+                <div class="burmese">ဟုတ်ပါတယ်၊ ကြာသပတေးနေ့ နေ့လယ် ၃ နာရီမှာ ရှေးဟောင်းရောမဗိသုကာအကြောင်း ဟောပြောပွဲရှိပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, there is a lecture on ancient Roman architecture on Thursday at 3 PM.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Visitor:</div>
+                <div class="english">Is it free with admission?</div>
+                <div class="burmese">ဝင်ကြေးနဲ့ အခမဲ့လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Is it free with admission?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Staff:</div>
+                <div class="english">Yes, all events are included with your ticket. No registration required.</div>
+                <div class="burmese">ဟုတ်ပါတယ်၊ ပွဲအားလုံးက သင့်လက်မှတ်နဲ့ ပါဝင်ပါတယ်။ စာရင်းပေးသွင်းရန် မလိုအပ်ပါဘူး။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, all events are included with your ticket. No registration required.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 7: Museum Gift Shop -->
+    <div class="conversation-section">
+        <h2>🎁 Museum Gift Shop / ပြတိုက်လက်ဆောင်ပစ္စည်းဆိုင်</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Visitor:</div>
+                <div class="english">Where is the gift shop?</div>
+                <div class="burmese">လက်ဆောင်ပစ္စည်းဆိုင်က ဘယ်မှာလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Where is the gift shop?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Staff:</div>
+                <div class="english">It's on the first floor, near the main entrance.</div>
+                <div class="burmese">ပထမထပ်၊ အဝင်ဝအနီးမှာပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('It is on the first floor, near the main entrance.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Visitor:</div>
+                <div class="english">Do they sell replicas of the exhibits?</div>
+                <div class="burmese">ပြပွဲတွေရဲ့ ပုံတူတွေ ရောင်းလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do they sell replicas of the exhibits?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Staff:</div>
+                <div class="english">Yes, you can find postcards, books, jewelry, and miniature sculptures inspired by our collection.</div>
+                <div class="burmese">ဟုတ်ပါတယ်၊ ကျွန်တော်တို့စုဆောင်းမှုကနေ မှုတ်သွင်းထားတဲ့ ပို့စကတ်များ၊ စာအုပ်များ၊ လက်ဝတ်ရတနာများနှင့် အရုပ်ပုံတုများကို တွေ့နိုင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, you can find postcards, books, jewelry, and miniature sculptures inspired by our collection.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 8: Photography Rules -->
+    <div class="conversation-section">
+        <h2>📸 Photography Rules / ဓာတ်ပုံရိုက်ခြင်းစည်းမျဉ်းများ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Visitor:</div>
+                <div class="english">Is photography allowed inside the museum?</div>
+                <div class="burmese">ပြတိုက်အတွင်းမှာ ဓာတ်ပုံရိုက်ခွင့်ပြုလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Is photography allowed inside the museum?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Staff:</div>
+                <div class="english">You can take photos without flash. Flash photography damages the artwork.</div>
+                <div class="burmese">ဖလက်ရှ်မပါဘဲ ဓာတ်ပုံရိုက်လို့ရပါတယ်။ ဖလက်ရှ်ဓာတ်ပုံက အနုပညာလက်ရာကို ပျက်စီးစေပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('You can take photos without flash. Flash photography damages the artwork.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Visitor:</div>
+                <div class="english">What about selfies and tripods?</div>
+                <div class="burmese">ဆဲလ်ဖီနဲ့ ခြေထောက်သုံးလုံးခုံတွေကရော။</div>
+                <button class="audio-btn" onclick="speakEnglish('What about selfies and tripods?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Staff:</div>
+                <div class="english">Selfies are fine, but tripods are not allowed during busy hours. Please check our website for full guidelines.</div>
+                <div class="burmese">ဆဲလ်ဖီက ရပါတယ်၊ ဒါပေမယ့် လူစည်ကားချိန်မှာ ခြေထောက်သုံးလုံးခုံတွေ ခွင့်မပြုပါဘူး။ အပြည့်အစုံလမ်းညွှန်ချက်အတွက် ကျွန်တော်တို့ဝက်ဘ်ဆိုက်ကို ကြည့်ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Selfies are fine, but tripods are not allowed during busy hours. Please check our website for full guidelines.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Museum Information -->
+    <div class="conversation-section">
+        <h2>📋 Museum Information / ပြတိုက်အချက်အလက်</h2>
+        <div class="info-box">
+            <p><strong>🕒 Hours (ဖွင့်ချိန်):</strong> Tuesday - Sunday: 10 AM - 6 PM | Closed Monday (အင်္ဂါနေ့မှ တနင်္ဂနွေနေ့အထိ၊ တနင်္လာနေ့ပိတ်)</p>
+            <p><strong>📍 Location (တည်နေရာ):</strong> 123 Museum Avenue, City Center (မြို့လယ်၊ ပြတိုက်လမ်း ၁၂၃)</p>
+            <p><strong>🚗 Parking (ကားပါကင်):</strong> $5 per day (တစ်ရက် ၅ ဒေါ်လာ)</p>
+            <p><strong>♿ Accessibility (မသန်စွမ်းသူများအတွက်):</strong> Wheelchair accessible, elevators available (ဘီးတပ်ကုလားထိုင်သုံးလို့ရ၊ ဓာတ်လှေကားရှိ)</p>
+            <p><strong>☕ Cafe (ကော်ဖီဆိုင်):</strong> On the ground floor (မြေညီထပ်)</p>
+            <p><strong>🎧 Guided Tours (လမ်းညွှန်ခရီးစဉ်):</strong> Available at 11 AM and 2 PM daily (နေ့စဉ် နံနက် ၁၁ နာရီနှင့် နေ့လယ် ၂ နာရီ)</p>
+        </div>
+    </div>
+    
+    <!-- Vocabulary Section -->
+    <div class="conversation-section">
+        <h2>📚 Museum Vocabulary / ပြတိုက်သုံးဝေါဟာရများ</h2>
+        <div class="vocab-grid">
+            <div class="vocab-item"><span class="vocab-eng">Exhibition</span><br><span class="vocab-burmese">ပြပွဲ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Artifact</span><br><span class="vocab-burmese">ရှေးဟောင်းပစ္စည်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Curator</span><br><span class="vocab-burmese">ပြတိုက်မှူး</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Gallery</span><br><span class="vocab-burmese">ပြခန်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Painting</span><br><span class="vocab-burmese">ပန်းချီကား</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Sculpture</span><br><span class="vocab-burmese">ရုပ်တု</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Fossil</span><br><span class="vocab-burmese">ရုပ်ကြွင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Mummy</span><br><span class="vocab-burmese">လူခေါင်းအလောင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Donation</span><br><span class="vocab-burmese">အလှူငွေ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Membership</span><br><span class="vocab-burmese">အသင်းဝင်ခြင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Restoration</span><br><span class="vocab-burmese">ပြန်လည်ထိန်းသိမ်းခြင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Permanent collection</span><br><span class="vocab-burmese">အမြဲတမ်းစုဆောင်းမှု</span></div>
+        </div>
+    </div>
+    
+    <!-- Museum Etiquette -->
+    <div class="conversation-section">
+        <h2>💡 Museum Etiquette / ပြတိုက်ကျင့်ဝတ်</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Do's and Don'ts in the Museum (ပြတိုက်တွင် လုပ်ရန်/မလုပ်ရန်):</strong><br>
+            • <strong>DO</strong> walk calmly (တိတ်တိတ်ဆိတ်ဆိတ် လမ်းလျှောက်ပါ)<br>
+            • <strong>DON'T</strong> touch the exhibits (ပြပွဲများကို မထိပါနှင့်)<br>
+            • <strong>DO</strong> keep your voice low (အသံနိမ့်ထားပါ)<br>
+            • <strong>DON'T</strong> bring large bags or backpacks (အိတ်ကြီးများ သို့မဟုတ် ကျောပိုးအိတ်များ မယူလာပါနှင့်)<br>
+            • <strong>DO</strong> stay behind the barriers (အတားအဆီးများနောက်မှာနေပါ)<br>
+            • <strong>DON'T</strong> eat or drink inside the galleries (ပြခန်းများအတွင်းတွင် စားသောက်ခြင်းမပြုပါနှင့်)<br>
+            • <strong>DO</strong> ask before taking photos (ဓာတ်ပုံမရိုက်မီ မေးမြန်းပါ)<br>
+        </div>
+    </div>
+    
+    <!-- Practice Section -->
+    <div class="conversation-section">
+        <h2>✏️ Practice Questions / လေ့ကျင့်ခန်းမေးခွန်းများ</h2>
+        <div class="dialogue-box">
+            <div class="quiz-question">
+                <p><strong>1. How do you ask about current exhibitions?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What exhibitions are on display?')">What time does the museum close?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What exhibitions are on display?')">What exhibitions are on display?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What exhibitions are on display?')">How much are tickets?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What exhibitions are on display?')">Where is the gift shop?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>2. "ဒီပန်းချီကားကို ဘယ်သူရေးဆွဲထားတာလဲ" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Who painted this painting?')">When was this painted?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Who painted this painting?')">Where was this painted?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Who painted this painting?')">Who painted this painting?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Who painted this painting?')">How much is this painting?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. What is an "audio guide" used for?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'To listen to information about exhibits')">To take photos</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'To listen to information about exhibits')">To buy tickets</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'To listen to information about exhibits')">To listen to information about exhibits</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'To listen to information about exhibits')">To read books</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. "ဖလက်ရှ်ဓာတ်ပုံရိုက်ခြင်းကို ခွင့်မပြုပါ" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Flash photography is not allowed.')">Photography is allowed.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Flash photography is not allowed.')">Flash photography is not allowed.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Flash photography is not allowed.')">Cameras are prohibited.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Flash photography is not allowed.')">You can use flash.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. What is a "curator"?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A person who manages museum collections')">A tour guide</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A person who manages museum collections')">A security guard</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A person who manages museum collections')">A person who manages museum collections</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A person who manages museum collections')">A ticket seller</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p><i class="fas fa-heart" style="color: #6c5ce7;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p>
+        <p style="font-size: 0.75rem; margin-top: 0.5rem;">Practice these conversations to visit museums with confidence!</p>
+    </footer>
+</div>
+
+<!-- Back to Top Button -->
+<a href="#" class="back-to-top" id="backToTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+<script>
+    function speakEnglish(text) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8;
+        utterance.pitch = 1.0;
+        
+        function setVoice() {
+            const voices = window.speechSynthesis.getVoices();
+            const englishVoice = voices.find(v => v.lang === 'en-US' || v.lang.startsWith('en-'));
+            if (englishVoice) utterance.voice = englishVoice;
+            window.speechSynthesis.speak(utterance);
+        }
+        
+        if (window.speechSynthesis.getVoices().length) setVoice();
+        else window.speechSynthesis.onvoiceschanged = setVoice;
+    }
+    
+    function checkAnswer(element, correctAnswer) {
+        const options = element.parentElement.querySelectorAll('.quiz-option');
+        const isCorrect = element.innerText === correctAnswer;
+        
+        if (isCorrect) {
+            element.style.background = '#2ecc71';
+            element.style.color = 'white';
+            speakEnglish(correctAnswer);
+            setTimeout(() => {
+                options.forEach(opt => {
+                    opt.style.background = '';
+                    opt.style.color = '';
+                });
+            }, 1500);
+        } else {
+            element.style.background = '#e74c3c';
+            element.style.color = 'white';
+            setTimeout(() => {
+                element.style.background = '';
+                element.style.color = '';
+            }, 500);
+        }
+    }
+    
+    // Back to Top Button Functionality
+    (function() {
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        
+        if (backToTopBtn) {
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

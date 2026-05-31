@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Repair - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 1rem;
+        }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        
+        .conversation-section {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .conversation-section h2 {
+            background: #2c3e50;
+            color: white;
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line {
+            display: grid;
+            grid-template-columns: 70px 1fr 1fr;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            align-items: start;
+        }
+        .speaker { font-weight: bold; color: #2c3e50; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { 
+            color: #8e6b3c; 
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 0.95rem;
+        }
+        .audio-btn {
+            background: #eef4ff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.3rem;
+        }
+        .audio-btn:hover { background: #2c3e50; color: white; }
+        
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+            padding: 1rem;
+        }
+        .vocab-item {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            border-left: 3px solid #2c3e50;
+        }
+        .vocab-eng { font-weight: bold; color: #2c3e50; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        
+        .quiz-question {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.8rem;
+        }
+        .quiz-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .quiz-option {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .quiz-option:hover { background: #2c3e50; color: white; border-color: #2c3e50; }
+        
+        .tips-box {
+            background: #e8f0f8;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #2c3e50;
+        }
+        .tips-box i { color: #2c3e50; margin-right: 8px; }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1rem;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: #1e3c72;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid white;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: #f5b042;
+            color: #1e3c72;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .back-to-top i {
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 42px;
+                height: 42px;
+            }
+            .back-to-top i {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 700px) {
+            .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> All Conversations
+    </a>
+    
+    <header>
+        <h1><i class="fas fa-wrench"></i> Car Repair</h1>
+        <p>Learn how to describe car problems, get estimates, and schedule repairs in English</p>
+        <p>ကားပြဿနာများဖော်ပြနည်း၊ ခန့်မှန်းခြေများရယူနည်းနှင့် ပြုပြင်ရန်အချိန်ဇယားဆွဲနည်းကို အင်္ဂလိပ်လို လေ့လာပါ</p>
+    </header>
+    
+    <!-- Dialogue 1: Strange Noise -->
+    <div class="conversation-section">
+        <h2>🔊 Strange Noise / ထူးဆန်းသောအသံ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">My car is making a strange grinding noise when I brake. Can you take a look?</div>
+                <div class="burmese">ကျွန်တော့်ကား ဘရိတ်အုပ်တဲ့အခါ ကြိတ်သံထူးထူးတစ်ခု မြည်နေတယ်။ လာကြည့်ပေးနိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('My car is making a strange grinding noise when I brake. Can you take a look?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Mechanic:</div>
+                <div class="english">That sounds like worn brake pads. Let me test drive it and check.</div>
+                <div class="burmese">ဘရိတ်ခွံတွေ ဟောင်းနေတာဖြစ်နိုင်ပါတယ်။ စမ်းမောင်းကြည့်ပြီး စစ်ဆေးပါရစေ။</div>
+                <button class="audio-btn" onclick="speakEnglish('That sounds like worn brake pads. Let me test drive it and check.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Mechanic:</div>
+                <div class="english">You're right. The brake pads are completely worn down. You also need new rotors.</div>
+                <div class="burmese">သင်မှန်ပါတယ်။ ဘရိတ်ခွံတွေ လုံးဝဟောင်းနွမ်းနေပါပြီ။ rotor အသစ်များလည်း လိုအပ်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('You are right. The brake pads are completely worn down. You also need new rotors.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">How much will that cost?</div>
+                <div class="burmese">ဒါက ဘယ်လောက်ကုန်ကျမလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('How much will that cost?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 2: Engine Won't Start -->
+    <div class="conversation-section">
+        <h2>🔋 Engine Won't Start / အင်ဂျင်မစတင်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">My car won't start. When I turn the key, I hear a clicking sound.</div>
+                <div class="burmese">ကျွန်တော့်ကား မစတင်ဘူး။ သော့လှည့်တဲ့အခါ ကလစ်သံတစ်ခု ကြားရတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('My car will not start. When I turn the key, I hear a clicking sound.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Mechanic:</div>
+                <div class="english">That's usually a dead battery. Let me test the battery for you.</div>
+                <div class="burmese">ဒါက များသောအားဖြင့် ဘက်ထရီသေသွားတာပါ။ ဘက်ထရီကို စမ်းသပ်ကြည့်ပါရစေ။</div>
+                <button class="audio-btn" onclick="speakEnglish('That is usually a dead battery. Let me test the battery for you.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Mechanic:</div>
+                <div class="english">Your battery is dead. It's 4 years old, so it's time for a replacement. A new battery will be $120 installed.</div>
+                <div class="burmese">သင့်ဘက်ထရီ သေသွားပါပြီ။ ၄ နှစ်ရှိပြီမို့ အစားထိုးချိန်ရောက်ပါပြီ။ တပ်ဆင်ပြီး ဘက်ထရီအသစ် ၁၂၀ ဒေါ်လာပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Your battery is dead. It is 4 years old, so it is time for a replacement. A new battery will be 120 dollars installed.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Okay, go ahead and replace it. How long will it take?</div>
+                <div class="burmese">အိုကေ၊ ဆက်လုပ်ပါ။ ဘယ်လောက်ကြာမလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Okay, go ahead and replace it. How long will it take?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 3: Check Engine Light -->
+    <div class="conversation-section">
+        <h2>⚠️ Check Engine Light / အင်ဂျင်စစ်ဆေးရန်မီး</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">The check engine light came on. Can you diagnose the problem?</div>
+                <div class="burmese">အင်ဂျင်စစ်ဆေးရန်မီး လင်းလာတယ်။ ပြဿနာကို စစ်ဆေးဖော်ထုတ်နိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('The check engine light came on. Can you diagnose the problem?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Mechanic:</div>
+                <div class="english">I'll connect the diagnostic scanner. Let's see what code it shows.</div>
+                <div class="burmese">ကျွန်တော် ရောဂါရှာဖွေရေးစကင်နာကို ချိတ်ဆက်ပါမယ်။ ဘယ်ကုဒ်ပြသလဲ ကြည့်ရအောင်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I will connect the diagnostic scanner. Let us see what code it shows.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Mechanic:</div>
+                <div class="english">It's an oxygen sensor problem. That's a common issue. The sensor needs to be replaced.</div>
+                <div class="burmese">အောက်ဆီဂျင်အာရုံခံကိရိယာ ပြဿနာပါ။ အဖြစ်များတဲ့ပြဿနာပါ။ အာရုံခံကိရိယာ အစားထိုးဖို့လိုပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('It is an oxygen sensor problem. That is a common issue. The sensor needs to be replaced.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">How much is the repair?</div>
+                <div class="burmese">ပြုပြင်ခက ဘယ်လောက်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('How much is the repair?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 4: Oil Change -->
+    <div class="conversation-section">
+        <h2>🛢️ Oil Change / ဆီလဲလှယ်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I need an oil change and routine maintenance. It's been 5,000 miles since my last service.</div>
+                <div class="burmese">ဆီလဲလှယ်ခြင်းနှင့် ပုံမှန်ပြုပြင်ထိန်းသိမ်းမှု လိုအပ်ပါတယ်။ နောက်ဆုံးဝန်ဆောင်မှုပြီးတာ ၅၀၀၀ မိုင်ရှိပြီ။</div>
+                <button class="audio-btn" onclick="speakEnglish('I need an oil change and routine maintenance. It has been 5,000 miles since my last service.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Mechanic:</div>
+                <div class="english">We offer a standard oil change package for $50. That includes new oil, oil filter, and a multi-point inspection.</div>
+                <div class="burmese">ကျွန်တော်တို့ စံဆီလဲလှယ်ခြင်းအထုပ်ကို ၅၀ ဒေါ်လာနဲ့ ပေးပါတယ်။ ဆီအသစ်၊ ဆီစစ်နှင့် အမှတ်ပေါင်းစုံစစ်ဆေးခြင်းတို့ ပါဝင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('We offer a standard oil change package for 50 dollars. That includes new oil, oil filter, and a multi-point inspection.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Do you use synthetic or conventional oil?</div>
+                <div class="burmese">ဓာတုဆီလား သဘာဝဆီလား သုံးလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you use synthetic or conventional oil?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Mechanic:</div>
+                <div class="english">Synthetic is better for your engine. It's an extra $20.</div>
+                <div class="burmese">ဓာတုဆီက သင့်အင်ဂျင်အတွက် ပိုကောင်းပါတယ်။ အပို ၂၀ ဒေါ်လာပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Synthetic is better for your engine. It is an extra 20 dollars.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 5: Tire Problems -->
+    <div class="conversation-section">
+        <h2>🛞 Tire Problems / တာယာပြဿနာများ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I have a flat tire. Can you fix it or replace it?</div>
+                <div class="burmese">ကျွန်တော့်မှာ တာယာပေါက်နေတယ်။ ပြင်ပေးနိုင်မလား ဒါမှမဟုတ် အစားထိုးပေးနိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('I have a flat tire. Can you fix it or replace it?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Mechanic:</div>
+                <div class="english">Let me inspect the tire. The puncture is on the sidewall, which can't be repaired. You'll need a new tire.</div>
+                <div class="burmese">တာယာကို စစ်ဆေးပါရစေ။ ထိုးဖောက်မှုက ဘေးနံရံမှာပါ၊ ပြုပင်၍မရပါ။ တာယာအသစ်လိုအပ်ပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Let me inspect the tire. The puncture is on the sidewall, which cannot be repaired. You will need a new tire.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">How much is a new tire?</div>
+                <div class="burmese">တာယာအသစ်တစ်လုံး ဘယ်လောက်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('How much is a new tire?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Mechanic:</div>
+                <div class="english">This model is $95 including installation and balancing.</div>
+                <div class="burmese">ဒီမော်ဒယ်က တပ်ဆင်ခြင်းနှင့် ချိန်ညှိခြင်းအပါအဝင် ၉၅ ဒေါ်လာပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('This model is 95 dollars including installation and balancing.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 6: Air Conditioning Problem -->
+    <div class="conversation-section">
+        <h2>❄️ Air Conditioning Problem / လေအေးပေးစက်ပြဿနာ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">My air conditioning is blowing warm air. It's not cooling at all.</div>
+                <div class="burmese">ကျွန်တော့်လေအေးပေးစက်က လေပူတွေ မှုတ်ထုတ်နေတယ်။ လုံးဝမအေးဘူး။</div>
+                <button class="audio-btn" onclick="speakEnglish('My air conditioning is blowing warm air. It is not cooling at all.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Mechanic:</div>
+                <div class="english">The refrigerant might be low. Let me check the pressure.</div>
+                <div class="burmese">ရေခဲသေတ္တာရည် နည်းနေနိုင်တယ်။ ဖိအားကို စစ်ကြည့်ပါရစေ။</div>
+                <button class="audio-btn" onclick="speakEnglish('The refrigerant might be low. Let me check the pressure.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Mechanic:</div>
+                <div class="english">You're low on refrigerant. I'll recharge the system. There's also a small leak I found. I recommend fixing it.</div>
+                <div class="burmese">သင့်မှာ ရေခဲသေတ္တာရည် နည်းနေတယ်။ စနစ်ကို ပြန်ဖြည့်ပေးပါမယ်။ ကျွန်တော်တွေ့တဲ့ ယိုစိမ့်မှုသေးသေးလည်း ရှိပါတယ်။ ပြုပြင်ဖို့ အကြံပြုပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('You are low on refrigerant. I will recharge the system. There is also a small leak I found. I recommend fixing it.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">How much for both?</div>
+                <div class="burmese">နှစ်ခုလုံးအတွက် ဘယ်လောက်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('How much for both?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 7: Getting a Quote -->
+    <div class="conversation-section">
+        <h2>📋 Getting a Quote / ခန့်မှန်းခြေရယူခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Can you give me a written estimate for all the repairs?</div>
+                <div class="burmese">ပြုပြင်မှုအားလုံးအတွက် စာဖြင့်ရေးသားထားသော ခန့်မှန်းခြေ ပေးနိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Can you give me a written estimate for all the repairs?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Mechanic:</div>
+                <div class="english">Sure. Here's the breakdown: Brake pads and rotors $350, battery $120, oxygen sensor $180, oil change $70, tire $95, AC repair $200. Total $1,015.</div>
+                <div class="burmese">ရပါတယ်။ ဒီမှာ ကွဲပြားပုံ- ဘရိတ်ခွံနှင့် rotor $၃၅၀၊ ဘက်ထရီ $၁၂၀၊ အောက်ဆီဂျင်အာရုံခံကိရိယာ $၁၈၀၊ ဆီလဲလှယ်ခြင်း $၇၀၊ တာယာ $၉၅၊ AC ပြုပြင်ခြင်း $၂၀၀။ စုစုပေါင်း $၁,၀၁၅။</div>
+                <button class="audio-btn" onclick="speakEnglish('Sure. Here is the breakdown: Brake pads and rotors 350 dollars, battery 120 dollars, oxygen sensor 180 dollars, oil change 70 dollars, tire 95 dollars, AC repair 200 dollars. Total 1,015 dollars.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">That's higher than I expected. Can you prioritize the urgent repairs?</div>
+                <div class="burmese">ဒါက ကျွန်တော်မျှော်လင့်ထားတာထက် မြင့်နေတယ်။ အရေးတကြီးပြုပြင်မှုများကို ဦးစားပေးနိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('That is higher than I expected. Can you prioritize the urgent repairs?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Mechanic:</div>
+                <div class="english">The brake issue is most urgent for safety. The battery and tire also need attention. The rest can wait a few weeks.</div>
+                <div class="burmese">ဘရိတ်ပြဿနာက ဘေးကင်းရေးအတွက် အရေးတကြီးဆုံးပါ။ ဘက်ထရီနဲ့ တာယာလည်း ဂရုစိုက်ဖို့လိုပါတယ်။ ကျန်တာတွေ ရက်သတ္တပတ်အနည်းငယ် စောင့်နိုင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('The brake issue is most urgent for safety. The battery and tire also need attention. The rest can wait a few weeks.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 8: Picking Up the Car -->
+    <div class="conversation-section">
+        <h2>✅ Picking Up the Car / ကားလာရောက်ယူခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I'm here to pick up my car. Is it ready?</div>
+                <div class="burmese">ကျွန်တော် ကျွန်တော့်ကားကို လာရောက်ယူပါတယ်။ အဆင်သင့်ဖြစ်ပြီလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am here to pick up my car. Is it ready?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Mechanic:</div>
+                <div class="english">Yes, all repairs are complete. We replaced the brakes, battery, and tire. We also did the oil change and AC recharge.</div>
+                <div class="burmese">ဟုတ်ပါတယ်၊ ပြုပြင်မှုအားလုံး ပြီးစီးပါပြီ။ ဘရိတ်၊ ဘက်ထရီနှင့် တာယာကို အစားထိုးခဲ့ပါတယ်။ ဆီလဲလှယ်ခြင်းနှင့် AC ပြန်ဖြည့်ခြင်းလည်း လုပ်ခဲ့ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, all repairs are complete. We replaced the brakes, battery, and tire. We also did the oil change and AC recharge.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Thank you. How much do I owe?</div>
+                <div class="burmese">ကျေးဇူးပါ။ ဘယ်လောက်ပေးရမလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Thank you. How much do I owe?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Mechanic:</div>
+                <div class="english">The total is $680. We also did a free alignment check. Your car is ready to go.</div>
+                <div class="burmese">စုစုပေါင်း ၆၈၀ ဒေါ်လာပါ။ ချိန်ညှိမှုစစ်ဆေးခြင်းကိုလည်း အခမဲ့လုပ်ပေးခဲ့ပါတယ်။ သင့်ကား မောင်းရန်အဆင်သင့်ဖြစ်ပါပြီ။</div>
+                <button class="audio-btn" onclick="speakEnglish('The total is 680 dollars. We also did a free alignment check. Your car is ready to go.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Car Repair Vocabulary -->
+    <div class="conversation-section">
+        <h2>📚 Car Repair Vocabulary / ကားပြုပြင်သုံးဝေါဟာရများ</h2>
+        <div class="vocab-grid">
+            <div class="vocab-item"><span class="vocab-eng">Engine</span><br><span class="vocab-burmese">အင်ဂျင်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Transmission</span><br><span class="vocab-burmese">ဂီယာ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Brake pads</span><br><span class="vocab-burmese">ဘရိတ်ခွံ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Rotors</span><br><span class="vocab-burmese">ဘရိတ်ဒစ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Alternator</span><br><span class="vocab-burmese">အော်တာနေတာ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Spark plugs</span><br><span class="vocab-burmese">စပါ့ပလပ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Timing belt</span><br><span class="vocab-burmese">အချိန်ကိုက်ခါးပတ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Radiator</span><br><span class="vocab-burmese">ရေတိုင်ကီ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Muffler</span><br><span class="vocab-burmese">အသံချဲ့စက်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Suspension</span><br><span class="vocab-burmese">ဆိုင်းထိန်းစနစ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Alignment</span><br><span class="vocab-burmese">ဘီးချိန်ညှိခြင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Diagnostic test</span><br><span class="vocab-burmese">ရောဂါရှာဖွေရေးစစ်ဆေးမှု</span></div>
+        </div>
+    </div>
+    
+    <!-- Car Maintenance Schedule -->
+    <div class="conversation-section">
+        <h2>📅 Car Maintenance Schedule / ကားပြုပြင်ထိန်းသိမ်းမှုအချိန်ဇယား</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Recommended Service Intervals (အကြံပြုထားသောဝန်ဆောင်မှုကြားကာလများ):</strong><br>
+            • <strong>Oil change</strong> - Every 5,000 - 7,500 miles (ဆီလဲလှယ်ခြင်း - မိုင် ၅,၀၀၀ - ၇,၅၀၀ တိုင်း)<br>
+            • <strong>Tire rotation</strong> - Every 6,000 - 8,000 miles (တာယာလဲလှယ်ခြင်း - မိုင် ၆,၀၀၀ - ၈,၀၀၀ တိုင်း)<br>
+            • <strong>Brake inspection</strong> - Every 10,000 - 15,000 miles (ဘရိတ်စစ်ဆေးခြင်း - မိုင် ၁၀,၀၀၀ - ၁၅,၀၀၀ တိုင်း)<br>
+            • <strong>Battery check</strong> - Twice a year (ဘက်ထရီစစ်ဆေးခြင်း - တစ်နှစ်နှစ်ကြိမ်)<br>
+            • <strong>Coolant flush</strong> - Every 30,000 miles (ရေအေးစနစ်သန့်ရှင်းခြင်း - မိုင် ၃၀,၀၀၀ တိုင်း)<br>
+            • <strong>Transmission service</strong> - Every 50,000 - 60,000 miles (ဂီယာဝန်ဆောင်မှု - မိုင် ၅၀,၀၀၀ - ၆၀,၀၀၀ တိုင်း)<br>
+            • <strong>Timing belt replacement</strong> - Every 90,000 - 100,000 miles (အချိန်ကိုက်ခါးပတ်အစားထိုးခြင်း - မိုင် ၉၀,၀၀၀ - ၁၀၀,၀၀၀ တိုင်း)<br>
+        </div>
+    </div>
+    
+    <!-- Emergency Car Tips -->
+    <div class="conversation-section">
+        <h2>🚨 Emergency Car Tips / အရေးပေါ်ကားအကြံပြုချက်များ</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>What to Do in Car Emergencies (ကားအရေးပေါ်အခြေအနေများတွင် လုပ်ဆောင်ရမည့်အရာများ):</strong><br>
+            • <strong>Engine overheats</strong> - Pull over, turn off AC, turn on heater (အင်ဂျင်အပူလွန်ကဲခြင်း - လမ်းဘေးဆွဲရပ်၊ AC ပိတ်၊ အပူပေးစက်ဖွင့်)<br>
+            • <strong>Flat tire</strong> - Pull to a safe area, use hazard lights, call roadside assistance (တာယာပေါက်ခြင်း - ဘေးကင်းရာနေရာသို့ရပ်၊ အန္တရာယ်ရှိမီးများဖွင့်၊ လမ်းဘေးအကူအညီခေါ်)<br>
+            • <strong>Dead battery</strong> - Try jump-starting with cables, call for help (ဘက်ထရီသေခြင်း - ကြိုးများဖြင့် jump-start လုပ်ကြည့်၊ အကူအညီခေါ်)<br>
+            • <strong>Strange noises</strong> - Don't ignore, get inspected immediately (ထူးဆန်းသောအသံများ - လျစ်လျူမရှု၊ ချက်ချင်းစစ်ဆေးပါ)<br>
+        </div>
+    </div>
+    
+    <!-- Practice Section -->
+    <div class="conversation-section">
+        <h2>✏️ Practice Questions / လေ့ကျင့်ခန်းမေးခွန်းများ</h2>
+        <div class="dialogue-box">
+            <div class="quiz-question">
+                <p><strong>1. How do you describe a strange noise in your car?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'My car is making a strange noise when I brake.')">My car is running perfectly.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'My car is making a strange noise when I brake.')">My car is making a strange noise when I brake.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'My car is making a strange noise when I brake.')">My car needs a wash.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'My car is making a strange noise when I brake.')">My car has new tires.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>2. "အင်ဂျင်စစ်ဆေးရန်မီး လင်းလာတယ်" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'The check engine light came on.')">The battery light is on.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'The check engine light came on.')">The check engine light came on.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'The check engine light came on.')">The oil light is on.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'The check engine light came on.')">The tire pressure light is on.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. What does "flat tire" mean?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A tire that has lost air pressure')">A tire that is new</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A tire that has lost air pressure')">A tire that is overinflated</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A tire that has lost air pressure')">A tire that has lost air pressure</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A tire that has lost air pressure')">A tire that is dirty</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. "ဆီလဲလှယ်ခြင်းနဲ့ ပုံမှန်ပြုပြင်ထိန်းသိမ်းမှု လိုအပ်ပါတယ်" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I need an oil change and routine maintenance.')">I need a new engine.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I need an oil change and routine maintenance.')">I need new brakes.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I need an oil change and routine maintenance.')">I need an oil change and routine maintenance.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I need an oil change and routine maintenance.')">I need new tires.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. What should you ask for before authorizing repairs?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A written estimate')">A verbal promise</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A written estimate')">A referral</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A written estimate')">A written estimate</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A written estimate')">A discount</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p><i class="fas fa-heart" style="color: #2c3e50;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p>
+        <p style="font-size: 0.75rem; margin-top: 0.5rem;">Practice these conversations to handle car repairs with confidence!</p>
+    </footer>
+</div>
+
+<!-- Back to Top Button -->
+<a href="#" class="back-to-top" id="backToTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+<script>
+    function speakEnglish(text) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8;
+        utterance.pitch = 1.0;
+        
+        function setVoice() {
+            const voices = window.speechSynthesis.getVoices();
+            const englishVoice = voices.find(v => v.lang === 'en-US' || v.lang.startsWith('en-'));
+            if (englishVoice) utterance.voice = englishVoice;
+            window.speechSynthesis.speak(utterance);
+        }
+        
+        if (window.speechSynthesis.getVoices().length) setVoice();
+        else window.speechSynthesis.onvoiceschanged = setVoice;
+    }
+    
+    function checkAnswer(element, correctAnswer) {
+        const options = element.parentElement.querySelectorAll('.quiz-option');
+        const isCorrect = element.innerText === correctAnswer;
+        
+        if (isCorrect) {
+            element.style.background = '#2ecc71';
+            element.style.color = 'white';
+            speakEnglish(correctAnswer);
+            setTimeout(() => {
+                options.forEach(opt => {
+                    opt.style.background = '';
+                    opt.style.color = '';
+                });
+            }, 1500);
+        } else {
+            element.style.background = '#e74c3c';
+            element.style.color = 'white';
+            setTimeout(() => {
+                element.style.background = '';
+                element.style.color = '';
+            }, 500);
+        }
+    }
+    
+    // Back to Top Button Functionality
+    (function() {
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        
+        if (backToTopBtn) {
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

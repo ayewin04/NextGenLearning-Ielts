@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Embassy Services - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 1rem;
+        }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        
+        .conversation-section {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .conversation-section h2 {
+            background: #2980b9;
+            color: white;
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line {
+            display: grid;
+            grid-template-columns: 70px 1fr 1fr;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            align-items: start;
+        }
+        .speaker { font-weight: bold; color: #2980b9; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { 
+            color: #8e6b3c; 
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 0.95rem;
+        }
+        .audio-btn {
+            background: #eef4ff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.3rem;
+        }
+        .audio-btn:hover { background: #2980b9; color: white; }
+        
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+            padding: 1rem;
+        }
+        .vocab-item {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            border-left: 3px solid #2980b9;
+        }
+        .vocab-eng { font-weight: bold; color: #2980b9; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        
+        .quiz-question {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.8rem;
+        }
+        .quiz-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .quiz-option {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .quiz-option:hover { background: #2980b9; color: white; border-color: #2980b9; }
+        
+        .tips-box {
+            background: #e3f2fd;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #2980b9;
+        }
+        .tips-box i { color: #2980b9; margin-right: 8px; }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1rem;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: #1e3c72;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid white;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: #f5b042;
+            color: #1e3c72;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .back-to-top i {
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 42px;
+                height: 42px;
+            }
+            .back-to-top i {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 700px) {
+            .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> All Conversations
+    </a>
+    
+    <header>
+        <h1><i class="fas fa-landmark"></i> Embassy Services</h1>
+        <p>Learn how to get passport services, legal assistance, and consular help in English</p>
+        <p>ပတ်စ်ပို့ဝန်ဆောင်မှုများ၊ ဥပဒေအကူအညီနှင့် ကောင်စစ်ဝန်အကူအညီများ ရယူနည်းကို အင်္ဂလိပ်လို လေ့လာပါ</p>
+    </header>
+    
+    <!-- Dialogue 1: Passport Renewal -->
+    <div class="conversation-section">
+        <h2>🛂 Passport Renewal / ပတ်စ်ပို့သက်တမ်းတိုးခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Citizen:</div>
+                <div class="english">Hello, I need to renew my passport. It expires in two months.</div>
+                <div class="burmese">မင်္ဂလာပါ၊ ကျွန်တော့်ပတ်စ်ပို့ သက်တမ်းတိုးဖို့ လိုအပ်ပါတယ်။ နှစ်လအတွင်း သက်တမ်းကုန်ပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Hello, I need to renew my passport. It expires in two months.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Officer:</div>
+                <div class="english">Do you have your old passport and a completed application form?</div>
+                <div class="burmese">သင့်ပတ်စ်ပို့ဟောင်းနဲ့ ဖြည့်စွက်ပြီးသောလျှောက်လွှာပုံစံ ရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you have your old passport and a completed application form?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Citizen:</div>
+                <div class="english">Yes, here they are. I also brought two passport photos.</div>
+                <div class="burmese">ဟုတ်ကဲ့၊ ဒီမှာပါ။ ပတ်စ်ပို့ဓာတ်ပုံ နှစ်ပုံလည်း ယူလာပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, here they are. I also brought two passport photos.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Officer:</div>
+                <div class="english">The renewal fee is $110. Your new passport will be ready in 4-6 weeks.</div>
+                <div class="burmese">သက်တမ်းတိုးခအကြေးငွေက ၁၁၀ ဒေါ်လာပါ။ သင့်ပတ်စ်ပို့အသစ်ကို ၄-၆ ပတ်အတွင်း အဆင်သင့်ဖြစ်ပါလိမ့်မယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('The renewal fee is 110 dollars. Your new passport will be ready in 4-6 weeks.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 2: Lost Passport -->
+    <div class="conversation-section">
+        <h2>🔍 Lost Passport / ပတ်စ်ပို့ပျောက်ဆုံးခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Citizen:</div>
+                <div class="english">My passport was stolen. I need a replacement.</div>
+                <div class="burmese">ကျွန်တော့်ပတ်စ်ပို့ ခိုးယူခံလိုက်ရတယ်။ အစားထိုးတစ်ခု လိုအပ်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('My passport was stolen. I need a replacement.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Officer:</div>
+                <div class="english">I'm sorry to hear that. Do you have a police report?</div>
+                <div class="burmese">ကြားရတာ စိတ်မကောင်းပါဘူး။ ရဲအစီရင်ခံစာ ရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am sorry to hear that. Do you have a police report?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Citizen:</div>
+                <div class="english">Yes, I filed one yesterday. Here it is.</div>
+                <div class="burmese">ဟုတ်ကဲ့၊ မနေ့က တင်ခဲ့တယ်။ ဒီမှာပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, I filed one yesterday. Here it is.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Officer:</div>
+                <div class="english">We will issue an emergency passport today. The fee is $150. We can also help you cancel the stolen passport.</div>
+                <div class="burmese">ကျွန်တော်တို့ ဒီနေ့ အရေးပေါ်ပတ်စ်ပို့ ထုတ်ပေးပါမယ်။ အခကြေးငွေက ၁၅၀ ဒေါ်လာပါ။ ခိုးယူခံရတဲ့ပတ်စ်ပို့ကို ဖျက်သိမ်းဖို့လည်း ကူညီနိုင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('We will issue an emergency passport today. The fee is 150 dollars. We can also help you cancel the stolen passport.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 3: Notarization Services -->
+    <div class="conversation-section">
+        <h2>✍️ Notarization Services / လက်မှတ်ထောက်ခံခြင်းဝန်ဆောင်မှုများ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Citizen:</div>
+                <div class="english">I need to get a document notarized for legal purposes.</div>
+                <div class="burmese">ဥပဒေရေးရာအတွက် စာရွက်စာတမ်းတစ်ခုကို လက်မှတ်ထောက်ခံခံယူဖို့ လိုအပ်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I need to get a document notarized for legal purposes.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Officer:</div>
+                <div class="english">We offer notary services for our citizens. Do you have a valid ID?</div>
+                <div class="burmese">ကျွန်တော်တို့သည် ကျွန်တော်တို့၏နိုင်ငံသားများအတွက် လက်မှတ်ထောက်ခံဝန်ဆောင်မှုပေးပါသည်။ သက်ဆိုင်ရာသက်သေခံရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('We offer notary services for our citizens. Do you have a valid ID?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Citizen:</div>
+                <div class="english">Yes, here's my driver's license. How much does it cost?</div>
+                <div class="burmese">ဟုတ်ကဲ့၊ ဒီမှာ ကျွန်တော့်ကားမောင်းလိုင်စင်ပါ။ ဘယ်လောက်ကုန်ကျလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, here is my driver\'s license. How much does it cost?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Officer:</div>
+                <div class="english">The notary fee is $20 per document. Please sign in front of me.</div>
+                <div class="burmese">လက်မှတ်ထောက်ခံခက စာရွက်စာတမ်းတစ်ခုလျှင် ၂၀ ဒေါ်လာပါ။ ကျေးဇူးပြု၍ ကျွန်တော့်ရှေ့တွင် လက်မှတ်ထိုးပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('The notary fee is 20 dollars per document. Please sign in front of me.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 4: Emergency Assistance -->
+    <div class="conversation-section">
+        <h2>🚨 Emergency Assistance / အရေးပေါ်အကူအညီ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Citizen:</div>
+                <div class="english">I need emergency assistance. I was in a car accident and my family back home needs to be notified.</div>
+                <div class="burmese">ကျွန်တော် အရေးပေါ်အကူအညီ လိုအပ်ပါတယ်။ ကျွန်တော် ကားမတော်တဆမှုတစ်ခုဖြစ်ခဲ့ပြီး အိမ်မှာရှိတဲ့ မိသားစုကို အကြောင်းကြားဖို့ လိုအပ်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I need emergency assistance. I was in a car accident and my family back home needs to be notified.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Consular Officer:</div>
+                <div class="english">Don't worry. We can help you contact your family. Are you injured?</div>
+                <div class="burmese">စိတ်မပူပါနဲ့။ သင့်မိသားစုကို ဆက်သွယ်ဖို့ ကျွန်တော်တို့ ကူညီနိုင်ပါတယ်။ သင် ဒဏ်ရာရလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do not worry. We can help you contact your family. Are you injured?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Citizen:</div>
+                <div class="english">Just minor bruises. I've already seen a doctor.</div>
+                <div class="burmese">အနည်းငယ်မျှသော ဒဏ်ရာရရှိပါတယ်။ ဆရာဝန်ပြပြီးပါပြီ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Just minor bruises. I have already seen a doctor.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Consular Officer:</div>
+                <div class="english">I'm glad you're okay. I'll arrange a call to your family. Do you have their contact information?</div>
+                <div class="burmese">မင်းအဆင်ပြေတာ ငါဝမ်းသာပါတယ်။ မင်းမိသားစုကို ဖုန်းခေါ်ဆိုမှုစီစဉ်ပေးပါမယ်။ သူတို့ရဲ့ဆက်သွယ်ရန်အချက်အလက် ရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am glad you are okay. I will arrange a call to your family. Do you have their contact information?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 5: Voting Overseas -->
+    <div class="conversation-section">
+        <h2>🗳️ Voting Overseas / ပြည်ပမှမဲပေးခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Citizen:</div>
+                <div class="english">I want to vote in the upcoming election. How can I register?</div>
+                <div class="burmese">လာမယ့်ရွေးကောက်ပွဲမှာ ကျွန်တော် မဲပေးချင်ပါတယ်။ ဘယ်လိုစာရင်းသွင်းရမလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('I want to vote in the upcoming election. How can I register?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Officer:</div>
+                <div class="english">You can register online through our website. You'll need to fill out a Federal Post Card Application.</div>
+                <div class="burmese">ကျွန်တော်တို့ဝက်ဘ်ဆိုက်မှတစ်ဆင့် အွန်လိုင်းမှ စာရင်းသွင်းနိုင်ပါတယ်။ Federal Post Card Application ကို ဖြည့်စွက်ရပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('You can register online through our website. You will need to fill out a Federal Post Card Application.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Citizen:</div>
+                <div class="english">What's the deadline for registration?</div>
+                <div class="burmese">စာရင်းသွင်းရန် နောက်ဆုံးရက်က ဘယ်တော့လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What is the deadline for registration?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Officer:</div>
+                <div class="english">The deadline is 30 days before the election. I recommend submitting as early as possible.</div>
+                <div class="burmese">နောက်ဆုံးရက်က ရွေးကောက်ပွဲမတိုင်မီ ရက် ၃၀ ပါ။ တတ်နိုင်သမျှစောစော တင်သွင်းဖို့ အကြံပြုပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('The deadline is 30 days before the election. I recommend submitting as early as possible.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 6: Birth Registration -->
+    <div class="conversation-section">
+        <h2>👶 Birth Registration / မွေးဖွားမှုမှတ်ပုံတင်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Parent:</div>
+                <div class="english">My child was born overseas. How do I register the birth?</div>
+                <div class="burmese">ကျွန်တော့်ကလေး ပြည်ပမှာ မွေးဖွားခဲ့ပါတယ်။ မွေးဖွားမှုကို ဘယ်လိုမှတ်ပုံတင်ရမလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('My child was born overseas. How do I register the birth?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Officer:</div>
+                <div class="english">You need to submit a Consular Report of Birth Abroad. Do you have the child's birth certificate?</div>
+                <div class="burmese">သင်သည် Consular Report of Birth Abroad ကို တင်သွင်းရန် လိုအပ်ပါတယ်။ ကလေး၏မွေးစာရင်းရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('You need to submit a Consular Report of Birth Abroad. Do you have the child\'s birth certificate?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Parent:</div>
+                <div class="english">Yes, here is the hospital birth certificate. What other documents do I need?</div>
+                <div class="burmese">ဟုတ်ကဲ့၊ ဒီမှာ ဆေးရုံမွေးစာရင်းပါ။ ဘယ်အခြားစာရွက်စာတမ်းတွေ လိုအပ်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, here is the hospital birth certificate. What other documents do I need?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Officer:</div>
+                <div class="english">You'll need proof of citizenship for both parents and the parents' marriage certificate if applicable.</div>
+                <div class="burmese">မိဘနှစ်ပါးစလုံး၏ နိုင်ငံသားဖြစ်မှုသက်သေခံနှင့် သက်ဆိုင်ပါက မိဘများ၏ လက်ထပ်စာချုပ်လိုအပ်ပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('You will need proof of citizenship for both parents and the parents\' marriage certificate if applicable.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 7: Legal Assistance -->
+    <div class="conversation-section">
+        <h2>⚖️ Legal Assistance / ဥပဒေအကူအညီ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Citizen:</div>
+                <div class="english">I've been arrested. Can the embassy help me?</div>
+                <div class="burmese">ကျွန်တော် ဖမ်းဆီးခံခဲ့ရတယ်။ သံရုံးက ကျွန်တော့်ကို ကူညီနိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('I have been arrested. Can the embassy help me?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Consular Officer:</div>
+                <div class="english">We can provide a list of local lawyers and notify your family. We cannot interfere with the local legal process.</div>
+                <div class="burmese">ကျွန်တော်တို့ ဒေသခံရှေ့နေများစာရင်းကို ပေးနိုင်ပြီး သင့်မိသားစုကို အကြောင်းကြားနိုင်ပါတယ်။ ဒေသခံဥပဒေလုပ်ငန်းစဉ်ကို ကျွန်တော်တို့ စွက်ဖက်လို့မရပါဘူး။</div>
+                <button class="audio-btn" onclick="speakEnglish('We can provide a list of local lawyers and notify your family. We cannot interfere with the local legal process.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Citizen:</div>
+                <div class="english">I understand. I really need a lawyer. Can you recommend one?</div>
+                <div class="burmese">နားလည်းပါတယ်။ ကျွန်တော် ရှေ့နေတစ်ဦးကို တကယ်လိုအပ်ပါတယ်။ တစ်ဦးကို အကြံပြုနိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('I understand. I really need a lawyer. Can you recommend one?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Consular Officer:</div>
+                <div class="english">Here is a list of English-speaking lawyers. We can also arrange a consular visit to check on your condition.</div>
+                <div class="burmese">ဒီမှာ အင်္ဂလိပ်စကားပြော ရှေ့နေများစာရင်းပါ။ သင့်အခြေအနေကို စစ်ဆေးရန် ကောင်စစ်ဝန်သွားရောက်လည်ပတ်မှုလည်း စီစဉ်ပေးနိုင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Here is a list of English-speaking lawyers. We can also arrange a consular visit to check on your condition.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 8: Registering with the Embassy -->
+    <div class="conversation-section">
+        <h2>📝 Registering with the Embassy / သံရုံးတွင်စာရင်းသွင်းခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Traveler:</div>
+                <div class="english">I've heard I should register with the embassy when traveling. How do I do that?</div>
+                <div class="burmese">ခရီးသွားတဲ့အခါ သံရုံးမှာ စာရင်းသွင်းသင့်တယ်လို့ ကြားဖူးတယ်။ အဲဒါကို ဘယ်လိုလုပ်ရမလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('I have heard I should register with the embassy when traveling. How do I do that?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Officer:</div>
+                <div class="english">You can register through our Smart Traveler Enrollment Program (STEP) online. It's free.</div>
+                <div class="burmese">ကျွန်တော်တို့ရဲ့ Smart Traveler Enrollment Program (STEP) မှတစ်ဆင့် အွန်လိုင်းမှ စာရင်းသွင်းနိုင်ပါတယ်။ အခမဲ့ဖြစ်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('You can register through our Smart Traveler Enrollment Program online. It is free.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Traveler:</div>
+                <div class="english">What information do I need to provide?</div>
+                <div class="burmese">ဘယ်အချက်အလက်တွေ ပေးဖို့လိုအပ်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What information do I need to provide?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Officer:</div>
+                <div class="english">Your name, contact information, travel dates, and emergency contact. It helps us reach you in case of an emergency.</div>
+                <div class="burmese">သင့်နာမည်၊ ဆက်သွယ်ရန်အချက်အလက်၊ ခရီးစဉ်ရက်စွဲများနှင့် အရေးပေါ်ဆက်သွယ်ရန်။ အရေးပေါ်အခြေအနေတွင် သင့်ထံဆက်သွယ်ရန် ကျွန်တော်တို့ကို ကူညီပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Your name, contact information, travel dates, and emergency contact. It helps us reach you in case of an emergency.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Embassy Services Guide -->
+    <div class="conversation-section">
+        <h2>📋 Embassy Services / သံရုံးဝန်ဆောင်မှုများ</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Common Services Provided by Embassies (သံရုံးများမှ ပေးအပ်သော အသုံးများဝန်ဆောင်မှုများ):</strong><br>
+            • Passport issuance and renewal (ပတ်စ်ပို့ထုတ်ပေးခြင်းနှင့် သက်တမ်းတိုးခြင်း)<br>
+            • Visa services (ဗီဇာဝန်ဆောင်မှုများ)<br>
+            • Notarization and document legalization (လက်မှတ်ထောက်ခံခြင်းနှင့် စာရွက်စာတမ်းတရားဝင်ဖြစ်စေခြင်း)<br>
+            • Emergency assistance to citizens (နိုင်ငံသားများအတွက် အရေးပေါ်အကူအညီ)<br>
+            • Birth and death registration abroad (ပြည်ပမွေးဖွားမှုနှင့် သေဆုံးမှုမှတ်ပုံတင်ခြင်း)<br>
+            • Voting assistance (မဲပေးခြင်းအကူအညီ)<br>
+            • Legal referrals (ဥပဒေဆိုင်ရာလွှဲပြောင်းချက်များ)<br>
+            • Travel advisories (ခရီးသွားအကြံပြုချက်များ)<br>
+        </div>
+    </div>
+    
+    <!-- Embassy Vocabulary -->
+    <div class="conversation-section">
+        <h2>📚 Embassy Vocabulary / သံရုံးသုံးဝေါဟာရများ</h2>
+        <div class="vocab-grid">
+            <div class="vocab-item"><span class="vocab-eng">Consulate</span><br><span class="vocab-burmese">ကောင်စစ်ဝန်ရုံး</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Ambassador</span><br><span class="vocab-burmese">သံအမတ်ကြီး</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Consular officer</span><br><span class="vocab-burmese">ကောင်စစ်ဝန်အရာရှိ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Diplomatic immunity</span><br><span class="vocab-burmese">သံတမန်ဆိုင်ရာ ကင်းလွတ်ခွင့်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Visa interview</span><br><span class="vocab-burmese">ဗီဇာအင်တာဗျူး</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Appointment</span><br><span class="vocab-burmese">ချိန်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Affidavit</span><br><span class="vocab-burmese">ကျမ်းကျိမ်လက်မှတ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Witness</span><br><span class="vocab-burmese">သက်သေ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Extradition</span><br><span class="vocab-burmese">လွှဲပြောင်းပေးအပ်ခြင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Asylum</span><br><span class="vocab-burmese">ခိုလှုံခွင့်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Repatriation</span><br><span class="vocab-burmese">ပြန်လည်ပို့ဆောင်ခြင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Warden</span><br><span class="vocab-burmese">ဂိုဒေါင်စောင့်</span></div>
+        </div>
+    </div>
+    
+    <!-- Embassy Tips -->
+    <div class="conversation-section">
+        <h2>💡 Embassy Tips / သံရုံးအကြံပြုချက်များ</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Tips for Visiting an Embassy (သံရုံးသို့သွားရောက်ရန် အကြံပြုချက်များ):</strong><br>
+            • Make an appointment before visiting (မသွားမီ ချိန်းယူပါ)<br>
+            • Arrive early for security screening (လုံခြုံရေးစစ်ဆေးမှုအတွက် စောစောရောက်ပါ)<br>
+            • Bring all required documents (လိုအပ်သောစာရွက်စာတမ်းများအားလုံးကိုယူလာပါ)<br>
+            • Leave prohibited items (phones, cameras) at home (တားမြစ်ထားသောပစ္စည်းများ (ဖုန်း၊ ကင်မရာ) ကို အိမ်တွင်ထားခဲ့ပါ)<br>
+            • Dress appropriately (သင့်လျော်စွာဝတ်ဆင်ပါ)<br>
+            • Be honest and polite (ရိုးသားပြီး ယဉ်ကျေးပါ)<br>
+            • Keep copies of all documents (စာရွက်စာတမ်းများအားလုံး၏ မိတ္တူများကိုသိမ်းဆည်းပါ)<br>
+        </div>
+    </div>
+    
+    <!-- Practice Section -->
+    <div class="conversation-section">
+        <h2>✏️ Practice Questions / လေ့ကျင့်ခန်းမေးခွန်းများ</h2>
+        <div class="dialogue-box">
+            <div class="quiz-question">
+                <p><strong>1. How do you ask about passport renewal?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I need to renew my passport.')">I need a visa.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I need to renew my passport.')">I need to renew my passport.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I need to renew my passport.')">I need a driver's license.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I need to renew my passport.')">I need a birth certificate.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>2. "ကျွန်တော့်ပတ်စ်ပို့ ခိုးယူခံလိုက်ရတယ်" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'My passport was stolen.')">My passport is lost.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'My passport was stolen.')">My passport was stolen.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'My passport was stolen.')">My passport is expired.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'My passport was stolen.')">My passport is damaged.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. What does "notarization" mean?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Official certification of a signature on a document')">Translation of a document</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Official certification of a signature on a document')">Copying a document</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Official certification of a signature on a document')">Official certification of a signature on a document</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Official certification of a signature on a document')">Destroying a document</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. "သံရုံးက ရှေ့နေတစ်ဦးကို အကြံပြုနိုင်မလား" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can the embassy recommend a lawyer?')">Can the embassy give me money?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can the embassy recommend a lawyer?')">Can the embassy recommend a lawyer?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can the embassy recommend a lawyer?')">Can the embassy hire a lawyer for me?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can the embassy recommend a lawyer?')">Can the embassy be my lawyer?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. What is STEP (Smart Traveler Enrollment Program)?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A program to register your travel with the embassy')">A travel insurance program</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A program to register your travel with the embassy')">A flight booking program</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A program to register your travel with the embassy')">A program to register your travel with the embassy</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A program to register your travel with the embassy')">A hotel booking program</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p><i class="fas fa-heart" style="color: #2980b9;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p>
+        <p style="font-size: 0.75rem; margin-top: 0.5rem;">Practice these conversations to navigate embassy services with confidence!</p>
+    </footer>
+</div>
+
+<!-- Back to Top Button -->
+<a href="#" class="back-to-top" id="backToTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+<script>
+    function speakEnglish(text) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8;
+        utterance.pitch = 1.0;
+        
+        function setVoice() {
+            const voices = window.speechSynthesis.getVoices();
+            const englishVoice = voices.find(v => v.lang === 'en-US' || v.lang.startsWith('en-'));
+            if (englishVoice) utterance.voice = englishVoice;
+            window.speechSynthesis.speak(utterance);
+        }
+        
+        if (window.speechSynthesis.getVoices().length) setVoice();
+        else window.speechSynthesis.onvoiceschanged = setVoice;
+    }
+    
+    function checkAnswer(element, correctAnswer) {
+        const options = element.parentElement.querySelectorAll('.quiz-option');
+        const isCorrect = element.innerText === correctAnswer;
+        
+        if (isCorrect) {
+            element.style.background = '#2ecc71';
+            element.style.color = 'white';
+            speakEnglish(correctAnswer);
+            setTimeout(() => {
+                options.forEach(opt => {
+                    opt.style.background = '';
+                    opt.style.color = '';
+                });
+            }, 1500);
+        } else {
+            element.style.background = '#e74c3c';
+            element.style.color = 'white';
+            setTimeout(() => {
+                element.style.background = '';
+                element.style.color = '';
+            }, 500);
+        }
+    }
+    
+    // Back to Top Button Functionality
+    (function() {
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        
+        if (backToTopBtn) {
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

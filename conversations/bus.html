@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taking the Bus - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%); font-family: 'Segoe UI', Roboto, sans-serif; padding: 1rem; }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        .back-btn { display: inline-flex; align-items: center; gap: 8px; background: white; padding: 0.6rem 1.2rem; border-radius: 2rem; text-decoration: none; color: #1e3c72; font-weight: 500; margin-bottom: 1rem; transition: 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        .conversation-section { background: white; border-radius: 1rem; margin-bottom: 2rem; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+        .conversation-section h2 { background: #2980b9; color: white; padding: 1rem; font-size: 1.2rem; }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line { display: grid; grid-template-columns: 70px 1fr 1fr; gap: 0.8rem; padding: 0.8rem; border-bottom: 1px solid #eee; align-items: start; }
+        .speaker { font-weight: bold; color: #2980b9; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.95rem; }
+        .audio-btn { background: #eef4ff; border: none; border-radius: 2rem; padding: 0.3rem 0.8rem; cursor: pointer; transition: 0.2s; margin-top: 0.3rem; }
+        .audio-btn:hover { background: #2980b9; color: white; }
+        .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.8rem; padding: 1rem; }
+        .vocab-item { background: #f8f9fa; padding: 0.8rem; border-radius: 0.8rem; border-left: 3px solid #2980b9; }
+        .vocab-eng { font-weight: bold; color: #2980b9; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        .quiz-question { background: #f8f9fa; padding: 1rem; margin-bottom: 1rem; border-radius: 0.8rem; }
+        .quiz-options { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
+        .quiz-option { background: white; padding: 0.5rem 1rem; border-radius: 2rem; border: 1px solid #ddd; cursor: pointer; transition: 0.2s; }
+        .quiz-option:hover { background: #2980b9; color: white; border-color: #2980b9; }
+        .tips-box { background: #e3f2fd; padding: 1rem; border-radius: 0.8rem; margin: 1rem; border-left: 3px solid #2980b9; }
+        .tips-box i { color: #2980b9; margin-right: 8px; }
+        footer { margin-top: 2rem; text-align: center; padding: 1rem; color: #6c757d; font-size: 0.8rem; }
+        .back-to-top { position: fixed; bottom: 1.5rem; right: 1.5rem; background: #1e3c72; color: white; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 1000; opacity: 0; visibility: hidden; border: 2px solid white; }
+        .back-to-top.show { opacity: 1; visibility: visible; }
+        .back-to-top:hover { background: #f5b042; color: #1e3c72; transform: translateY(-3px); }
+        .back-to-top i { font-size: 1.2rem; }
+        @media (max-width: 768px) { .back-to-top { bottom: 1rem; right: 1rem; width: 42px; height: 42px; } .back-to-top i { font-size: 1rem; } }
+        @media (max-width: 700px) { .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; } }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn"><i class="fas fa-arrow-left"></i> All Conversations</a>
+    <header><h1><i class="fas fa-bus"></i> Taking the Bus</h1><p>Learn how to ask about bus routes, buy tickets, and find stops in English</p><p>ဘတ်စ်ကားလမ်းကြောင်းများအကြောင်းမေးမြန်းနည်း၊ လက်မှတ်များဝယ်ယူနည်းနှင့် မှတ်တိုင်များရှာဖွေနည်းကို အင်္ဂလိပ်လို လေ့လာပါ</p></header>
+    
+    <!-- Dialogue 1: Finding the Bus Stop -->
+    <div class="conversation-section"><h2>🚏 Finding the Bus Stop / ဘတ်စ်ကားမှတ်တိုင်ရှာဖွေခြင်း</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Passenger:</div><div class="english">Excuse me, where is the nearest bus stop?</div><div class="burmese">ခွင့်လွှတ်ပါ၊ အနီးဆုံးဘတ်စ်ကားမှတ်တိုင် ဘယ်မှာလဲ။</div><button class="audio-btn" onclick="speakEnglish('Excuse me, where is the nearest bus stop?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Local:</div><div class="english">It's just around the corner, next to the pharmacy.</div><div class="burmese">ထောင့်ကွေ့ရုံပါပဲ၊ ဆေးဆိုင်ဘေးမှာပါ။</div><button class="audio-btn" onclick="speakEnglish('It is just around the corner, next to the pharmacy.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Passenger:</div><div class="english">Which buses stop there?</div><div class="burmese">ဘယ်ဘတ်စ်ကားတွေ အဲဒီမှာရပ်လဲ။</div><button class="audio-btn" onclick="speakEnglish('Which buses stop there?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Local:</div><div class="english">Numbers 12, 25, and 40. You can check the schedule at the stop.</div><div class="burmese">နံပါတ် ၁၂၊ ၂၅ နဲ့ ၄၀။ မှတ်တိုင်မှာ အချိန်ဇယားစစ်နိုင်ပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('Numbers 12, 25, and 40. You can check the schedule at the stop.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 2: Asking About Routes -->
+    <div class="conversation-section"><h2>🗺️ Asking About Routes / လမ်းကြောင်းများအကြောင်းမေးခြင်း</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Passenger:</div><div class="english">Does this bus go to the city center?</div><div class="burmese">ဒီဘတ်စ်ကား မြို့လယ်ကိုသွားလား။</div><button class="audio-btn" onclick="speakEnglish('Does this bus go to the city center?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">Yes, it does. Get off at Central Station.</div><div class="burmese">ဟုတ်ကဲ့ သွားပါတယ်။ ဗဟိုဘူတာမှာဆင်းပါ။</div><button class="audio-btn" onclick="speakEnglish('Yes, it does. Get off at Central Station.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Passenger:</div><div class="english">How many stops is that?</div><div class="burmese">ဘယ်နှစ်ခုရပ်မလဲ။</div><button class="audio-btn" onclick="speakEnglish('How many stops is that?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">About 12 stops. The ride takes about 20 minutes.</div><div class="burmese">၁၂ ခုရပ်လောက်ပါ။ ခရီးစဉ်က ၂၀ မိနစ်လောက်ကြာပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('About 12 stops. The ride takes about 20 minutes.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 3: Buying a Ticket -->
+    <div class="conversation-section"><h2>🎫 Buying a Ticket / လက်မှတ်ဝယ်ယူခြင်း</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Passenger:</div><div class="english">How much is the fare to the museum?</div><div class="burmese">ပြတိုက်ကို ယာဉ်စီးခ ဘယ်လောက်လဲ။</div><button class="audio-btn" onclick="speakEnglish('How much is the fare to the museum?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">$2.50. You can pay with cash or a transit card.</div><div class="burmese">၂.၅၀ ဒေါ်လာပါ။ ငွေသား သို့မဟုတ် ဖြတ်သန်းကဒ်ဖြင့် ပေးချေနိုင်ပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('2 dollars 50 cents. You can pay with cash or a transit card.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Passenger:</div><div class="english">I'll pay with cash. Do I need exact change?</div><div class="burmese">ငွေသားနဲ့ ပေးပါမယ်။ အတိအကျလိုအပ်လား။</div><button class="audio-btn" onclick="speakEnglish('I will pay with cash. Do I need exact change?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">The bus doesn't give change. Please have exact fare ready.</div><div class="burmese">ဘတ်စ်ကားက ပြန်လက်ငွေ မပေးပါဘူး။ ကျေးဇူးပြု၍ အတိအကျအဆင်သင့်ထားပါ။</div><button class="audio-btn" onclick="speakEnglish('The bus does not give change. Please have exact fare ready.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 4: Using a Transit Card -->
+    <div class="conversation-section"><h2>💳 Using a Transit Card / ဖြတ်သန်းကဒ်အသုံးပြုခြင်း</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Passenger:</div><div class="english">Where can I buy a transit card?</div><div class="burmese">ဖြတ်သန်းကဒ် ဘယ်မှာဝယ်လို့ရလဲ။</div><button class="audio-btn" onclick="speakEnglish('Where can I buy a transit card?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Staff:</div><div class="english">You can buy one at the transit center or online. It costs $5 for the card, then you add money.</div><div class="burmese">ဖြတ်သန်းစင်တာ သို့မဟုတ် အွန်လိုင်းမှာ ဝယ်နိုင်ပါတယ်။ ကဒ်က ၅ ဒေါ်လာကျပြီး ပြီးရင် ငွေထည့်ပါ။</div><button class="audio-btn" onclick="speakEnglish('You can buy one at the transit center or online. It costs 5 dollars for the card, then you add money.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Passenger:</div><div class="english">How do I tap the card when I board?</div><div class="burmese">ကိုယ်တက်တဲ့အခါ ကဒ်ကို ဘယ်လို tap ရမလဲ။</div><button class="audio-btn" onclick="speakEnglish('How do I tap the card when I board?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Staff:</div><div class="english">Just hold it against the reader near the driver. You'll hear a beep.</div><div class="burmese">ယာဉ်မောင်းအနားက ဖတ်စက်မှာ ကပ်ထားရုံပါပဲ။ အသံမြည်ပါလိမ့်မယ်။</div><button class="audio-btn" onclick="speakEnglish('Just hold it against the reader near the driver. You will hear a beep.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 5: Requesting a Stop -->
+    <div class="conversation-section"><h2>🔔 Requesting a Stop / မှတ်တိုင်တောင်းဆိုခြင်း</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Passenger:</div><div class="english">I need to get off at the next stop. Can you let me know when we get there?</div><div class="burmese">နောက်မှတ်တိုင်မှာ ဆင်းဖို့လိုတယ်။ ရောက်ရင် ပြောပြနိုင်မလား။</div><button class="audio-btn" onclick="speakEnglish('I need to get off at the next stop. Can you let me know when we get there?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Passenger:</div><div class="english">Please pull the yellow cord when you want to request a stop.</div><div class="burmese">ကျေးဇူးပြု၍ မှတ်တိုင်တောင်းဆိုချင်ရင် အဝါရောင်ကြိုးကို ဆွဲပါ။</div><button class="audio-btn" onclick="speakEnglish('Please pull the yellow cord when you want to request a stop.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Passenger:</div><div class="english">I pulled the cord. Is this my stop?</div><div class="burmese">ကြိုးဆွဲလိုက်ပြီ။ ဒါက ကျွန်တော့်မှတ်တိုင်လား။</div><button class="audio-btn" onclick="speakEnglish('I pulled the cord. Is this my stop?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">Yes, the next stop is Main Street. Please exit through the back door.</div><div class="burmese">ဟုတ်ကဲ့၊ နောက်မှတ်တိုင်က Main Street ပါ။ ကျေးဇူးပြု၍ နောက်တံခါးမှ ထွက်ပါ။</div><button class="audio-btn" onclick="speakEnglish('Yes, the next stop is Main Street. Please exit through the back door.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 6: Bus Schedule -->
+    <div class="conversation-section"><h2>📅 Bus Schedule / ဘတ်စ်ကားအချိန်ဇယား</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Passenger:</div><div class="english">How often does the bus run on weekends?</div><div class="burmese">အားလပ်ရက်များတွင် ဘတ်စ်ကား ဘယ်နှစ်မိနစ်တစ်ခါလာလဲ။</div><button class="audio-btn" onclick="speakEnglish('How often does the bus run on weekends?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Staff:</div><div class="english">Every 30 minutes. The first bus is at 7 AM and the last bus at 9 PM.</div><div class="burmese">မိနစ် ၃၀ တစ်ခါပါ။ ပထမဆုံးဘတ်စ်ကား နံနက် ၇ နာရီ၊ နောက်ဆုံးဘတ်စ်ကား ည ၉ နာရီပါ။</div><button class="audio-btn" onclick="speakEnglish('Every 30 minutes. The first bus is at 7 AM and the last bus at 9 PM.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Passenger:</div><div class="english">Is there a night bus service?</div><div class="burmese">ညဘက်ဘတ်စ်ကားဝန်ဆောင်မှုရှိလား။</div><button class="audio-btn" onclick="speakEnglish('Is there a night bus service?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Staff:</div><div class="english">Yes, night buses run hourly from 10 PM to 5 AM on weekends.</div><div class="burmese">ဟုတ်ပါတယ်၊ ညဘက်ဘတ်စ်ကားများသည် စနေ၊ တနင်္ဂနွေများတွင် ည ၁၀ နာရီမှ နံနက် ၅ နာရီအထိ တစ်နာရီတစ်ခါ ပြေးဆွဲပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('Yes, night buses run hourly from 10 PM to 5 AM on weekends.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 7: Express Bus -->
+    <div class="conversation-section"><h2>⚡ Express Bus / အမြန်ဘတ်စ်ကား</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Passenger:</div><div class="english">Is there an express bus to the airport?</div><div class="burmese">လေဆိပ်ကို အမြန်ဘတ်စ်ကားရှိလား။</div><button class="audio-btn" onclick="speakEnglish('Is there an express bus to the airport?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Staff:</div><div class="english">Yes, the Airport Express runs every 20 minutes. It takes only 30 minutes.</div><div class="burmese">ဟုတ်ပါတယ်၊ Airport Express က ၂၀ မိနစ်တစ်ခါ ပြေးဆွဲပါတယ်။ ၃၀ မိနစ်သာ ကြာပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('Yes, the Airport Express runs every 20 minutes. It takes only 30 minutes.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Passenger:</div><div class="english">How much is the express fare?</div><div class="burmese">အမြန်ယာဉ်စီးခက ဘယ်လောက်လဲ။</div><button class="audio-btn" onclick="speakEnglish('How much is the express fare?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Staff:</div><div class="english">$8 one way. It's more expensive than the local bus but much faster.</div><div class="burmese">တစ်ကြောင်းသွား ၈ ဒေါ်လာပါ။ ဒေသခံဘတ်စ်ကားထက် ပိုစျေးကြီးပေမယ့် အများကြီးမြန်ပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('8 dollars one way. It is more expensive than the local bus but much faster.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 8: Lost on the Bus -->
+    <div class="conversation-section"><h2>🧭 Lost on the Bus / ဘတ်စ်ကားပေါ်တွင် လမ်းမှားခြင်း</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Passenger:</div><div class="english">I think I missed my stop. Can you help me?</div><div class="burmese">ကျွန်တော် ကျွန်တော့်မှတ်တိုင် လွတ်သွားတယ်ထင်တယ်။ ကူညီနိုင်မလား။</div><button class="audio-btn" onclick="speakEnglish('I think I missed my stop. Can you help me?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">Where are you trying to go?</div><div class="burmese">ဘယ်ကိုသွားဖို့ ကြိုးစားနေတာလဲ။</div><button class="audio-btn" onclick="speakEnglish('Where are you trying to go?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Passenger:</div><div class="english">The museum. I was supposed to get off three stops ago.</div><div class="burmese">ပြတိုက်။ လွန်ခဲ့တဲ့ သုံးခုရပ်အလိုက ဆင်းသင့်တယ်။</div><button class="audio-btn" onclick="speakEnglish('The museum. I was supposed to get off three stops ago.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">Don't worry. Get off at the next stop and cross the street. Take bus number 12 going the opposite direction.</div><div class="burmese">မပူပါနဲ့။ နောက်မှတ်တိုင်မှာဆင်းပြီး လမ်းဖြတ်ကူးပါ။ ဆန့်ကျင်ဘက်သွားတဲ့ ဘတ်စ်ကားအမှတ် ၁၂ စီးပါ။</div><button class="audio-btn" onclick="speakEnglish('Do not worry. Get off at the next stop and cross the street. Take bus number 12 going the opposite direction.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <div class="conversation-section">
+    <h2>📚 Bus Vocabulary / ဘတ်စ်ကားသုံးဝေါဟာရများ</h2>
+    <div class="vocab-grid">
+        <div class="vocab-item"><span class="vocab-eng">Bus stop</span><br><span class="vocab-burmese">ဘတ်စ်ကားမှတ်တိုင်</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Bus route</span><br><span class="vocab-burmese">ဘတ်စ်ကားလမ်းကြောင်း</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Schedule / Timetable</span><br><span class="vocab-burmese">အချိန်ဇယား</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Transfer</span><br><span class="vocab-burmese">ပြောင်းစီးခြင်း</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Bus pass</span><br><span class="vocab-burmese">ဘတ်စ်ကားလက်မှတ်</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Senior citizen discount</span><br><span class="vocab-burmese">သက်ကြီးရွယ်အိုလျှော့စျေး</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Student discount</span><br><span class="vocab-burmese">ကျောင်းသားလျှော့စျေး</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Priority seating</span><br><span class="vocab-burmese">ဦးစားပေးထိုင်ခုံ</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Bus lane</span><br><span class="vocab-burmese">ဘတ်စ်ကားလမ်း</span></div>
+    </div></div>
+    
+    <div class="tips-box"><i class="fas fa-lightbulb"></i> <strong>Tips for Taking the Bus (ဘတ်စ်ကားစီးရန် အကြံပြုချက်များ):</strong><br>• Have exact change ready (အတိအကျအဆင်သင့်ထားပါ)<br>• Signal the driver when you see your stop (သင့်မှတ်တိုင်မြင်ရင် အချက်ပြပါ)<br>• Move to the back if the bus is crowded (ဘတ်စ်ကားစည်ကားရင် နောက်ဘက်သို့ရွှေ့ပါ)<br>• Check the route map before boarding (မတက်မီ လမ်းကြောင်းမြေပုံစစ်ဆေးပါ)<br>• Download a transit app for real-time tracking (အချိန်နှင့်တစ်ပြေးညီခြေရာခံရန် ဖြတ်သန်းအက်ပ်ဒေါင်းလုဒ်လုပ်ပါ)</div>
+    
+    <div class="conversation-section"><div class="quiz-question"><p><strong>1. How do you ask where the bus stop is?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'Where is the nearest bus stop?')">How much is the fare?</div><div class="quiz-option" onclick="checkAnswer(this, 'Where is the nearest bus stop?')">Where is the nearest bus stop?</div><div class="quiz-option" onclick="checkAnswer(this, 'Where is the nearest bus stop?')">Does this bus go downtown?</div><div class="quiz-option" onclick="checkAnswer(this, 'Where is the nearest bus stop?')">What time is the next bus?</div></div></div>
+    <div class="quiz-question"><p><strong>2. "ဒီဘတ်စ်ကား မြို့လယ်ကိုသွားလား" in English?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'Does this bus go to the city center?')">Where is the city center?</div><div class="quiz-option" onclick="checkAnswer(this, 'Does this bus go to the city center?')">Does this bus go to the city center?</div><div class="quiz-option" onclick="checkAnswer(this, 'Does this bus go to the city center?')">How much to the city center?</div><div class="quiz-option" onclick="checkAnswer(this, 'Does this bus go to the city center?')">When does the bus leave?</div></div></div>
+    <div class="quiz-question"><p><strong>3. Why do you need exact change on some buses?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'The bus does not give change')">The driver keeps the change</div><div class="quiz-option" onclick="checkAnswer(this, 'The bus does not give change')">It's a tip for the driver</div><div class="quiz-option" onclick="checkAnswer(this, 'The bus does not give change')">The bus does not give change</div><div class="quiz-option" onclick="checkAnswer(this, 'The bus does not give change')">Change is given at the next stop</div></div></div>
+    <div class="quiz-question"><p><strong>4. "ကျေးဇူးပြု၍ နောက်တံခါးမှ ထွက်ပါ" in English?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'Please exit through the back door.')">Please exit through the front door.</div><div class="quiz-option" onclick="checkAnswer(this, 'Please exit through the back door.')">Please exit through the back door.</div><div class="quiz-option" onclick="checkAnswer(this, 'Please exit through the back door.')">Please stay seated.</div><div class="quiz-option" onclick="checkAnswer(this, 'Please exit through the back door.')">Please pay the driver.</div></div></div>
+    <div class="quiz-question"><p><strong>5. What should you do to request a stop?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'Pull the cord or press the stop button')">Shout at the driver</div><div class="quiz-option" onclick="checkAnswer(this, 'Pull the cord or press the stop button')">Stand up and wave</div><div class="quiz-option" onclick="checkAnswer(this, 'Pull the cord or press the stop button')">Pull the cord or press the stop button</div><div class="quiz-option" onclick="checkAnswer(this, 'Pull the cord or press the stop button')">Ring a bell</div></div></div>
+    </div>
+    <footer><p><i class="fas fa-heart" style="color: #2980b9;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p><p style="font-size: 0.75rem; margin-top: 0.5rem;">Practice these conversations to take the bus with confidence!</p></footer>
+</div>
+<a href="#" class="back-to-top" id="backToTopBtn"><i class="fas fa-arrow-up"></i></a>
+<script>
+    function speakEnglish(text){if(!window.speechSynthesis)return;window.speechSynthesis.cancel();const utterance=new SpeechSynthesisUtterance(text);utterance.lang='en-US';utterance.rate=0.8;utterance.pitch=1.0;function setVoice(){const voices=window.speechSynthesis.getVoices();const englishVoice=voices.find(v=>v.lang==='en-US'||v.lang.startsWith('en-'));if(englishVoice)utterance.voice=englishVoice;window.speechSynthesis.speak(utterance);}if(window.speechSynthesis.getVoices().length)setVoice();else window.speechSynthesis.onvoiceschanged=setVoice;}
+    function checkAnswer(element,correctAnswer){const options=element.parentElement.querySelectorAll('.quiz-option');const isCorrect=element.innerText===correctAnswer;if(isCorrect){element.style.background='#2ecc71';element.style.color='white';speakEnglish(correctAnswer);setTimeout(()=>{options.forEach(opt=>{opt.style.background='';opt.style.color='';});},1500);}else{element.style.background='#e74c3c';element.style.color='white';setTimeout(()=>{options.forEach(opt=>{opt.style.background='';opt.style.color='';});},500);}}
+    (function(){const btn=document.getElementById('backToTopBtn');if(btn){window.addEventListener('scroll',function(){btn.classList.toggle('show',window.scrollY>300);});btn.addEventListener('click',function(e){e.preventDefault();window.scrollTo({top:0,behavior:'smooth'});});}})();
+</script>
+</body>
+</html>

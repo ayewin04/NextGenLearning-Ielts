@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Conversations - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 1rem;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 1rem;
+        }
+        .header h1 {
+            font-size: 1.8rem;
+            color: #1e3c72;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .header p { color: #5a6e8a; margin-top: 0.5rem; }
+        
+        .back-main {
+            display: inline-block;
+            background: #1e3c72;
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border-radius: 3rem;
+            text-decoration: none;
+            margin-bottom: 1.5rem;
+            transition: 0.2s;
+        }
+        .back-main:hover { background: #f5b042; color: #1e3c72; }
+        
+        /* Search Bar */
+        .search-wrapper {
+            background: white;
+            padding: 0.8rem 1.2rem;
+            border-radius: 3rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            flex-wrap: wrap;
+        }
+        .search-icon {
+            color: #1e3c72;
+            font-size: 1.1rem;
+        }
+        .search-input {
+            flex: 1;
+            border: none;
+            padding: 0.6rem;
+            font-size: 1rem;
+            outline: none;
+            min-width: 200px;
+        }
+        .search-input::placeholder {
+            color: #aaa;
+            font-style: italic;
+        }
+        .search-clear {
+            background: #eef0f5;
+            border: none;
+            padding: 0.5rem 1.2rem;
+            border-radius: 2rem;
+            cursor: pointer;
+            transition: 0.2s;
+            color: #1e3c72;
+            font-weight: 500;
+        }
+        .search-clear:hover {
+            background: #1e3c72;
+            color: white;
+        }
+        .result-count {
+            background: #f5b042;
+            color: #1e3c72;
+            padding: 0.3rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+        
+        .flashcard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .conv-card {
+            background: white;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        .conv-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        .card-icon {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            font-size: 3rem;
+        }
+        .card-content {
+            padding: 1.5rem;
+        }
+        .card-content h3 {
+            color: #1e3c72;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+        .card-content p {
+            color: #6c757d;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        .sample-phrase {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            margin-top: 1rem;
+            font-style: italic;
+            color: #2c3e66;
+            font-size: 0.85rem;
+            border-left: 3px solid #f5b042;
+        }
+        .sample-phrase i { color: #f5b042; margin-right: 5px; }
+        
+        /* Burmese ID Tag */
+        .burmese-id-tag {
+            display: inline-block;
+            background: #eef0f5;
+            padding: 0.2rem 0.6rem;
+            border-radius: 1rem;
+            font-size: 0.65rem;
+            color: #1e3c72;
+            margin-top: 0.5rem;
+            font-family: 'Noto Sans Myanmar', sans-serif;
+        }
+        
+        /* Empty Message */
+        .empty-message {
+            text-align: center;
+            padding: 3rem;
+            color: #6c757d;
+            font-size: 1.1rem;
+            background: white;
+            border-radius: 1.5rem;
+            grid-column: 1 / -1;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: #1e3c72;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid white;
+        }
+        .back-to-top.show { opacity: 1; visibility: visible; }
+        .back-to-top:hover { background: #f5b042; color: #1e3c72; transform: translateY(-3px); }
+        .back-to-top i { font-size: 1.2rem; }
+        
+        @media (max-width: 768px) {
+            .back-to-top { bottom: 1rem; right: 1rem; width: 42px; height: 42px; }
+            .back-to-top i { font-size: 1rem; }
+            .search-wrapper { flex-direction: column; align-items: stretch; }
+            .search-clear { align-self: flex-end; }
+        }
+        @media (min-width: 768px) {
+            .flashcard-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (max-width: 550px) {
+            .flashcard-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <a href="index.html" class="back-main"><i class="fas fa-arrow-left"></i> Back to Vocabulary</a>
+    
+    <div class="header">
+        <h1><i class="fas fa-comments"></i> Daily English Conversations</h1>
+        <p>အင်္ဂလိပ်စကားပြောလေ့ကျင့်ရန် ကတ်ပြားကို နှိပ်ပါ။ Click any flashcard to start practicing</p>
+    </div>
+    
+    <!-- Search Bar -->
+    <div class="search-wrapper">
+        <i class="fas fa-search search-icon"></i>
+        <input type="text" class="search-input" id="searchInput" placeholder="Search by topic (e.g., shopping, restaurant) or Burmese (ဈေးဝယ်, စားသောက်ဆိုင်)...">
+        <button class="search-clear" id="clearSearch"><i class="fas fa-times"></i> Clear</button>
+        <span class="result-count" id="resultCount">70 conversations</span>
+    </div>
+    
+    <div class="flashcard-grid" id="conversationGrid"></div>
+</div>
+
+<a href="#" class="back-to-top" id="backToTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+<script>
+    const conversations = [
+        { id: "greetings", burmeseId: "နှုတ်ဆက်ခြင်း", icon: "👋", title: "Greetings & Introductions", description: "Learn how to greet people, introduce yourself, and say goodbye in English.", samplePhrase: "Hello! My name is... (မင်္ဂလာပါ။ ကျွန်တော့်နာမည်က...)", color: "#1e3c72" },
+        { id: "shopping", burmeseId: "ဈေးဝယ်ခြင်း", icon: "🛍️", title: "Shopping", description: "Ask for prices, sizes, colors, and make purchases at stores.", samplePhrase: "How much is this? (ဒါဘယ်လောက်လဲ?)", color: "#e67e22" },
+        { id: "restaurant", burmeseId: "စားသောက်ဆိုင်", icon: "🍜", title: "Restaurant & Food", description: "Order food, ask about menu items, and pay the bill.", samplePhrase: "Can I see the menu, please? (မီနူးကြည့်လို့ရမလား?)", color: "#27ae60" },
+        { id: "travel", burmeseId: "ခရီးသွားခြင်း", icon: "✈️", title: "Travel & Transportation", description: "Ask for directions, book tickets, and use public transport.", samplePhrase: "Where is the bus stop? (ဘတ်စ်ကားမှတ်တိုင်ဘယ်မှာလဲ?)", color: "#3498db" },
+        { id: "weather", burmeseId: "ရာသီဥတု", icon: "🌤️", title: "Weather", description: "Talk about weather conditions, seasons, and temperature.", samplePhrase: "It's sunny today. (ဒီနေ့ နေသာတယ်။)", color: "#f39c12" },
+        { id: "family", burmeseId: "မိသားစု", icon: "👨‍👩‍👧‍👦", title: "Family", description: "Introduce family members and talk about relationships.", samplePhrase: "I have two brothers. (ကျွန်တော့်မှာ မောင်နှစ်ယောက်ရှိတယ်။)", color: "#9b59b6" },
+        { id: "hotel", burmeseId: "ဟိုတယ်", icon: "🏨", title: "Hotel & Accommodation", description: "Book a room, check in, and request hotel services.", samplePhrase: "I'd like to book a room. (အခန်းတစ်ခန်း ကြိုစာရင်းသွင်းချင်ပါတယ်။)", color: "#16a085" },
+        { id: "hospital", burmeseId: "ဆေးရုံ", icon: "🏥", title: "Hospital & Health", description: "Describe symptoms, see a doctor, and buy medicine.", samplePhrase: "I have a headache. (ခေါင်းကိုက်တယ်။)", color: "#e74c3c" },
+        { id: "work", burmeseId: "အလုပ်အင်တာဗျူး", icon: "💼", title: "Job Interview", description: "Practice common job interview questions and answers.", samplePhrase: "Tell me about yourself. (ကိုယ့်အကြောင်း ပြောပြပါ။)", color: "#2c3e50" },
+        { id: "school", burmeseId: "ကျောင်း", icon: "📚", title: "School & Education", description: "Talk about subjects, exams, and classroom situations.", samplePhrase: "What's your favorite subject? (မင်းအကြိုက်ဆုံးဘာသာရပ်ကဘာလဲ?)", color: "#8e44ad" },
+        { id: "bank", burmeseId: "ဘဏ်", icon: "🏦", title: "Banking", description: "Open an account, withdraw money, and exchange currency.", samplePhrase: "I'd like to open an account. (အကောင့်ဖွင့်ချင်ပါတယ်။)", color: "#27ae60" },
+        { id: "phone", burmeseId: "ဖုန်းခေါ်ဆိုမှု", icon: "📱", title: "Phone Calls", description: "Make phone calls, leave messages, and handle wrong numbers.", samplePhrase: "May I speak to John? (ဂျွန်နဲ့ စကားပြောလို့ရမလား?)", color: "#2980b9" },
+        { id: "airport", burmeseId: "လေဆိပ်", icon: "✈️", title: "At the Airport", description: "Check in, go through security, and board your flight.", samplePhrase: "Where is the check-in counter? (Check-in ကောင်တာဘယ်မှာလဲ?)", color: "#1abc9c" },
+        { id: "market", burmeseId: "ဈေး", icon: "🥬", title: "At the Market", description: "Buy fruits, vegetables, and bargain for the best price.", samplePhrase: "How much per kilo? (တစ်ကီလိုဘယ်လောက်လဲ?)", color: "#f1c40f" },
+        { id: "hobby", burmeseId: "ဝါသနာ", icon: "🎨", title: "Hobbies & Interests", description: "Talk about your free time activities and interests.", samplePhrase: "I love reading books. (ကျွန်တော် စာအုပ်ဖတ်ရတာကြိုက်တယ်။)", color: "#e84393" },
+        { id: "directions", burmeseId: "လမ်းညွှန်", icon: "🗺️", title: "Asking for Directions", description: "Ask for and give directions to different places.", samplePhrase: "How do I get to the station? (ဘူတာရုံကို ဘယ်လိုသွားရမလဲ?)", color: "#3498db" },
+        { id: "emergency", burmeseId: "အရေးပေါ်", icon: "🚨", title: "Emergency Situations", description: "Get help during emergencies like fire, accident, or theft.", samplePhrase: "Call the police! (ရဲကိုခေါ်ပါ!)", color: "#c0392b" },
+        { id: "postoffice", burmeseId: "စာတိုက်", icon: "📮", title: "Post Office", description: "Send letters, packages, and buy stamps.", samplePhrase: "I want to send this package. (ဒီပါဆယ်ကို ပို့ချင်ပါတယ်။)", color: "#d35400" },
+        { id: "beauty", burmeseId: "အလှပြင်ဆိုင်", icon: "💇", title: "Beauty & Salon", description: "Get a haircut, manicure, or other beauty services.", samplePhrase: "I'd like a haircut. (ဆံပင်ညှပ်ချင်ပါတယ်။)", color: "#fd79a8" },
+        { id: "social", burmeseId: "လူမှုရေး", icon: "🎉", title: "Social Situations", description: "Invite friends, accept or decline invitations politely.", samplePhrase: "Would you like to come to my party? (ငါ့ပါတီကိုလာချင်လား?)", color: "#6c5ce7" },
+        { id: "business", burmeseId: "စီးပွားရေးအစည်းအဝေး", icon: "💼", title: "Business Meetings", description: "Participate in business meetings, make presentations, and discuss projects.", samplePhrase: "Let's schedule a meeting. (အစည်းအဝေးတစ်ခု စီစဉ်ကြရအောင်။)", color: "#2c3e50" },
+        { id: "technology", burmeseId: "နည်းပညာ", icon: "💻", title: "Technology & Computers", description: "Talk about computers, internet, apps, and technical problems.", samplePhrase: "My computer isn't working. (ကျွန်တော့်ကွန်ပျူတာ အလုပ်မလုပ်ဘူး။)", color: "#00b894" },
+        { id: "environment", burmeseId: "ပတ်ဝန်းကျင်", icon: "🌳", title: "Environment", description: "Discuss pollution, recycling, climate change, and conservation.", samplePhrase: "We should recycle more. (ကျွန်တော်တို့ ပြန်လည်အသုံးပြုသင့်တယ်။)", color: "#27ae60" },
+        { id: "sports", burmeseId: "အားကစား", icon: "⚽", title: "Sports & Fitness", description: "Talk about your favorite sports, exercise routines, and competitions.", samplePhrase: "I love playing football. (ကျွန်တော် ဘောလုံးကစားရတာ ကြိုက်တယ်။)", color: "#e17055" },
+        { id: "music", burmeseId: "ဂီတ", icon: "🎵", title: "Music & Concerts", description: "Discuss music genres, favorite artists, and concert experiences.", samplePhrase: "What kind of music do you like? (မင်း ဘယ်လိုဂီတမျိုးကြိုက်လဲ?)", color: "#e84393" },
+        { id: "movies", burmeseId: "ရုပ်ရှင်", icon: "🎬", title: "Movies & Cinema", description: "Talk about films, actors, and movie recommendations.", samplePhrase: "Have you seen the new movie? (ရုပ်ရှင်အသစ်ကြည့်ဖူးလား?)", color: "#6c5ce7" },
+        { id: "books", burmeseId: "စာအုပ်", icon: "📖", title: "Books & Reading", description: "Discuss books, authors, and reading habits.", samplePhrase: "I'm reading an interesting book. (စိတ်ဝင်စားစရာစာအုပ်တစ်အုပ် ဖတ်နေတယ်။)", color: "#0984e3" },
+        { id: "news", burmeseId: "သတင်း", icon: "📰", title: "News & Current Events", description: "Talk about daily news, politics, and world events.", samplePhrase: "Did you hear the news today? (ဒီနေ့ သတင်းကြားဖူးလား?)", color: "#d63031" },
+        { id: "history", burmeseId: "သမိုင်း", icon: "🏛️", title: "History & Culture", description: "Discuss historical events, famous people, and cultural traditions.", samplePhrase: "I love learning about history. (သမိုင်းလေ့လာရတာ ကြိုက်တယ်။)", color: "#a29bfe" },
+        { id: "science", burmeseId: "သိပ္ပံ", icon: "🔬", title: "Science & Research", description: "Talk about scientific discoveries, experiments, and research.", samplePhrase: "Science is fascinating! (သိပ္ပံပညာက အရမ်းစိတ်ဝင်စားစရာကောင်းတယ်!)", color: "#00cec9" },
+        { id: "cooking", burmeseId: "ချက်ပြုတ်ခြင်း", icon: "👩‍🍳", title: "Cooking & Recipes", description: "Share recipes, cooking tips, and talk about food preparation.", samplePhrase: "Can you teach me how to cook this? (ဒါကို ဘယ်လိုချက်ရမလဲ သင်ပေးနိုင်မလား?)", color: "#e17055" },
+        { id: "bakery", burmeseId: "မုန့်ဆိုင်", icon: "🥖", title: "Bakery & Cafe", description: "Order coffee, pastries, and talk about baked goods.", samplePhrase: "I'd like a coffee and a croissant, please. (ကော်ဖီတစ်ခွက်နဲ့ croissant တစ်ခုယူချင်ပါတယ်။)", color: "#d63031" },
+        { id: "supermarket", burmeseId: "စူပါမားကတ်", icon: "🛒", title: "Supermarket", description: "Find items, compare prices, and shop for groceries.", samplePhrase: "Where can I find the milk? (နို့ဘယ်မှာရှာလို့ရမလဲ?)", color: "#fdcb6e" },
+        { id: "clothing", burmeseId: "အဝတ်အစားဆိုင်", icon: "👕", title: "Clothing Store", description: "Try on clothes, ask for sizes, and buy fashion items.", samplePhrase: "Do you have this in a larger size? (ဒါကို အရွယ်ကြီးထဲမှာ ရှိလား?)", color: "#fd79a8" },
+        { id: "electronics", burmeseId: "အီလက်ထရွန်းနစ်", icon: "📱", title: "Electronics Store", description: "Buy phones, laptops, and ask about product features.", samplePhrase: "What are the specifications of this phone? (ဒီဖုန်းရဲ့ သတ်မှတ်ချက်တွေက ဘာတွေလဲ?)", color: "#00b894" },
+        { id: "jewelry", burmeseId: "လက်ဝတ်ရတနာ", icon: "💍", title: "Jewelry Store", description: "Buy rings, necklaces, and ask about precious metals.", samplePhrase: "Is this made of gold? (ဒါက ရွှေနဲ့လုပ်ထားတာလား?)", color: "#f1c40f" },
+        { id: "library", burmeseId: "စာကြည့်တိုက်", icon: "🏫", title: "Library", description: "Borrow books, ask for recommendations, and use library services.", samplePhrase: "How long can I keep this book? (ဒီစာအုပ်ကို ဘယ်လောက်ကြာကြာ ထားလို့ရမလဲ?)", color: "#0984e3" },
+        { id: "museum", burmeseId: "ပြတိုက်", icon: "🖼️", title: "Museum & Art Gallery", description: "Talk about art, exhibits, and museum hours.", samplePhrase: "What time does the museum open? (ပြတိုက် ဘယ်အချိန်ဖွင့်လဲ?)", color: "#6c5ce7" },
+        { id: "zoo", burmeseId: "တိရစ္ဆာန်ရုံ", icon: "🐘", title: "Zoo & Animals", description: "Discuss animals, conservation, and zoo experiences.", samplePhrase: "Let's go see the elephants! (ဆင်တွေသွားကြည့်ရအောင်!)", color: "#27ae60" },
+        { id: "beach", burmeseId: "ကမ်းခြေ", icon: "🏖️", title: "Beach & Swimming", description: "Talk about swimming, sunbathing, and beach activities.", samplePhrase: "Is it safe to swim here? (ဒီမှာ ရေကူးလို့ရှိလား?)", color: "#00cec9" },
+        { id: "camping", burmeseId: "စခန်းချခြင်း", icon: "🏕️", title: "Camping & Hiking", description: "Plan camping trips, talk about nature, and hiking trails.", samplePhrase: "Don't forget to bring a tent. (တဲတစ်လုံး ယူလာဖို့ မမေ့နဲ့။)", color: "#e17055" },
+        { id: "wedding", burmeseId: "မင်္ဂလာဆောင်", icon: "💒", title: "Wedding Ceremony", description: "Talk about wedding plans, gifts, and celebrations.", samplePhrase: "Congratulations on your wedding! (မင်္ဂလာဆောင်အတွက် ဝမ်းသာပါတယ်!)", color: "#fd79a8" },
+        { id: "birthday", burmeseId: "မွေးနေ့", icon: "🎂", title: "Birthday Party", description: "Plan parties, buy gifts, and celebrate birthdays.", samplePhrase: "Happy Birthday! (မွေးနေ့ပျော်ရွှင်ပါစေ!)", color: "#e84393" },
+        { id: "newyear", burmeseId: "နှစ်သစ်ကူး", icon: "🎆", title: "New Year Celebration", description: "Talk about New Year resolutions and celebration plans.", samplePhrase: "What are your New Year resolutions? (နှစ်သစ်ကတိတွေ ဘာတွေရှိလဲ?)", color: "#d63031" },
+        { id: "interview", burmeseId: "အလုပ်အင်တာဗျူး", icon: "🎤", title: "Job Interview Practice", description: "Practice common interview questions and answers.", samplePhrase: "Why do you want to work here? (ဒီမှာ အလုပ်လုပ်ချင်တဲ့ အကြောင်းရင်းက ဘာလဲ?)", color: "#2c3e50" },
+        { id: "meeting", burmeseId: "အစည်းအဝေး", icon: "👥", title: "Team Meeting", description: "Discuss projects, assign tasks, and give feedback.", samplePhrase: "Let me share my ideas. (ကျွန်တော့်အတွေးအကြံတွေ မျှဝေပါရစေ။)", color: "#00b894" },
+        { id: "presentation", burmeseId: "တင်ဆက်မှု", icon: "📊", title: "Presentations", description: "Give presentations, answer questions, and explain data.", samplePhrase: "Let me explain this chart. (ဒီဇယားကို ရှင်းပြပါရစေ။)", color: "#0984e3" },
+        { id: "negotiation", burmeseId: "ညှိနှိုင်းခြင်း", icon: "🤝", title: "Negotiations", description: "Discuss prices, terms, and reach agreements.", samplePhrase: "Can we agree on a lower price? (စျေးနှုန်းသက်သာအောင် ညှိနှိုင်းလို့ရမလား?)", color: "#e17055" },
+        { id: "customer", burmeseId: "ဖောက်သည်ဝန်ဆောင်မှု", icon: "🛎️", title: "Customer Service", description: "Handle complaints, return items, and request refunds.", samplePhrase: "I'd like to return this item. (ဒီပစ္စည်းကို ပြန်အပ်ချင်ပါတယ်။)", color: "#d63031" },
+        { id: "realestate", burmeseId: "အိမ်ခြံမြေ", icon: "🏠", title: "Real Estate", description: "Rent or buy houses, ask about prices, and inspect properties.", samplePhrase: "How much is the rent per month? (တစ်လငှားရမ်းခ ဘယ်လောက်လဲ?)", color: "#fdcb6e" },
+        { id: "pharmacy", burmeseId: "ဆေးဆိုင်", icon: "💊", title: "Pharmacy", description: "Buy medicine, ask for dosage instructions, and describe symptoms.", samplePhrase: "I need something for a headache. (ခေါင်းကိုက်တာအတွက် ဆေးလိုအပ်ပါတယ်။)", color: "#e74c3c" },
+        { id: "dentist", burmeseId: "သွားဆရာဝန်", icon: "🦷", title: "Dentist Appointment", description: "Make appointments, describe tooth pain, and get dental care.", samplePhrase: "I have a toothache. (သွားကိုက်တယ်။)", color: "#00b894" },
+        { id: "optician", burmeseId: "မျက်စိဆရာဝန်", icon: "👓", title: "Optician & Glasses", description: "Buy glasses, get eye exams, and order contact lenses.", samplePhrase: "I need new glasses. (မျက်မှန်အသစ်လိုအပ်ပါတယ်။)", color: "#0984e3" },
+        { id: "gym", burmeseId: "အားကစားခန်း", icon: "🏋️", title: "Gym Membership", description: "Sign up for gym, ask about facilities, and fitness classes.", samplePhrase: "How much is the monthly membership? (တစ်လအသင်းဝင်ကြေး ဘယ်လောက်လဲ?)", color: "#e17055" },
+        { id: "yoga", burmeseId: "ယောဂ", icon: "🧘", title: "Yoga Class", description: "Join yoga classes, ask about schedules, and meditation.", samplePhrase: "Is this your first yoga class? (ဒါ မင်းရဲ့ပထမဆုံးယောဂသင်တန်းလား?)", color: "#9b59b6" },
+        { id: "swimming", burmeseId: "ရေကူး", icon: "🏊", title: "Swimming Pool", description: "Ask about pool hours, swimming lessons, and safety rules.", samplePhrase: "What time does the pool open? (ရေကူးကန် ဘယ်အချိန်ဖွင့်လဲ?)", color: "#00cec9" },
+        { id: "laundry", burmeseId: "အဝတ်လျှော်", icon: "🧺", title: "Laundry Service", description: "Get clothes cleaned, ask about prices, and pick up items.", samplePhrase: "Can you dry clean this shirt? (ဒီရှပ်အင်္ကျီကို ဒရိုင်ကလင်းန်း လုပ်ပေးနိုင်မလား?)", color: "#fdcb6e" },
+        { id: "repair", burmeseId: "ပြုပြင်ရေး", icon: "🔧", title: "Repair Shop", description: "Fix phones, computers, and ask about repair costs.", samplePhrase: "Can you fix my phone screen? (ကျွန်တော့်ဖုန်းမျက်နှာပြင်ကို ပြင်ပေးနိုင်မလား?)", color: "#d63031" },
+        { id: "car", burmeseId: "ကားငှား", icon: "🚗", title: "Car Rental", description: "Rent cars, ask about insurance, and return vehicles.", samplePhrase: "I'd like to rent a car for 3 days. (ကား ၃ ရက်အငှား လုပ်ချင်ပါတယ်။)", color: "#2c3e50" },
+        { id: "taxi", burmeseId: "တက္ကစီ", icon: "🚕", title: "Taking a Taxi", description: "Hail taxis, give directions, and pay the fare.", samplePhrase: "Please take me to the airport. (ကျေးဇူးပြု၍ လေဆိပ်ကို ခေါ်သွားပေးပါ။)", color: "#f1c40f" },
+        { id: "bus", burmeseId: "ဘတ်စ်ကား", icon: "🚌", title: "Taking the Bus", description: "Ask about bus routes, buy tickets, and find stops.", samplePhrase: "Which bus goes to the city center? (မြို့လယ်ကို ဘယ်ဘတ်စ်ကားမှ သွားလဲ?)", color: "#3498db" },
+        { id: "train", burmeseId: "ရထား", icon: "🚂", title: "Train Travel", description: "Book train tickets, ask about schedules, and find platforms.", samplePhrase: "What time is the next train to Mandalay? (မန္တလေးကို နောက်ရထား ဘယ်အချိန်ထွက်လဲ?)", color: "#8e44ad" },
+        { id: "visa", burmeseId: "ဗီဇာ", icon: "🛂", title: "Visa Application", description: "Apply for visas, ask about requirements, and submit documents.", samplePhrase: "What documents do I need for the visa? (ဗီဇာအတွက် ဘယ်စာရွက်စာတမ်းတွေ လိုအပ်လဲ?)", color: "#e74c3c" },
+        { id: "embassy", burmeseId: "သံရုံး", icon: "🏛️", title: "Embassy Services", description: "Get passport services, legal assistance, and consular help.", samplePhrase: "I need to renew my passport. (ပတ်စ်ပို့ အသစ်တိုးဖို့ လိုအပ်ပါတယ်။)", color: "#00b894" },
+        { id: "insurance", burmeseId: "အာမခံ", icon: "📄", title: "Insurance", description: "Buy health, travel, or car insurance policies.", samplePhrase: "I want to buy health insurance. (ကျန်းမာရေးအာမခံ ဝယ်ယူချင်ပါတယ်။)", color: "#0984e3" },
+        { id: "lawyer", burmeseId: "ရှေ့နေ", icon: "⚖️", title: "Lawyer Consultation", description: "Get legal advice, discuss cases, and hire attorneys.", samplePhrase: "I need to speak with a lawyer. (ရှေ့နေတစ်ဦးနဲ့ စကားပြောဖို့ လိုအပ်ပါတယ်။)", color: "#6c5ce7" },
+        { id: "accountant", burmeseId: "စာရင်းကိုင်", icon: "🧾", title: "Accountant", description: "File taxes, ask about finances, and get accounting help.", samplePhrase: "Can you help me with my tax return? (ကျွန်တော့်အခွန်စာရင်းအတွက် ကူညီပေးနိုင်မလား?)", color: "#fdcb6e" },
+        { id: "construction", burmeseId: "ဆောက်လုပ်ရေး", icon: "🏗️", title: "Construction", description: "Hire builders, discuss home renovations, and ask about costs.", samplePhrase: "How much to build a new house? (အိမ်အသစ်ဆောက်ဖို့ ဘယ်လောက်ကျမလဲ?)", color: "#e17055" },
+        { id: "plumber", burmeseId: "ပိုက်ဆရာ", icon: "🔧", title: "Plumber", description: "Fix leaking pipes, unclog drains, and repair water heaters.", samplePhrase: "The pipe is leaking. Please send a plumber. (ပိုက်ကနေ ရေတွေယိုနေတယ်။ ပိုက်ဆရာတစ်ယောက် လွှတ်ပေးပါ။)", color: "#3498db" },
+        { id: "electrician", burmeseId: "လျှပ်စစ်ပညာရှင်", icon: "⚡", title: "Electrician", description: "Fix electrical problems, install lights, and rewire homes.", samplePhrase: "The power is out in my house. (ကျွန်တော့်အိမ်မှာ မီးပျက်နေတယ်။)", color: "#f1c40f" },
+        { id: "gasstation", burmeseId: "ဓာတ်ဆီဆိုင်", icon: "⛽", title: "Gas Station", description: "Fill up gas, check oil, and pay at the station.", samplePhrase: "Fill it up, please. (ဓာတ်ဆီအပြည့်ဖြည့်ပေးပါ။)", color: "#f39c12" },
+        { id: "carwash", burmeseId: "ကားလေဆေး", icon: "🧼", title: "Car Wash", description: "Choose car wash services, ask about prices, and clean your car.", samplePhrase: "How much for an exterior wash? (ကားအပြင်ဘက်လေဆေးခြင်း ဘယ်လောက်လဲ?)", color: "#00cec9" },
+        { id: "towing", burmeseId: "ထရပ်ကား", icon: "🚚", title: "Towing Service", description: "Request a tow truck, provide location, and deal with breakdowns.", samplePhrase: "My car broke down. I need a tow truck. (ကျွန်တော့်ကားပျက်သွားတယ်။ ထရပ်ကားတစ်စီး လိုအပ်ပါတယ်။)", color: "#e74c3c" },
+        { id: "parking", burmeseId: "ကားရပ်နား", icon: "🅿️", title: "Parking Garage", description: "Find parking, pay for parking, and locate your car.", samplePhrase: "Where is the parking garage? (ကားရပ်နားရုံ ဘယ်မှာလဲ?)", color: "#2c3e50" },
+        { id: "petstore", burmeseId: "အိမ်မွေးတိရစ္ဆာန်ဆိုင်", icon: "🐾", title: "Pet Store", description: "Buy pet supplies, ask about pet food, and care for your pet.", samplePhrase: "I need dog food for my Labrador. (ကျွန်တော့် Labrador အတွက် ခွေးအစာ လိုအပ်ပါတယ်။)", color: "#fd79a8" },
+        { id: "florist", burmeseId: "ပန်းဆိုင်", icon: "🌸", title: "Florist", description: "Buy flowers, order arrangements, and send bouquets.", samplePhrase: "I'd like to buy a bouquet of flowers. (ပန်းစည်းတစ်စည်း ဝယ်ချင်ပါတယ်။)", color: "#e84393" },
+        { id: "toystore", burmeseId: "အရုပ်ဆိုင်", icon: "🎮", title: "Toy Store", description: "Buy toys for kids, ask about age recommendations, and find gifts.", samplePhrase: "I need a birthday gift for a 5-year-old boy. (အသက် ၅ နှစ်အရွယ် ယောက်ျားလေးအတွက် မွေးနေ့လက်ဆောင်တစ်ခု လိုအပ်ပါတယ်။)", color: "#f39c12" },
+        { id: "sporting-goods", burmeseId: "အားကစားပစ္စည်းဆိုင်", icon: "⚽", title: "Sporting Goods", description: "Buy sports equipment, find the right sizes, and get advice.", samplePhrase: "I need a soccer ball for my son. (ကျွန်တော့်သားအတွက် ဘောလုံးတစ်လုံး လိုအပ်ပါတယ်။)", color: "#00b894" }
+    ];
+    
+    const grid = document.getElementById('conversationGrid');
+    let currentSearchTerm = '';
+    
+    function getIconForConversation(id) {
+        const icons = {
+            greetings: "fa-hand-peace", shopping: "fa-bag-shopping", restaurant: "fa-utensils",
+            travel: "fa-plane", weather: "fa-sun", family: "fa-users", hotel: "fa-hotel",
+            hospital: "fa-hospital", work: "fa-briefcase", school: "fa-graduation-cap",
+            bank: "fa-building-columns", phone: "fa-phone", airport: "fa-plane-departure",
+            market: "fa-apple-alt", hobby: "fa-palette", directions: "fa-map-lines",
+            emergency: "fa-truck-medical", postoffice: "fa-envelope", beauty: "fa-scissors",
+            social: "fa-calendar-check", business: "fa-briefcase", technology: "fa-laptop-code",
+            environment: "fa-leaf", sports: "fa-futbol", music: "fa-music", movies: "fa-film",
+            books: "fa-book", news: "fa-newspaper", history: "fa-landmark", science: "fa-flask",
+            cooking: "fa-utensils", bakery: "fa-bread-slice", supermarket: "fa-shopping-cart",
+            clothing: "fa-tshirt", electronics: "fa-laptop", jewelry: "fa-gem", library: "fa-book",
+            museum: "fa-landmark", zoo: "fa-paw", beach: "fa-umbrella-beach", camping: "fa-campground",
+            wedding: "fa-ring", birthday: "fa-birthday-cake", newyear: "fa-glass-cheers",
+            interview: "fa-user-tie", meeting: "fa-users", presentation: "fa-chalkboard-user",
+            negotiation: "fa-handshake", customer: "fa-headset", realestate: "fa-home",
+            pharmacy: "fa-capsules", dentist: "fa-tooth", optician: "fa-glasses", gym: "fa-dumbbell",
+            yoga: "fa-praying-hands", swimming: "fa-swimmer", laundry: "fa-tshirt", repair: "fa-tools",
+            car: "fa-car", taxi: "fa-taxi", bus: "fa-bus", train: "fa-train", visa: "fa-passport",
+            embassy: "fa-landmark", insurance: "fa-shield-alt", lawyer: "fa-gavel", accountant: "fa-calculator",
+            construction: "fa-hard-hat", plumber: "fa-wrench", electrician: "fa-bolt", gasstation: "fa-gas-pump",
+            carwash: "fa-car-side", towing: "fa-truck", parking: "fa-parking", petstore: "fa-paw",
+            florist: "fa-seedling", toystore: "fa-rocket", "sporting-goods": "fa-football-ball"
+        };
+        return icons[id] || "fa-comment";
+    }
+    
+    function renderConversations() {
+        const filtered = conversations.filter(conv => {
+            if (!currentSearchTerm) return true;
+            const searchLower = currentSearchTerm.toLowerCase();
+            return conv.id.toLowerCase().includes(searchLower) ||
+                   conv.title.toLowerCase().includes(searchLower) ||
+                   conv.burmeseId.toLowerCase().includes(searchLower) ||
+                   conv.description.toLowerCase().includes(searchLower);
+        });
+        
+        document.getElementById('resultCount').innerText = `${filtered.length} conversations`;
+        
+        if (filtered.length === 0) {
+            grid.innerHTML = `<div class="empty-message">
+                <i class="fas fa-search" style="font-size: 2rem; color: #aaa; margin-bottom: 1rem; display: block;"></i>
+                No conversations found for "<strong>${currentSearchTerm}</strong>"<br>
+                Try searching by topic name or Burmese keyword like ဈေးဝယ်, စားသောက်ဆိုင်, ခရီးသွား
+            </div>`;
+            return;
+        }
+        
+        grid.innerHTML = filtered.map(conv => `
+            <a href="conversations/${conv.id}.html" class="conv-card">
+                <div class="card-icon" style="background: linear-gradient(135deg, ${conv.color}, ${conv.color}dd);">
+                    <i class="fas ${getIconForConversation(conv.id)}"></i>
+                </div>
+                <div class="card-content">
+                    <h3>${conv.icon} ${conv.title}</h3>
+                    <p>${conv.description}</p>
+                    <div class="sample-phrase">
+                        <i class="fas fa-comment-dots"></i> "${conv.samplePhrase}"
+                    </div>
+                    <div class="burmese-id-tag">
+                        <i class="fas fa-tag"></i> ${conv.burmeseId}
+                    </div>
+                </div>
+            </a>
+        `).join('');
+    }
+    
+    // Search functionality
+    const searchInput = document.getElementById('searchInput');
+    const clearSearch = document.getElementById('clearSearch');
+    
+    searchInput.addEventListener('input', (e) => {
+        currentSearchTerm = e.target.value;
+        renderConversations();
+    });
+    
+    clearSearch.addEventListener('click', () => {
+        searchInput.value = '';
+        currentSearchTerm = '';
+        renderConversations();
+    });
+    
+    // Initial render
+    renderConversations();
+    
+    // Back to Top Button
+    (function() {
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        if (backToTopBtn) {
+            window.addEventListener('scroll', function() {
+                backToTopBtn.classList.toggle('show', window.scrollY > 300);
+            });
+            backToTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

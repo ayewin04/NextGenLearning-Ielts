@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visa Application - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 1rem;
+        }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        
+        .conversation-section {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .conversation-section h2 {
+            background: #e74c3c;
+            color: white;
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line {
+            display: grid;
+            grid-template-columns: 70px 1fr 1fr;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            align-items: start;
+        }
+        .speaker { font-weight: bold; color: #e74c3c; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { 
+            color: #8e6b3c; 
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 0.95rem;
+        }
+        .audio-btn {
+            background: #eef4ff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.3rem;
+        }
+        .audio-btn:hover { background: #e74c3c; color: white; }
+        
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+            padding: 1rem;
+        }
+        .vocab-item {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            border-left: 3px solid #e74c3c;
+        }
+        .vocab-eng { font-weight: bold; color: #e74c3c; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        
+        .quiz-question {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.8rem;
+        }
+        .quiz-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .quiz-option {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .quiz-option:hover { background: #e74c3c; color: white; border-color: #e74c3c; }
+        
+        .tips-box {
+            background: #fdeaea;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #e74c3c;
+        }
+        .tips-box i { color: #e74c3c; margin-right: 8px; }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1rem;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: #1e3c72;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid white;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: #f5b042;
+            color: #1e3c72;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .back-to-top i {
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 42px;
+                height: 42px;
+            }
+            .back-to-top i {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 700px) {
+            .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> All Conversations
+    </a>
+    
+    <header>
+        <h1><i class="fas fa-passport"></i> Visa Application</h1>
+        <p>Learn how to apply for visas, ask about requirements, and submit documents in English</p>
+        <p>ဗီဇာများလျှောက်ထားနည်း၊ လိုအပ်ချက်များအကြောင်းမေးမြန်းနည်းနှင့် စာရွက်စာတမ်းများတင်သွင်းနည်းကို အင်္ဂလိပ်လို လေ့လာပါ</p>
+    </header>
+    
+    <!-- Dialogue 1: Asking About Visa Requirements -->
+    <div class="conversation-section">
+        <h2>📋 Asking About Visa Requirements / ဗီဇာလိုအပ်ချက်များအကြောင်းမေးမြန်းခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Applicant:</div>
+                <div class="english">Hello, I'm planning to travel to the United States. Do I need a visa?</div>
+                <div class="burmese">မင်္ဂလာပါ၊ ကျွန်တော် အမေရိကန်ပြည်ထောင်စုကို ခရီးသွားရန် စီစဉ်နေပါတယ်။ ဗီဇာလိုအပ်ပါသလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Hello, I am planning to travel to the United States. Do I need a visa?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Officer:</div>
+                <div class="english">What is your nationality and the purpose of your visit?</div>
+                <div class="burmese">သင့်နိုင်ငံသားဖြစ်မှုနှင့် လာရောက်ခြင်းရည်ရွယ်ချက်က ဘာလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What is your nationality and the purpose of your visit?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Applicant:</div>
+                <div class="english">I'm from Myanmar, and I want to go as a tourist for two weeks.</div>
+                <div class="burmese">ကျွန်တော် မြန်မာနိုင်ငံသားပါ၊ နှစ်ပတ်ကြာ ခရီးသွားအဖြစ် သွားလိုပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am from Myanmar, and I want to go as a tourist for two weeks.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Officer:</div>
+                <div class="english">You will need a B-2 tourist visa. The application process takes about 4-6 weeks.</div>
+                <div class="burmese">သင် B-2 ခရီးသွားဗီဇာ လိုအပ်ပါမယ်။ လျှောက်ထားခြင်းလုပ်ငန်းစဉ်က ၄-၆ ပတ်ခန့်ကြာပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('You will need a B-2 tourist visa. The application process takes about 4-6 weeks.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 2: Required Documents -->
+    <div class="conversation-section">
+        <h2>📄 Required Documents / လိုအပ်သောစာရွက်စာတမ်းများ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Applicant:</div>
+                <div class="english">What documents do I need to submit?</div>
+                <div class="burmese">ဘယ်စာရွက်စာတမ်းတွေ တင်သွင်းဖို့လိုအပ်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What documents do I need to submit?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Officer:</div>
+                <div class="english">You'll need a valid passport, a completed application form, a passport photo, and proof of funds.</div>
+                <div class="burmese">သင့်အနေဖြင့် သက်တမ်းရှိပတ်စပို့၊ ဖြည့်စွက်ပြီးသောလျှောက်လွှာပုံစံ၊ ပတ်စပို့ဓာတ်ပုံနှင့် ငွေကြေးအထောက်အထားတို့ လိုအပ်ပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('You will need a valid passport, a completed application form, a passport photo, and proof of funds.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Applicant:</div>
+                <div class="english">What kind of proof of funds?</div>
+                <div class="burmese">ဘယ်လိုငွေကြေးအထောက်အထားမျိုးလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What kind of proof of funds?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Officer:</div>
+                <div class="english">Bank statements for the last three months, showing you have enough money for your trip.</div>
+                <div class="burmese">လွန်ခဲ့တဲ့သုံးလအတွက် ဘဏ်ရှင်းတမ်းများ၊ သင့်ခရီးစဉ်အတွက် လုံလောက်သောငွေရှိကြောင်း ပြသပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Bank statements for the last three months, showing you have enough money for your trip.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 3: Filling Out the Application Form -->
+    <div class="conversation-section">
+        <h2>✍️ Filling Out the Application Form / လျှောက်လွှာပုံစံဖြည့်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Applicant:</div>
+                <div class="english">I'm having trouble with question 25 on the form. Can you help me?</div>
+                <div class="burmese">ပုံစံပေါ်က မေးခွန်း ၂၅ မှာ ကျွန်တော် အခက်အခဲရှိတယ်။ ကူညီနိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am having trouble with question 25 on the form. Can you help me?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Officer:</div>
+                <div class="english">Of course. What does the question ask?</div>
+                <div class="burmese">ရပါတယ်။ မေးခွန်းက ဘာမေးလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Of course. What does the question ask?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Applicant:</div>
+                <div class="english">It asks for my previous travel history to the US. I've never been before.</div>
+                <div class="burmese">ဒါက အမေရိကန်ကို ကျွန်တော့်ရဲ့ ယခင်ခရီးသွားမှတ်တမ်းကို မေးပါတယ်။ အရင်က တစ်ခါမှ မသွားဖူးပါဘူး။</div>
+                <button class="audio-btn" onclick="speakEnglish('It asks for my previous travel history to the US. I have never been before.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Officer:</div>
+                <div class="english">Simply write "N/A" or "Not applicable." Make sure to answer all questions honestly.</div>
+                <div class="burmese">"N/A" သို့မဟုတ် "Not applicable" လို့ရေးပါ။ မေးခွန်းအားလုံးကို ရိုးသားစွာဖြေကြားပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Simply write N/A or Not applicable. Make sure to answer all questions honestly.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 4: Scheduling an Interview -->
+    <div class="conversation-section">
+        <h2>📅 Scheduling an Interview / အင်တာဗျူးအချိန်ဇယားဆွဲခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Applicant:</div>
+                <div class="english">Do I need to attend an interview?</div>
+                <div class="burmese">ကျွန်တော် အင်တာဗျူးတက်ရောက်ဖို့ လိုအပ်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do I need to attend an interview?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Officer:</div>
+                <div class="english">Yes, most applicants between 14 and 79 years old must attend an in-person interview.</div>
+                <div class="burmese">ဟုတ်ပါတယ်၊ အသက် ၁၄ နှစ်မှ ၇၉ နှစ်ကြားရှိ လျှောက်ထားသူအများစုသည် ကိုယ်တိုင်လာရောက်သောအင်တာဗျူးတက်ရောက်ရပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, most applicants between 14 and 79 years old must attend an in-person interview.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Applicant:</div>
+                <div class="english">How can I schedule the interview?</div>
+                <div class="burmese">အင်တာဗျူးကို ဘယ်လိုအချိန်ဇယားဆွဲရမလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('How can I schedule the interview?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Officer:</div>
+                <div class="english">After submitting your application, you'll receive a confirmation with a link to schedule your interview online.</div>
+                <div class="burmese">သင့်လျှောက်လွှာတင်ပြီးနောက်၊ သင့်အင်တာဗျူးကို အွန်လိုင်းမှအချိန်ဇယားဆွဲရန် လင့်ခ်တစ်ခုပါသော အတည်ပြုချက်ကို ရရှိပါမည်။</div>
+                <button class="audio-btn" onclick="speakEnglish('After submitting your application, you will receive a confirmation with a link to schedule your interview online.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 5: Visa Interview -->
+    <div class="conversation-section">
+        <h2>🎤 Visa Interview / ဗီဇာအင်တာဗျူး</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Officer:</div>
+                <div class="english">Please state the purpose of your visit to the United States.</div>
+                <div class="burmese">ကျေးဇူးပြု၍ အမေရိကန်ပြည်ထောင်စုသို့ သင့်လာရောက်ခြင်း၏ ရည်ရွယ်ချက်ကို ဖော်ပြပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Please state the purpose of your visit to the United States.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Applicant:</div>
+                <div class="english">I'm going for tourism. I want to visit New York and see the Statue of Liberty.</div>
+                <div class="burmese">ကျွန်တော် ခရီးသွားလုပ်ငန်းအတွက် သွားပါမယ်။ နယူးယောက်ကိုသွားပြီး လစ်ဘာတီရုပ်တုကို ကြည့်ချင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am going for tourism. I want to visit New York and see the Statue of Liberty.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Officer:</div>
+                <div class="english">How long will you stay?</div>
+                <div class="burmese">ဘယ်လောက်ကြာကြာနေမလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('How long will you stay?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Applicant:</div>
+                <div class="english">Two weeks. I have a return ticket and hotel reservations.</div>
+                <div class="burmese">နှစ်ပတ်ပါ။ ကျွန်တော်မှာ ပြန်လက်မှတ်နှင့် ဟိုတယ်အခန်းကြိုမှာထားမှုများရှိပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Two weeks. I have a return ticket and hotel reservations.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 6: Visa Fee Payment -->
+    <div class="conversation-section">
+        <h2>💵 Visa Fee Payment / ဗီဇာအခကြေးငွေပေးချေခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Applicant:</div>
+                <div class="english">How much is the visa application fee?</div>
+                <div class="burmese">ဗီဇာလျှောက်လွှာအခကြေးငွေက ဘယ်လောက်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('How much is the visa application fee?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Officer:</div>
+                <div class="english">The fee for a tourist visa is $160. This fee is non-refundable, even if your visa is denied.</div>
+                <div class="burmese">ခရီးသွားဗီဇာအတွက် အခကြေးငွေက ၁၆၀ ဒေါ်လာပါ။ သင့်ဗီဇာငြင်းပယ်ခံရရင်တောင် ဒီအခကြေးငွေကို ပြန်အမ်းမည်မဟုတ်ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('The fee for a tourist visa is 160 dollars. This fee is non-refundable, even if your visa is denied.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Applicant:</div>
+                <div class="english">How can I pay the fee?</div>
+                <div class="burmese">အခကြေးငွေကို ဘယ်လိုပေးချေရမလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('How can I pay the fee?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Officer:</div>
+                <div class="english">You can pay online by credit card or at designated bank branches.</div>
+                <div class="burmese">အွန်လိုင်းမှ ခရက်ဒစ်ကဒ်ဖြင့် သို့မဟုတ် သတ်မှတ်ထားသောဘဏ်ခွဲများတွင် ပေးချေနိုင်ပါသည်။</div>
+                <button class="audio-btn" onclick="speakEnglish('You can pay online by credit card or at designated bank branches.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 7: Visa Processing Time -->
+    <div class="conversation-section">
+        <h2>⏳ Visa Processing Time / ဗီဇာဆောင်ရွက်ချိန်</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Applicant:</div>
+                <div class="english">How long does it take to process the visa?</div>
+                <div class="burmese">ဗီဇာဆောင်ရွက်ရန် ဘယ်လောက်ကြာမလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('How long does it take to process the visa?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Officer:</div>
+                <div class="english">Processing usually takes 2-4 weeks after your interview. However, it can vary based on your country.</div>
+                <div class="burmese">ဆောင်ရွက်ချိန်သည် များသောအားဖြင့် သင့်အင်တာဗျူးပြီးနောက် ၂-၄ ပတ်ကြာပါသည်။ သို့သော် သင့်နိုင်ငံအပေါ်မူတည်၍ ကွဲပြားနိုင်ပါသည်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Processing usually takes 2-4 weeks after your interview. However, it can vary based on your country.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Applicant:</div>
+                <div class="english">Is there an expedited processing option?</div>
+                <div class="burmese">အမြန်ဆောင်ရွက်ခြင်းရွေးချယ်စရာရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Is there an expedited processing option?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Officer:</div>
+                <div class="english">In certain emergency cases, yes. You would need to request it and provide supporting documentation.</div>
+                <div class="burmese">အရေးပေါ်အခြေအနေအချို့တွင် ရှိပါသည်။ သင်လျှောက်ထားရန်နှင့် ထောက်ခံစာရွက်စာတမ်းများ ပေးအပ်ရန် လိုအပ်ပါမည်။</div>
+                <button class="audio-btn" onclick="speakEnglish('In certain emergency cases, yes. You would need to request it and provide supporting documentation.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 8: Visa Denial -->
+    <div class="conversation-section">
+        <h2>❌ Visa Denial / ဗီဇာငြင်းပယ်ခံရခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Applicant:</div>
+                <div class="english">My visa was denied. Can I reapply?</div>
+                <div class="burmese">ကျွန်တော့်ဗီဇာ ငြင်းပယ်ခံခဲ့ရတယ်။ ပြန်လျှောက်လို့ရမလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('My visa was denied. Can I reapply?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Officer:</div>
+                <div class="english">Yes, you can reapply. However, you should address the reason for the denial first.</div>
+                <div class="burmese">ဟုတ်ပါတယ်၊ သင်ပြန်လျှောက်ထားနိုင်ပါတယ်။ သို့သော် သင်သည် ငြင်းပယ်ခြင်း၏အကြောင်းရင်းကို အရင်ဆုံးဖြေရှင်းသင့်ပါသည်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, you can reapply. However, you should address the reason for the denial first.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Applicant:</div>
+                <div class="english">They said I didn't provide strong enough ties to my home country.</div>
+                <div class="burmese">ကျွန်တော့်နိုင်ငံနှင့် ခိုင်မာသောဆက်သွယ်မှုများ မပေးနိုင်ဘူးလို့ သူတို့ပြောတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('They said I did not provide strong enough ties to my home country.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Officer:</div>
+                <div class="english">You can provide additional evidence like employment letters, property ownership, or family ties. Consider consulting an immigration lawyer.</div>
+                <div class="burmese">အလုပ်ခန့်စာများ၊ အိမ်ခြံမြေပိုင်ဆိုင်မှု သို့မဟုတ် မိသားစုဆက်သွယ်မှုများကဲ့သို့ နောက်ထပ်သက်သေအထောက်အထားများ ပေးနိုင်ပါသည်။ လူဝင်မှုကြီးကြပ်ရေးရှေ့နေနှင့် တိုင်ပင်ရန် စဉ်းစားပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('You can provide additional evidence like employment letters, property ownership, or family ties. Consider consulting an immigration lawyer.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Types of Visas -->
+    <div class="conversation-section">
+        <h2>📋 Types of Visas / ဗီဇာအမျိုးအစားများ</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Common Visa Types (အသုံးများသောဗီဇာအမျိုးအစားများ):</strong><br>
+            • <strong>B-1</strong> - Business Visa (စီးပွားရေးဗီဇာ)<br>
+            • <strong>B-2</strong> - Tourist Visa (ခရီးသွားဗီဇာ)<br>
+            • <strong>F-1</strong> - Student Visa (ကျောင်းသားဗီဇာ)<br>
+            • <strong>H-1B</strong> - Work Visa (အလုပ်ဗီဇာ)<br>
+            • <strong>K-1</strong> - Fiancé(e) Visa (စေ့စပ်ထားသူဗီဇာ)<br>
+            • <strong>J-1</strong> - Exchange Visitor Visa (ဖလှယ်ရေးဧည့်သည်ဗီဇာ)<br>
+            • <strong>L-1</strong> - Intra-company Transfer Visa (ကုမ္ပဏီအတွင်းလွှဲပြောင်းဗီဇာ)<br>
+            • <strong>O-1</strong> - Extraordinary Ability Visa (ထူးခြားစွမ်းရည်ဗီဇာ)<br>
+        </div>
+    </div>
+    
+    <!-- Visa Vocabulary -->
+    <div class="conversation-section">
+        <h2>📚 Visa Vocabulary / ဗီဇာသုံးဝေါဟာရများ</h2>
+        <div class="vocab-grid">
+            <div class="vocab-item"><span class="vocab-eng">Visa waiver</span><br><span class="vocab-burmese">ဗီဇာကင်းလွတ်ခွင့်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Visa validity</span><br><span class="vocab-burmese">ဗီဇာသက်တမ်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Duration of stay</span><br><span class="vocab-burmese">နေထိုင်ကာလ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Multiple entry</span><br><span class="vocab-burmese">အကြိမ်ပေါင်းများစွာ ဝင်ခွင့်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Single entry</span><br><span class="vocab-burmese">တစ်ကြိမ်တည်းဝင်ခွင့်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Visa extension</span><br><span class="vocab-burmese">ဗီဇာသက်တမ်းတိုးခြင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Overstay</span><br><span class="vocab-burmese">ခွင့်ပြုချိန်ထက်ကျော်လွန်နေထိုင်ခြင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Deportation</span><br><span class="vocab-burmese">ပြည်နှင်ဒဏ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Consular processing</span><br><span class="vocab-burmese">ကောင်စစ်ဝန်ဆိုင်ရာဆောင်ရွက်မှု</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Administrative processing</span><br><span class="vocab-burmese">စီမံခန့်ခွဲရေးဆိုင်ရာဆောင်ရွက်မှု</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Visa stamp</span><br><span class="vocab-burmese">ဗီဇာတံဆိပ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">I-94 form</span><br><span class="vocab-burmese">I-94 ပုံစံ (ဝင်ရောက်ခွင့်မှတ်တမ်း)</span></div>
+        </div>
+    </div>
+    
+    <!-- Visa Tips -->
+    <div class="conversation-section">
+        <h2>💡 Visa Tips / ဗီဇာအကြံပြုချက်များ</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Tips for a Successful Visa Application (အောင်မြင်သောဗီဇာလျှောက်ထားမှုအတွက် အကြံပြုချက်များ):</strong><br>
+            • Apply well in advance of your travel date (သင့်ခရီးစဉ်ရက်စွဲမတိုင်မီ ကြိုတင်လျှောက်ထားပါ)<br>
+            • Answer all questions honestly (မေးခွန်းအားလုံးကို ရိုးသားစွာဖြေကြားပါ)<br>
+            • Bring all required documents (လိုအပ်သောစာရွက်စာတမ်းများအားလုံးကိုယူလာပါ)<br>
+            • Dress professionally for your interview (အင်တာဗျူးအတွက် ကျေကျေနပ်နပ်ဝတ်ဆင်ပါ)<br>
+            • Show strong ties to your home country (သင့်နိုင်ငံနှင့် ခိုင်မာသောဆက်သွယ်မှုများပြသပါ)<br>
+            • Be concise and confident in your answers (သင့်အဖြေများတွင် တိုတိုနှင့် ယုံကြည်မှုရှိပါ)<br>
+            • Never provide false documents (မမှန်ကန်သောစာရွက်စာတမ်းများကို ဘယ်တော့မှ မပေးပါနှင့်)<br>
+        </div>
+    </div>
+    
+    <!-- Practice Section -->
+    <div class="conversation-section">
+        <h2>✏️ Practice Questions / လေ့ကျင့်ခန်းမေးခွန်းများ</h2>
+        <div class="dialogue-box">
+            <div class="quiz-question">
+                <p><strong>1. How do you ask if you need a visa?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Do I need a visa?')">How much is a visa?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Do I need a visa?')">Do I need a visa?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Do I need a visa?')">Where do I apply for a visa?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Do I need a visa?')">When does my visa expire?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>2. "ဗီဇာအတွက် ဘယ်စာရွက်စာတမ်းတွေ လိုအပ်လဲ" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What documents do I need for the visa?')">What is the visa fee?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What documents do I need for the visa?')">What documents do I need for the visa?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What documents do I need for the visa?')">Where is the embassy?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What documents do I need for the visa?')">How long is the visa valid?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. What does "valid passport" mean?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A passport that has not expired')">A new passport</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A passport that has not expired')">A passport with visas</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A passport that has not expired')">A passport that has not expired</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A passport that has not expired')">A passport with photos</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. "အင်တာဗျူးကို ဘယ်လိုအချိန်ဇယားဆွဲရမလဲ" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'How can I schedule the interview?')">How can I pay the fee?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'How can I schedule the interview?')">How can I schedule the interview?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'How can I schedule the interview?')">How can I submit documents?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'How can I schedule the interview?')">How can I track my application?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. What is an "overstay"?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Staying beyond the permitted time')">Leaving early</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Staying beyond the permitted time')">Arriving late</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Staying beyond the permitted time')">Staying beyond the permitted time</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Staying beyond the permitted time')">Extending your visa</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p><i class="fas fa-heart" style="color: #e74c3c;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p>
+        <p style="font-size: 0.75rem; margin-top: 0.5rem;">Practice these conversations to navigate the visa application process with confidence!</p>
+    </footer>
+</div>
+
+<!-- Back to Top Button -->
+<a href="#" class="back-to-top" id="backToTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+<script>
+    function speakEnglish(text) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8;
+        utterance.pitch = 1.0;
+        
+        function setVoice() {
+            const voices = window.speechSynthesis.getVoices();
+            const englishVoice = voices.find(v => v.lang === 'en-US' || v.lang.startsWith('en-'));
+            if (englishVoice) utterance.voice = englishVoice;
+            window.speechSynthesis.speak(utterance);
+        }
+        
+        if (window.speechSynthesis.getVoices().length) setVoice();
+        else window.speechSynthesis.onvoiceschanged = setVoice;
+    }
+    
+    function checkAnswer(element, correctAnswer) {
+        const options = element.parentElement.querySelectorAll('.quiz-option');
+        const isCorrect = element.innerText === correctAnswer;
+        
+        if (isCorrect) {
+            element.style.background = '#2ecc71';
+            element.style.color = 'white';
+            speakEnglish(correctAnswer);
+            setTimeout(() => {
+                options.forEach(opt => {
+                    opt.style.background = '';
+                    opt.style.color = '';
+                });
+            }, 1500);
+        } else {
+            element.style.background = '#e74c3c';
+            element.style.color = 'white';
+            setTimeout(() => {
+                element.style.background = '';
+                element.style.color = '';
+            }, 500);
+        }
+    }
+    
+    // Back to Top Button Functionality
+    (function() {
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        
+        if (backToTopBtn) {
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

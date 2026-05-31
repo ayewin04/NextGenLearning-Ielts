@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Service - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 1rem;
+        }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        
+        .conversation-section {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .conversation-section h2 {
+            background: #d63031;
+            color: white;
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line {
+            display: grid;
+            grid-template-columns: 70px 1fr 1fr;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            align-items: start;
+        }
+        .speaker { font-weight: bold; color: #d63031; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { 
+            color: #8e6b3c; 
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 0.95rem;
+        }
+        .audio-btn {
+            background: #eef4ff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.3rem;
+        }
+        .audio-btn:hover { background: #d63031; color: white; }
+        
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+            padding: 1rem;
+        }
+        .vocab-item {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            border-left: 3px solid #d63031;
+        }
+        .vocab-eng { font-weight: bold; color: #d63031; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        
+        .quiz-question {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.8rem;
+        }
+        .quiz-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .quiz-option {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .quiz-option:hover { background: #d63031; color: white; border-color: #d63031; }
+        
+        .tips-box {
+            background: #fdeaea;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #d63031;
+        }
+        .tips-box i { color: #d63031; margin-right: 8px; }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1rem;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: #1e3c72;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid white;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: #f5b042;
+            color: #1e3c72;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .back-to-top i {
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 42px;
+                height: 42px;
+            }
+            .back-to-top i {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 700px) {
+            .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> All Conversations
+    </a>
+    
+    <header>
+        <h1><i class="fas fa-headset"></i> Customer Service</h1>
+        <p>Learn how to handle complaints, return items, and request refunds in English</p>
+        <p>တိုင်ကြားချက်များကိုကိုင်တွယ်နည်း၊ ပစ္စည်းများပြန်အပ်နည်းနှင့် ငွေပြန်အမ်းရန်တောင်းဆိုနည်းတို့ကို အင်္ဂလိပ်လို လေ့လာပါ</p>
+    </header>
+    
+    <!-- Dialogue 1: Calling Customer Service -->
+    <div class="conversation-section">
+        <h2>📞 Calling Customer Service / ဖောက်သည်ဝန်ဆောင်မှုကိုခေါ်ဆိုခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Hello, I'd like to speak to a customer service representative.</div>
+                <div class="burmese">မင်္ဂလာပါ၊ ဖောက်သည်ဝန်ဆောင်မှုကိုယ်စားလှယ်တစ်ဦးနဲ့ စကားပြောချင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Hello, I would like to speak to a customer service representative.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">This is Sarah speaking. How may I help you today?</div>
+                <div class="burmese">ဒါက ဆာရာ ပြောနေတာပါ။ ဒီနေ့ ဘယ်လိုကူညီရမလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('This is Sarah speaking. How may I help you today?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I have a problem with an order I placed last week.</div>
+                <div class="burmese">ကျွန်တော် ပြီးခဲ့တဲ့အပတ်က မှာခဲ့တဲ့အော်ဒါတစ်ခုမှာ ပြဿနာရှိပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I have a problem with an order I placed last week.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">I'm sorry to hear that. Can I have your order number, please?</div>
+                <div class="burmese">ကြားရတာ စိတ်မကောင်းပါဘူး။ ကျေးဇူးပြု၍ သင့်အော်ဒါနံပါတ်ကို ရနိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am sorry to hear that. Can I have your order number, please?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 2: Damaged Product -->
+    <div class="conversation-section">
+        <h2>📦 Damaged Product / ပျက်စီးနေသောထုတ်ကုန်</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">The product arrived damaged. The box was crushed and the item inside is broken.</div>
+                <div class="burmese">ထုတ်ကုန်က ပျက်စီးလာတယ်။ သေတ္တာ ကြေမွနေပြီး အတွင်းက ပစ္စည်း ကျိုးနေတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('The product arrived damaged. The box was crushed and the item inside is broken.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">I apologize for the inconvenience. We will send you a replacement immediately.</div>
+                <div class="burmese">အဆင်မပြေမှုအတွက် တောင်းပန်ပါတယ်။ ကျွန်တော်တို့ သင့်ကို အစားထိုးပစ္စည်းချက်ချင်းပို့ပေးပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I apologize for the inconvenience. We will send you a replacement immediately.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Do I need to return the damaged item?</div>
+                <div class="burmese">ပျက်စီးနေတဲ့ပစ္စည်းကို ပြန်အပ်ဖို့လိုအပ်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do I need to return the damaged item?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">Yes, we will email you a return label. You can drop it off at any post office.</div>
+                <div class="burmese">ဟုတ်ပါတယ်၊ ကျွန်တော်တို့ ပြန်ပို့တံဆိပ်ကို အီးမေးလ်ပို့ပေးပါမယ်။ ဘယ်စာတိုက်မှာမဆို သွားထားနိုင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, we will email you a return label. You can drop it off at any post office.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 3: Wrong Item Received -->
+    <div class="conversation-section">
+        <h2>🔄 Wrong Item Received / မှားယွင်းသောပစ္စည်းလက်ခံရရှိခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I received the wrong item. I ordered a blue shirt, but you sent me a red one.</div>
+                <div class="burmese">ကျွန်တော် မှားယွင်းတဲ့ပစ္စည်းကို လက်ခံရရှိခဲ့တယ်။ ကျွန်တော် အပြာရောင်ရှပ်အင်္ကျီမှာခဲ့ပေမယ့် အနီရောင်တစ်ထည်ပို့လိုက်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I received the wrong item. I ordered a blue shirt, but you sent me a red one.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">I'm very sorry for the mistake. We'll send you the correct item right away.</div>
+                <div class="burmese">အမှားအတွက် အလွန်စိတ်မကောင်းပါဘူး။ မှန်ကန်တဲ့ပစ္စည်းကို ချက်ချင်းပို့ပေးပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am very sorry for the mistake. We will send you the correct item right away.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">What should I do with the wrong item?</div>
+                <div class="burmese">မှားယွင်းတဲ့ပစ္စည်းကို ဘာလုပ်ရမလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What should I do with the wrong item?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">You can keep it as our apology, or return it using the prepaid label we'll send.</div>
+                <div class="burmese">ကျွန်တော်တို့ရဲ့တောင်းပန်မှုအဖြစ် သိမ်းထားနိုင်ပါတယ်၊ ဒါမှမဟုတ် ကျွန်တော်တို့ပို့မယ့် ကြိုပေးပြီးသားတံဆိပ်ကိုသုံးပြီး ပြန်အပ်နိုင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('You can keep it as our apology, or return it using the prepaid label we will send.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 4: Late Delivery -->
+    <div class="conversation-section">
+        <h2>⏰ Late Delivery / နောက်ကျသောပို့ဆောင်မှု</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">My order was supposed to arrive two days ago. It's still not here.</div>
+                <div class="burmese">ကျွန်တော့်အော်ဒါက လွန်ခဲ့တဲ့ နှစ်ရက်က ရောက်သင့်တယ်။ အခုထိ မရောက်သေးဘူး။</div>
+                <button class="audio-btn" onclick="speakEnglish('My order was supposed to arrive two days ago. It is still not here.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">I apologize for the delay. Let me track your order for you.</div>
+                <div class="burmese">နောက်ကျတဲ့အတွက် တောင်းပန်ပါတယ်။ သင့်အော်ဒါကို ခြေရာခံကြည့်ပါရစေ။</div>
+                <button class="audio-btn" onclick="speakEnglish('I apologize for the delay. Let me track your order for you.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">It shows your package is delayed due to weather conditions. It should arrive by tomorrow.</div>
+                <div class="burmese">ရာသီဥတုအခြေအနေကြောင့် သင့်ပါဆယ်နောက်ကျနေတယ်လို့ ပြထားပါတယ်။ မနက်ဖြန်အတွင်း ရောက်သင့်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('It shows your package is delayed due to weather conditions. It should arrive by tomorrow.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Okay, thank you for checking. I'll wait until tomorrow.</div>
+                <div class="burmese">အိုကေ၊ စစ်ဆေးပေးတဲ့အတွက် ကျေးဇူးပါ။ မနက်ဖြန်အထိ စောင့်ပါ့မယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Okay, thank you for checking. I will wait until tomorrow.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 5: Requesting a Refund -->
+    <div class="conversation-section">
+        <h2>💰 Requesting a Refund / ငွေပြန်အမ်းတောင်းခံခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I'm not satisfied with this product. I'd like to request a refund.</div>
+                <div class="burmese">ကျွန်တော် ဒီထုတ်ကုန်ကို ကျေနပ်မှုမရှိပါဘူး။ ငွေပြန်အမ်းရန် တောင်းဆိုချင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am not satisfied with this product. I would like to request a refund.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">I understand. May I ask why you're not satisfied?</div>
+                <div class="burmese">နားလည်းပါတယ်။ ဘာကြောင့် မကျေနပ်တာလဲ မေးလို့ရမလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('I understand. May I ask why you are not satisfied?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">The quality is poor and it doesn't work as described.</div>
+                <div class="burmese">အရည်အသွေးက ညံ့ဖျင်းပြီး ဖော်ပြထားသလို အလုပ်မလုပ်ပါဘူး။</div>
+                <button class="audio-btn" onclick="speakEnglish('The quality is poor and it does not work as described.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">I'm sorry to hear that. Since it's within 30 days of purchase, I can issue a full refund.</div>
+                <div class="burmese">ကြားရတာ စိတ်မကောင်းပါဘူး။ ဝယ်ယူပြီး ၃၀ ရက်အတွင်းဖြစ်တာမို့ ငွေအပြည့်ပြန်အမ်းပေးနိုင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am sorry to hear that. Since it is within 30 days of purchase, I can issue a full refund.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 6: Escalating to a Manager -->
+    <div class="conversation-section">
+        <h2>📈 Escalating to a Manager / မန်နေဂျာထံတိုးမြှင့်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I've been on hold for 30 minutes. This is unacceptable.</div>
+                <div class="burmese">ကျွန်တော် စောင့်နေရတာ ၃၀ မိနစ်ရှိပြီ။ ဒါက လက်ခံနိုင်စရာမရှိပါဘူး။</div>
+                <button class="audio-btn" onclick="speakEnglish('I have been on hold for 30 minutes. This is unacceptable.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">I apologize for the long wait. Let me see if I can resolve your issue.</div>
+                <div class="burmese">ကြာရှည်စောင့်ရတဲ့အတွက် တောင်းပန်ပါတယ်။ သင့်ပြဿနာကို ဖြေရှင်းနိုင်မလားကြည့်ပါရစေ။</div>
+                <button class="audio-btn" onclick="speakEnglish('I apologize for the long wait. Let me see if I can resolve your issue.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I want to speak to your manager, please.</div>
+                <div class="burmese">ကျေးဇူးပြု၍ သင့်မန်နေဂျာနဲ့ စကားပြောချင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I want to speak to your manager, please.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Manager:</div>
+                <div class="english">Hello, this is the manager. How can I help you?</div>
+                <div class="burmese">မင်္ဂလာပါ၊ ကျွန်တော် မန်နေဂျာပါ။ ဘယ်လိုကူညီရမလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Hello, this is the manager. How can I help you?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 7: Billing Issue -->
+    <div class="conversation-section">
+        <h2>💳 Billing Issue / ငွေတောင်းခံမှုပြဿနာ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I was charged twice for the same order. Can you fix this?</div>
+                <div class="burmese">ကျွန်တော် အော်ဒါတူအတွက် နှစ်ခါငွေတောင်းခံခဲ့ပါတယ်။ ဒါကို ပြင်ပေးနိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('I was charged twice for the same order. Can you fix this?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">I apologize for the error. I'll look into this right away.</div>
+                <div class="burmese">အမှားအတွက် တောင်းပန်ပါတယ်။ ချက်ချင်းစစ်ဆေးပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I apologize for the error. I will look into this right away.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">I see the double charge. I'll reverse the second charge immediately. It should reflect in 3-5 business days.</div>
+                <div class="burmese">ကျွန်တော် နှစ်ခါငွေတောင်းခံမှုကို မြင်ရပါတယ်။ ဒုတိယငွေတောင်းခံမှုကို ချက်ချင်းပြန်ဖျက်ပါမယ်။ လုပ်ငန်းရက် ၃-၅ ရက်အတွင်း ပြသသင့်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I see the double charge. I will reverse the second charge immediately. It should reflect in 3-5 business days.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Thank you for your help. I appreciate it.</div>
+                <div class="burmese">ကူညီတဲ့အတွက် ကျေးဇူးပါ။ အလေးထားပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Thank you for your help. I appreciate it.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 8: Giving Positive Feedback -->
+    <div class="conversation-section">
+        <h2>😊 Giving Positive Feedback / အပြုသဘောဆောင်သောတုံ့ပြန်ချက်ပေးခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I just wanted to say that your customer service agent was very helpful.</div>
+                <div class="burmese">ခင်ဗျားတို့ရဲ့ ဖောက်သည်ဝန်ဆောင်မှုကိုယ်စားလှယ် အလွန်အကူအညီဖြစ်တယ်လို့ ပြောချင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I just wanted to say that your customer service agent was very helpful.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">Thank you so much! I'm glad I could help you.</div>
+                <div class="burmese">ကျေးဇူးအရမ်းတင်ပါတယ်! ကျွန်တော် ကူညီနိုင်ခဲ့တာ ဝမ်းသာပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Thank you so much! I am glad I could help you.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I'll definitely shop with your company again. You've earned my loyalty.</div>
+                <div class="burmese">ကျွန်တော် သေချာပေါက် ခင်ဗျားတို့ကုမ္ပဏီနဲ့ ပြန်ဝယ်ပါမယ်။ ကျွန်တော့်ရဲ့သစ္စာစောင့်သိမှုကို ရရှိထားပါပြီ။</div>
+                <button class="audio-btn" onclick="speakEnglish('I will definitely shop with your company again. You have earned my loyalty.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">That means a lot to us. Have a wonderful day!</div>
+                <div class="burmese">ဒါက ကျွန်တော်တို့အတွက် အရမ်းအဓိပ္ပာယ်ရှိပါတယ်။ ကောင်းမွန်တဲ့နေ့လေးဖြစ်ပါစေ။</div>
+                <button class="audio-btn" onclick="speakEnglish('That means a lot to us. Have a wonderful day!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Customer Service Tips -->
+    <div class="conversation-section">
+        <h2>💡 Customer Service Tips / ဖောက်သည်ဝန်ဆောင်မှုအကြံပြုချက်များ</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>For Customers (ဖောက်သည်များအတွက်):</strong><br>
+            • Stay calm and polite (စိတ်တည်ငြိမ်အောင်ထားပြီး ယဉ်ယဉ်ကျေးကျေးနေပါ)<br>
+            • Have your order number ready (သင့်အော်ဒါနံပါတ်ကို အဆင်သင့်ထားပါ)<br>
+            • Be specific about the problem (ပြဿနာအကြောင်း တိတိကျကျပြောပါ)<br>
+            • Ask for a supervisor if needed (လိုအပ်ရင် ကြီးကြပ်ရေးမှူးကိုတောင်းပါ)<br>
+            • Take notes of who you spoke with (သင်စကားပြောခဲ့သူကို မှတ်သားထားပါ)<br>
+            <br>
+            <strong>For Representatives (ကိုယ်စားလှယ်များအတွက်):</strong><br>
+            • Listen actively (တက်ကြွစွာနားထောင်ပါ)<br>
+            • Apologize sincerely (ရိုးသားစွာတောင်းပန်ပါ)<br>
+            • Take ownership of the problem (ပြဿနာကိုတာဝန်ယူပါ)<br>
+            • Offer a solution before the customer asks (ဖောက်သည်မမေးခင် အဖြေကမ်းလှမ်းပါ)<br>
+            • Follow up to ensure satisfaction (ကျေနပ်မှုရှိစေရန် နောက်ဆက်တွဲလုပ်ပါ)<br>
+        </div>
+    </div>
+    
+    <!-- Useful Customer Service Phrases -->
+    <div class="conversation-section">
+        <h2>📖 Useful Customer Service Phrases / အသုံးဝင်သော ဖောက်သည်ဝန်ဆောင်မှုစကားစုများ</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Common Phrases (အသုံးများသောစကားစုများ):</strong><br>
+            • "Thank you for your patience." (သည်းခံပေးတဲ့အတွက် ကျေးဇူးပါ)<br>
+            • "I completely understand your frustration." (သင့်စိတ်ပျက်မှုကို ကျွန်တော် အပြည့်အဝနားလည်းပါတယ်)<br>
+            • "Let me see what I can do for you." (သင့်အတွက် ဘာလုပ်ပေးနိုင်လဲ ကြည့်ပါရစေ)<br>
+            • "I'll make sure this gets resolved." (ဒါကို ဖြေရှင်းပြီးအောင်လုပ်မယ်ဆိုတာ သေချာအောင်လုပ်ပါမယ်)<br>
+            • "Is there anything else I can help you with today?" (ဒီနေ့ နောက်ထပ်ကူညီစရာတစ်ခုခုရှိလား)<br>
+            • "We value your business." (သင့်လုပ်ငန်းကို ကျွန်တော်တို့ တန်ဖိုးထားပါတယ်)<br>
+        </div>
+    </div>
+    
+    <!-- Vocabulary Section -->
+    <div class="conversation-section">
+        <h2>📚 Customer Service Vocabulary / ဖောက်သည်ဝန်ဆောင်မှုသုံးဝေါဟာရများ</h2>
+        <div class="vocab-grid">
+            <div class="vocab-item"><span class="vocab-eng">Complaint</span><br><span class="vocab-burmese">တိုင်ကြားချက်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Refund</span><br><span class="vocab-burmese">ငွေပြန်အမ်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Exchange</span><br><span class="vocab-burmese">လဲလှယ်ခြင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Return policy</span><br><span class="vocab-burmese">ပြန်အပ်မူဝါဒ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Warranty</span><br><span class="vocab-burmese">အာမခံ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Escalate</span><br><span class="vocab-burmese">တိုးမြှင့်သည်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Resolution</span><br><span class="vocab-burmese">ဖြေရှင်းချက်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Compensation</span><br><span class="vocab-burmese">လျော်ကြေး</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Survey</span><br><span class="vocab-burmese">စစ်တမ်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Live chat</span><br><span class="vocab-burmese">တိုက်ရိုက်ချတ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">FAQ</span><br><span class="vocab-burmese">အမေးများသောမေးခွန်းများ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Ticket number</span><br><span class="vocab-burmese">အကူအညီတောင်းခံမှုနံပါတ်</span></div>
+        </div>
+    </div>
+    
+    <!-- Practice Section -->
+    <div class="conversation-section">
+        <h2>✏️ Practice Questions / လေ့ကျင့်ခန်းမေးခွန်းများ</h2>
+        <div class="dialogue-box">
+            <div class="quiz-question">
+                <p><strong>1. How do you request a refund?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like to request a refund.')">I would like to order more.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like to request a refund.')">I would like to request a refund.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like to request a refund.')">I would like to cancel my order.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like to request a refund.')">I would like to change my address.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>2. "ထုတ်ကုန်က ပျက်စီးလာတယ်" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'The product arrived damaged.')">The product arrived early.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'The product arrived damaged.')">The product arrived damaged.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'The product arrived damaged.')">The product is missing.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'The product arrived damaged.')">The product is perfect.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. What should you have ready when calling customer service?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Order number')">Credit card PIN</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Order number')">Driver's license</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Order number')">Order number</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Order number')">Social security number</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. "မန်နေဂျာနဲ့ စကားပြောချင်ပါတယ်" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I want to speak to the manager.')">I want to speak to the cashier.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I want to speak to the manager.')">I want to speak to the manager.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I want to speak to the manager.')">I want to speak to the security guard.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I want to speak to the manager.')">I want to speak to the delivery driver.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. What does "escalate to a manager" mean?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'To move the issue to a higher authority')">To ignore the issue</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'To move the issue to a higher authority')">To cancel the issue</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'To move the issue to a higher authority')">To move the issue to a higher authority</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'To move the issue to a higher authority')">To close the issue</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p><i class="fas fa-heart" style="color: #d63031;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p>
+        <p style="font-size: 0.75rem; margin-top: 0.5rem;">Practice these conversations to handle customer service situations with confidence!</p>
+    </footer>
+</div>
+
+<!-- Back to Top Button -->
+<a href="#" class="back-to-top" id="backToTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+<script>
+    function speakEnglish(text) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8;
+        utterance.pitch = 1.0;
+        
+        function setVoice() {
+            const voices = window.speechSynthesis.getVoices();
+            const englishVoice = voices.find(v => v.lang === 'en-US' || v.lang.startsWith('en-'));
+            if (englishVoice) utterance.voice = englishVoice;
+            window.speechSynthesis.speak(utterance);
+        }
+        
+        if (window.speechSynthesis.getVoices().length) setVoice();
+        else window.speechSynthesis.onvoiceschanged = setVoice;
+    }
+    
+    function checkAnswer(element, correctAnswer) {
+        const options = element.parentElement.querySelectorAll('.quiz-option');
+        const isCorrect = element.innerText === correctAnswer;
+        
+        if (isCorrect) {
+            element.style.background = '#2ecc71';
+            element.style.color = 'white';
+            speakEnglish(correctAnswer);
+            setTimeout(() => {
+                options.forEach(opt => {
+                    opt.style.background = '';
+                    opt.style.color = '';
+                });
+            }, 1500);
+        } else {
+            element.style.background = '#e74c3c';
+            element.style.color = 'white';
+            setTimeout(() => {
+                element.style.background = '';
+                element.style.color = '';
+            }, 500);
+        }
+    }
+    
+    // Back to Top Button Functionality
+    (function() {
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        
+        if (backToTopBtn) {
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

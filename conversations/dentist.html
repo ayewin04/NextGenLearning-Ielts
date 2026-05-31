@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dentist Appointment - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%); font-family: 'Segoe UI', Roboto, sans-serif; padding: 1rem; }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        .back-btn { display: inline-flex; align-items: center; gap: 8px; background: white; padding: 0.6rem 1.2rem; border-radius: 2rem; text-decoration: none; color: #1e3c72; font-weight: 500; margin-bottom: 1rem; transition: 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        .conversation-section { background: white; border-radius: 1rem; margin-bottom: 2rem; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+        .conversation-section h2 { background: #00b894; color: white; padding: 1rem; font-size: 1.2rem; }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line { display: grid; grid-template-columns: 70px 1fr 1fr; gap: 0.8rem; padding: 0.8rem; border-bottom: 1px solid #eee; align-items: start; }
+        .speaker { font-weight: bold; color: #00b894; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.95rem; }
+        .audio-btn { background: #eef4ff; border: none; border-radius: 2rem; padding: 0.3rem 0.8rem; cursor: pointer; transition: 0.2s; margin-top: 0.3rem; }
+        .audio-btn:hover { background: #00b894; color: white; }
+        .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.8rem; padding: 1rem; }
+        .vocab-item { background: #f8f9fa; padding: 0.8rem; border-radius: 0.8rem; border-left: 3px solid #00b894; }
+        .vocab-eng { font-weight: bold; color: #00b894; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        .quiz-question { background: #f8f9fa; padding: 1rem; margin-bottom: 1rem; border-radius: 0.8rem; }
+        .quiz-options { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
+        .quiz-option { background: white; padding: 0.5rem 1rem; border-radius: 2rem; border: 1px solid #ddd; cursor: pointer; transition: 0.2s; }
+        .quiz-option:hover { background: #00b894; color: white; border-color: #00b894; }
+        .tips-box { background: #e8f8f5; padding: 1rem; border-radius: 0.8rem; margin: 1rem; border-left: 3px solid #00b894; }
+        .tips-box i { color: #00b894; margin-right: 8px; }
+        footer { margin-top: 2rem; text-align: center; padding: 1rem; color: #6c757d; font-size: 0.8rem; }
+        .back-to-top { position: fixed; bottom: 1.5rem; right: 1.5rem; background: #1e3c72; color: white; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 1000; opacity: 0; visibility: hidden; border: 2px solid white; }
+        .back-to-top.show { opacity: 1; visibility: visible; }
+        .back-to-top:hover { background: #f5b042; color: #1e3c72; transform: translateY(-3px); }
+        .back-to-top i { font-size: 1.2rem; }
+        @media (max-width: 768px) { .back-to-top { bottom: 1rem; right: 1rem; width: 42px; height: 42px; } .back-to-top i { font-size: 1rem; } }
+        @media (max-width: 700px) { .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; } }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn"><i class="fas fa-arrow-left"></i> All Conversations</a>
+    <header><h1><i class="fas fa-tooth"></i> Dentist Appointment</h1><p>Learn how to make appointments, describe tooth pain, and get dental care in English</p><p>သွားဆရာဝန်ချိန်းယူနည်း၊ သွားကိုက်ခြင်းကိုဖော်ပြနည်းနှင့် သွားနှင့်ခံတွင်းစောင့်ရှောက်မှုရယူနည်းကို အင်္ဂလိပ်လို လေ့လာပါ</p></header>
+    
+    <!-- Dialogue 1: Emergency Appointment -->
+    <div class="conversation-section"><h2>🦷 Emergency Appointment / အရေးပေါ်ချိန်း</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Patient:</div><div class="english">I have a terrible toothache. Can I see a dentist today?</div><div class="burmese">ကျွန်တော့်သွားက အရမ်းကိုက်နေတယ်။ ဒီနေ့ သွားဆရာဝန်ပြနိုင်မလား။</div><button class="audio-btn" onclick="speakEnglish('I have a terrible toothache. Can I see a dentist today?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Receptionist:</div><div class="english">We have an emergency slot at 3 PM. Can you come then?</div><div class="burmese">ကျွန်တော်တို့မှာ ညနေ ၃ နာရီမှာ အရေးပေါ်အချိန်ရှိပါတယ်။ အဲဒီအချိန်လာနိုင်မလား။</div><button class="audio-btn" onclick="speakEnglish('We have an emergency slot at 3 PM. Can you come then?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Patient:</div><div class="english">Yes, I'll be there. Do I need to bring anything?</div><div class="burmese">ဟုတ်ကဲ့၊ ကျွန်တော်ရောက်ပါမယ်။ ဘာတစ်ခုခု ယူလာဖို့လိုလား။</div><button class="audio-btn" onclick="speakEnglish('Yes, I will be there. Do I need to bring anything?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Receptionist:</div><div class="english">Just your ID and insurance card if you have one.</div><div class="burmese">သင့်သက်သေခံနှင့် ရှိရင် အာမခံကဒ်ပါ။</div><button class="audio-btn" onclick="speakEnglish('Just your ID and insurance card if you have one.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 2: Describing Tooth Pain -->
+    <div class="conversation-section"><h2>😖 Describing Tooth Pain / သွားကိုက်ခြင်းဖော်ပြခြင်း</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Dentist:</div><div class="english">Which tooth is bothering you?</div><div class="burmese">ဘယ်သွားက သင့်ကို စိတ်အနှောင့်အယှက်ဖြစ်စေလဲ။</div><button class="audio-btn" onclick="speakEnglish('Which tooth is bothering you?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Patient:</div><div class="english">The lower left molar. It hurts when I chew or drink something cold.</div><div class="burmese">အောက်ဘယ်ဘက်အံသွားပါ။ ဝါးတဲ့အခါ ဒါမှမဟုတ် အေးတဲ့အရာတစ်ခုခုသောက်တဲ့အခါ နာပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('The lower left molar. It hurts when I chew or drink something cold.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Dentist:</div><div class="english">Is the pain constant or does it come and go?</div><div class="burmese">နာကျင်မှုက အဆက်မပြတ်လား ဒါမှမဟုတ် ပြောင်းလဲနေလား။</div><button class="audio-btn" onclick="speakEnglish('Is the pain constant or does it come and go?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Patient:</div><div class="english">It comes and goes, but it's getting worse.</div><div class="burmese">ပြောင်းလဲနေပေမယ့် ပိုဆိုးလာနေပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('It comes and goes, but it is getting worse.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 3: Dental Exam -->
+    <div class="conversation-section"><h2>🔍 Dental Exam / သွားစစ်ဆေးခြင်း</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Dentist:</div><div class="english">Open wide, please. I'm going to take some X-rays.</div><div class="burmese">ကျေးဇူးပြု၍ ကျယ်ကျယ်ဖွင့်ပါ။ ဓာတ်မှန်ရိုက်ပါမယ်။</div><button class="audio-btn" onclick="speakEnglish('Open wide, please. I am going to take some X-rays.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Patient:</div><div class="english">Do the X-rays hurt?</div><div class="burmese">ဓာတ်မှန်က နာလား။</div><button class="audio-btn" onclick="speakEnglish('Do the X-rays hurt?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Dentist:</div><div class="english">No, not at all. You'll just need to bite down gently on this film.</div><div class="burmese">မနာပါဘူး။ ဒီဖလင်ပေါ်မှာ ညင်သာစွာ ကိုက်ထားဖို့ပဲ လိုပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('No, not at all. You will just need to bite down gently on this film.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Dentist:</div><div class="english">I see a cavity on your X-ray. It's deep, so you may need a root canal.</div><div class="burmese">သင့်ဓာတ်မှန်မှာ သွားပိုးတစ်ခုတွေ့ရပါတယ်။ နက်နေတာမို့ အမြစ်တူးသန့်စင်ဖို့ လိုအပ်နိုင်ပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('I see a cavity on your X-ray. It is deep, so you may need a root canal.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 4: Cleaning Appointment -->
+    <div class="conversation-section"><h2>✨ Cleaning Appointment / သွားသန့်ရှင်းရေးချိန်း</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Patient:</div><div class="english">I'm due for my regular cleaning. Can I schedule an appointment?</div><div class="burmese">ကျွန်တော် ပုံမှန်သန့်ရှင်းရေးခံယူရန် အချိန်ကျနေပြီ။ အချိန်ဇယားဆွဲလို့ရမလား။</div><button class="audio-btn" onclick="speakEnglish('I am due for my regular cleaning. Can I schedule an appointment?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Hygienist:</div><div class="english">How about next Tuesday at 9 AM?</div><div class="burmese">လာမယ့်အင်္ဂါနေ့ နံနက် ၉ နာရီက ဘယ်လိုလဲ။</div><button class="audio-btn" onclick="speakEnglish('How about next Tuesday at 9 AM?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Patient:</div><div class="english">That works for me. How long will it take?</div><div class="burmese">အဆင်ပြေပါတယ်။ ဘယ်လောက်ကြာမလဲ။</div><button class="audio-btn" onclick="speakEnglish('That works for me. How long will it take?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Hygienist:</div><div class="english">About 45 minutes. We'll clean, polish, and floss your teeth.</div><div class="burmese">၄၅ မိနစ်ခန့်ပါ။ သွားများကို သန့်ရှင်းရေး၊ တောက်ပအောင်ပြုလုပ်ရေးနှင့် သွားကြိုးသုံးပေးပါမယ်။</div><button class="audio-btn" onclick="speakEnglish('About 45 minutes. We will clean, polish, and floss your teeth.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 5: Root Canal Treatment -->
+    <div class="conversation-section"><h2>🦷 Root Canal Treatment / အမြစ်တူးသန့်စင်ခြင်း</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Patient:</div><div class="english">I'm nervous about the root canal. Will it be painful?</div><div class="burmese">အမြစ်တူးသန့်စင်ခြင်းအတွက် ကျွန်တော် စိတ်လှုပ်ရှားနေတယ်။ နာမှာလား။</div><button class="audio-btn" onclick="speakEnglish('I am nervous about the root canal. Will it be painful?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Dentist:</div><div class="english">Don't worry. We'll use local anesthesia. You won't feel any pain during the procedure.</div><div class="burmese">မပူပါနဲ့။ ဒေသခံထုံဆေးကို သုံးပါမယ်။ လုပ်ထုံးလုပ်နည်းအတွင်း နာကျင်မှုကို မခံစားရပါဘူး။</div><button class="audio-btn" onclick="speakEnglish('Do not worry. We will use local anesthesia. You will not feel any pain during the procedure.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Dentist:</div><div class="english">The treatment will take about an hour. You'll need a crown afterward.</div><div class="burmese">ကုသမှုက တစ်နာရီခန့်ကြာပါမယ်။ နောက်ပိုင်းမှာ သွားစွပ်တစ်ခု လိုအပ်ပါလိမ့်မယ်။</div><button class="audio-btn" onclick="speakEnglish('The treatment will take about an hour. You will need a crown afterward.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Patient:</div><div class="english">How much will the crown cost?</div><div class="burmese">သွားစွပ်က ဘယ်လောက်ကုန်ကျမလဲ။</div><button class="audio-btn" onclick="speakEnglish('How much will the crown cost?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 6: Teeth Whitening -->
+    <div class="conversation-section"><h2>✨ Teeth Whitening / သွားဖြူစေခြင်း</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Patient:</div><div class="english">I'm interested in teeth whitening. What options do you have?</div><div class="burmese">သွားဖြူစေခြင်းကို စိတ်ဝင်စားပါတယ်။ ဘယ်လိုရွေးချယ်စရာတွေ ရှိလဲ။</div><button class="audio-btn" onclick="speakEnglish('I am interested in teeth whitening. What options do you have?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Dentist:</div><div class="english">We offer in-office whitening and take-home kits. In-office takes one hour and costs $300.</div><div class="burmese">ကျွန်တော်တို့မှာ ဆိုင်အတွင်းအဖြူဆေးခြင်းနှင့် အိမ်ယူပါကိရိယာများ ပေးပါတယ်။ ဆိုင်အတွင်းက တစ်နာရီကြာပြီး ၃၀၀ ဒေါ်လာပါ။</div><button class="audio-btn" onclick="speakEnglish('We offer in-office whitening and take-home kits. In-office takes one hour and costs 300 dollars.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Patient:</div><div class="english">What about the take-home kit?</div><div class="burmese">အိမ်ယူပါကိရိယာကရော။</div><button class="audio-btn" onclick="speakEnglish('What about the take-home kit?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Dentist:</div><div class="english">Take-home kits are $150. You use them for two weeks. Results are similar but take longer.</div><div class="burmese">အိမ်ယူပါကိရိယာက ၁၅၀ ဒေါ်လာပါ။ နှစ်ပတ်ကြာ အသုံးပြုပါ။ ရလဒ်များက ဆင်တူပေမယ့် ပိုကြာပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('Take-home kits are 150 dollars. You use them for two weeks. Results are similar but take longer.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 7: Insurance Coverage -->
+    <div class="conversation-section"><h2>📋 Insurance Coverage / အာမခံအကျုံးဝင်မှု</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Patient:</div><div class="english">Does my dental insurance cover root canals?</div><div class="burmese">ကျွန်တော့်သွားအာမခံက အမြစ်တူးသန့်စင်ခြင်းကို အကျုံးဝင်လား။</div><button class="audio-btn" onclick="speakEnglish('Does my dental insurance cover root canals?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Receptionist:</div><div class="english">Let me check. Yes, it covers 80% of the cost. Your portion would be about $200.</div><div class="burmese">စစ်ကြည့်ပါရစေ။ ဟုတ်ပါတယ်၊ ကုန်ကျစရိတ်၏ ၈၀ ရာခိုင်နှုန်းကို အကျုံးဝင်ပါတယ်။ သင့်အပိုင်းက ၂၀၀ ဒေါ်လာခန့် ကျပါလိမ့်မယ်။</div><button class="audio-btn" onclick="speakEnglish('Let me check. Yes, it covers 80 percent of the cost. Your portion would be about 200 dollars.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Patient:</div><div class="english">What about the crown? Is that covered too?</div><div class="burmese">သွားစွပ်ကရော? အဲဒါလည်း အကျုံးဝင်လား။</div><button class="audio-btn" onclick="speakEnglish('What about the crown? Is that covered too?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Receptionist:</div><div class="english">Crowns are covered at 50%. You would pay the remaining $300.</div><div class="burmese">သွားစွပ်တွေက ၅၀ ရာခိုင်နှုန်း အကျုံးဝင်ပါတယ်။ ကျန် ၃၀၀ ဒေါ်လာကို သင်ပေးရပါလိမ့်မယ်။</div><button class="audio-btn" onclick="speakEnglish('Crowns are covered at 50 percent. You would pay the remaining 300 dollars.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 8: Follow-up Appointment -->
+    <div class="conversation-section"><h2>📅 Follow-up Appointment / နောက်ဆက်တွဲချိန်း</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Dentist:</div><div class="english">Your filling is complete. How does it feel?</div><div class="burmese">သင့်သွားဖြည့်စွက်ခြင်း ပြီးစီးပါပြီ။ ဘယ်လိုခံစားရလဲ။</div><button class="audio-btn" onclick="speakEnglish('Your filling is complete. How does it feel?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Patient:</div><div class="english">It feels fine. A little sensitive to cold, but much better than before.</div><div class="burmese">အဆင်ပြေပါတယ်။ အေးတာနဲ့ နည်းနည်းစဉ့်ကလပ်ဖြစ်ပေမယ့် အရင်ကထက် အများကြီးကောင်းပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('It feels fine. A little sensitive to cold, but much better than before.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Dentist:</div><div class="english">The sensitivity should go away in a few days. Please schedule a follow-up in six months.</div><div class="burmese">ထိခိုက်လွယ်မှုက ရက်အနည်းငယ်အတွင်း ပျောက်သွားသင့်ပါတယ်။ ကျေးဇူးပြု၍ ခြောက်လအတွင်း နောက်ဆက်တွဲချိန်းယူပါ။</div><button class="audio-btn" onclick="speakEnglish('The sensitivity should go away in a few days. Please schedule a follow-up in six months.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Patient:</div><div class="english">I will. Thank you, doctor!</div><div class="burmese">ကျွန်တော်လုပ်ပါမယ်။ ကျေးဇူးပါ ဆရာ။</div><button class="audio-btn" onclick="speakEnglish('I will. Thank you, doctor!')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <div class="tips-box"><i class="fas fa-lightbulb"></i> <strong>Tips for Dental Health (သွားနှင့်ခံတွင်းကျန်းမာရေးအကြံပြုချက်များ):</strong><br>• Brush twice a day for two minutes (တစ်နေ့နှစ်ကြိမ် နှစ်မိနစ်ကြာ သွားတိုက်ပါ)<br>• Floss daily (နေ့စဉ် သွားကြိုးသုံးပါ)<br>• Visit the dentist every six months (ခြောက်လတစ်ကြိမ် သွားဆရာဝန်ပြသပါ)<br>• Avoid sugary drinks and snacks (သကြားပါသောအဖျော်ယမကာနှင့် သရေစာများကို ရှောင်ကြဉ်ပါ)</div>
+    
+    <div class="conversation-section"><div class="vocab-grid">
+        <div class="vocab-item"><span class="vocab-eng">Cavity</span><br><span class="vocab-burmese">သွားပိုး</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Filling</span><br><span class="vocab-burmese">သွားဖြည့်ခြင်း</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Extraction</span><br><span class="vocab-burmese">သွားနုတ်ခြင်း</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Gums</span><br><span class="vocab-burmese">သွားဖုံး</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Bleeding</span><br><span class="vocab-burmese">သွေးထွက်ခြင်း</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Swelling</span><br><span class="vocab-burmese">ရောင်ရမ်းခြင်း</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Anesthesia</span><br><span class="vocab-burmese">ထုံဆေး</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Mouthguard</span><br><span class="vocab-burmese">ပါးစပ်အကာအကွယ်</span></div>
+    </div></div>
+    
+    <div class="conversation-section"><div class="quiz-question"><p><strong>1. How do you describe a toothache?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'I have a terrible toothache.')">I need a cleaning.</div><div class="quiz-option" onclick="checkAnswer(this, 'I have a terrible toothache.')">I have a terrible toothache.</div><div class="quiz-option" onclick="checkAnswer(this, 'I have a terrible toothache.')">My gums are bleeding.</div><div class="quiz-option" onclick="checkAnswer(this, 'I have a terrible toothache.')">I want to whiten my teeth.</div></div></div>
+    <div class="quiz-question"><p><strong>2. "သွားဆရာဝန်နဲ့ အရေးပေါ်ချိန်းယူနိုင်မလား" in English?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'Can I schedule an emergency appointment?')">Can I schedule a cleaning?</div><div class="quiz-option" onclick="checkAnswer(this, 'Can I schedule an emergency appointment?')">Can I schedule an emergency appointment?</div><div class="quiz-option" onclick="checkAnswer(this, 'Can I schedule an emergency appointment?')">Can I get a filling?</div><div class="quiz-option" onclick="checkAnswer(this, 'Can I schedule an emergency appointment?')">Can I get X-rays?</div></div></div>
+    <div class="quiz-question"><p><strong>3. What is a "root canal"?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'A treatment to remove infected pulp from a tooth')">A tooth cleaning</div><div class="quiz-option" onclick="checkAnswer(this, 'A treatment to remove infected pulp from a tooth')">A tooth extraction</div><div class="quiz-option" onclick="checkAnswer(this, 'A treatment to remove infected pulp from a tooth')">A treatment to remove infected pulp from a tooth</div><div class="quiz-option" onclick="checkAnswer(this, 'A treatment to remove infected pulp from a tooth')">Teeth whitening</div></div></div>
+    <div class="quiz-question"><p><strong>4. "သွားတွေကို သန့်ရှင်းရေးလုပ်ပေးမလား" in English?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'Will you clean my teeth?')">Will you pull my tooth?</div><div class="quiz-option" onclick="checkAnswer(this, 'Will you clean my teeth?')">Will you fill my cavity?</div><div class="quiz-option" onclick="checkAnswer(this, 'Will you clean my teeth?')">Will you clean my teeth?</div><div class="quiz-option" onclick="checkAnswer(this, 'Will you clean my teeth?')">Will you whiten my teeth?</div></div></div>
+    <div class="quiz-question"><p><strong>5. How often should you visit the dentist?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'Every six months')">Every month</div><div class="quiz-option" onclick="checkAnswer(this, 'Every six months')">Once a year</div><div class="quiz-option" onclick="checkAnswer(this, 'Every six months')">Every six months</div><div class="quiz-option" onclick="checkAnswer(this, 'Every six months')">Only when it hurts</div></div></div>
+    </div>
+    <footer><p><i class="fas fa-heart" style="color: #00b894;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p></footer>
+</div>
+<a href="#" class="back-to-top" id="backToTopBtn"><i class="fas fa-arrow-up"></i></a>
+<script>
+    function speakEnglish(text){if(!window.speechSynthesis)return;window.speechSynthesis.cancel();const utterance=new SpeechSynthesisUtterance(text);utterance.lang='en-US';utterance.rate=0.8;utterance.pitch=1.0;function setVoice(){const voices=window.speechSynthesis.getVoices();const englishVoice=voices.find(v=>v.lang==='en-US'||v.lang.startsWith('en-'));if(englishVoice)utterance.voice=englishVoice;window.speechSynthesis.speak(utterance);}if(window.speechSynthesis.getVoices().length)setVoice();else window.speechSynthesis.onvoiceschanged=setVoice;}
+    function checkAnswer(element,correctAnswer){const options=element.parentElement.querySelectorAll('.quiz-option');const isCorrect=element.innerText===correctAnswer;if(isCorrect){element.style.background='#2ecc71';element.style.color='white';speakEnglish(correctAnswer);setTimeout(()=>{options.forEach(opt=>{opt.style.background='';opt.style.color='';});},1500);}else{element.style.background='#e74c3c';element.style.color='white';setTimeout(()=>{options.forEach(opt=>{opt.style.background='';opt.style.color='';});},500);}}
+    (function(){const btn=document.getElementById('backToTopBtn');if(btn){window.addEventListener('scroll',function(){btn.classList.toggle('show',window.scrollY>300);});btn.addEventListener('click',function(e){e.preventDefault();window.scrollTo({top:0,behavior:'smooth'});});}})();
+</script>
+</body>
+</html>

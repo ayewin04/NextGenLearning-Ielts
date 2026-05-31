@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clothing Store - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 1rem;
+        }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        
+        .conversation-section {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .conversation-section h2 {
+            background: #fd79a8;
+            color: white;
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line {
+            display: grid;
+            grid-template-columns: 70px 1fr 1fr;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            align-items: start;
+        }
+        .speaker { font-weight: bold; color: #e84393; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { 
+            color: #8e6b3c; 
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 0.95rem;
+        }
+        .audio-btn {
+            background: #eef4ff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.3rem;
+        }
+        .audio-btn:hover { background: #fd79a8; color: white; }
+        
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+            padding: 1rem;
+        }
+        .vocab-item {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            border-left: 3px solid #fd79a8;
+        }
+        .vocab-eng { font-weight: bold; color: #e84393; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        
+        .quiz-question {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.8rem;
+        }
+        .quiz-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .quiz-option {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .quiz-option:hover { background: #fd79a8; color: white; border-color: #fd79a8; }
+        
+        .size-chart {
+            background: #fdf2f8;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #fd79a8;
+        }
+        .size-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.3rem 0;
+            border-bottom: 1px dashed #ddd;
+        }
+        
+        .tips-box {
+            background: #fdf2f8;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #fd79a8;
+        }
+        .tips-box i { color: #e84393; margin-right: 8px; }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1rem;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: #1e3c72;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid white;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: #f5b042;
+            color: #1e3c72;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .back-to-top i {
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 42px;
+                height: 42px;
+            }
+            .back-to-top i {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 700px) {
+            .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> All Conversations
+    </a>
+    
+    <header>
+        <h1><i class="fas fa-tshirt"></i> Clothing Store</h1>
+        <p>Learn how to ask for sizes, colors, try on clothes, and buy fashion items</p>
+        <p>အရွယ်အစား၊ အရောင်များမေးမြန်းနည်း၊ အဝတ်အစားများစမ်းဝတ်နည်းနှင့် ဖက်ရှင်ပစ္စည်းများဝယ်ယူနည်းကို အင်္ဂလိပ်လို လေ့လာပါ</p>
+    </header>
+    
+    <!-- Dialogue 1: Asking for Help -->
+    <div class="conversation-section">
+        <h2>👋 Asking for Help / အကူအညီတောင်းခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Excuse me, can you help me find a size medium in this shirt?</div>
+                <div class="burmese">ခွင့်လွှတ်ပါ၊ ဒီရှပ်အင်္ကျီမှာ အလတ်စား အရွယ်အစားကို ရှာဖွေဖို့ ကူညီနိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Excuse me, can you help me find a size medium in this shirt?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Salesperson:</div>
+                <div class="english">Sure! Let me check in the back for you.</div>
+                <div class="burmese">ရပါတယ်! နောက်ခန်းမှာ စစ်ပေးပါရစေ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Sure! Let me check in the back for you.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Thank you. I'll wait here.</div>
+                <div class="burmese">ကျေးဇူးပါ။ ဒီမှာစောင့်နေပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Thank you. I will wait here.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Salesperson:</div>
+                <div class="english">Here you go. We have one medium left. Would you like to try it on?</div>
+                <div class="burmese">ဒီမှာပါ။ ကျွန်တော်တို့မှာ အလတ်စား တစ်ခုကျန်ပါသေးတယ်။ စမ်းဝတ်ကြည့်ချင်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Here you go. We have one medium left. Would you like to try it on?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 2: Asking for Different Colors -->
+    <div class="conversation-section">
+        <h2>🎨 Asking for Different Colors / မတူညီသောအရောင်များမေးခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Do you have this dress in blue?</div>
+                <div class="burmese">ဒီဝတ်စုံကို အပြာရောင် ရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you have this dress in blue?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Salesperson:</div>
+                <div class="english">Yes, we have blue, red, and green. Which one would you like?</div>
+                <div class="burmese">ဟုတ်ပါတယ်၊ အပြာ၊ အနီ၊ နဲ့ အစိမ်းရှိပါတယ်။ ဘယ်ဟာယူချင်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, we have blue, red, and green. Which one would you like?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I'll take the blue one. Can I try it on?</div>
+                <div class="burmese">အပြာရောင်ကို ယူမယ်။ စမ်းဝတ်လို့ရမလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('I will take the blue one. Can I try it on?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Salesperson:</div>
+                <div class="english">Of course. The fitting rooms are over there.</div>
+                <div class="burmese">ရပါတယ်။ အဝတ်စမ်းခန်းတွေက ဟိုမှာပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Of course. The fitting rooms are over there.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 3: Trying on Clothes -->
+    <div class="conversation-section">
+        <h2>👗 Trying on Clothes / အဝတ်အစားများစမ်းဝတ်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">How does this look on me?</div>
+                <div class="burmese">ဒါက ငါ့ကိုဘယ်လိုမြင်ရသလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('How does this look on me?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Friend:</div>
+                <div class="english">It looks great! The color suits you perfectly.</div>
+                <div class="burmese">အရမ်းကောင်းတယ်! အရောင်က မင်းနဲ့ သိပ်ကိုက်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('It looks great! The color suits you perfectly.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I think it's a little tight around the waist.</div>
+                <div class="burmese">ခါးပတ်ပတ်လို့ နည်းနည်းကျပ်တယ်ထင်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I think it is a little tight around the waist.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Friend:</div>
+                <div class="english">Maybe try a larger size. Let's ask the salesperson.</div>
+                <div class="burmese">အရွယ်အစားကြီးတာစမ်းကြည့်ပါ။ ဈေးသမားကိုမေးကြရအောင်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Maybe try a larger size. Let us ask the salesperson.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 4: Asking for Price -->
+    <div class="conversation-section">
+        <h2>💰 Asking for Price / စျေးနှုန်းမေးခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">How much is this jacket?</div>
+                <div class="burmese">ဒီဂျာကင်က ဘယ်လောက်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('How much is this jacket?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Salesperson:</div>
+                <div class="english">That's $49.99. But it's on sale today for 20% off.</div>
+                <div class="burmese">၄၉.၉၉ ဒေါ်လာပါ။ ဒါပေမယ့် ဒီနေ့ ၂၀ ရာခိုင်နှုန်းလျှော့ပြီး ဈေးချနေပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('That is 49 dollars and 99 cents. But it is on sale today for 20 percent off.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">So it's about $40. That's a good deal. I'll take it.</div>
+                <div class="burmese">ဒါဆို ၄၀ ဒေါ်လာလောက်ပါ။ ဒါက အကောင်းစားပါ။ ယူမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('So it is about 40 dollars. That is a good deal. I will take it.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Salesperson:</div>
+                <div class="english">Great choice! I'll wrap it up for you.</div>
+                <div class="burmese">ကောင်းတဲ့ရွေးချယ်မှုပါ! ထုပ်စီပေးပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Great choice! I will wrap it up for you.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 5: Returning an Item -->
+    <div class="conversation-section">
+        <h2>🔄 Returning an Item / ပစ္စည်းပြန်အပ်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I'd like to return these pants. They're too long.</div>
+                <div class="burmese">ဒီဘောင်းဘီတွေကို ပြန်အပ်ချင်ပါတယ်။ အရမ်းရှည်နေတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I would like to return these pants. They are too long.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Salesperson:</div>
+                <div class="english">Do you have the receipt?</div>
+                <div class="burmese">ပြေစာရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you have the receipt?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Yes, here it is. I bought them yesterday.</div>
+                <div class="burmese">ဟုတ်တယ်၊ ဒီမှာပါ။ မနေ့က ဝယ်ခဲ့တာ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, here it is. I bought them yesterday.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Salesperson:</div>
+                <div class="english">Would you like a refund or an exchange?</div>
+                <div class="burmese">ငွေပြန်အမ်းချင်လား ဒါမှမဟုတ် လဲလှယ်ချင်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Would you like a refund or an exchange?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 6: Getting Alterations -->
+    <div class="conversation-section">
+        <h2>✂️ Getting Alterations / အဝတ်ပြင်ဆင်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Do you offer alteration services?</div>
+                <div class="burmese">ခင်ဗျားတို့ အဝတ်ပြင်ဆင်ဝန်ဆောင်မှု ပေးလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you offer alteration services?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Salesperson:</div>
+                <div class="english">Yes, we do. What needs to be adjusted?</div>
+                <div class="burmese">ဟုတ်ကဲ့ လုပ်ပေးပါတယ်။ ဘာကို ချိန်ညှိဖို့လိုလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, we do. What needs to be adjusted?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">The sleeves are too long. Can you shorten them?</div>
+                <div class="burmese">လက်စွပ်တွေ အရမ်းရှည်နေတယ်။ တိုအောင်လုပ်ပေးနိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('The sleeves are too long. Can you shorten them?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Salesperson:</div>
+                <div class="english">Sure. It will cost $10 and take two days.</div>
+                <div class="burmese">ရပါတယ်။ ၁၀ ဒေါ်လာကျပြီး နှစ်ရက်ကြာပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Sure. It will cost 10 dollars and take two days.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 7: Sale and Discounts -->
+    <div class="conversation-section">
+        <h2>🏷️ Sale and Discounts / ဈေးချခြင်းနှင့်လျှော့စျေးများ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Look! Everything is 30% off today.</div>
+                <div class="burmese">ကြည့်စမ်း! ဒီနေ့ ပစ္စည်းအားလုံး ၃၀ ရာခိုင်နှုန်းချနေတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Look! Everything is 30 percent off today.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Great! Let's check out the clearance rack too.</div>
+                <div class="burmese">ကောင်းပါတယ်! ရှင်းတမ်းစင်ကိုလည်း သွားကြည့်ရအောင်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Great! Let us check out the clearance rack too.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">This sweater is only $15 after the discount!</div>
+                <div class="burmese">ဒီဆွယ်တာအင်္ကျီက လျှော့ပြီးရင် ၁၅ ဒေါ်လာပဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('This sweater is only 15 dollars after the discount!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">That's a steal! You should buy it.</div>
+                <div class="burmese">ဒါ ပေါက်ဈေးပဲ! ဝယ်သင့်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('That is a steal! You should buy it.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 8: Paying at the Counter -->
+    <div class="conversation-section">
+        <h2>💳 Paying at the Counter / ငွေရှင်းကောင်တာတွင်ပေးချေခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Cashier:</div>
+                <div class="english">Is that everything for you today?</div>
+                <div class="burmese">ဒီနေ့ ဒါပဲလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Is that everything for you today?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Yes, that's all. How much is the total?</div>
+                <div class="burmese">ဟုတ်ကဲ့၊ ဒါပါပဲ။ စုစုပေါင်းဘယ်လောက်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, that is all. How much is the total?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Cashier:</div>
+                <div class="english">That'll be $87.50. Would you like a gift receipt?</div>
+                <div class="burmese">၈၇.၅၀ ဒေါ်လာပါ။ လက်ဆောင်ပြေစာ လိုချင်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('That will be 87 dollars and 50 cents. Would you like a gift receipt?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">No, thanks. I'll pay by credit card.</div>
+                <div class="burmese">မလိုပါဘူး။ ခရက်ဒစ်ကဒ်နဲ့ ပေးပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('No, thanks. I will pay by credit card.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Size Chart -->
+    <div class="conversation-section">
+        <h2>📏 Size Chart / အရွယ်အစားဇယား</h2>
+        <div class="size-chart">
+            <div class="size-row"><strong>US Size</strong> - <strong>UK Size</strong> - <strong>EU Size</strong> - <strong>Burmese</strong></div>
+            <div class="size-row">XS (Extra Small) - 6 - 34 - အသေးဆုံး</div>
+            <div class="size-row">S (Small) - 8 - 36 - သေး</div>
+            <div class="size-row">M (Medium) - 10 - 38 - အလတ်</div>
+            <div class="size-row">L (Large) - 12 - 40 - ကြီး</div>
+            <div class="size-row">XL (Extra Large) - 14 - 42 - အကြီးဆုံး</div>
+            <div class="size-row">XXL (Double Extra Large) - 16 - 44 - အကြီးဆုံး(နှစ်ဆ)</div>
+        </div>
+    </div>
+    
+    <!-- Vocabulary Section -->
+    <div class="conversation-section">
+        <h2>📚 Clothing Vocabulary / အဝတ်အစားသုံးဝေါဟာရများ</h2>
+        <div class="vocab-grid">
+            <div class="vocab-item"><span class="vocab-eng">Shirt / Blouse</span><br><span class="vocab-burmese">ရှပ်အင်္ကျီ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Pants / Trousers</span><br><span class="vocab-burmese">ဘောင်းဘီရှည်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Jeans</span><br><span class="vocab-burmese">ဂျင်းဘောင်းဘီ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Dress</span><br><span class="vocab-burmese">ဝတ်စုံ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Jacket / Coat</span><br><span class="vocab-burmese">ဂျာကင်/ကုတ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Sweater</span><br><span class="vocab-burmese">ဆွယ်တာအင်္ကျီ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Skirt</span><br><span class="vocab-burmese">စကတ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Shoes</span><br><span class="vocab-burmese">ဖိနပ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Accessories</span><br><span class="vocab-burmese">အဆင်တန်ဆာများ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Fitting room</span><br><span class="vocab-burmese">အဝတ်စမ်းခန်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Clearance</span><br><span class="vocab-burmese">ရှင်းတမ်းစင်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Final sale</span><br><span class="vocab-burmese">နောက်ဆုံးရောင်းချမှု</span></div>
+        </div>
+    </div>
+    
+    <!-- Useful Clothing Phrases -->
+    <div class="conversation-section">
+        <h2>💡 Useful Clothing Phrases / အသုံးဝင်သောအဝတ်အစားစကားစုများ</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>In the Fitting Room (အဝတ်စမ်းခန်းတွင်):</strong><br>
+            • "This is too big / too small." (ဒါက အရမ်းကြီးတယ်/သေးတယ်။)<br>
+            • "Does this come in a different size?" (ဒါက မတူညီတဲ့အရွယ်အစား ရှိလား။)<br>
+            • "I love the fabric. It's so soft." (အထည်ကို ကြိုက်တယ်။ အရမ်းနူးညံ့တယ်။)<br>
+            • "Can I get a second opinion?" (ဒုတိယထင်မြင်ချက်တစ်ခုရနိုင်မလား။)<br>
+            <br>
+            <i class="fas fa-lightbulb"></i>
+            <strong>Asking for Recommendations (အကြံပြုချက်များတောင်းခြင်း):</strong><br>
+            • "What do you think would look good on me?" (ငါ့အတွက် ဘယ်ဟာကောင်းမယ်ထင်လဲ။)<br>
+            • "Do you have something more formal?" (ပိုတရားဝင်တဲ့ဟာမျိုးရှိလား။)<br>
+            • "I'm looking for something casual." (ပေါ့ပေါ့ပါးပါး အဝတ်အစားရှာနေတယ်။)<br>
+        </div>
+    </div>
+    
+    <!-- Practice Section -->
+    <div class="conversation-section">
+        <h2>✏️ Practice Questions / လေ့ကျင့်ခန်းမေးခွန်းများ</h2>
+        <div class="dialogue-box">
+            <div class="quiz-question">
+                <p><strong>1. How do you ask for a different size?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Do you have this in a larger size?')">How much is this?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Do you have this in a larger size?')">Do you have this in a larger size?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Do you have this in a larger size?')">What color is this?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Do you have this in a larger size?')">Where is the fitting room?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>2. "ဒီဂျာကင် ဘယ်လောက်လဲ" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'How much is this jacket?')">What size is this jacket?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'How much is this jacket?')">How much is this jacket?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'How much is this jacket?')">Where is this jacket from?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'How much is this jacket?')">What color is this jacket?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. What is a "fitting room" used for?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'To try on clothes')">To pay for clothes</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'To try on clothes')">To return clothes</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'To try on clothes')">To try on clothes</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'To try on clothes')">To store clothes</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. "ဒီဘောင်းဘီတွေ အရမ်းရှည်တယ်" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'These pants are too long.')">These pants are too short.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'These pants are too long.')">These pants are too long.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'These pants are too long.')">These pants are too tight.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'These pants are too long.')">These pants are too loose.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. What does "final sale" mean?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Item cannot be returned or exchanged')">Item can be returned</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Item cannot be returned or exchanged')">Item is on sale</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Item cannot be returned or exchanged')">Item cannot be returned or exchanged</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Item cannot be returned or exchanged')">Item is free</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p><i class="fas fa-heart" style="color: #fd79a8;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p>
+        <p style="font-size: 0.75rem; margin-top: 0.5rem;">Practice these conversations to shop for clothes with confidence!</p>
+    </footer>
+</div>
+
+<!-- Back to Top Button -->
+<a href="#" class="back-to-top" id="backToTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+<script>
+    function speakEnglish(text) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8;
+        utterance.pitch = 1.0;
+        
+        function setVoice() {
+            const voices = window.speechSynthesis.getVoices();
+            const englishVoice = voices.find(v => v.lang === 'en-US' || v.lang.startsWith('en-'));
+            if (englishVoice) utterance.voice = englishVoice;
+            window.speechSynthesis.speak(utterance);
+        }
+        
+        if (window.speechSynthesis.getVoices().length) setVoice();
+        else window.speechSynthesis.onvoiceschanged = setVoice;
+    }
+    
+    function checkAnswer(element, correctAnswer) {
+        const options = element.parentElement.querySelectorAll('.quiz-option');
+        const isCorrect = element.innerText === correctAnswer;
+        
+        if (isCorrect) {
+            element.style.background = '#2ecc71';
+            element.style.color = 'white';
+            speakEnglish(correctAnswer);
+            setTimeout(() => {
+                options.forEach(opt => {
+                    opt.style.background = '';
+                    opt.style.color = '';
+                });
+            }, 1500);
+        } else {
+            element.style.background = '#e74c3c';
+            element.style.color = 'white';
+            setTimeout(() => {
+                element.style.background = '';
+                element.style.color = '';
+            }, 500);
+        }
+    }
+    
+    // Back to Top Button Functionality
+    (function() {
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        
+        if (backToTopBtn) {
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

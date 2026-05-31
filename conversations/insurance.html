@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insurance - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 1rem;
+        }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        
+        .conversation-section {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .conversation-section h2 {
+            background: #00b894;
+            color: white;
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line {
+            display: grid;
+            grid-template-columns: 70px 1fr 1fr;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            align-items: start;
+        }
+        .speaker { font-weight: bold; color: #00b894; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { 
+            color: #8e6b3c; 
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 0.95rem;
+        }
+        .audio-btn {
+            background: #eef4ff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.3rem;
+        }
+        .audio-btn:hover { background: #00b894; color: white; }
+        
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+            padding: 1rem;
+        }
+        .vocab-item {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            border-left: 3px solid #00b894;
+        }
+        .vocab-eng { font-weight: bold; color: #00b894; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        
+        .quiz-question {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.8rem;
+        }
+        .quiz-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .quiz-option {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .quiz-option:hover { background: #00b894; color: white; border-color: #00b894; }
+        
+        .tips-box {
+            background: #e8f8f5;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #00b894;
+        }
+        .tips-box i { color: #00b894; margin-right: 8px; }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1rem;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: #1e3c72;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid white;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: #f5b042;
+            color: #1e3c72;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .back-to-top i {
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 42px;
+                height: 42px;
+            }
+            .back-to-top i {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 700px) {
+            .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> All Conversations
+    </a>
+    
+    <header>
+        <h1><i class="fas fa-shield-alt"></i> Insurance</h1>
+        <p>Learn how to buy health, travel, or car insurance policies in English</p>
+        <p>ကျန်းမာရေး၊ ခရီးသွား သို့မဟုတ် ကားအာမခံမူဝါဒများ အင်္ဂလိပ်လို ဝယ်ယူနည်းကို လေ့လာပါ</p>
+    </header>
+    
+    <!-- Dialogue 1: Health Insurance Inquiry -->
+    <div class="conversation-section">
+        <h2>🏥 Health Insurance Inquiry / ကျန်းမာရေးအာမခံစုံစမ်းခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Hello, I'm looking for health insurance. Can you help me?</div>
+                <div class="burmese">မင်္ဂလာပါ၊ ကျန်းမာရေးအာမခံရှာနေပါတယ်။ ကူညီနိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Hello, I am looking for health insurance. Can you help me?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">Of course. Is this for yourself or for a family?</div>
+                <div class="burmese">ရပါတယ်။ ကိုယ့်အတွက်လား ဒါမှမဟုတ် မိသားစုအတွက်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Of course. Is this for yourself or for a family?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">For myself and my spouse. What plans do you offer?</div>
+                <div class="burmese">ကိုယ်တိုင်နဲ့ အိမ်ထောင်ဖက်အတွက်ပါ။ ဘယ်လိုအစီအစဉ်တွေ ပေးလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('For myself and my spouse. What plans do you offer?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">We have HMO, PPO, and high-deductible plans. What's your monthly budget?</div>
+                <div class="burmese">ကျွန်တော်တို့မှာ HMO၊ PPO နဲ့ high-deductible အစီအစဉ်များရှိပါတယ်။ သင့်လစဉ်ဘတ်ဂျက်က ဘယ်လောက်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('We have HMO, PPO, and high-deductible plans. What is your monthly budget?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 2: Comparing Health Plans -->
+    <div class="conversation-section">
+        <h2>📊 Comparing Health Plans / ကျန်းမာရေးအစီအစဉ်များနှိုင်းယှဉ်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">What's the difference between HMO and PPO?</div>
+                <div class="burmese">HMO နဲ့ PPO ကြားက ကွာခြားချက်က ဘာလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What is the difference between HMO and PPO?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">With HMO, you need a primary care physician and referrals. PPO offers more flexibility but costs more.</div>
+                <div class="burmese">HMO ဖြင့် သင်သည် ပင်မကုသဆရာဝန်နှင့် လွှဲပြောင်းချက်များ လိုအပ်ပါတယ်။ PPO က ပိုမိုပြောင်းလွယ်ပြင်လွယ်ရှိပေမယ့် ပိုစျေးကြီးပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('With HMO, you need a primary care physician and referrals. PPO offers more flexibility but costs more.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">What's the deductible on the HMO plan?</div>
+                <div class="burmese">HMO အစီအစဉ်မှာ deductible ကဘာလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What is the deductible on the HMO plan?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">The deductible is $1,000 per person, with a $2,000 out-of-pocket maximum.</div>
+                <div class="burmese">တစ်ဦးလျှင် deductible က ၁၀၀၀ ဒေါ်လာ၊ out-of-pocket အများဆုံး ၂၀၀၀ ဒေါ်လာပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('The deductible is 1,000 dollars per person, with a 2,000 dollar out-of-pocket maximum.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 3: Car Insurance -->
+    <div class="conversation-section">
+        <h2>🚗 Car Insurance / ကားအာမခံ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I need car insurance for my new vehicle.</div>
+                <div class="burmese">ကျွန်တော့်ကားအသစ်အတွက် ကားအာမခံလိုအပ်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I need car insurance for my new vehicle.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">Congratulations on your new car! What's the make, model, and year?</div>
+                <div class="burmese">ကားအသစ်အတွက် ဂုဏ်ယူပါတယ်! ကားအမျိုးအစား၊ မော်ဒယ်နဲ့ နှစ်က ဘာလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Congratulations on your new car! What is the make, model, and year?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">It's a 2023 Toyota Camry.</div>
+                <div class="burmese">၂၀၂၃ Toyota Camry ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('It is a 2023 Toyota Camry.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">Do you want liability only or full coverage?</div>
+                <div class="burmese">တာဝန်ခံမှုတစ်ခုတည်းလား ဒါမှမဟုတ် အကျုံးဝင်မှုအပြည့်လား လိုချင်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you want liability only or full coverage?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 4: Travel Insurance -->
+    <div class="conversation-section">
+        <h2>✈️ Travel Insurance / ခရီးသွားအာမခံ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I'm traveling to Europe next month. Do I need travel insurance?</div>
+                <div class="burmese">ကျွန်တော် လာမယ့်လ ဥရောပကို ခရီးသွားမယ်။ ခရီးသွားအာမခံ လိုအပ်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am traveling to Europe next month. Do I need travel insurance?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">I highly recommend it. It covers trip cancellation, medical emergencies, and lost luggage.</div>
+                <div class="burmese">အလွန်အကြံပြုပါတယ်။ ခရီးစဉ်ဖျက်သိမ်းမှု၊ ဆေးဘက်ဆိုင်ရာအရေးပေါ်အခြေအနေများနှင့် ခရီးဆောင်အိတ်ပျောက်ဆုံးမှုတို့ကို အကျုံးဝင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I highly recommend it. It covers trip cancellation, medical emergencies, and lost luggage.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">How much does it cost?</div>
+                <div class="burmese">ဘယ်လောက်ကုန်ကျလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('How much does it cost?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">About 5-10% of your total trip cost. For a two-week trip, around $100-$200.</div>
+                <div class="burmese">သင့်ခရီးစဉ်စုစုပေါင်းကုန်ကျစရိတ်၏ ၅-၁၀ ရာခိုင်နှုန်းခန့်။ နှစ်ပတ်ခရီးအတွက် ၁၀၀-၂၀၀ ဒေါ်လာဝန်းကျင်။</div>
+                <button class="audio-btn" onclick="speakEnglish('About 5-10 percent of your total trip cost. For a two-week trip, around 100-200 dollars.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 5: Home Insurance -->
+    <div class="conversation-section">
+        <h2>🏠 Home Insurance / အိမ်အာမခံ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I just bought a house. I need homeowners insurance.</div>
+                <div class="burmese">ကျွန်တော် အိမ်တစ်လုံးအသစ်ဝယ်လိုက်ပြီ။ အိမ်ပိုင်ရှင်အာမခံ လိုအပ်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I just bought a house. I need homeowners insurance.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">Congratulations! What's the value of the home?</div>
+                <div class="burmese">ဂုဏ်ယူပါတယ်! အိမ်ရဲ့တန်ဖိုးက ဘယ်လောက်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Congratulations! What is the value of the home?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">$250,000. What does the policy cover?</div>
+                <div class="burmese">၂၅၀,၀၀၀ ဒေါ်လာ။ အာမခံစာချုပ်က ဘာတွေအကျုံးဝင်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('250,000 dollars. What does the policy cover?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">It covers fire, theft, vandalism, and weather damage. Flood insurance is separate.</div>
+                <div class="burmese">မီး၊ ခိုးမှု၊ ဖျက်ဆီးမှု၊ နှင့် ရာသီဥတုပျက်စီးမှုတို့ကို အကျုံးဝင်ပါတယ်။ ရေလွှမ်းမိုးမှုအာမခံက သီးသန့်ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('It covers fire, theft, vandalism, and weather damage. Flood insurance is separate.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 6: Life Insurance -->
+    <div class="conversation-section">
+        <h2>💝 Life Insurance / အသက်အာမခံ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I'm considering life insurance to protect my family. What options do you have?</div>
+                <div class="burmese">မိသားစုကိုကာကွယ်ရန် အသက်အာမခံကို စဉ်းစားနေတယ်။ ဘယ်ရွေးချယ်စရာတွေရှိလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am considering life insurance to protect my family. What options do you have?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">We have term life and whole life insurance. Term is cheaper for a set period, whole life lasts forever and builds cash value.</div>
+                <div class="burmese">ကျွန်တော်တို့မှာ term life နဲ့ whole life အာမခံရှိပါတယ်။ Term က သတ်မှတ်ကာလအတွက် ပိုစျေးသက်သာပါတယ်၊ whole life က ထာဝရတည်ရှိပြီး ငွေသားတန်ဖိုးကို တည်ဆောက်ပေးပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('We have term life and whole life insurance. Term is cheaper for a set period, whole life lasts forever and builds cash value.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">What's the coverage amount you recommend?</div>
+                <div class="burmese">ဘယ်လောက်အကျုံးဝင်မှုပမာဏကို အကြံပြုလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What is the coverage amount you recommend?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">Typically 10-12 times your annual income. For someone earning $50,000, that's $500,000 to $600,000.</div>
+                <div class="burmese">ပုံမှန်အားဖြင့် သင့်နှစ်စဉ်ဝင်ငွေ၏ ၁၀-၁၂ ဆ။ တစ်နှစ် ၅၀၀၀၀ ဒေါ်လာရရှိသူအတွက် ၅၀၀,၀၀၀ မှ ၆၀၀,၀၀၀ ဒေါ်လာပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Typically 10-12 times your annual income. For someone earning 50,000 dollars, that is 500,000 to 600,000 dollars.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 7: Filing a Claim -->
+    <div class="conversation-section">
+        <h2>📋 Filing a Claim / တောင်းဆိုမှုတစ်ခုတင်သွင်းခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I was in a car accident yesterday. I need to file a claim.</div>
+                <div class="burmese">မနေ့က ကျွန်တော် ကားမတော်တဆမှုတစ်ခုဖြစ်ခဲ့တယ်။ တောင်းဆိုမှုတစ်ခုတင်ဖို့လိုတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I was in a car accident yesterday. I need to file a claim.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">I'm sorry to hear that. Do you have a police report?</div>
+                <div class="burmese">ကြားရတာ စိတ်မကောင်းပါဘူး။ ရဲအစီရင်ခံစာ ရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am sorry to hear that. Do you have a police report?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Yes, here it is. The other driver was at fault.</div>
+                <div class="burmese">ဟုတ်ကဲ့၊ ဒီမှာပါ။ အခြားယာဉ်မောင်းက အမှားရှိတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, here it is. The other driver was at fault.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">I'll start the claims process. We'll send an adjuster to assess the damage. You'll need to pay your deductible first.</div>
+                <div class="burmese">တောင်းဆိုမှုလုပ်ငန်းစဉ် စတင်ပါမယ်။ ပျက်စီးမှုကို အကဲဖြတ်ရန် အကဲဖြတ်သူကို စေလွှတ်ပါမယ်။ အရင်ဆုံး သင့်ဖြတ်တောက်ငွေ ပေးဆောင်ရပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I will start the claims process. We will send an adjuster to assess the damage. You will need to pay your deductible first.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 8: Policy Renewal -->
+    <div class="conversation-section">
+        <h2>🔄 Policy Renewal / အာမခံစာချုပ်သက်တမ်းတိုးခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">My health insurance policy is expiring next month. Can I renew it?</div>
+                <div class="burmese">ကျွန်တော့်ကျန်းမာရေးအာမခံစာချုပ် လာမယ့်လမှာ သက်တမ်းကုန်တော့မယ်။ သက်တမ်းတိုးလို့ရမလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('My health insurance policy is expiring next month. Can I renew it?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">Yes, you can renew your policy. Your premium will stay the same if you haven't filed any claims.</div>
+                <div class="burmese">ဟုတ်ပါတယ်၊ သင့်အာမခံစာချုပ်ကို သက်တမ်းတိုးနိုင်ပါတယ်။ တောင်းဆိုမှုတစ်စုံတစ်ရာ မတင်ထားရင် သင့်ပရီမီယံမှာ အတိုင်းသာရှိပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, you can renew your policy. Your premium will stay the same if you have not filed any claims.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Can I make any changes to my coverage?</div>
+                <div class="burmese">ကျွန်တော့်အကျုံးဝင်မှုကို ပြောင်းလဲမှုတစ်စုံတစ်ရာ လုပ်နိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Can I make any changes to my coverage?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Agent:</div>
+                <div class="english">Yes, during the renewal period, you can adjust your deductible, add family members, or change your plan.</div>
+                <div class="burmese">ဟုတ်ပါတယ်၊ သက်တမ်းတိုးကာလအတွင်း သင့်ဖြတ်တောက်ငွေကို ချိန်ညှိနိုင်ပါတယ်၊ မိသားစုဝင်များထည့်နိုင်ပါတယ်၊ သို့မဟုတ် သင့်အစီအစဉ်ကို ပြောင်းလဲနိုင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, during the renewal period, you can adjust your deductible, add family members, or change your plan.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Types of Insurance -->
+    <div class="conversation-section">
+        <h2>📋 Types of Insurance / အာမခံအမျိုးအစားများ</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Common Insurance Types (အသုံးများသောအာမခံအမျိုးအစားများ):</strong><br>
+            • <strong>Health Insurance</strong> - ကျန်းမာရေးအာမခံ<br>
+            • <strong>Car Insurance</strong> - ကားအာမခံ<br>
+            • <strong>Homeowners/Renters Insurance</strong> - အိမ်ပိုင်ရှင်/အိမ်ငှားအာမခံ<br>
+            • <strong>Life Insurance</strong> - အသက်အာမခံ<br>
+            • <strong>Travel Insurance</strong> - ခရီးသွားအာမခံ<br>
+            • <strong>Disability Insurance</strong> - မသန်စွမ်းမှုအာမခံ<br>
+            • <strong>Dental Insurance</strong> - သွားနှင့်ခံတွင်းအာမခံ<br>
+            • <strong>Pet Insurance</strong> - အိမ်မွေးတိရစ္ဆာန်အာမခံ<br>
+        </div>
+    </div>
+    
+    <!-- Insurance Vocabulary -->
+    <div class="conversation-section">
+        <h2>📚 Insurance Vocabulary / အာမခံသုံးဝေါဟာရများ</h2>
+        <div class="vocab-grid">
+            <div class="vocab-item"><span class="vocab-eng">Premium</span><br><span class="vocab-burmese">ပရီမီယံ (လစဉ်ကြေး)</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Deductible</span><br><span class="vocab-burmese">ဖြတ်တောက်ငွေ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Copay</span><br><span class="vocab-burmese">ကူညီငွေ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Coverage</span><br><span class="vocab-burmese">အကျုံးဝင်မှု</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Claim</span><br><span class="vocab-burmese">တောင်းဆိုမှု</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Beneficiary</span><br><span class="vocab-burmese">အကျိုးခံစားခွင့်ရှိသူ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Out-of-pocket maximum</span><br><span class="vocab-burmese">ကိုယ်တိုင်ပေးရသည့်အများဆုံးပမာဏ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Network provider</span><br><span class="vocab-burmese">ကွန်ရက်ဝန်ဆောင်မှုပေးသူ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Pre-existing condition</span><br><span class="vocab-burmese">ကြိုရှိပြီးသားအခြေအနေ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Grace period</span><br><span class="vocab-burmese">ကရုဏာကာလ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Lapse</span><br><span class="vocab-burmese">သက်တမ်းကုန်ဆုံးခြင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Underwriting</span><br><span class="vocab-burmese">အာမခံဆိုင်ရာအကဲဖြတ်ခြင်း</span></div>
+        </div>
+    </div>
+    
+    <!-- Insurance Tips -->
+    <div class="conversation-section">
+        <h2>💡 Insurance Tips / အာမခံအကြံပြုချက်များ</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Tips for Choosing Insurance (အာမခံရွေးချယ်ရန် အကြံပြုချက်များ):</strong><br>
+            • Compare quotes from multiple companies (ကုမ္ပဏီအများအပြားမှ စျေးနှုန်းများနှိုင်းယှဉ်ပါ)<br>
+            • Understand what's covered and what's not (ဘာအကျုံးဝင်ပြီး ဘာအကျုံးမဝင်ဘူးဆိုတာ နားလည်ပါ)<br>
+            • Choose a deductible you can afford (သင်တတ်နိုင်သော ဖြတ်တောက်ငွေကို ရွေးချယ်ပါ)<br>
+            • Read the fine print (အနုစာများကိုဖတ်ပါ)<br>
+            • Ask about discounts (လျှော့စျေးများအကြောင်းမေးမြန်းပါ)<br>
+            • Review your policy annually (သင့်အာမခံစာချုပ်ကို နှစ်စဉ်ပြန်လည်သုံးသပ်ပါ)<br>
+        </div>
+    </div>
+    
+    <!-- Practice Section -->
+    <div class="conversation-section">
+        <h2>✏️ Practice Questions / လေ့ကျင့်ခန်းမေးခွန်းများ</h2>
+        <div class="dialogue-box">
+            <div class="quiz-question">
+                <p><strong>1. How do you ask about health insurance?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I am looking for health insurance.')">I am looking for car insurance.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I am looking for health insurance.')">I am looking for health insurance.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I am looking for health insurance.')">I am looking for travel insurance.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I am looking for health insurance.')">I am looking for life insurance.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>2. "ဒီအာမခံစာချုပ်က ဘာအကျုံးဝင်လဲ" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What does this policy cover?')">How much is the premium?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What does this policy cover?')">What does this policy cover?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What does this policy cover?')">What is the deductible?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What does this policy cover?')">Who is the beneficiary?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. What is a "deductible"?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'The amount you pay before insurance covers the rest')">The monthly payment</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'The amount you pay before insurance covers the rest')">The maximum coverage amount</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'The amount you pay before insurance covers the rest')">The amount you pay before insurance covers the rest</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'The amount you pay before insurance covers the rest')">The refund amount</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. "တောင်းဆိုမှုတစ်ခုတင်သွင်းချင်ပါတယ်" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I want to file a claim.')">I want to renew my policy.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I want to file a claim.')">I want to cancel my policy.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I want to file a claim.')">I want to file a claim.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I want to file a claim.')">I want to change my coverage.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. What is the difference between term life and whole life insurance?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Term is for a set period, whole life lasts forever')">Term lasts forever, whole life is temporary</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Term is for a set period, whole life lasts forever')">Term is for a set period, whole life lasts forever</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Term is for a set period, whole life lasts forever')">Both are the same</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Term is for a set period, whole life lasts forever')">Term is cheaper than whole life</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p><i class="fas fa-heart" style="color: #00b894;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p>
+        <p style="font-size: 0.75rem; margin-top: 0.5rem;">Practice these conversations to understand and purchase insurance with confidence!</p>
+    </footer>
+</div>
+
+<!-- Back to Top Button -->
+<a href="#" class="back-to-top" id="backToTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+<script>
+    function speakEnglish(text) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8;
+        utterance.pitch = 1.0;
+        
+        function setVoice() {
+            const voices = window.speechSynthesis.getVoices();
+            const englishVoice = voices.find(v => v.lang === 'en-US' || v.lang.startsWith('en-'));
+            if (englishVoice) utterance.voice = englishVoice;
+            window.speechSynthesis.speak(utterance);
+        }
+        
+        if (window.speechSynthesis.getVoices().length) setVoice();
+        else window.speechSynthesis.onvoiceschanged = setVoice;
+    }
+    
+    function checkAnswer(element, correctAnswer) {
+        const options = element.parentElement.querySelectorAll('.quiz-option');
+        const isCorrect = element.innerText === correctAnswer;
+        
+        if (isCorrect) {
+            element.style.background = '#2ecc71';
+            element.style.color = 'white';
+            speakEnglish(correctAnswer);
+            setTimeout(() => {
+                options.forEach(opt => {
+                    opt.style.background = '';
+                    opt.style.color = '';
+                });
+            }, 1500);
+        } else {
+            element.style.background = '#e74c3c';
+            element.style.color = 'white';
+            setTimeout(() => {
+                element.style.background = '';
+                element.style.color = '';
+            }, 500);
+        }
+    }
+    
+    // Back to Top Button Functionality
+    (function() {
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        
+        if (backToTopBtn) {
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

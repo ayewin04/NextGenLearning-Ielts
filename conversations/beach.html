@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beach & Swimming - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 1rem;
+        }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        
+        .conversation-section {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .conversation-section h2 {
+            background: #00cec9;
+            color: white;
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line {
+            display: grid;
+            grid-template-columns: 70px 1fr 1fr;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            align-items: start;
+        }
+        .speaker { font-weight: bold; color: #00cec9; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { 
+            color: #8e6b3c; 
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 0.95rem;
+        }
+        .audio-btn {
+            background: #eef4ff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.3rem;
+        }
+        .audio-btn:hover { background: #00cec9; color: white; }
+        
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+            padding: 1rem;
+        }
+        .vocab-item {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            border-left: 3px solid #00cec9;
+        }
+        .vocab-eng { font-weight: bold; color: #00cec9; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        
+        .quiz-question {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.8rem;
+        }
+        .quiz-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .quiz-option {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .quiz-option:hover { background: #00cec9; color: white; border-color: #00cec9; }
+        
+        .tips-box {
+            background: #e8f8f5;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #00cec9;
+        }
+        .tips-box i { color: #00cec9; margin-right: 8px; }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1rem;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: #1e3c72;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid white;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: #f5b042;
+            color: #1e3c72;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .back-to-top i {
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 42px;
+                height: 42px;
+            }
+            .back-to-top i {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 700px) {
+            .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> All Conversations
+    </a>
+    
+    <header>
+        <h1><i class="fas fa-umbrella-beach"></i> Beach & Swimming</h1>
+        <p>Learn how to talk about swimming, sunbathing, and beach activities in English</p>
+        <p>ရေကူးခြင်း၊ နေပူထိုးခြင်းနှင့် ကမ်းခြေလှုပ်ရှားမှုများအကြောင်း အင်္ဂလိပ်လို ပြောဆိုနည်းကို လေ့လာပါ</p>
+    </header>
+    
+    <!-- Dialogue 1: Planning a Beach Trip -->
+    <div class="conversation-section">
+        <h2>🏖️ Planning a Beach Trip / ကမ်းခြေခရီးစဉ်စီစဉ်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Let's go to the beach this weekend. The weather is going to be perfect.</div>
+                <div class="burmese">ဒီစနေ၊ တနင်္ဂနွေ ကမ်းခြေသွားကြရအောင်။ ရာသီဥတုက ပြီးပြည့်စုံတော့မယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Let us go to the beach this weekend. The weather is going to be perfect.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">That sounds great! Which beach should we go to?</div>
+                <div class="burmese">ကောင်းပါတယ်! ဘယ်ကမ်းခြေသွားသင့်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('That sounds great! Which beach should we go to?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">I've heard Ngapali Beach is beautiful. It's about a 3-hour drive.</div>
+                <div class="burmese">ငပလီကမ်းခြေက လှတယ်လို့ ကြားဖူးတယ်။ ကားနဲ့ ၃ နာရီလောက်ကြာတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I have heard Ngapali Beach is beautiful. It is about a 3-hour drive.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Perfect. Let's leave early in the morning to avoid the traffic.</div>
+                <div class="burmese">ပြီးပြည့်စုံတယ်။ ယာဉ်ကြောရှောင်ဖို့ မနက်စောစောထွက်ကြရအောင်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Perfect. Let us leave early in the morning to avoid the traffic.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 2: Packing for the Beach -->
+    <div class="conversation-section">
+        <h2>🎒 Packing for the Beach / ကမ်းခြေအတွက်ထုပ်ပိုးခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">What should we bring to the beach?</div>
+                <div class="burmese">ကမ်းခြေကို ဘာတွေယူသွားသင့်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What should we bring to the beach?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Don't forget your swimsuit, towel, and sunscreen!</div>
+                <div class="burmese">ရေကူးဝတ်စုံ၊ မျက်နှာသုတ်ပုဝါနဲ့ နေကာခရင်မ် မမေ့ပါနဲ့။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do not forget your swimsuit, towel, and sunscreen!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">I'll also bring a hat, sunglasses, and a beach umbrella.</div>
+                <div class="burmese">ငါ ဦးထုပ်၊ နေကာမျက်မှန်နဲ့ ကမ်းခြေထီးလည်း ယူလာမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I will also bring a hat, sunglasses, and a beach umbrella.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Good idea. And let's pack some snacks and lots of water.</div>
+                <div class="burmese">အကြံကောင်းပါတယ်။ သရေစာတွေနဲ့ ရေများများ ထုပ်လိုက်ရအောင်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Good idea. And let us pack some snacks and lots of water.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 3: At the Beach -->
+    <div class="conversation-section">
+        <h2>🌊 At the Beach / ကမ်းခြေတွင်</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">The water feels amazing! Come in, it's not too cold.</div>
+                <div class="burmese">ရေက အံ့သြစရာကောင်းတယ်! လာခဲ့၊ သိပ်မအေးဘူး။</div>
+                <button class="audio-btn" onclick="speakEnglish('The water feels amazing! Come in, it is not too cold.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Okay, I'm coming. Is it safe to swim far out?</div>
+                <div class="burmese">အိုကေ၊ လာနေပြီ။ အဝေးကြီးကူးဖို့ စိတ်ချရလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Okay, I am coming. Is it safe to swim far out?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Better to stay close to the shore. Look at those waves!</div>
+                <div class="burmese">ကမ်းစပ်နားမှာနေတာ ပိုကောင်းတယ်။ လှိုင်းတွေကို ကြည့်စမ်း။</div>
+                <button class="audio-btn" onclick="speakEnglish('Better to stay close to the shore. Look at those waves!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">You're right. Let's just enjoy splashing around.</div>
+                <div class="burmese">မင်းမှန်တယ်။ ရေပက်ရင်း ပျော်ကြရအောင်။</div>
+                <button class="audio-btn" onclick="speakEnglish('You are right. Let us just enjoy splashing around.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 4: Sunbathing -->
+    <div class="conversation-section">
+        <h2>☀️ Sunbathing / နေပူထိုးခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">I'm going to lie down and get some sun. Don't forget to put on sunscreen!</div>
+                <div class="burmese">ငါ လှဲပြီး နေပူထိုးမယ်။ နေကာခရင်မ် လိမ်းဖို့ မမေ့နဲ့။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am going to lie down and get some sun. Do not forget to put on sunscreen!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">I already applied SPF 50. The sun is very strong today.</div>
+                <div class="burmese">ငါ SPF 50 လိမ်းပြီးပြီ။ ဒီနေ့ နေရောင်က အရမ်းပြင်းတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I already applied SPF 50. The sun is very strong today.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Should we set up the umbrella?</div>
+                <div class="burmese">ထီးထူထောင်သင့်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Should we set up the umbrella?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Yes, let's take turns sitting in the shade so we don't get burned.</div>
+                <div class="burmese">ဟုတ်တယ်၊ အရေပြားမလောင်အောင် အရိပ်မှာ အလှည့်ကျထိုင်ကြရအောင်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, let us take turns sitting in the shade so we do not get burned.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 5: Beach Activities -->
+    <div class="conversation-section">
+        <h2>🏐 Beach Activities / ကမ်းခြေလှုပ်ရှားမှုများ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Do you want to play beach volleyball?</div>
+                <div class="burmese">ကမ်းခြေဘော်လီဘောကစားချင်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you want to play beach volleyball?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Sure! But I'm not very good. Do you have a ball?</div>
+                <div class="burmese">ရပါတယ်! ဒါပေမယ့် ငါ သိပ်မကောင်းဘူး။ ဘောလုံးရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Sure! But I am not very good. Do you have a ball?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Yes, I brought a beach ball. Let's find a good spot.</div>
+                <div class="burmese">ဟုတ်တယ်၊ ကမ်းခြေဘောလုံးယူလာတယ်။ နေရာကောင်းရှာကြရအောင်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, I brought a beach ball. Let us find a good spot.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Look, there's a net over there. Let's play!</div>
+                <div class="burmese">ကြည့်စမ်း၊ ဟိုမှာ ပိုက်ကွန်ရှိတယ်။ ကစားကြရအောင်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Look, there is a net over there. Let us play!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 6: Building Sandcastles -->
+    <div class="conversation-section">
+        <h2>🏰 Building Sandcastles / သဲပုံစံအိမ်များဆောက်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Look at that sandcastle! It's huge.</div>
+                <div class="burmese">အဲဒီသဲပုံစံအိမ်ကို ကြည့်စမ်း။ ဧရာမကြီးပဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Look at that sandcastle! It is huge.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Let's build one too. I'll get the buckets and shovels.</div>
+                <div class="burmese">ငါတို့လည်း တစ်ခုဆောက်ကြရအောင်။ ငါ ပုံးတွေနဲ့ ဂေါ်ပြားတွေ ယူလာမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Let us build one too. I will get the buckets and shovels.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">We need wet sand to make it sturdy. Let's get water from the ocean.</div>
+                <div class="burmese">ခိုင်ခံ့အောင် ရေစိုသဲလိုတယ်။ သမုဒ္ဒရာကနေ ရေယူကြရအောင်။</div>
+                <button class="audio-btn" onclick="speakEnglish('We need wet sand to make it sturdy. Let us get water from the ocean.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">This is so much fun. Don't forget to add some shells for decoration.</div>
+                <div class="burmese">အရမ်းပျော်စရာကောင်းတယ်။ အလှဆင်ဖို့ ခွံတချို့ထည့်ဖို့ မမေ့နဲ့။</div>
+                <button class="audio-btn" onclick="speakEnglish('This is so much fun. Do not forget to add some shells for decoration.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 7: Safety Tips -->
+    <div class="conversation-section">
+        <h2>⚠️ Beach Safety Tips / ကမ်းခြေဘေးကင်းရေးအကြံပြုချက်များ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">I see a red flag over there. What does that mean?</div>
+                <div class="burmese">ဟိုမှာ အနီရောင်အလံတစ်ခု မြင်တယ်။ အဲဒါက ဘာအဓိပ္ပာယ်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('I see a red flag over there. What does that mean?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Red flags mean the water is dangerous. We should not go swimming.</div>
+                <div class="burmese">အနီရောင်အလံက ရေက အန္တရာယ်ရှိတယ်လို့ ဆိုလိုတယ်။ ရေမကူးသင့်ဘူး။</div>
+                <button class="audio-btn" onclick="speakEnglish('Red flags mean the water is dangerous. We should not go swimming.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Good to know. What about yellow flags?</div>
+                <div class="burmese">သိရတာ ကောင်းပါတယ်။ အဝါရောင်အလံကရော။</div>
+                <button class="audio-btn" onclick="speakEnglish('Good to know. What about yellow flags?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Yellow means caution. You can swim, but be careful of strong currents.</div>
+                <div class="burmese">အဝါရောင်က သတိထားရမယ်။ ရေကူးလို့ရတယ်၊ ဒါပေမယ့် ရေစီးအားပြင်းတာကို သတိထားပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yellow means caution. You can swim, but be careful of strong currents.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 8: After Beach -->
+    <div class="conversation-section">
+        <h2>🍹 After Beach / ကမ်းခြေပြီးနောက်</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">I'm getting hungry. Let's find a place to eat.</div>
+                <div class="burmese">ငါ ဗိုက်ဆာလာပြီ။ စားစရာနေရာရှာကြရအောင်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am getting hungry. Let us find a place to eat.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">There's a seafood restaurant near the pier. The grilled fish is delicious.</div>
+                <div class="burmese">ဆိပ်ကမ်းအနားမှာ ပင်လယ်စာစားသောက်ဆိုင်ရှိတယ်။ ငါးကင်က အရသာရှိတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('There is a seafood restaurant near the pier. The grilled fish is delicious.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Let's go there. I could also use a cold drink.</div>
+                <div class="burmese">အဲဒီကိုသွားကြရအောင်။ ရေခဲသောက်စရာလည်း သောက်ချင်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Let us go there. I could also use a cold drink.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Perfect way to end a great beach day. Don't forget to rinse off the sand before leaving!</div>
+                <div class="burmese">ကောင်းမွန်တဲ့ကမ်းခြေနေ့ကို အဆုံးသတ်ဖို့ ပြီးပြည့်စုံတဲ့နည်းလမ်းပါ။ မထွက်ခင် သဲတွေကိုဆေးကြောဖို့ မမေ့နဲ့။</div>
+                <button class="audio-btn" onclick="speakEnglish('Perfect way to end a great beach day. Do not forget to rinse off the sand before leaving!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Beach Packing List -->
+    <div class="conversation-section">
+        <h2>🎒 Beach Packing Checklist / ကမ်းခြေထုပ်ပိုးစာရင်း</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>What to Bring to the Beach (ကမ်းခြေသို့ ယူသွားရမည့်ပစ္စည်းများ):</strong><br>
+            • 🩱 Swimsuit (ရေကူးဝတ်စုံ)<br>
+            • 🧴 Sunscreen (နေကာခရင်မ်)<br>
+            • 🧢 Hat & Sunglasses (ဦးထုပ်နှင့် နေကာမျက်မှန်)<br>
+            • 🏖️ Beach towel (ကမ်းခြေမျက်နှာသုတ်ပုဝါ)<br>
+            • 💧 Water bottle (ရေပုလင်း)<br>
+            • 🍎 Snacks (သရေစာ)<br>
+            • ☂️ Umbrella (ထီး)<br>
+            • 📚 Book or magazine (စာအုပ် သို့မဟုတ် မဂ္ဂဇင်း)<br>
+            • 🎵 Speaker or headphones (စပီကာ သို့မဟုတ် နားကြပ်)<br>
+            • 🩹 First aid kit (ရှေးဦးသူနာပြုသေတ္တာ)<br>
+        </div>
+    </div>
+    
+    <!-- Vocabulary Section -->
+    <div class="conversation-section">
+        <h2>📚 Beach & Swimming Vocabulary / ကမ်းခြေနှင့်ရေကူးသုံးဝေါဟာရများ</h2>
+        <div class="vocab-grid">
+            <div class="vocab-item"><span class="vocab-eng">Swimsuit / Bathing suit</span><br><span class="vocab-burmese">ရေကူးဝတ်စုံ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Lifeguard</span><br><span class="vocab-burmese">အသက်ကယ်စောင့်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Wave</span><br><span class="vocab-burmese">လှိုင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Current</span><br><span class="vocab-burmese">ရေစီးကြောင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Tide</span><br><span class="vocab-burmese">ဒီရေ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Shore / Coast</span><br><span class="vocab-burmese">ကမ်းစပ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Sand</span><br><span class="vocab-burmese">သဲ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Seaweed</span><br><span class="vocab-burmese">ရေညှိ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Sunburn</span><br><span class="vocab-burmese">နေလောင်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">SPF (Sun Protection Factor)</span><br><span class="vocab-burmese">နေရောင်ကာကွယ်မှုအဆင့်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Floating</span><br><span class="vocab-burmese">မျောနေခြင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Diving</span><br><span class="vocab-burmese">ရေငုပ်</span></div>
+        </div>
+    </div>
+    
+    <!-- Practice Section -->
+    <div class="conversation-section">
+        <h2>✏️ Practice Questions / လေ့ကျင့်ခန်းမေးခွန်းများ</h2>
+        <div class="dialogue-box">
+            <div class="quiz-question">
+                <p><strong>1. How do you ask someone to go to the beach?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Let us go to the beach.')">Let us go to the mountains.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Let us go to the beach.')">Let us go to the beach.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Let us go to the beach.')">Let us go to the park.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Let us go to the beach.')">Let us go to the mall.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>2. "နေကာခရင်မ် လိမ်းဖို့ မမေ့�ဲ့" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Do not forget to put on sunscreen.')">Do not forget to bring a towel.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Do not forget to put on sunscreen.')">Do not forget to put on sunscreen.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Do not forget to put on sunscreen.')">Do not forget to wear a hat.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Do not forget to put on sunscreen.')">Do not forget to bring water.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. What does a red flag at the beach mean?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Dangerous water, do not swim')">Safe water, you can swim</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Dangerous water, do not swim')">Watch for sharks</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Dangerous water, do not swim')">Dangerous water, do not swim</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Dangerous water, do not swim')">Good weather</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. "ရေအရမ်းပူနေတယ်" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'The water is very warm.')">The water is very cold.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'The water is very warm.')">The water is very warm.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'The water is very warm.')">The water is very deep.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'The water is very warm.')">The water is very shallow.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. What does SPF stand for?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Sun Protection Factor')">Sun Power Factor</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Sun Protection Factor')">Sun Protection Factor</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Sun Protection Factor')">Skin Protection Factor</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Sun Protection Factor')">Sun Prevention Factor</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p><i class="fas fa-heart" style="color: #00cec9;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p>
+        <p style="font-size: 0.75rem; margin-top: 0.5rem;">Practice these conversations to enjoy the beach and talk about swimming with confidence!</p>
+    </footer>
+</div>
+
+<!-- Back to Top Button -->
+<a href="#" class="back-to-top" id="backToTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+<script>
+    function speakEnglish(text) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8;
+        utterance.pitch = 1.0;
+        
+        function setVoice() {
+            const voices = window.speechSynthesis.getVoices();
+            const englishVoice = voices.find(v => v.lang === 'en-US' || v.lang.startsWith('en-'));
+            if (englishVoice) utterance.voice = englishVoice;
+            window.speechSynthesis.speak(utterance);
+        }
+        
+        if (window.speechSynthesis.getVoices().length) setVoice();
+        else window.speechSynthesis.onvoiceschanged = setVoice;
+    }
+    
+    function checkAnswer(element, correctAnswer) {
+        const options = element.parentElement.querySelectorAll('.quiz-option');
+        const isCorrect = element.innerText === correctAnswer;
+        
+        if (isCorrect) {
+            element.style.background = '#2ecc71';
+            element.style.color = 'white';
+            speakEnglish(correctAnswer);
+            setTimeout(() => {
+                options.forEach(opt => {
+                    opt.style.background = '';
+                    opt.style.color = '';
+                });
+            }, 1500);
+        } else {
+            element.style.background = '#e74c3c';
+            element.style.color = 'white';
+            setTimeout(() => {
+                element.style.background = '';
+                element.style.color = '';
+            }, 500);
+        }
+    }
+    
+    // Back to Top Button Functionality
+    (function() {
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        
+        if (backToTopBtn) {
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

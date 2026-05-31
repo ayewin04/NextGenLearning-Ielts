@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Repair Shop - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 1rem;
+        }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        
+        .conversation-section {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .conversation-section h2 {
+            background: #d63031;
+            color: white;
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line {
+            display: grid;
+            grid-template-columns: 70px 1fr 1fr;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            align-items: start;
+        }
+        .speaker { font-weight: bold; color: #d63031; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { 
+            color: #8e6b3c; 
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 0.95rem;
+        }
+        .audio-btn {
+            background: #eef4ff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.3rem;
+        }
+        .audio-btn:hover { background: #d63031; color: white; }
+        
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+            padding: 1rem;
+        }
+        .vocab-item {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            border-left: 3px solid #d63031;
+        }
+        .vocab-eng { font-weight: bold; color: #d63031; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        
+        .quiz-question {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.8rem;
+        }
+        .quiz-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .quiz-option {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .quiz-option:hover { background: #d63031; color: white; border-color: #d63031; }
+        
+        .tips-box {
+            background: #fdeaea;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #d63031;
+        }
+        .tips-box i { color: #d63031; margin-right: 8px; }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1rem;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: #1e3c72;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid white;
+        }
+        .back-to-top.show { opacity: 1; visibility: visible; }
+        .back-to-top:hover { background: #f5b042; color: #1e3c72; transform: translateY(-3px); }
+        .back-to-top i { font-size: 1.2rem; }
+        
+        @media (max-width: 768px) {
+            .back-to-top { bottom: 1rem; right: 1rem; width: 42px; height: 42px; }
+            .back-to-top i { font-size: 1rem; }
+        }
+        @media (max-width: 700px) {
+            .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> All Conversations
+    </a>
+    
+    <header>
+        <h1><i class="fas fa-tools"></i> Repair Shop</h1>
+        <p>Learn how to fix phones, computers, and ask about repair costs in English</p>
+        <p>ဖုန်းများ၊ ကွန်ပျူတာများပြုပြင်နည်းနှင့် ပြုပြင်စရိတ်များအကြောင်း အင်္ဂလိပ်လို မေးမြန်းနည်းကို လေ့လာပါ</p>
+    </header>
+    
+    <!-- Dialogue 1: Phone Screen Repair -->
+    <div class="conversation-section">
+        <h2>📱 Phone Screen Repair / ဖုန်းမျက်နှာပြင်ပြုပြင်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Hello, I dropped my phone and the screen cracked. Can you fix it?</div>
+                <div class="burmese">မင်္ဂလာပါ၊ ကျွန်တော်ဖုန်းကျသွားလို့ မျက်နှာပြင်ကွဲသွားတယ်။ ပြင်ပေးနိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Hello, I dropped my phone and the screen cracked. Can you fix it?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Technician:</div>
+                <div class="english">Yes, we repair phone screens. What model is your phone?</div>
+                <div class="burmese">ဟုတ်ပါတယ်၊ ဖုန်းမျက်နှာပြင်များ ပြုပြင်ပေးပါတယ်။ သင့်ဖုန်းမော်ဒယ်က ဘာလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, we repair phone screens. What model is your phone?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">iPhone 13. How much will it cost?</div>
+                <div class="burmese">iPhone 13 ပါ။ ဘယ်လောက်ကုန်ကျမလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('iPhone 13. How much will it cost?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Technician:</div>
+                <div class="english">Screen replacement for iPhone 13 is $180. It will take about 1 hour.</div>
+                <div class="burmese">iPhone 13 အတွက် မျက်နှာပြင်အစားထိုးခြင်းက ၁၈၀ ဒေါ်လာပါ။ ၁ နာရီခန့်ကြာပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Screen replacement for iPhone 13 is 180 dollars. It will take about 1 hour.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 2: Computer Repair -->
+    <div class="conversation-section">
+        <h2>💻 Computer Repair / ကွန်ပျူတာပြုပြင်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">My laptop won't turn on. Can you diagnose the problem?</div>
+                <div class="burmese">ကျွန်တော့်လက်ပ်တော့ မဖွင့်ဘူး။ ပြဿနာကို စစ်ဆေးဖော်ထုတ်နိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('My laptop will not turn on. Can you diagnose the problem?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Technician:</div>
+                <div class="english">I'll take a look. The diagnostic fee is $30, which is waived if you proceed with the repair.</div>
+                <div class="burmese">ကြည့်ပါရစေ။ ရောဂါရှာဖွေရေးအခကြေးငွေက ၃၀ ဒေါ်လာဖြစ်ပြီး ပြုပြင်မှုဆက်လုပ်ပါက ဖယ်ရှားပေးပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I will take a look. The diagnostic fee is 30 dollars, which is waived if you proceed with the repair.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Technician:</div>
+                <div class="english">The motherboard is damaged. Replacement will cost $250 plus labor ($80).</div>
+                <div class="burmese">မားသားဘုတ် ပျက်စီးနေပါတယ်။ အစားထိုးခြင်းက အလုပ်သမားခ (၈၀ ဒေါ်လာ) အပေါင်း ၂၅၀ ဒေါ်လာ ကျပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('The motherboard is damaged. Replacement will cost 250 dollars plus labor of 80 dollars.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">That's expensive. Is it worth repairing?</div>
+                <div class="burmese">စျေးကြီးတယ်။ ပြုပြင်ဖို့ တန်ဖိုးရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('That is expensive. Is it worth repairing?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 3: Tablet Screen Replacement -->
+    <div class="conversation-section">
+        <h2>📱 Tablet Screen Replacement / တက်ဘလက်မျက်နှာပြင်အစားထိုးခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">My iPad screen is shattered. Can you replace it?</div>
+                <div class="burmese">ကျွန်တော့် iPad မျက်နှာပြင် ရွဲ့စိုင်းနေတယ်။ အစားထိုးပေးနိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('My iPad screen is shattered. Can you replace it?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Technician:</div>
+                <div class="english">Yes, we do iPad screen repairs. Which generation is it?</div>
+                <div class="burmese">ဟုတ်ပါတယ်၊ iPad မျက်နှာပြင်ပြုပြင်မှုများ လုပ်ပါတယ်။ ဘယ်မျိုးဆက်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, we do iPad screen repairs. Which generation is it?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">iPad Air 4th generation.</div>
+                <div class="burmese">iPad Air ၄ မျိုးဆက်ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('iPad Air 4th generation.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Technician:</div>
+                <div class="english">That repair costs $150 and takes 2 hours. We also offer a 3-month warranty on our work.</div>
+                <div class="burmese">အဲဒီပြုပြင်မှုက ၁၅၀ ဒေါ်လာကျပြီး ၂ နာရီကြာပါတယ်။ ကျွန်တော်တို့အလုပ်အတွက် ၃ လအာမခံလည်း ပေးပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('That repair costs 150 dollars and takes 2 hours. We also offer a 3-month warranty on our work.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 4: Battery Replacement -->
+    <div class="conversation-section">
+        <h2>🔋 Battery Replacement / ဘက်ထရီအစားထိုးခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">My phone battery drains very quickly. Can you replace it?</div>
+                <div class="burmese">ကျွန်တော့်ဖုန်းဘက်ထရီ အရမ်းမြန်မြန်ကုန်တယ်။ အစားထိုးပေးနိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('My phone battery drains very quickly. Can you replace it?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Technician:</div>
+                <div class="english">Yes, battery replacement is $60 including the battery and installation.</div>
+                <div class="burmese">ဟုတ်ပါတယ်၊ ဘက်ထရီအစားထိုးခြင်းက ဘက်ထရီနှင့် တပ်ဆင်ခြင်းအပါအဝင် ၆၀ ဒေါ်လာပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, battery replacement is 60 dollars including the battery and installation.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">How long does it take?</div>
+                <div class="burmese">ဘယ်လောက်ကြာမလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('How long does it take?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Technician:</div>
+                <div class="english">About 30 minutes. We can do it while you wait.</div>
+                <div class="burmese">၃၀ မိနစ်ခန့်ပါ။ သင်စောင့်နေစဉ် လုပ်ဆောင်နိုင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('About 30 minutes. We can do it while you wait.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 5: Smartwatch Repair -->
+    <div class="conversation-section">
+        <h2>⌚ Smartwatch Repair / စမတ်နာရီပြုပြင်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">My smartwatch screen is cracked. Can you fix it?</div>
+                <div class="burmese">ကျွန်တော့်စမတ်နာရီမျက်နှာပြင် ကွဲနေတယ်။ ပြင်ပေးနိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('My smartwatch screen is cracked. Can you fix it?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Technician:</div>
+                <div class="english">Smartwatch repairs are more delicate. We can do it for $80. It takes 2-3 days.</div>
+                <div class="burmese">စမတ်နာရီပြုပြင်ခြင်းက ပိုမိုနုနယ်ပါတယ်။ ၈၀ ဒေါ်လာဖြင့် လုပ်ဆောင်နိုင်ပါတယ်။ ၂-၃ ရက်ကြာပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Smartwatch repairs are more delicate. We can do it for 80 dollars. It takes 2-3 days.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Will it be waterproof after repair?</div>
+                <div class="burmese">ပြုပြင်ပြီးရင် ရေစိုခံမလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Will it be waterproof after repair?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Technician:</div>
+                <div class="english">We'll reseal it, but we cannot guarantee the original waterproof rating.</div>
+                <div class="burmese">ပြန်လည်အလုံပိတ်ပေးပါမယ်၊ ဒါပေမယ့် မူလရေစိုခံအဆင့်ကို အာမမခံနိုင်ပါဘူး။</div>
+                <button class="audio-btn" onclick="speakEnglish('We will reseal it, but we cannot guarantee the original waterproof rating.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 6: Data Recovery -->
+    <div class="conversation-section">
+        <h2>💾 Data Recovery / ဒေတာပြန်လည်ရယူခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">My hard drive crashed. Can you recover my photos?</div>
+                <div class="burmese">ကျွန်တော့် hard drive ပျက်သွားတယ်။ ကျွန်တော့်ဓာတ်ပုံများကို ပြန်ရယူနိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('My hard drive crashed. Can you recover my photos?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Technician:</div>
+                <div class="english">We offer data recovery services. We'll need to run a diagnostic first. The diagnostic fee is $40.</div>
+                <div class="burmese">ကျွန်တော်တို့ ဒေတာပြန်လည်ရယူခြင်းဝန်ဆောင်မှုများ ပေးပါတယ်။ အရင်ဆုံး ရောဂါရှာဖွေရေး လုပ်ဆောင်ဖို့လိုပါမယ်။ ရောဂါရှာဖွေရေးအခကြေးငွေက ၄၀ ဒေါ်လာပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('We offer data recovery services. We will need to run a diagnostic first. The diagnostic fee is 40 dollars.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Technician:</div>
+                <div class="english">Good news. We can recover about 90% of your data. The recovery cost is $150.</div>
+                <div class="burmese">သတင်းကောင်းပါ။ သင့်ဒေတာ၏ ၉၀ ရာခိုင်နှုန်းခန့်ကို ပြန်ရယူနိုင်ပါတယ်။ ပြန်လည်ရယူခစရိတ်က ၁၅၀ ဒေါ်လာပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Good news. We can recover about 90 percent of your data. The recovery cost is 150 dollars.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Please proceed. The photos are very important to me.</div>
+                <div class="burmese">ကျေးဇူးပြု၍ ဆက်လုပ်ပါ။ ဓာတ်ပုံများက ကျွန်တော့်အတွက် အလွန်အရေးကြီးပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Please proceed. The photos are very important to me.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 7: Warranty Information -->
+    <div class="conversation-section">
+        <h2>📋 Warranty Information / အာမခံအချက်အလက်</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Do you offer a warranty on your repairs?</div>
+                <div class="burmese">သင့်ပြုပြင်မှုများအတွက် အာမခံ ပေးလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you offer a warranty on your repairs?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Technician:</div>
+                <div class="english">Yes, we offer a 90-day warranty on all repairs. If the same issue occurs within 90 days, we'll fix it for free.</div>
+                <div class="burmese">ဟုတ်ပါတယ်၊ ပြုပြင်မှုအားလုံးအတွက် ရက် ၉၀ အာမခံ ပေးပါတယ်။ ၉၀ ရက်အတွင်း တူညီသောပြဿနာဖြစ်ပေါ်ပါက အခမဲ့ပြုပြင်ပေးပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, we offer a 90-day warranty on all repairs. If the same issue occurs within 90 days, we will fix it for free.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Does the warranty cover accidental damage?</div>
+                <div class="burmese">အာမခံသည် မတော်တဆပျက်စီးမှုကို အကျုံးဝင်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Does the warranty cover accidental damage?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Technician:</div>
+                <div class="english">No, the warranty only covers issues related to our repair work, not new accidents.</div>
+                <div class="burmese">မရှိပါ၊ အာမခံသည် ကျွန်တော်တို့၏ပြုပြင်မှုအလုပ်နှင့်ဆိုင်သော ပြဿနာများကိုသာ အကျုံးဝင်ပါသည်။</div>
+                <button class="audio-btn" onclick="speakEnglish('No, the warranty only covers issues related to our repair work, not new accidents.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 8: Pickup and Delivery for Repairs -->
+    <div class="conversation-section">
+        <h2>🚚 Pickup and Delivery for Repairs / ပြုပြင်ရန်အတွက် လာရောက်ယူခြင်းနှင့် ပို့ဆောင်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Do you offer pickup and delivery for repairs?</div>
+                <div class="burmese">ပြုပြင်ရန်အတွက် လာရောက်ယူခြင်းနှင့် ပို့ဆောင်ခြင်း ပေးလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you offer pickup and delivery for repairs?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Technician:</div>
+                <div class="english">Yes, for an additional $10 within the city limits. We'll pick up your device, repair it, and deliver it back.</div>
+                <div class="burmese">ဟုတ်ပါတယ်၊ မြို့လယ်အတွင်း အပို ၁၀ ဒေါ်လာဖြင့် ပေးပါတယ်။ သင့်ပစ္စည်းကို လာရောက်ယူမယ်၊ ပြုပြင်မယ်၊ ပြန်ပို့ပေးမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, for an additional 10 dollars within the city limits. We will pick up your device, repair it, and deliver it back.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">How do I schedule a pickup?</div>
+                <div class="burmese">လာရောက်ယူရန် ဘယ်လိုအချိန်ဇယားဆွဲရမလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('How do I schedule a pickup?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Technician:</div>
+                <div class="english">Just call our shop or book online through our website. We'll confirm the time.</div>
+                <div class="burmese">ကျွန်တော်တို့ဆိုင်ကို ဖုန်းဆက်ပါ သို့မဟုတ် ကျွန်တော်တို့ဝက်ဘ်ဆိုက်မှတစ်ဆင့် အွန်လိုင်းမှ ကြိုမှာယူပါ။ အချိန်ကို အတည်ပြုပေးပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Just call our shop or book online through our website. We will confirm the time.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Repair Price List -->
+    <div class="conversation-section">
+        <h2>💰 Common Repair Prices / အသုံးများသောပြုပြင်စရိတ်များ</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Repair Service Rates (ပြုပြင်ဝန်ဆောင်မှုနှုန်းထားများ):</strong><br>
+            • Phone Screen Repair (ဖုန်းမျက်နှာပြင်ပြုပြင်ခြင်း) - $80 to $250 depending on model<br>
+            • Battery Replacement (ဘက်ထရီအစားထိုးခြင်း) - $50 to $80<br>
+            • Charging Port Repair (အားသွင်းပေါက်ပြုပြင်ခြင်း) - $40 to $70<br>
+            • Water Damage Repair (ရေပျက်စီးမှုပြုပြင်ခြင်း) - $70 to $150<br>
+            • Computer Virus Removal (ကွန်ပျူတာဗိုင်းရပ်စ်ဖယ်ရှားခြင်း) - $60<br>
+            • Data Recovery (ဒေတာပြန်လည်ရယူခြင်း) - $100 to $300<br>
+            • Speaker Repair (စပီကာပြုပြင်ခြင်း) - $40 to $80<br>
+            • Camera Repair (ကင်မရာပြုပြင်ခြင်း) - $50 to $120<br>
+            • Diagnostic Fee (ရောဂါရှာဖွေရေးအခကြေးငွေ) - $30 (waived with repair)<br>
+        </div>
+    </div>
+    
+    <!-- Practice Section -->
+    <div class="conversation-section">
+        <h2>✏️ Practice Questions / လေ့ကျင့်ခန်းမေးခွန်းများ</h2>
+        <div class="dialogue-box">
+            <div class="quiz-question">
+                <p><strong>1. How do you ask about phone screen repair?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can you fix my cracked phone screen?')">Can you replace my battery?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can you fix my cracked phone screen?')">Can you fix my cracked phone screen?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can you fix my cracked phone screen?')">Can you recover my data?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can you fix my cracked phone screen?')">Can you install a new operating system?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>2. "ရောဂါရှာဖွေရေးအခကြေးငွေက ဘယ်လောက်လဲ" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'How much is the diagnostic fee?')">How long will it take?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'How much is the diagnostic fee?')">How much is the diagnostic fee?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'How much is the diagnostic fee?')">Do you have a warranty?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'How much is the diagnostic fee?')">Can you fix it today?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. What does "warranty" mean for repairs?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A guarantee that the repair will be fixed for free if the same issue occurs')">A discount on future repairs</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A guarantee that the repair will be fixed for free if the same issue occurs')">A free phone case</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A guarantee that the repair will be fixed for free if the same issue occurs')">A guarantee that the repair will be fixed for free if the same issue occurs</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A guarantee that the repair will be fixed for free if the same issue occurs')">Free pickup and delivery</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. "ဘက်ထရီ အစားထိုးဖို့ ဘယ်လောက်ကုန်ကျလဲ" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'How much does battery replacement cost?')">How much does screen repair cost?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'How much does battery replacement cost?')">How much does battery replacement cost?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'How much does battery replacement cost?')">How much does data recovery cost?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'How much does battery replacement cost?')">How much does water damage repair cost?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. What is "data recovery"?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Retrieving lost files from a damaged device')">Installing new software</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Retrieving lost files from a damaged device')">Cleaning a device</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Retrieving lost files from a damaged device')">Retrieving lost files from a damaged device</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Retrieving lost files from a damaged device')">Backing up files</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p><i class="fas fa-heart" style="color: #d63031;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p>
+        <p style="font-size: 0.75rem; margin-top: 0.5rem;">Practice these conversations to get your devices repaired with confidence!</p>
+    </footer>
+</div>
+
+<a href="#" class="back-to-top" id="backToTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+<script>
+    function speakEnglish(text) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8;
+        utterance.pitch = 1.0;
+        
+        function setVoice() {
+            const voices = window.speechSynthesis.getVoices();
+            const englishVoice = voices.find(v => v.lang === 'en-US' || v.lang.startsWith('en-'));
+            if (englishVoice) utterance.voice = englishVoice;
+            window.speechSynthesis.speak(utterance);
+        }
+        
+        if (window.speechSynthesis.getVoices().length) setVoice();
+        else window.speechSynthesis.onvoiceschanged = setVoice;
+    }
+    
+    function checkAnswer(element, correctAnswer) {
+        const options = element.parentElement.querySelectorAll('.quiz-option');
+        const isCorrect = element.innerText === correctAnswer;
+        
+        if (isCorrect) {
+            element.style.background = '#2ecc71';
+            element.style.color = 'white';
+            speakEnglish(correctAnswer);
+            setTimeout(() => {
+                options.forEach(opt => {
+                    opt.style.background = '';
+                    opt.style.color = '';
+                });
+            }, 1500);
+        } else {
+            element.style.background = '#e74c3c';
+            element.style.color = 'white';
+            setTimeout(() => {
+                options.forEach(opt => {
+                    opt.style.background = '';
+                    opt.style.color = '';
+                });
+            }, 500);
+        }
+    }
+    
+    (function() {
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        if (backToTopBtn) {
+            window.addEventListener('scroll', function() {
+                backToTopBtn.classList.toggle('show', window.scrollY > 300);
+            });
+            backToTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

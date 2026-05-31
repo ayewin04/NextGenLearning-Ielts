@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pharmacy - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%); font-family: 'Segoe UI', Roboto, sans-serif; padding: 1rem; }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        .back-btn { display: inline-flex; align-items: center; gap: 8px; background: white; padding: 0.6rem 1.2rem; border-radius: 2rem; text-decoration: none; color: #1e3c72; font-weight: 500; margin-bottom: 1rem; transition: 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        .conversation-section { background: white; border-radius: 1rem; margin-bottom: 2rem; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+        .conversation-section h2 { background: #e74c3c; color: white; padding: 1rem; font-size: 1.2rem; }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line { display: grid; grid-template-columns: 70px 1fr 1fr; gap: 0.8rem; padding: 0.8rem; border-bottom: 1px solid #eee; align-items: start; }
+        .speaker { font-weight: bold; color: #e74c3c; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.95rem; }
+        .audio-btn { background: #eef4ff; border: none; border-radius: 2rem; padding: 0.3rem 0.8rem; cursor: pointer; transition: 0.2s; margin-top: 0.3rem; }
+        .audio-btn:hover { background: #e74c3c; color: white; }
+        .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.8rem; padding: 1rem; }
+        .vocab-item { background: #f8f9fa; padding: 0.8rem; border-radius: 0.8rem; border-left: 3px solid #e74c3c; }
+        .vocab-eng { font-weight: bold; color: #e74c3c; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        .quiz-question { background: #f8f9fa; padding: 1rem; margin-bottom: 1rem; border-radius: 0.8rem; }
+        .quiz-options { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
+        .quiz-option { background: white; padding: 0.5rem 1rem; border-radius: 2rem; border: 1px solid #ddd; cursor: pointer; transition: 0.2s; }
+        .quiz-option:hover { background: #e74c3c; color: white; border-color: #e74c3c; }
+        .tips-box { background: #fdeaea; padding: 1rem; border-radius: 0.8rem; margin: 1rem; border-left: 3px solid #e74c3c; }
+        .tips-box i { color: #e74c3c; margin-right: 8px; }
+        footer { margin-top: 2rem; text-align: center; padding: 1rem; color: #6c757d; font-size: 0.8rem; }
+        .back-to-top { position: fixed; bottom: 1.5rem; right: 1.5rem; background: #1e3c72; color: white; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 1000; opacity: 0; visibility: hidden; border: 2px solid white; }
+        .back-to-top.show { opacity: 1; visibility: visible; }
+        .back-to-top:hover { background: #f5b042; color: #1e3c72; transform: translateY(-3px); }
+        .back-to-top i { font-size: 1.2rem; }
+        @media (max-width: 768px) { .back-to-top { bottom: 1rem; right: 1rem; width: 42px; height: 42px; } .back-to-top i { font-size: 1rem; } }
+        @media (max-width: 700px) { .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; } }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn"><i class="fas fa-arrow-left"></i> All Conversations</a>
+    <header><h1><i class="fas fa-capsules"></i> Pharmacy</h1><p>Learn how to buy medicine, ask for dosage instructions, and describe symptoms in English</p><p>ဆေးဝယ်ယူနည်း၊ သောက်သုံးပုံညွှန်ကြားချက်များမေးမြန်းနည်းနှင့် ရောဂါလက္ခဏာများဖော်ပြနည်းကို အင်္ဂလိပ်လို လေ့လာပါ</p></header>
+    
+    <!-- Dialogue 1: Asking for Cold Medicine -->
+    <div class="conversation-section"><h2>🤧 Cold Medicine / အအေးမိဆေး</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">Hello, I have a bad cold. Can you recommend something?</div><div class="burmese">မင်္ဂလာပါ၊ ကျွန်တော် အအေးမိပြင်းပြင်းမိတယ်။ တစ်ခုခု အကြံပြုနိုင်မလား။</div><button class="audio-btn" onclick="speakEnglish('Hello, I have a bad cold. Can you recommend something?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Pharmacist:</div><div class="english">Do you have a fever or just cold symptoms?</div><div class="burmese">အဖျားရှိလား ဒါမှမဟုတ် အအေးမိလက္ခဏာများသာလား။</div><button class="audio-btn" onclick="speakEnglish('Do you have a fever or just cold symptoms?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">Runny nose, cough, and a sore throat. No fever.</div><div class="burmese">နှာရည်ယိုခြင်း၊ ချောင်းဆိုးခြင်းနှင့် လည်ချောင်းနာခြင်း။ အဖျားမရှိပါ။</div><button class="audio-btn" onclick="speakEnglish('Runny nose, cough, and a sore throat. No fever.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Pharmacist:</div><div class="english">This cold and flu relief tablet should help. Take one every 6 hours.</div><div class="burmese">ဒီအအေးမိတုပ်ကွေးသက်သာစေသောဆေးပြားက ကူညီသင့်ပါတယ်။ ၆ နာရီတစ်ခါ တစ်ပြားသောက်ပါ။</div><button class="audio-btn" onclick="speakEnglish('This cold and flu relief tablet should help. Take one every 6 hours.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 2: Prescription Refill -->
+    <div class="conversation-section"><h2>💊 Prescription Refill / ဆေးညွှန်းပြန်ဖြည့်ခြင်း</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">I need to refill my prescription. Here's my bottle.</div><div class="burmese">ကျွန်တော် ဆေးညွှန်း ပြန်ဖြည့်ဖို့ လိုအပ်ပါတယ်။ ဒီမှာ ကျွန်တော့်ပုလင်းပါ။</div><button class="audio-btn" onclick="speakEnglish('I need to refill my prescription. Here is my bottle.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Pharmacist:</div><div class="english">Let me check. You have one refill left. I can have it ready in 15 minutes.</div><div class="burmese">စစ်ကြည့်ပါရစေ။ သင့်မှာ တစ်ခါထပ်ဖြည့်ခွင့်ကျန်ပါသေးတယ်။ ၁၅ မိနစ်အတွင်း အဆင်သင့်ဖြစ်အောင်လုပ်နိုင်ပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('Let me check. You have one refill left. I can have it ready in 15 minutes.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">I'll wait. Do you need my insurance card again?</div><div class="burmese">ကျွန်တော် စောင့်ပါမယ်။ အာမခံကဒ် ထပ်လိုအပ်လား။</div><button class="audio-btn" onclick="speakEnglish('I will wait. Do you need my insurance card again?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Pharmacist:</div><div class="english">Yes, please. I'll update your information in the system.</div><div class="burmese">ဟုတ်ပါတယ်။ စနစ်ထဲမှာ သင့်အချက်အလက်ကို အပ်ဒိတ်လုပ်ပါမယ်။</div><button class="audio-btn" onclick="speakEnglish('Yes, please. I will update your information in the system.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 3: Allergy Medicine -->
+    <div class="conversation-section"><h2>🌸 Allergy Medicine / ဓာတ်မတည့်မှုဆေး</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">I have seasonal allergies. My eyes are itchy and I'm sneezing a lot.</div><div class="burmese">ကျွန်တော်မှာ ရာသီအလိုက် ဓာတ်မတည့်မှုရှိပါတယ်။ မျက်လုံးတွေ ယားယံပြီး နှာချေတာများပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('I have seasonal allergies. My eyes are itchy and I am sneezing a lot.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Pharmacist:</div><div class="english">Antihistamines work well for allergies. This non-drowsy formula is very popular.</div><div class="burmese">ဓာတ်မတည့်မှုဆေးတွေက ကောင်းစွာအလုပ်လုပ်ပါတယ်။ ဒီအိပ်ငိုက်ခြင်းမရှိသောဆေးက အရမ်းလူကြိုက်များပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('Antihistamines work well for allergies. This non-drowsy formula is very popular.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">Does it have any side effects?</div><div class="burmese">ဒါမှာ ဘေးထွက်ဆိုးကျိုးတွေ ရှိလား။</div><button class="audio-btn" onclick="speakEnglish('Does it have any side effects?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Pharmacist:</div><div class="english">Some people experience dry mouth, but it's generally well tolerated.</div><div class="burmese">တချို့လူတွေ ပါးစပ်ခြောက်တတ်ပေမယ့် ယေဘုယျအားဖြင့် ကောင်းစွာခံနိုင်ရည်ရှိပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('Some people experience dry mouth, but it is generally well tolerated.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 4: Pain Relief -->
+    <div class="conversation-section"><h2>💢 Pain Relief / အကိုက်အခဲပျောက်ဆေး</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">I have a headache. What do you recommend?</div><div class="burmese">ကျွန်တော် ခေါင်းကိုက်နေတယ်။ ဘာအကြံပြုလဲ။</div><button class="audio-btn" onclick="speakEnglish('I have a headache. What do you recommend?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Pharmacist:</div><div class="english">Ibuprofen or acetaminophen both work well. Do you have any stomach issues?</div><div class="burmese">Ibuprofen သို့မဟုတ် acetaminophen နှစ်မျိုးစလုံး ကောင်းစွာအလုပ်လုပ်ပါတယ်။ သင့်မှာ အစာအိမ်ပြဿနာရှိလား။</div><button class="audio-btn" onclick="speakEnglish('Ibuprofen or acetaminophen both work well. Do you have any stomach issues?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">No, my stomach is fine.</div><div class="burmese">မရှိပါဘူး၊ ကျွန်တော့်အစာအိမ် အဆင်ပြေပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('No, my stomach is fine.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Pharmacist:</div><div class="english">Then ibuprofen is fine. Take 200-400mg every 6 hours as needed. Don't exceed 1200mg per day.</div><div class="burmese">ဒါဆို ibuprofen က အဆင်ပြေပါတယ်။ လိုအပ်သလို ၆ နာရီတစ်ခါ ၂၀၀-၄၀၀ မီလီဂရမ် သောက်ပါ။ တစ်နေ့ ၁၂၀၀ မီလီဂရမ် မကျော်စေရ။</div><button class="audio-btn" onclick="speakEnglish('Then ibuprofen is fine. Take 200-400mg every 6 hours as needed. Do not exceed 1200mg per day.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 5: Children's Medicine -->
+    <div class="conversation-section"><h2>👶 Children's Medicine / ကလေးဆေး</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Parent:</div><div class="english">My 4-year-old has a fever. What medicine can I give her?</div><div class="burmese">ကျွန်မ အသက် ၄ နှစ်အရွယ် သမီးလေး အဖျားရှိတယ်။ ဘယ်ဆေးပေးလို့ရမလဲ။</div><button class="audio-btn" onclick="speakEnglish('My 4-year-old has a fever. What medicine can I give her?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Pharmacist:</div><div class="english">Children's acetaminophen is safe. How much does she weigh?</div><div class="burmese">ကလေး acetaminophen က စိတ်ချရပါတယ်။ သူမ ဘယ်လောက်အလေးချိန်ရှိလဲ။</div><button class="audio-btn" onclick="speakEnglish('Children\'s acetaminophen is safe. How much does she weigh?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Parent:</div><div class="english">About 35 pounds.</div><div class="burmese">၃၅ ပေါင်လောက်။</div><button class="audio-btn" onclick="speakEnglish('About 35 pounds.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Pharmacist:</div><div class="english">Give her 5ml every 4 hours. Use the dosing syringe that comes with the bottle.</div><div class="burmese">၄ နာရီတစ်ခါ ၅ မီလီလီတာ ပေးပါ။ ပုလင်းပါလာတဲ့ သောက်ဆေးပြွန်ကို သုံးပါ။</div><button class="audio-btn" onclick="speakEnglish('Give her 5ml every 4 hours. Use the dosing syringe that comes with the bottle.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 6: Skin Cream -->
+    <div class="conversation-section"><h2>🧴 Skin Cream / အရေပြားခရင်မ်</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">I have a rash on my arm. It's red and itchy.</div><div class="burmese">ကျွန်တော့်လက်မောင်းမှာ အဖုအပိမ့်ထွက်နေတယ်။ အနီရောင်ဖြစ်ပြီး ယားယံတယ်။</div><button class="audio-btn" onclick="speakEnglish('I have a rash on my arm. It is red and itchy.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Pharmacist:</div><div class="english">It could be an allergic reaction or contact dermatitis. This hydrocortisone cream should help.</div><div class="burmese">ဒါက ဓာတ်မတည့်မှု သို့မဟုတ် ထိတွေ့အရေပြားရောင်ရမ်းခြင်း ဖြစ်နိုင်ပါတယ်။ ဒီ hydrocortisone ခရင်မ်က ကူညီသင့်ပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('It could be an allergic reaction or contact dermatitis. This hydrocortisone cream should help.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">How often should I apply it?</div><div class="burmese">ဘယ်နှစ်ခါလောက် လိမ်းသင့်လဲ။</div><button class="audio-btn" onclick="speakEnglish('How often should I apply it?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Pharmacist:</div><div class="english">Apply a thin layer 2-3 times a day. If it doesn't improve in a week, see a doctor.</div><div class="burmese">တစ်နေ့ ၂-၃ ကြိမ် ပါးပါးလိမ်းပါ။ တစ်ပတ်အတွင်း မသက်သာရင် ဆရာဝန်ပြပါ။</div><button class="audio-btn" onclick="speakEnglish('Apply a thin layer 2-3 times a day. If it does not improve in a week, see a doctor.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 7: Vitamins and Supplements -->
+    <div class="conversation-section"><h2>💊 Vitamins and Supplements / ဗီတာမင်နှင့်ဖြည့်စွက်စာများ</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">I've been feeling tired lately. Do you recommend any vitamins?</div><div class="burmese">မကြာခင်တုန်းက ကျွန်တော် ပင်ပန်းနွမ်းနယ်နေတယ်။ ဗီတာမင်တစ်ခုခု အကြံပြုလား။</div><button class="audio-btn" onclick="speakEnglish('I have been feeling tired lately. Do you recommend any vitamins?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Pharmacist:</div><div class="english">A multivitamin is a good start. Vitamin B12 and D can also help with energy levels.</div><div class="burmese">ဗီတာမင်စုံဆေးက ကောင်းတဲ့အစပါ။ ဗီတာမင် B12 နှင့် D က စွမ်းအင်အဆင့်ကို ကူညီပေးနိုင်ပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('A multivitamin is a good start. Vitamin B12 and D can also help with energy levels.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">Is there a difference between cheap and expensive brands?</div><div class="burmese">စျေးသက်သာတဲ့နဲ့ စျေးကြီးတဲ့အမှတ်တံဆိပ်တွေကြား ကွာခြားချက်ရှိလား။</div><button class="audio-btn" onclick="speakEnglish('Is there a difference between cheap and expensive brands?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Pharmacist:</div><div class="english">All brands must meet quality standards. Store brands are usually just as effective.</div><div class="burmese">အမှတ်တံဆိပ်အားလုံး အရည်အသွေးစံနှုန်းများကို ပြည့်မီရပါမယ်။ ဆိုင်အမှတ်တံဆိပ်များသည် များသောအားဖြင့် အတူတူပင်ထိရောက်မှုရှိပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('All brands must meet quality standards. Store brands are usually just as effective.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 8: Emergency Contraception -->
+    <div class="conversation-section"><h2>🔞 Emergency Contraception / အရေးပေါ်တားဆေးဝါး</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">I need emergency contraception. Do you sell it without a prescription?</div><div class="burmese">အရေးပေါ်တားဆေးဝါး လိုအပ်ပါတယ်။ ဆေးညွှန်းမပါဘဲ ရောင်းလား။</div><button class="audio-btn" onclick="speakEnglish('I need emergency contraception. Do you sell it without a prescription?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Pharmacist:</div><div class="english">Yes, it's available over the counter. It's most effective if taken within 72 hours.</div><div class="burmese">ဟုတ်ပါတယ်၊ ဆေးဆိုင်တွင် ရနိုင်ပါတယ်။ ၇၂ နာရီအတွင်း သောက်ရင် အကောင်းဆုံးဖြစ်ပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('Yes, it is available over the counter. It is most effective if taken within 72 hours.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">How much is it?</div><div class="burmese">ဘယ်လောက်လဲ။</div><button class="audio-btn" onclick="speakEnglish('How much is it?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Pharmacist:</div><div class="english">$45. Do you have any questions about how to take it?</div><div class="burmese">၄၅ ဒေါ်လာပါ။ ဘယ်လိုသောက်ရမလဲဆိုတာ မေးစရာရှိလား။</div><button class="audio-btn" onclick="speakEnglish('45 dollars. Do you have any questions about how to take it?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <div class="tips-box"><i class="fas fa-lightbulb"></i> <strong>Tips for Using a Pharmacy (ဆေးဆိုင်သုံးစွဲရန် အကြံပြုချက်များ):</strong><br>• Always tell the pharmacist about other medications you're taking (သင်သောက်နေတဲ့ အခြားဆေးများအကြောင်း ဆေးဝါးကျွမ်းကျင်သူကို အမြဲပြောပါ)<br>• Ask about potential side effects (ဖြစ်နိုင်ခြေရှိသော ဘေးထွက်ဆိုးကျိုးများအကြောင်း မေးမြန်းပါ)<br>• Follow the dosage instructions exactly (သောက်သုံးပုံညွှန်ကြားချက်များကို အတိအကျလိုက်နာပါ)<br>• Check the expiration date before purchasing (မဝယ်မီ သက်တမ်းကုန်ဆုံးရက်ကို စစ်ဆေးပါ)<br>• Store medications properly (ဆေးဝါးများကို စနစ်တကျ သိမ်းဆည်းပါ)</div>
+    
+    <div class="conversation-section"><div class="vocab-grid">
+        <div class="vocab-item"><span class="vocab-eng">Prescription</span><br><span class="vocab-burmese">ဆေးညွှန်း</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Over the counter</span><br><span class="vocab-burmese">ဆေးဆိုင်တွင်ရနိုင်သော</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Dosage</span><br><span class="vocab-burmese">သောက်သုံးပုံ</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Side effects</span><br><span class="vocab-burmese">ဘေးထွက်ဆိုးကျိုး</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Allergic reaction</span><br><span class="vocab-burmese">ဓာတ်မတည့်ခြင်း</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Generic / Brand name</span><br><span class="vocab-burmese">ဂျင်နရစ်/အမှတ်တံဆိပ်အမည်</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Refill</span><br><span class="vocab-burmese">ထပ်ဖြည့်ခြင်း</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Expiration date</span><br><span class="vocab-burmese">သက်တမ်းကုန်ဆုံးရက်</span></div>
+    </div></div>
+    
+    <div class="conversation-section"><div class="quiz-question"><p><strong>1. How do you ask for cold medicine?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'Can you recommend something for a cold?')">Can you fill my prescription?</div><div class="quiz-option" onclick="checkAnswer(this, 'Can you recommend something for a cold?')">Can you recommend something for a cold?</div><div class="quiz-option" onclick="checkAnswer(this, 'Can you recommend something for a cold?')">Do you have pain relievers?</div><div class="quiz-option" onclick="checkAnswer(this, 'Can you recommend something for a cold?')">I need allergy medicine.</div></div></div>
+    <div class="quiz-question"><p><strong>2. "ဒီဆေးကို တစ်နေ့ ဘယ်နှစ်ကြိမ်သောက်ရမလဲ" in English?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'How many times a day should I take this?')">How much does this cost?</div><div class="quiz-option" onclick="checkAnswer(this, 'How many times a day should I take this?')">How many times a day should I take this?</div><div class="quiz-option" onclick="checkAnswer(this, 'How many times a day should I take this?')">What are the side effects?</div><div class="quiz-option" onclick="checkAnswer(this, 'How many times a day should I take this?')">Does this require a prescription?</div></div></div>
+    <div class="quiz-question"><p><strong>3. What does "over the counter" mean?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'Medicine you can buy without a prescription')">Medicine that requires a prescription</div><div class="quiz-option" onclick="checkAnswer(this, 'Medicine you can buy without a prescription')">Medicine that is free</div><div class="quiz-option" onclick="checkAnswer(this, 'Medicine you can buy without a prescription')">Medicine you can buy without a prescription</div><div class="quiz-option" onclick="checkAnswer(this, 'Medicine you can buy without a prescription')">Medicine for children only</div></div></div>
+    <div class="quiz-question"><p><strong>4. "ဒီဆေးရဲ့ ဘေးထွက်ဆိုးကျိုးတွေက ဘာတွေလဲ" in English?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'What are the side effects of this medicine?')">How much does this cost?</div><div class="quiz-option" onclick="checkAnswer(this, 'What are the side effects of this medicine?')">How do I take this medicine?</div><div class="quiz-option" onclick="checkAnswer(this, 'What are the side effects of this medicine?')">What are the side effects of this medicine?</div><div class="quiz-option" onclick="checkAnswer(this, 'What are the side effects of this medicine?')">Is this safe for children?</div></div></div>
+    <div class="quiz-question"><p><strong>5. What should you tell the pharmacist before buying medicine?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'All medications you are currently taking')">Your name only</div><div class="quiz-option" onclick="checkAnswer(this, 'All medications you are currently taking')">Your address</div><div class="quiz-option" onclick="checkAnswer(this, 'All medications you are currently taking')">All medications you are currently taking</div><div class="quiz-option" onclick="checkAnswer(this, 'All medications you are currently taking')">Your occupation</div></div></div>
+    </div>
+    <footer><p><i class="fas fa-heart" style="color: #e74c3c;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p></footer>
+</div>
+<a href="#" class="back-to-top" id="backToTopBtn"><i class="fas fa-arrow-up"></i></a>
+<script>
+    function speakEnglish(text){if(!window.speechSynthesis)return;window.speechSynthesis.cancel();const utterance=new SpeechSynthesisUtterance(text);utterance.lang='en-US';utterance.rate=0.8;utterance.pitch=1.0;function setVoice(){const voices=window.speechSynthesis.getVoices();const englishVoice=voices.find(v=>v.lang==='en-US'||v.lang.startsWith('en-'));if(englishVoice)utterance.voice=englishVoice;window.speechSynthesis.speak(utterance);}if(window.speechSynthesis.getVoices().length)setVoice();else window.speechSynthesis.onvoiceschanged=setVoice;}
+    function checkAnswer(element,correctAnswer){const options=element.parentElement.querySelectorAll('.quiz-option');const isCorrect=element.innerText===correctAnswer;if(isCorrect){element.style.background='#2ecc71';element.style.color='white';speakEnglish(correctAnswer);setTimeout(()=>{options.forEach(opt=>{opt.style.background='';opt.style.color='';});},1500);}else{element.style.background='#e74c3c';element.style.color='white';setTimeout(()=>{options.forEach(opt=>{opt.style.background='';opt.style.color='';});},500);}}
+    (function(){const btn=document.getElementById('backToTopBtn');if(btn){window.addEventListener('scroll',function(){btn.classList.toggle('show',window.scrollY>300);});btn.addEventListener('click',function(e){e.preventDefault();window.scrollTo({top:0,behavior:'smooth'});});}})();
+</script>
+</body>
+</html>

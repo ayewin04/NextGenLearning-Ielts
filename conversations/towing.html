@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Towing Service - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%); font-family: 'Segoe UI', Roboto, sans-serif; padding: 1rem; }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        .back-btn { display: inline-flex; align-items: center; gap: 8px; background: white; padding: 0.6rem 1.2rem; border-radius: 2rem; text-decoration: none; color: #1e3c72; font-weight: 500; margin-bottom: 1rem; transition: 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        .conversation-section { background: white; border-radius: 1rem; margin-bottom: 2rem; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+        .conversation-section h2 { background: #e74c3c; color: white; padding: 1rem; font-size: 1.2rem; }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line { display: grid; grid-template-columns: 70px 1fr 1fr; gap: 0.8rem; padding: 0.8rem; border-bottom: 1px solid #eee; align-items: start; }
+        .speaker { font-weight: bold; color: #e74c3c; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.95rem; }
+        .audio-btn { background: #eef4ff; border: none; border-radius: 2rem; padding: 0.3rem 0.8rem; cursor: pointer; transition: 0.2s; margin-top: 0.3rem; }
+        .audio-btn:hover { background: #e74c3c; color: white; }
+        .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.8rem; padding: 1rem; }
+        .vocab-item { background: #f8f9fa; padding: 0.8rem; border-radius: 0.8rem; border-left: 3px solid #e74c3c; }
+        .vocab-eng { font-weight: bold; color: #e74c3c; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        .quiz-question { background: #f8f9fa; padding: 1rem; margin-bottom: 1rem; border-radius: 0.8rem; }
+        .quiz-options { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
+        .quiz-option { background: white; padding: 0.5rem 1rem; border-radius: 2rem; border: 1px solid #ddd; cursor: pointer; transition: 0.2s; }
+        .quiz-option:hover { background: #e74c3c; color: white; border-color: #e74c3c; }
+        .tips-box { background: #fdeaea; padding: 1rem; border-radius: 0.8rem; margin: 1rem; border-left: 3px solid #e74c3c; }
+        .tips-box i { color: #e74c3c; margin-right: 8px; }
+        footer { margin-top: 2rem; text-align: center; padding: 1rem; color: #6c757d; font-size: 0.8rem; }
+        .back-to-top { position: fixed; bottom: 1.5rem; right: 1.5rem; background: #1e3c72; color: white; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 1000; opacity: 0; visibility: hidden; border: 2px solid white; }
+        .back-to-top.show { opacity: 1; visibility: visible; }
+        .back-to-top:hover { background: #f5b042; color: #1e3c72; transform: translateY(-3px); }
+        .back-to-top i { font-size: 1.2rem; }
+        @media (max-width: 768px) { .back-to-top { bottom: 1rem; right: 1rem; width: 42px; height: 42px; } .back-to-top i { font-size: 1rem; } }
+        @media (max-width: 700px) { .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; } }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn"><i class="fas fa-arrow-left"></i> All Conversations</a>
+    <header><h1><i class="fas fa-truck"></i> Towing Service</h1><p>Learn how to request a tow truck, provide location, and deal with breakdowns in English</p><p>ထရပ်ကားခေါ်ယူနည်း၊ တည်နေရာပေးအပ်နည်းနှင့် ကားပျက်စီးမှုများကိုကိုင်တွယ်နည်းကို အင်္ဂလိပ်လို လေ့လာပါ</p></header>
+    
+    <!-- Dialogue 1: Calling for a Tow -->
+    <div class="conversation-section"><h2>📞 Calling for a Tow / ထရပ်ကားခေါ်ခြင်း</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">Hello, my car broke down. I need a tow truck.</div><div class="burmese">မင်္ဂလာပါ၊ ကျွန်တော့်ကားပျက်သွားတယ်။ ထရပ်ကားတစ်စီး လိုအပ်ပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('Hello, my car broke down. I need a tow truck.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Dispatcher:</div><div class="english">Where are you located?</div><div class="burmese">ခင်ဗျား ဘယ်မှာရှိလဲ။</div><button class="audio-btn" onclick="speakEnglish('Where are you located?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">I'm on Highway 101, about 2 miles past the airport exit, heading north.</div><div class="burmese">ကျွန်တော် အဝေးပြေးလမ်း ၁၀၁ မှာ၊ လေဆိပ်ထွက်ပေါက်ဖြတ်ပြီး ၂ မိုင်လောက်၊ မြောက်ဘက်သွားနေတယ်။</div><button class="audio-btn" onclick="speakEnglish('I am on Highway 101, about 2 miles past the airport exit, heading north.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Dispatcher:</div><div class="english">What color and model is your car? I'll send a truck right away.</div><div class="burmese">သင့်ကားရဲ့ အရောင်နဲ့ မော်ဒယ်က ဘာလဲ။ ထရပ်ကားတစ်စီး ချက်ချင်းစေလွှတ်ပါမယ်။</div><button class="audio-btn" onclick="speakEnglish('What color and model is your car? I will send a truck right away.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 2: Flat Tire -->
+    <div class="conversation-section"><h2>🛞 Flat Tire / တာယာပေါက်ခြင်း</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">I have a flat tire on the highway. Can you send someone?</div><div class="burmese">ကျွန်တော် အဝေးပြေးလမ်းပေါ်မှာ တာယာပေါက်နေတယ်။ တစ်ယောက်ယောက် စေလွှတ်ပေးနိုင်မလား။</div><button class="audio-btn" onclick="speakEnglish('I have a flat tire on the highway. Can you send someone?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Dispatcher:</div><div class="english">Do you have a spare tire? Our driver can change it for you.</div><div class="burmese">အပိုတာယာရှိလား။ ကျွန်တော်တို့မောင်းသူက ပြောင်းပေးနိုင်ပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('Do you have a spare tire? Our driver can change it for you.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">Yes, I have a spare in the trunk. How much will it cost?</div><div class="burmese">ဟုတ်တယ်၊ ကျွန်တော့်ကားအိတ်ထဲမှာ အပိုရှိတယ်။ ဘယ်လောက်ကုန်ကျမလဲ။</div><button class="audio-btn" onclick="speakEnglish('Yes, I have a spare in the trunk. How much will it cost?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Dispatcher:</div><div class="english">Tire change is $50 plus a service call fee of $30. Total $80.</div><div class="burmese">တာယာလဲလှယ်ခြင်းက ၅၀ ဒေါ်လာ အပေါင်း ဝန်ဆောင်မှုခေါ်ယူခကြေး ၃၀ ဒေါ်လာ။ စုစုပေါင်း ၈၀ ဒေါ်လာပါ။</div><button class="audio-btn" onclick="speakEnglish('Tire change is 50 dollars plus a service call fee of 30 dollars. Total 80 dollars.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 3: Out of Gas -->
+    <div class="conversation-section"><h2>⛽ Out of Gas / ဓာတ်ဆီကုန်ခြင်း</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">I ran out of gas on the interstate. Can you bring me some?</div><div class="burmese">ကျွန်တော် ပြည်နယ်လမ်းမကြီးပေါ်မှာ ဓာတ်ဆီကုန်သွားတယ်။ နည်းနည်းယူလာပေးနိုင်မလား။</div><button class="audio-btn" onclick="speakEnglish('I ran out of gas on the interstate. Can you bring me some?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Dispatcher:</div><div class="english">Yes, we offer fuel delivery. How many gallons do you need?</div><div class="burmese">ဟုတ်ပါတယ်၊ လောင်စာဆီပို့ဆောင်ခြင်း ပေးပါတယ်။ ဂါလံဘယ်နှစ်ဂါလံလိုအပ်လဲ။</div><button class="audio-btn" onclick="speakEnglish('Yes, we offer fuel delivery. How many gallons do you need?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">Two gallons should be enough to get me to the next station.</div><div class="burmese">နှစ်ဂါလံက ကျွန်တော့်ကို နောက်ဆိုင်အထိ ရောက်ဖို့ လုံလောက်သင့်ပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('Two gallons should be enough to get me to the next station.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Dispatcher:</div><div class="english">Fuel delivery is $40 plus the cost of gas. ETA 20 minutes.</div><div class="burmese">လောင်စာဆီပို့ဆောင်ခြင်းက ဓာတ်ဆီစျေးအပေါင်း ၄၀ ဒေါ်လာပါ။ ရောက်ရှိရန် ၂၀ မိနစ်ပါ။</div><button class="audio-btn" onclick="speakEnglish('Fuel delivery is 40 dollars plus the cost of gas. ETA 20 minutes.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 4: Jump Start -->
+    <div class="conversation-section"><h2>🔋 Jump Start / ဘက်ထရီအားသွင်းပေးခြင်း</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">My battery is dead. Can you give me a jump start?</div><div class="burmese">ကျွန်တော့်ဘက်ထရီသေသွားတယ်။ အားသွင်းပေးနိုင်မလား။</div><button class="audio-btn" onclick="speakEnglish('My battery is dead. Can you give me a jump start?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Dispatcher:</div><div class="english">Yes, jump start service is $60. We'll be there within 30 minutes.</div><div class="burmese">ဟုတ်ပါတယ်၊ jump start ဝန်ဆောင်မှုက ၆၀ ဒေါ်လာပါ။ မိနစ် ၃၀ အတွင်း ရောက်ပါမယ်။</div><button class="audio-btn" onclick="speakEnglish('Yes, jump start service is 60 dollars. We will be there within 30 minutes.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">Do you also sell batteries if mine is completely dead?</div><div class="burmese">ကျွန်တော့်ဟာ လုံးဝသေသွားရင် ဘက်ထရီလည်း ရောင်းလား။</div><button class="audio-btn" onclick="speakEnglish('Do you also sell batteries if mine is completely dead?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Dispatcher:</div><div class="english">Yes, we have batteries starting at $120 with installation included.</div><div class="burmese">ဟုတ်ပါတယ်၊ တပ်ဆင်ခြင်းအပါအဝင် ၁၂၀ ဒေါ်လာမှစသော ဘက်ထရီများ ရှိပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('Yes, we have batteries starting at 120 dollars with installation included.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 5: Locked Out -->
+    <div class="conversation-section"><h2>🔑 Locked Out / သော့သောက်ကျန်ခဲ့ခြင်း</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">I locked my keys in the car. Can you help me get in?</div><div class="burmese">ကျွန်တော် သော့တွေကို ကားထဲမှာ သောက်ကျန်ခဲ့တယ်။ ဝင်ရောက်ဖို့ ကူညီနိုင်မလား။</div><button class="audio-btn" onclick="speakEnglish('I locked my keys in the car. Can you help me get in?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Dispatcher:</div><div class="english">Yes, lockout service is $50. We'll send someone to unlock your car.</div><div class="burmese">ဟုတ်ပါတယ်၊ သော့ဖွင့်ဝန်ဆောင်မှုက ၅၀ ဒေါ်လာပါ။ သင့်ကားသော့ဖွင့်ရန် တစ်စုံတစ်ယောက်ကို စေလွှတ်ပါမယ်။</div><button class="audio-btn" onclick="speakEnglish('Yes, lockout service is 50 dollars. We will send someone to unlock your car.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">Will they damage the door?</div><div class="burmese">တံခါးကို ပျက်စီးစေမလား။</div><button class="audio-btn" onclick="speakEnglish('Will they damage the door?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Dispatcher:</div><div class="english">No, we use professional tools that won't scratch or damage your car.</div><div class="burmese">မပျက်စီးပါဘူး၊ သင့်ကားကို မခြစ်မိစေရန် သို့မဟုတ် မပျက်စီးစေရန် ပရော်ဖက်ရှင်နယ်ကိရိယာများကို သုံးပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('No, we use professional tools that will not scratch or damage your car.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 6: Accident Scene -->
+    <div class="conversation-section"><h2>🚗 Accident Scene / မတော်တဆမှုနေရာ</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">I've been in an accident. The car is not drivable.</div><div class="burmese">ကျွန်တော် မတော်တဆမှုတစ်ခုဖြစ်ခဲ့တယ်။ ကားက မောင်းလို့မရဘူး။</div><button class="audio-btn" onclick="speakEnglish('I have been in an accident. The car is not drivable.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Dispatcher:</div><div class="english">Is anyone injured? Do you need an ambulance?</div><div class="burmese">တစ်ယောက်ယောက် ဒဏ်ရာရလား။ လူနာတင်ယာဉ် လိုအပ်လား။</div><button class="audio-btn" onclick="speakEnglish('Is anyone injured? Do you need an ambulance?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">No injuries, thank goodness. Just need a tow to the repair shop.</div><div class="burmese">ဘယ်သူမှ ဒဏ်မရပါဘူး၊ ကံကောင်းပါတယ်။ ပြုပြင်ဆိုင်ကို ထရပ်ကားနဲ့ပို့ဖို့ပဲ လိုပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('No injuries, thank goodness. Just need a tow to the repair shop.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Dispatcher:</div><div class="english">I'm sending a flatbed tow truck to your location. ETA 25 minutes.</div><div class="burmese">သင့်တည်နေရာကို ပြန့်ပြားထရပ်ကား စေလွှတ်နေပါတယ်။ ၂၅ မိနစ်အတွင်း ရောက်ပါမယ်။</div><button class="audio-btn" onclick="speakEnglish('I am sending a flatbed tow truck to your location. ETA 25 minutes.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 7: Payment Methods -->
+    <div class="conversation-section"><h2>💳 Payment Methods / ငွေပေးချေမှုနည်းလမ်းများ</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">How do I pay for the towing service?</div><div class="burmese">ထရပ်ကားဝန်ဆောင်မှုအတွက် ဘယ်လိုပေးချေရမလဲ။</div><button class="audio-btn" onclick="speakEnglish('How do I pay for the towing service?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Dispatcher:</div><div class="english">You can pay by credit card over the phone, cash to the driver, or we can invoice you.</div><div class="burmese">ဖုန်းဖြင့် ခရက်ဒစ်ကဒ်၊ ယာဉ်မောင်းအား ငွေသား၊ သို့မဟုတ် ငွေတောင်းခံလွှာပို့နိုင်ပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('You can pay by credit card over the phone, cash to the driver, or we can invoice you.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">I'll pay with credit card. Can you email me a receipt?</div><div class="burmese">ခရက်ဒစ်ကဒ်နဲ့ ပေးပါမယ်။ ပြေစာကို အီးမေးလ်ပို့နိုင်မလား။</div><button class="audio-btn" onclick="speakEnglish('I will pay with credit card. Can you email me a receipt?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Dispatcher:</div><div class="english">Of course. What's your email address?</div><div class="burmese">ရပါတယ်။ သင့်အီးမေးလ်လိပ်စာက ဘာလဲ။</div><button class="audio-btn" onclick="speakEnglish('Of course. What is your email address?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 8: Long Distance Tow -->
+    <div class="conversation-section"><h2>📍 Long Distance Tow / အကွာအဝေးကြီးထရပ်ကားပို့ဆောင်ခြင်း</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">I need to tow my car to another city, about 80 miles away.</div><div class="burmese">ကျွန်တော့်ကားကို အခြားမြို့တစ်မြို့ကို ထရပ်ကားနဲ့ပို့ဖို့လိုတယ်၊ မိုင် ၈၀ လောက်ဝေးတယ်။</div><button class="audio-btn" onclick="speakEnglish('I need to tow my car to another city, about 80 miles away.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Dispatcher:</div><div class="english">Long distance towing is $3 per mile plus a hook-up fee of $50. Total would be about $290.</div><div class="burmese">အကွာအဝေးကြီးထရပ်ကားပို့ဆောင်ခြင်းက တစ်မိုင် ၃ ဒေါ်လာ အပေါင်း တွဲတင်ခကြေး ၅၀ ဒေါ်လာပါ။ စုစုပေါင်း ၂၉၀ ဒေါ်လာခန့်ပါ။</div><button class="audio-btn" onclick="speakEnglish('Long distance towing is 3 dollars per mile plus a hook-up fee of 50 dollars. Total would be about 290 dollars.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">That's more than I expected. Do you offer any discounts?</div><div class="burmese">ဒါက ကျွန်တော်မျှော်လင့်ထားတာထက် ပိုတယ်။ လျှော့စျေးတစ်ခုခု ပေးလား။</div><button class="audio-btn" onclick="speakEnglish('That is more than I expected. Do you offer any discounts?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Dispatcher:</div><div class="english">I can do $2.50 per mile if you pay upfront. That would be $250 total.</div><div class="burmese">ကြိုပေးရင် တစ်မိုင် ၂.၅၀ ဒေါ်လာ လုပ်ပေးနိုင်ပါတယ်။ စုစုပေါင်း ၂၅၀ ဒေါ်လာပါ။</div><button class="audio-btn" onclick="speakEnglish('I can do 2 dollars and 50 cents per mile if you pay upfront. That would be 250 dollars total.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <div class="vocab-grid">
+        <div class="vocab-item"><span class="vocab-eng">Flatbed tow truck</span><br><span class="vocab-burmese">ပြန့်ပြားထရပ်ကား</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Hook-up fee</span><br><span class="vocab-burmese">တွဲတင်ခကြေး</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Roadside assistance</span><br><span class="vocab-burmese">လမ်းဘေးအကူအညီ</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Winching</span><br><span class="vocab-burmese">ကြိုးဆွဲတင်ခြင်း</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Impound lot</span><br><span class="vocab-burmese">သိမ်းဆည်းရေးကွင်း</span></div>
+        <div class="vocab-item"><span class="vocab-eng">AAA membership</span><br><span class="vocab-burmese">AAA အသင်းဝင်</span></div>
+    </div>
+    
+    <div class="tips-box"><i class="fas fa-lightbulb"></i> <strong>Tips for Roadside Emergencies (လမ်းဘေးအရေးပေါ်အခြေအနေများအတွက် အကြံပြုချက်များ):</strong><br>• Stay in your vehicle if you're on a busy highway (လူစည်ကားသောအဝေးပြေးလမ်းပေါ်တွင် သင့်ယာဉ်အတွင်း၌နေပါ)<br>• Turn on your hazard lights (သင့်အန္တရာယ်ရှိမီးများကိုဖွင့်ပါ)<br>• Place reflective triangles or flares behind your car (သင့်ကားနောက်တွင် အလင်းပြန်တြိဂံများ သို့မဟုတ် မီးတောက်များထားပါ)<br>• Have your insurance card and membership information ready (သင့်အာမခံကဒ်နှင့် အသင်းဝင်အချက်အလက်များကို အဆင်သင့်ထားပါ)</div>
+    
+    <div class="quiz-question"><p><strong>1. How do you request a tow truck?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'I need a tow truck.')">I need a mechanic.</div><div class="quiz-option" onclick="checkAnswer(this, 'I need a tow truck.')">I need a tow truck.</div><div class="quiz-option" onclick="checkAnswer(this, 'I need a tow truck.')">I need a rental car.</div><div class="quiz-option" onclick="checkAnswer(this, 'I need a tow truck.')">I need a taxi.</div></div></div>
+    <div class="quiz-question"><p><strong>2. "ကျွန်တော် ဓာတ်ဆီကုန်သွားတယ်" in English?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'I ran out of gas.')">My battery is dead.</div><div class="quiz-option" onclick="checkAnswer(this, 'I ran out of gas.')">I have a flat tire.</div><div class="quiz-option" onclick="checkAnswer(this, 'I ran out of gas.')">I ran out of gas.</div><div class="quiz-option" onclick="checkAnswer(this, 'I ran out of gas.')">My car won't start.</div></div></div>
+    <div class="quiz-question"><p><strong>3. What is a "jump start"?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'Using another battery to start a dead battery')">Towing a car</div><div class="quiz-option" onclick="checkAnswer(this, 'Using another battery to start a dead battery')">Changing a tire</div><div class="quiz-option" onclick="checkAnswer(this, 'Using another battery to start a dead battery')">Using another battery to start a dead battery</div><div class="quiz-option" onclick="checkAnswer(this, 'Using another battery to start a dead battery')">Lockout service</div></div></div>
+    <div class="quiz-question"><p><strong>4. "သော့ဖွင့်ဝန်ဆောင်မှု ပေးလား" in English?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'Do you offer lockout service?')">Do you offer tire change?</div><div class="quiz-option" onclick="checkAnswer(this, 'Do you offer lockout service?')">Do you offer lockout service?</div><div class="quiz-option" onclick="checkAnswer(this, 'Do you offer lockout service?')">Do you offer fuel delivery?</div><div class="quiz-option" onclick="checkAnswer(this, 'Do you offer lockout service?')">Do you offer jump starts?</div></div></div>
+    <div class="quiz-question"><p><strong>5. What should you do first if your car breaks down on a highway?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'Turn on hazard lights')">Call a tow truck</div><div class="quiz-option" onclick="checkAnswer(this, 'Turn on hazard lights')">Get out of the car</div><div class="quiz-option" onclick="checkAnswer(this, 'Turn on hazard lights')">Turn on hazard lights</div><div class="quiz-option" onclick="checkAnswer(this, 'Turn on hazard lights')">Push the car</div></div></div>
+    
+    <footer><p><i class="fas fa-heart" style="color: #e74c3c;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p></footer>
+</div>
+<a href="#" class="back-to-top" id="backToTopBtn"><i class="fas fa-arrow-up"></i></a>
+<script>
+    function speakEnglish(text){if(!window.speechSynthesis)return;window.speechSynthesis.cancel();const utterance=new SpeechSynthesisUtterance(text);utterance.lang='en-US';utterance.rate=0.8;utterance.pitch=1.0;function setVoice(){const voices=window.speechSynthesis.getVoices();const englishVoice=voices.find(v=>v.lang==='en-US'||v.lang.startsWith('en-'));if(englishVoice)utterance.voice=englishVoice;window.speechSynthesis.speak(utterance);}if(window.speechSynthesis.getVoices().length)setVoice();else window.speechSynthesis.onvoiceschanged=setVoice;}
+    function checkAnswer(element,correctAnswer){const options=element.parentElement.querySelectorAll('.quiz-option');const isCorrect=element.innerText===correctAnswer;if(isCorrect){element.style.background='#2ecc71';element.style.color='white';speakEnglish(correctAnswer);setTimeout(()=>{options.forEach(opt=>{opt.style.background='';opt.style.color='';});},1500);}else{element.style.background='#e74c3c';element.style.color='white';setTimeout(()=>{options.forEach(opt=>{opt.style.background='';opt.style.color='';});},500);}}
+    (function(){const btn=document.getElementById('backToTopBtn');if(btn){window.addEventListener('scroll',function(){btn.classList.toggle('show',window.scrollY>300);});btn.addEventListener('click',function(e){e.preventDefault();window.scrollTo({top:0,behavior:'smooth'});});}})();
+</script>
+</body>
+</html>

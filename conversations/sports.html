@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 1rem;
+        }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        
+        .conversation-section {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .conversation-section h2 {
+            background: #e17055;
+            color: white;
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line {
+            display: grid;
+            grid-template-columns: 70px 1fr 1fr;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            align-items: start;
+        }
+        .speaker { font-weight: bold; color: #e17055; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { 
+            color: #8e6b3c; 
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 0.95rem;
+        }
+        .audio-btn {
+            background: #eef4ff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.3rem;
+        }
+        .audio-btn:hover { background: #e17055; color: white; }
+        
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+            padding: 1rem;
+        }
+        .vocab-item {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            border-left: 3px solid #e17055;
+        }
+        .vocab-eng { font-weight: bold; color: #e17055; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        
+        .quiz-question {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.8rem;
+        }
+        .quiz-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .quiz-option {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .quiz-option:hover { background: #e17055; color: white; border-color: #e17055; }
+        
+        .tips-box {
+            background: #fef5e7;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #e17055;
+        }
+        .tips-box i { color: #e17055; margin-right: 8px; }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1rem;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: #1e3c72;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid white;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: #f5b042;
+            color: #1e3c72;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .back-to-top i {
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 42px;
+                height: 42px;
+            }
+            .back-to-top i {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 700px) {
+            .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> All Conversations
+    </a>
+    
+    <header>
+        <h1><i class="fas fa-futbol"></i> Sports</h1>
+        <p>Learn how to talk about your favorite sports, exercise routines, and competitions in English</p>
+        <p>အားကစားအကြိုက်ဆုံးများ၊ လေ့ကျင့်ခန်းပုံမှန်လုပ်ဆောင်မှုများနှင့် ပြိုင်ပွဲများအကြောင်း အင်္ဂလိပ်လို ပြောဆိုနည်းကို လေ့လာပါ</p>
+    </header>
+    
+    <!-- Dialogue 1: Talking About Favorite Sport -->
+    <div class="conversation-section">
+        <h2>⚽ Favorite Sport / အကြိုက်ဆုံးအားကစား</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">What's your favorite sport?</div>
+                <div class="burmese">မင်းရဲ့ အကြိုက်ဆုံးအားကစားက ဘာလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What is your favorite sport?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">I love football. I've been a fan since I was a kid.</div>
+                <div class="burmese">ဘောလုံးကို ကြိုက်တယ်။ ငယ်ငယ်ကတည်းက ပရိသတ်ဖြစ်ခဲ့တာ။</div>
+                <button class="audio-btn" onclick="speakEnglish('I love football. I have been a fan since I was a kid.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Do you play or just watch?</div>
+                <div class="burmese">မင်း ကစားလား ဒါမှမဟုတ် ကြည့်ရုံလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you play or just watch?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Both! I play every weekend with my friends. Do you play any sports?</div>
+                <div class="burmese">နှစ်မျိုးစလုံး! စနေတနင်္ဂနွေတိုင်း သူငယ်ချင်းတွေနဲ့ ကစားတယ်။ မင်း အားကစားတစ်ခုခု လုပ်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Both! I play every weekend with my friends. Do you play any sports?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 2: Watching a Match -->
+    <div class="conversation-section">
+        <h2>🏆 Watching a Match / ပွဲကြည့်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Did you watch the match last night? It was so exciting!</div>
+                <div class="burmese">မနေ့ညက ပွဲကြည့်လား။ အရမ်းစိတ်လှုပ်ရှားစရာကောင်းတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Did you watch the match last night? It was so exciting!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Yes! The final minute goal was incredible. I couldn't believe it!</div>
+                <div class="burmese">ဟုတ်တယ်! နောက်ဆုံးမိနစ်က ဂိုးက မယုံနိုင်စရာကောင်းတယ်။ မယုံနိုင်စရာပါပဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes! The final minute goal was incredible. I could not believe it!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Who's your favorite player?</div>
+                <div class="burmese">မင်းရဲ့ အကြိုက်ဆုံးကစားသမားက ဘယ်သူလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Who is your favorite player?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Messi, without a doubt. He's the greatest of all time.</div>
+                <div class="burmese">မက်ဆီ၊ သံသယမရှိဘူး။ သူက အချိန်တိုင်းရဲ့အကောင်းဆုံးပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Messi, without a doubt. He is the greatest of all time.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 3: Exercise Routine -->
+    <div class="conversation-section">
+        <h2>🏋️ Exercise Routine / လေ့ကျင့်ခန်းပုံမှန်လုပ်ဆောင်မှု</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">How often do you exercise?</div>
+                <div class="burmese">မင်း ဘယ်နှစ်ခါလောက် လေ့ကျင့်ခန်းလုပ်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('How often do you exercise?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">I try to work out at least four times a week.</div>
+                <div class="burmese">တစ်ပတ်ကို အနည်းဆုံး လေးခါလောက် လေ့ကျင့်ခန်းလုပ်ဖို့ ကြိုးစားတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I try to work out at least four times a week.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">What kind of exercise do you do?</div>
+                <div class="burmese">ဘယ်လိုလေ့ကျင့်ခန်းမျိုး လုပ်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What kind of exercise do you do?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">I go running three times a week and lift weights twice a week.</div>
+                <div class="burmese">တစ်ပတ်ကို သုံးခါ ပြေးတယ်၊ တစ်ပတ်ကို နှစ်ခါ အလေးမတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I go running three times a week and lift weights twice a week.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 4: Basketball -->
+    <div class="conversation-section">
+        <h2>🏀 Basketball / ဘတ်စကတ်ဘော</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Do you like basketball?</div>
+                <div class="burmese">မင်း ဘတ်စကတ်ဘော ကြိုက်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you like basketball?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">I love it! I play at the community court every evening.</div>
+                <div class="burmese">ကြိုက်တယ်! ညနေတိုင်း လူထုကွင်းမှာ ကစားတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I love it! I play at the community court every evening.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Who's your favorite NBA player?</div>
+                <div class="burmese">မင်းရဲ့ အကြိုက်ဆုံး NBA ကစားသမားက ဘယ်သူလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Who is your favorite NBA player?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">LeBron James. He's a legend both on and off the court.</div>
+                <div class="burmese">LeBron James။ သူဟာ ကွင်းအတွင်းရော အပြင်မှာပါ ဂန္ထဝင်တစ်ဦးပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('LeBron James. He is a legend both on and off the court.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 5: Swimming -->
+    <div class="conversation-section">
+        <h2>🏊 Swimming / ရေကူးခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Swimming is great exercise. Do you know how to swim?</div>
+                <div class="burmese">ရေကူးတာက ကောင်းတဲ့လေ့ကျင့်ခန်းပါ။ မင်း ရေကူးတတ်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Swimming is great exercise. Do you know how to swim?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Yes, I learned when I was six. I swim at the local pool every Sunday.</div>
+                <div class="burmese">ဟုတ်တယ်၊ ခြောက်နှစ်သားတုန်းက သင်ယူခဲ့တယ်။ တနင်္ဂနွေတိုင်း ဒေသခံရေကူးကန်မှာ ရေကူးတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, I learned when I was six. I swim at the local pool every Sunday.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">What style do you prefer?</div>
+                <div class="burmese">ဘယ်ဟန်ကို ပိုကြိုက်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What style do you prefer?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Freestyle is my favorite. It's the fastest and most efficient.</div>
+                <div class="burmese">ဖရီစတိုင်က ငါ့အကြိုက်ဆုံး။ အမြန်ဆုံးနဲ့ အထိရောက်ဆုံးပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Freestyle is my favorite. It is the fastest and most efficient.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 6: Tennis -->
+    <div class="conversation-section">
+        <h2>🎾 Tennis / တင်းနစ်</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Do you play tennis? I'm looking for a partner.</div>
+                <div class="burmese">မင်း တင်းနစ်ကစားလား။ ကစားဖော်ရှာနေတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you play tennis? I am looking for a partner.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">I play sometimes, but I'm not very good. I'm still learning.</div>
+                <div class="burmese">တစ်ခါတစ်ရံ ကစားတယ်၊ ဒါပေမယ့် သိပ်မကောင်းဘူး။ ဆက်လေ့လာနေတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I play sometimes, but I am not very good. I am still learning.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">That's fine! We can practice together. The court is free in the morning.</div>
+                <div class="burmese">ကောင်းပါတယ်! ငါတို့ အတူတူ လေ့ကျင့်လို့ရတယ်။ မနက်ခင်းမှာ ကွင်းအခမဲ့ရတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('That is fine! We can practice together. The court is free in the morning.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Sounds great! I'll bring my racket tomorrow.</div>
+                <div class="burmese">ကောင်းပါတယ်! မနက်ဖြန် ငါ့ရက်ကက် ယူလာမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Sounds great! I will bring my racket tomorrow.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 7: Martial Arts -->
+    <div class="conversation-section">
+        <h2>🥋 Martial Arts / ကိုယ်ခံပညာ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">I heard you practice martial arts. Which one?</div>
+                <div class="burmese">မင်း ကိုယ်ခံပညာ လေ့ကျင့်တယ်လို့ ကြားတယ်။ ဘယ်ဟာလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('I heard you practice martial arts. Which one?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Taekwondo. I've been training for three years. I have a black belt.</div>
+                <div class="burmese">တက်ကွမ်ဒို။ သုံးနှစ်လေ့ကျင့်နေပြီ။ ကျွန်တော် အနက်ရောင်ခါးပတ်ရှိတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Taekwondo. I have been training for three years. I have a black belt.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Wow, that's impressive! Is it difficult to learn?</div>
+                <div class="burmese">ဝိုး၊ အထင်ကြီးစရာပဲ! သင်ယူရခက်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Wow, that is impressive! Is it difficult to learn?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">It takes discipline and practice, but anyone can learn. You should try it!</div>
+                <div class="burmese">စည်းကမ်းနဲ့ လေ့ကျင့်မှု လိုအပ်ပေမယ့် ဘယ်သူမဆို သင်ယူနိုင်ပါတယ်။ စမ်းကြည့်သင့်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('It takes discipline and practice, but anyone can learn. You should try it!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 8: Olympics -->
+    <div class="conversation-section">
+        <h2>🏅 Olympics / အိုလံပစ်အားကစားပွဲတော်</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Are you excited about the upcoming Olympics?</div>
+                <div class="burmese">လာမယ့်အိုလံပစ်အားကစားပွဲအတွက် စိတ်လှုပ်ရှားနေလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Are you excited about the upcoming Olympics?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Yes! I never miss it. My favorite events are swimming and gymnastics.</div>
+                <div class="burmese">ဟုတ်တယ်! ဘယ်တော့မှ မလွတ်ဘူး။ ငါ့အကြိုက်ဆုံးပွဲတွေက ရေကူးခြင်းနဲ့ ကျွမ်းဘားအားကစားပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes! I never miss it. My favorite events are swimming and gymnastics.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">I love watching track and field. The 100-meter sprint is so thrilling!</div>
+                <div class="burmese">ငါ ပြေးခုန်ပစ်ကို ကြည့်ရတာ ကြိုက်တယ်။ ၁၀၀ မီတာ အပြေးပြိုင်ပွဲက အရမ်းစိတ်လှုပ်ရှားစရာကောင်းတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I love watching track and field. The 100-meter sprint is so thrilling!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">It's amazing how athletes push their limits. So inspiring!</div>
+                <div class="burmese">အားကစားသမားတွေ သူတို့ရဲ့ကန့်သတ်ချက်တွေကို တွန်းအားပေးပုံက အံ့သြစရာပါ။ အရမ်းလှုံ့ဆော်ပေးတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('It is amazing how athletes push their limits. So inspiring!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Sports List -->
+    <div class="conversation-section">
+        <h2>🎯 Popular Sports / လူကြိုက်များသော အားကစားများ</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Popular Sports Around the World (ကမ္ဘာတစ်ဝှမ်းရှိ လူကြိုက်များသောအားကစားများ):</strong><br>
+            • Football (Soccer) - ဘောလုံး<br>
+            • Basketball - ဘတ်စကတ်ဘော<br>
+            • Cricket - ခရစ်ကတ်<br>
+            • Tennis - တင်းနစ်<br>
+            • Swimming - ရေကူး<br>
+            • Running - ပြေး<br>
+            • Badminton - ကြက်တောင်ရိုက်<br>
+            • Volleyball - ဘော်လီဘော<br>
+            • Table Tennis - စားပွဲတင်တင်းနစ်<br>
+            • Boxing - လက်ဝှေ့<br>
+            • Martial Arts - ကိုယ်ခံပညာ<br>
+            • Cycling - စက်ဘီးစီး<br>
+        </div>
+    </div>
+    
+    <!-- Vocabulary Section -->
+    <div class="conversation-section">
+        <h2>📚 Sports Vocabulary / အားကစားသုံးဝေါဟာရများ</h2>
+        <div class="vocab-grid">
+            <div class="vocab-item"><span class="vocab-eng">Team</span><br><span class="vocab-burmese">အသင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Player</span><br><span class="vocab-burmese">ကစားသမား</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Coach</span><br><span class="vocab-burmese">နည်းပြ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Referee / Umpire</span><br><span class="vocab-burmese">ဒိုင်လူကြီး</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Stadium / Arena</span><br><span class="vocab-burmese">အားကစားကွင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Championship</span><br><span class="vocab-burmese">ချန်ပီယံပြိုင်ပွဲ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Score / Goal</span><br><span class="vocab-burmese">အမှတ်/ဂိုး</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Victory / Win</span><br><span class="vocab-burmese">အောင်ပွဲ/အနိုင်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Defeat / Loss</span><br><span class="vocab-burmese">ရှုံးပွဲ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Training / Practice</span><br><span class="vocab-burmese">လေ့ကျင့်မှု</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Competition</span><br><span class="vocab-burmese">ပြိုင်ပွဲ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Fitness</span><br><span class="vocab-burmese">ကြံ့ခိုင်မှု</span></div>
+        </div>
+    </div>
+    
+    <!-- Practice Section -->
+    <div class="conversation-section">
+        <h2>✏️ Practice Questions / လေ့ကျင့်ခန်းမေးခွန်းများ</h2>
+        <div class="dialogue-box">
+            <div class="quiz-question">
+                <p><strong>1. How do you ask someone about their favorite sport?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What is your favorite sport?')">What is your name?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What is your favorite sport?')">What is your favorite sport?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What is your favorite sport?')">Where do you live?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What is your favorite sport?')">How old are you?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>2. "ဘောလုံးကို ကြိုက်တယ်" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I love football.')">I love basketball.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I love football.')">I love swimming.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I love football.')">I love football.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I love football.')">I love tennis.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. What do you call a person who officiates a sports match?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Referee')">Player</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Referee')">Coach</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Referee')">Referee</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Referee')">Fan</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. "ငါတစ်ပတ်ကို သုံးခါလေ့ကျင့်ခန်းလုပ်တယ်" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I exercise three times a week.')">I exercise once a week.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I exercise three times a week.')">I exercise three times a week.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I exercise three times a week.')">I exercise every day.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I exercise three times a week.')">I never exercise.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. What does "black belt" refer to in martial arts?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'High level of expertise')">Beginner level</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'High level of expertise')">High level of expertise</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'High level of expertise')">A type of clothing</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'High level of expertise')">A type of kick</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p><i class="fas fa-heart" style="color: #e17055;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p>
+        <p style="font-size: 0.75rem; margin-top: 0.5rem;">Practice these conversations to talk about sports and fitness with confidence!</p>
+    </footer>
+</div>
+
+<!-- Back to Top Button -->
+<a href="#" class="back-to-top" id="backToTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+<script>
+    function speakEnglish(text) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8;
+        utterance.pitch = 1.0;
+        
+        function setVoice() {
+            const voices = window.speechSynthesis.getVoices();
+            const englishVoice = voices.find(v => v.lang === 'en-US' || v.lang.startsWith('en-'));
+            if (englishVoice) utterance.voice = englishVoice;
+            window.speechSynthesis.speak(utterance);
+        }
+        
+        if (window.speechSynthesis.getVoices().length) setVoice();
+        else window.speechSynthesis.onvoiceschanged = setVoice;
+    }
+    
+    function checkAnswer(element, correctAnswer) {
+        const options = element.parentElement.querySelectorAll('.quiz-option');
+        const isCorrect = element.innerText === correctAnswer;
+        
+        if (isCorrect) {
+            element.style.background = '#2ecc71';
+            element.style.color = 'white';
+            speakEnglish(correctAnswer);
+            setTimeout(() => {
+                options.forEach(opt => {
+                    opt.style.background = '';
+                    opt.style.color = '';
+                });
+            }, 1500);
+        } else {
+            element.style.background = '#e74c3c';
+            element.style.color = 'white';
+            setTimeout(() => {
+                element.style.background = '';
+                element.style.color = '';
+            }, 500);
+        }
+    }
+    
+    // Back to Top Button Functionality
+    (function() {
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        
+        if (backToTopBtn) {
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

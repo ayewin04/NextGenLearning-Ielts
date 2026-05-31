@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accountant - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 1rem;
+        }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        
+        .conversation-section {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .conversation-section h2 {
+            background: #0984e3;
+            color: white;
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line {
+            display: grid;
+            grid-template-columns: 70px 1fr 1fr;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            align-items: start;
+        }
+        .speaker { font-weight: bold; color: #0984e3; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { 
+            color: #8e6b3c; 
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 0.95rem;
+        }
+        .audio-btn {
+            background: #eef4ff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.3rem;
+        }
+        .audio-btn:hover { background: #0984e3; color: white; }
+        
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+            padding: 1rem;
+        }
+        .vocab-item {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            border-left: 3px solid #0984e3;
+        }
+        .vocab-eng { font-weight: bold; color: #0984e3; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        
+        .quiz-question {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.8rem;
+        }
+        .quiz-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .quiz-option {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .quiz-option:hover { background: #0984e3; color: white; border-color: #0984e3; }
+        
+        .tips-box {
+            background: #e3f2fd;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #0984e3;
+        }
+        .tips-box i { color: #0984e3; margin-right: 8px; }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1rem;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: #1e3c72;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid white;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: #f5b042;
+            color: #1e3c72;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .back-to-top i {
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 42px;
+                height: 42px;
+            }
+            .back-to-top i {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 700px) {
+            .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> All Conversations
+    </a>
+    
+    <header>
+        <h1><i class="fas fa-calculator"></i> Accountant</h1>
+        <p>Learn how to file taxes, ask about finances, and get accounting help in English</p>
+        <p>အခွန်များတင်သွင်းနည်း၊ ဘဏ္ဍာရေးအကြောင်းမေးမြန်းနည်းနှင့် စာရင်းကိုင်အကူအညီရယူနည်းကို အင်္ဂလိပ်လို လေ့လာပါ</p>
+    </header>
+    
+    <!-- Dialogue 1: First Meeting with Accountant -->
+    <div class="conversation-section">
+        <h2>📊 First Meeting with Accountant / စာရင်းကိုင်နှင့်ပထမဆုံးတွေ့ဆုံခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Client:</div>
+                <div class="english">Hello, I need help with my taxes. A friend recommended you.</div>
+                <div class="burmese">မင်္ဂလာပါ၊ ကျွန်တော့်အခွန်အတွက် အကူအညီလိုအပ်ပါတယ်။ သူငယ်ချင်းတစ်ယောက်က သင့်ကို အကြံပြုထားပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Hello, I need help with my taxes. A friend recommended you.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Accountant:</div>
+                <div class="english">Welcome. Do you file as an individual or have a business?</div>
+                <div class="burmese">ကြိုဆိုပါတယ်။ တစ်ဦးချင်းအနေနဲ့ လုပ်လား ဒါမှမဟုတ် လုပ်ငန်းတစ်ခုရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Welcome. Do you file as an individual or have a business?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Client:</div>
+                <div class="english">I'm an employee, but I also have some freelance income on the side.</div>
+                <div class="burmese">ကျွန်တော် ဝန်ထမ်းတစ်ဦးပါ၊ ဒါပေမယ့် ဘေးထွက်အနေနဲ့ အလွတ်တန်းဝင်ငွေအချို့လည်းရှိပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am an employee, but I also have some freelance income on the side.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Accountant:</div>
+                <div class="english">I can help you with both. Do you have your W-2 and 1099 forms?</div>
+                <div class="burmese">နှစ်ခုစလုံးအတွက် ကူညီနိုင်ပါတယ်။ သင့် W-2 နှင့် 1099 ဖောင်များ ရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('I can help you with both. Do you have your W-2 and 1099 forms?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 2: Discussing Deductions -->
+    <div class="conversation-section">
+        <h2>💰 Discussing Deductions / နုတ်ယူခွင့်များဆွေးနွေးခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Client:</div>
+                <div class="english">What deductions can I claim on my taxes?</div>
+                <div class="burmese">ကျွန်တော့်အခွန်မှာ ဘယ်လိုနုတ်ယူခွင့်တွေ တောင်းဆိုနိုင်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What deductions can I claim on my taxes?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Accountant:</div>
+                <div class="english">You can deduct mortgage interest, charitable donations, and medical expenses above a certain threshold.</div>
+                <div class="burmese">အိမ်ချေးငွေအတိုး၊ ပရဟိတလှူဒါန်းမှုများနှင့် သတ်မှတ်ပမာဏအထက် ဆေးဘက်ဆိုင်ရာအသုံးစရိတ်များကို နုတ်ယူနိုင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('You can deduct mortgage interest, charitable donations, and medical expenses above a certain threshold.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Client:</div>
+                <div class="english">I made some donations last year. Do I need receipts?</div>
+                <div class="burmese">ပြီးခဲ့တဲ့နှစ်က လှူဒါန်းမှုအချို့လုပ်ခဲ့တယ်။ ပြေစာတွေ လိုအပ်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('I made some donations last year. Do I need receipts?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Accountant:</div>
+                <div class="english">Yes, you'll need receipts for any donation over $250. Keep them in your records.</div>
+                <div class="burmese">ဟုတ်ပါတယ်၊ ဒေါ်လာ ၂၅၀ ကျော်တဲ့ လှူဒါန်းမှုအတွက် ပြေစာတွေ လိုအပ်ပါမယ်။ သင့်မှတ်တမ်းများတွင် သိမ်းဆည်းထားပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, you will need receipts for any donation over 250 dollars. Keep them in your records.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 3: Tax Filing Options -->
+    <div class="conversation-section">
+        <h2>📄 Tax Filing Options / အခွန်တင်သွင်းခြင်းရွေးချယ်စရာများ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Client:</div>
+                <div class="english">Should I file jointly with my spouse or separately?</div>
+                <div class="burmese">ကျွန်တော် အိမ်ထောင်ဖက်နဲ့ အတူတူတင်သင့်လား၊ သီးသန့်တင်သင့်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Should I file jointly with my spouse or separately?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Accountant:</div>
+                <div class="english">For most couples, filing jointly results in lower taxes. Let me calculate both scenarios for you.</div>
+                <div class="burmese">စုံတွဲအများစုအတွက် အတူတူတင်ခြင်းက အခွန်နည်းစေပါတယ်။ သင့်အတွက် အခြေအနေနှစ်ခုစလုံးကို တွက်ကြည့်ပါရစေ။</div>
+                <button class="audio-btn" onclick="speakEnglish('For most couples, filing jointly results in lower taxes. Let me calculate both scenarios for you.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Client:</div>
+                <div class="english">When is the tax deadline?</div>
+                <div class="burmese">အခွန်နောက်ဆုံးရက်က ဘယ်တော့လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('When is the tax deadline?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Accountant:</div>
+                <div class="english">April 15th is the federal deadline. We should file a few weeks early to avoid last-minute issues.</div>
+                <div class="burmese">ဧပြီ ၁၅ ရက်က ပြည်ထောင်စုနောက်ဆုံးရက်ပါ။ နောက်ဆုံးမိနစ်ပြဿနာများကိုရှောင်ရှားရန် ရက်သတ္တပတ်အနည်းငယ်စောပြီး တင်သင့်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('April 15th is the federal deadline. We should file a few weeks early to avoid last-minute issues.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 4: Business Accounting -->
+    <div class="conversation-section">
+        <h2>🏢 Business Accounting / စီးပွားရေးစာရင်းကိုင်</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Client:</div>
+                <div class="english">I just started a small business. I need help setting up my books.</div>
+                <div class="burmese">ကျွန်တော် လုပ်ငန်းငယ်တစ်ခု စတင်လိုက်ပြီ။ ကျွန်တော့်စာရင်းစာအုပ်များ သတ်မှတ်ဖို့ အကူအညီလိုအပ်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I just started a small business. I need help setting up my books.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Accountant:</div>
+                <div class="english">Congratulations! I recommend using accounting software like QuickBooks. I can help you set it up.</div>
+                <div class="burmese">ဂုဏ်ယူပါတယ်! QuickBooks လိုမျိုး စာရင်းကိုင်ဆော့ဖ်ဝဲသုံးဖို့ အကြံပြုပါတယ်။ တပ်ဆင်ပေးနိုင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Congratulations! I recommend using accounting software like QuickBooks. I can help you set it up.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Client:</div>
+                <div class="english">Do I need to pay estimated quarterly taxes?</div>
+                <div class="burmese">သုံးလပတ်ခန့်မှန်းအခွန်များ ပေးဖို့လိုအပ်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do I need to pay estimated quarterly taxes?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Accountant:</div>
+                <div class="english">Yes, as a self-employed person, you'll need to pay estimated taxes every quarter. I can calculate the amounts for you.</div>
+                <div class="burmese">ဟုတ်ပါတယ်၊ အလွတ်တန်းအလုပ်သမားအနေနဲ့ သုံးလပတ်တိုင်း ခန့်မှန်းအခွန်များ ပေးဆောင်ရပါမယ်။ သင့်အတွက် ပမာဏများကို တွက်ချက်ပေးနိုင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, as a self-employed person, you will need to pay estimated taxes every quarter. I can calculate the amounts for you.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 5: Audit Support -->
+    <div class="conversation-section">
+        <h2>🔍 Audit Support / စစ်ဆေးမှုအကူအညီ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Client:</div>
+                <div class="english">I received a letter from the tax authority saying I'm being audited. I'm very worried.</div>
+                <div class="burmese">ကျွန်တော် အခွန်အာဏာပိုင်ထံမှ စစ်ဆေးခြင်းခံရတယ်လို့ စာတစ်စောင်ရခဲ့တယ်။ အရမ်းစိုးရိမ်မိတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I received a letter from the tax authority saying I am being audited. I am very worried.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Accountant:</div>
+                <div class="english">Don't panic. Audits are common. I can represent you and handle all communication with them.</div>
+                <div class="burmese">စိတ်မပူပါနဲ့။ စစ်ဆေးခြင်းတွေက ပုံမှန်ပါ။ ကျွန်တော် သင့်ကိုကိုယ်စားပြုပြီး သူတို့နဲ့ ဆက်သွယ်မှုအားလုံးကို ကိုင်တွယ်နိုင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do not panic. Audits are common. I can represent you and handle all communication with them.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Client:</div>
+                <div class="english">What do I need to provide?</div>
+                <div class="burmese">ကျွန်တော် ဘာတွေပေးအပ်ဖို့လိုလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What do I need to provide?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Accountant:</div>
+                <div class="english">Gather all your tax returns, receipts, and financial documents for the past three years. I'll review everything and respond to the audit.</div>
+                <div class="burmese">လွန်ခဲ့တဲ့သုံးနှစ်အတွက် သင့်အခွန်ပြန်တမ်းများ၊ ပြေစာများနှင့် ဘဏ္ဍာရေးစာရွက်စာတမ်းများအားလုံးကို စုဆောင်းပါ။ ကျွန်တော် အားလုံးကို ပြန်လည်သုံးသပ်ပြီး စစ်ဆေးမှုကို တုံ့ပြန်ပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Gather all your tax returns, receipts, and financial documents for the past three years. I will review everything and respond to the audit.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 6: Financial Planning -->
+    <div class="conversation-section">
+        <h2>📈 Financial Planning / ဘဏ္ဍာရေးစီမံကိန်းရေးဆွဲခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Client:</div>
+                <div class="english">I want to start saving for retirement. Can you help me plan?</div>
+                <div class="burmese">ကျွန်တော် အငြိမ်းစားအတွက် စုဆောင်းခြင်းစတင်ချင်ပါတယ်။ စီစဉ်ပေးနိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('I want to start saving for retirement. Can you help me plan?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Accountant:</div>
+                <div class="english">Absolutely. Have you considered opening an IRA or 401(k)?</div>
+                <div class="burmese">လုံးဝရပါတယ်။ IRA သို့မဟုတ် 401(k) ဖွင့်ဖို့ စဉ်းစားဖူးလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Absolutely. Have you considered opening an IRA or 401(k)?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Client:</div>
+                <div class="english">My employer offers a 401(k) with matching. Should I contribute?</div>
+                <div class="burmese">ကျွန်တော့်အလုပ်ရှင်က လိုက်လျောညီထွေရှိတဲ့ 401(k) ပေးပါတယ်။ ထည့်ဝင်သင့်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('My employer offers a 401(k) with matching. Should I contribute?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Accountant:</div>
+                <div class="english">Yes, at least contribute enough to get the full employer match. It's free money. I'll help you determine the best amount.</div>
+                <div class="burmese">ဟုတ်ပါတယ်၊ အနည်းဆုံး အလုပ်ရှင်နဲ့အပြည့်ကိုက်ညီဖို့ လုံလောက်အောင်ထည့်ပါ။ ဒါက အခမဲ့ငွေပါ။ အကောင်းဆုံးပမာဏကို ဆုံးဖြတ်ဖို့ ကူညီပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, at least contribute enough to get the full employer match. It is free money. I will help you determine the best amount.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 7: Tax Extension -->
+    <div class="conversation-section">
+        <h2>⏰ Tax Extension / အခွန်သက်တမ်းတိုးခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Client:</div>
+                <div class="english">I can't file my taxes by the deadline. Can I get an extension?</div>
+                <div class="burmese">ကျွန်တော် ကျွန်တော့်အခွန်ကို နောက်ဆုံးရက်အတွင်း မတင်နိုင်ဘူး။ သက်တမ်းတိုးလို့ရမလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('I cannot file my taxes by the deadline. Can I get an extension?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Accountant:</div>
+                <div class="english">Yes, you can file for a six-month extension. But remember, an extension to file is not an extension to pay.</div>
+                <div class="burmese">ဟုတ်ပါတယ်၊ ခြောက်လ သက်တမ်းတိုးမှုအတွက် တင်နိုင်ပါတယ်။ ဒါပေမယ့် မှတ်ထားပါ၊ တင်ရန်သက်တမ်းတိုးခြင်းသည် ပေးရန်သက်တမ်းတိုးခြင်းမဟုတ်ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, you can file for a six-month extension. But remember, an extension to file is not an extension to pay.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Client:</div>
+                <div class="english">What does that mean?</div>
+                <div class="burmese">အဲဒါ ဘာအဓိပ္ပာယ်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What does that mean?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Accountant:</div>
+                <div class="english">You still need to estimate and pay any taxes owed by the original deadline to avoid penalties.</div>
+                <div class="burmese">ပြစ်ဒဏ်များကိုရှောင်ရှားရန် မူရင်းနောက်ဆုံးရက်အတွင်း ပေးရန်ရှိသောအခွန်များကို ခန့်မှန်းပြီး ပေးဆောင်ရဦးမည်ဖြစ်ပါသည်။</div>
+                <button class="audio-btn" onclick="speakEnglish('You still need to estimate and pay any taxes owed by the original deadline to avoid penalties.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 8: Year-End Review -->
+    <div class="conversation-section">
+        <h2>📋 Year-End Review / နှစ်ကုန်ပြန်လည်သုံးသပ်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Client:</div>
+                <div class="english">Can we review my financial situation before the end of the year?</div>
+                <div class="burmese">နှစ်ကုန်မတိုင်မီ ကျွန်တော့်ဘဏ္ဍာရေးအခြေအနေကို ပြန်လည်သုံးသပ်နိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Can we review my financial situation before the end of the year?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Accountant:</div>
+                <div class="english">Absolutely. Year-end planning can help you minimize your tax liability.</div>
+                <div class="burmese">လုံးဝရပါတယ်။ နှစ်ကုန်စီစဉ်ခြင်းက သင့်အခွန်တာဝန်ကို လျှော့ချဖို့ ကူညီနိုင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Absolutely. Year-end planning can help you minimize your tax liability.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Client:</div>
+                <div class="english">Should I make any last-minute donations or expenses?</div>
+                <div class="burmese">နောက်ဆုံးမိနစ် လှူဒါန်းမှုများ သို့မဟုတ် အသုံးစရိတ်များ လုပ်သင့်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Should I make any last-minute donations or expenses?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Accountant:</div>
+                <div class="english">Yes, charitable donations and business expenses made before December 31st can be deducted on this year's return.</div>
+                <div class="burmese">ဟုတ်ပါတယ်၊ ဒီဇင်ဘာ ၃၁ ရက်မတိုင်မီ ပြုလုပ်သော ပရဟိတလှူဒါန်းမှုများနှင့် စီးပွားရေးအသုံးစရိတ်များကို ယခုနှစ်၏အခွန်ပြန်တမ်းတွင် နုတ်ယူနိုင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, charitable donations and business expenses made before December 31st can be deducted on this year\'s return.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Accounting Vocabulary -->
+    <div class="conversation-section">
+        <h2>📚 Accounting Vocabulary / စာရင်းကိုင်သုံးဝေါဟာရများ</h2>
+        <div class="vocab-grid">
+            <div class="vocab-item"><span class="vocab-eng">Gross income</span><br><span class="vocab-burmese">စုစုပေါင်းဝင်ငွေ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Net income</span><br><span class="vocab-burmese">အသားတင်ဝင်ငွေ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Tax bracket</span><br><span class="vocab-burmese">အခွန်အဆင့်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Itemized deductions</span><br><span class="vocab-burmese">အသေးစိတ်နုတ်ယူခွင့်များ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Standard deduction</span><br><span class="vocab-burmese">စံနုတ်ယူခွင့်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Tax credit</span><br><span class="vocab-burmese">အခွန်အကြွေး</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Capital gains</span><br><span class="vocab-burmese">အရင်းအနှီးအမြတ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Depreciation</span><br><span class="vocab-burmese">တန်ဖိုးကျဆင်းမှု</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Balance sheet</span><br><span class="vocab-burmese">ချိန်ခွင်လျှာ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Income statement</span><br><span class="vocab-burmese">ဝင်ငွေရှင်းတမ်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Cash flow</span><br><span class="vocab-burmese">ငွေသားစီးဆင်းမှု</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Fiscal year</span><br><span class="vocab-burmese">ဘဏ္ဍာရေးနှစ်</span></div>
+        </div>
+    </div>
+    
+    <!-- Accounting Tips -->
+    <div class="conversation-section">
+        <h2>💡 Accounting Tips / စာရင်းကိုင်အကြံပြုချက်များ</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Tips for Managing Your Finances (သင့်ဘဏ္ဍာရေးကိုစီမံခန့်ခွဲရန် အကြံပြုချက်များ):</strong><br>
+            • Keep all receipts for at least three years (ပြေစာများအားလုံးကို အနည်းဆုံးသုံးနှစ်ထားပါ)<br>
+            • Separate business and personal expenses (စီးပွားရေးနှင့် ကိုယ်ရေးကိုယ်တာအသုံးစရိတ်များကို ခွဲခြားပါ)<br>
+            • Use accounting software to track income and expenses (ဝင်ငွေနှင့်အသုံးစရိတ်များကို ခြေရာခံရန် စာရင်းကိုင်ဆော့ဖ်ဝဲသုံးပါ)<br>
+            • Make estimated tax payments on time (ခန့်မှန်းအခွန်များကို အချိန်မီပေးချေပါ)<br>
+            • Review your financial statements monthly (သင့်ဘဏ္ဍာရေးရှင်းတမ်းများကို လစဉ်ပြန်လည်သုံးသပ်ပါ)<br>
+            • Consult an accountant before major financial decisions (အဓိကဘဏ္ဍာရေးဆုံးဖြတ်ချက်များမချမီ စာရင်းကိုင်နှင့် တိုင်ပင်ပါ)<br>
+        </div>
+    </div>
+    
+    <!-- Common Tax Forms -->
+    <div class="conversation-section">
+        <h2>📑 Common Tax Forms / အသုံးများသောအခွန်ဖောင်များ</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Important Tax Documents (အရေးကြီးသောအခွန်စာရွက်စာတမ်းများ):</strong><br>
+            • <strong>W-2</strong> - Wage and tax statement for employees (ဝန်ထမ်းများအတွက် လုပ်ခနှင့်အခွန်ရှင်းတမ်း)<br>
+            • <strong>1099-NEC</strong> - For freelance or contract work (အလွတ်တန်း သို့မဟုတ် စာချုပ်အလုပ်အတွက်)<br>
+            • <strong>1099-INT</strong> - Interest income statement (အတိုးဝင်ငွေရှင်းတမ်း)<br>
+            • <strong>1099-DIV</strong> - Dividend income statement (အမြတ်ဝေစုဝင်ငွေရှင်းတမ်း)<br>
+            • <strong>Schedule C</strong> - Profit or loss from business (စီးပွားရေးမှ အမြတ် သို့မဟုတ် အရှုံး)<br>
+            • <strong>Schedule A</strong> - Itemized deductions (အသေးစိတ်နုတ်ယူခွင့်များ)<br>
+        </div>
+    </div>
+    
+    <!-- Practice Section -->
+    <div class="conversation-section">
+        <h2>✏️ Practice Questions / လေ့ကျင့်ခန်းမေးခွန်းများ</h2>
+        <div class="dialogue-box">
+            <div class="quiz-question">
+                <p><strong>1. How do you ask for help with taxes?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I need help with my taxes.')">I need help with my investments.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I need help with my taxes.')">I need help with my taxes.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I need help with my taxes.')">I need help with my mortgage.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I need help with my taxes.')">I need help with my rent.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>2. "အခွန်နုတ်ယူခွင့်တွေ ဘာတွေလဲ" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What deductions can I claim?')">What income do I have?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What deductions can I claim?')">What deductions can I claim?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What deductions can I claim?')">What is my tax rate?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What deductions can I claim?')">What is my refund?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. What is the federal tax deadline in the US?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'April 15th')">January 1st</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'April 15th')">December 31st</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'April 15th')">April 15th</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'April 15th')">June 30th</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. "သက်တမ်းတိုးမှုအတွက် လျှောက်ထားနိုင်မလား" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can I apply for an extension?')">Can I pay late?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can I apply for an extension?')">Can I apply for an extension?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can I apply for an extension?')">Can I get a refund?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can I apply for an extension?')">Can I amend my return?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. What is a 401(k)?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A retirement savings plan')">A type of tax form</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A retirement savings plan')">A health insurance plan</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A retirement savings plan')">A retirement savings plan</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A retirement savings plan')">A bank account</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p><i class="fas fa-heart" style="color: #0984e3;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p>
+        <p style="font-size: 0.75rem; margin-top: 0.5rem;">Practice these conversations to manage your finances and taxes with confidence!</p>
+    </footer>
+</div>
+
+<!-- Back to Top Button -->
+<a href="#" class="back-to-top" id="backToTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+<script>
+    function speakEnglish(text) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8;
+        utterance.pitch = 1.0;
+        
+        function setVoice() {
+            const voices = window.speechSynthesis.getVoices();
+            const englishVoice = voices.find(v => v.lang === 'en-US' || v.lang.startsWith('en-'));
+            if (englishVoice) utterance.voice = englishVoice;
+            window.speechSynthesis.speak(utterance);
+        }
+        
+        if (window.speechSynthesis.getVoices().length) setVoice();
+        else window.speechSynthesis.onvoiceschanged = setVoice;
+    }
+    
+    function checkAnswer(element, correctAnswer) {
+        const options = element.parentElement.querySelectorAll('.quiz-option');
+        const isCorrect = element.innerText === correctAnswer;
+        
+        if (isCorrect) {
+            element.style.background = '#2ecc71';
+            element.style.color = 'white';
+            speakEnglish(correctAnswer);
+            setTimeout(() => {
+                options.forEach(opt => {
+                    opt.style.background = '';
+                    opt.style.color = '';
+                });
+            }, 1500);
+        } else {
+            element.style.background = '#e74c3c';
+            element.style.color = 'white';
+            setTimeout(() => {
+                element.style.background = '';
+                element.style.color = '';
+            }, 500);
+        }
+    }
+    
+    // Back to Top Button Functionality
+    (function() {
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        
+        if (backToTopBtn) {
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Negotiations - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 1rem;
+        }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        
+        .conversation-section {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .conversation-section h2 {
+            background: #e17055;
+            color: white;
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line {
+            display: grid;
+            grid-template-columns: 70px 1fr 1fr;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            align-items: start;
+        }
+        .speaker { font-weight: bold; color: #e17055; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { 
+            color: #8e6b3c; 
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 0.95rem;
+        }
+        .audio-btn {
+            background: #eef4ff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.3rem;
+        }
+        .audio-btn:hover { background: #e17055; color: white; }
+        
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+            padding: 1rem;
+        }
+        .vocab-item {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            border-left: 3px solid #e17055;
+        }
+        .vocab-eng { font-weight: bold; color: #e17055; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        
+        .quiz-question {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.8rem;
+        }
+        .quiz-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .quiz-option {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .quiz-option:hover { background: #e17055; color: white; border-color: #e17055; }
+        
+        .tips-box {
+            background: #fef5e7;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #e17055;
+        }
+        .tips-box i { color: #e17055; margin-right: 8px; }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1rem;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: #1e3c72;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid white;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: #f5b042;
+            color: #1e3c72;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .back-to-top i {
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 42px;
+                height: 42px;
+            }
+            .back-to-top i {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 700px) {
+            .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> All Conversations
+    </a>
+    
+    <header>
+        <h1><i class="fas fa-handshake"></i> Negotiations</h1>
+        <p>Learn how to discuss prices, terms, and reach agreements in English</p>
+        <p>စျေးနှုန်းများ၊ သတ်မှတ်ချက်များဆွေးနွေးနည်းနှင့် သဘောတူညီမှုများရရှိနည်းကို အင်္ဂလိပ်လို လေ့လာပါ</p>
+    </header>
+    
+    <!-- Dialogue 1: Opening Negotiation -->
+    <div class="conversation-section">
+        <h2>🤝 Opening Negotiation / ညှိနှိုင်းမှုစတင်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Buyer:</div>
+                <div class="english">Thank you for meeting with me today. I'd like to discuss the pricing for your product.</div>
+                <div class="burmese">ဒီနေ့ငါနဲ့တွေ့တဲ့အတွက် ကျေးဇူးပါ။ မင်းရဲ့ထုတ်ကုန်အတွက် စျေးနှုန်းကို ဆွေးနွေးချင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Thank you for meeting with me today. I would like to discuss the pricing for your product.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Seller:</div>
+                <div class="english">Absolutely. Our standard price is $100 per unit. How many units are you interested in?</div>
+                <div class="burmese">ရပါတယ်။ ကျွန်တော်တို့ရဲ့ စံစျေးနှုန်းက တစ်ခုကို ၁၀၀ ဒေါ်လာပါ။ ဘယ်နှစ်ခု စိတ်ဝင်စားလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Absolutely. Our standard price is 100 dollars per unit. How many units are you interested in?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Buyer:</div>
+                <div class="english">I'm looking to purchase 500 units. Can you offer a volume discount?</div>
+                <div class="burmese">ကျွန်တော် အလုံး ၅၀၀ ဝယ်ယူဖို့ ရှာနေတယ်။ အမြောက်အမြားလျှော့စျေး ပေးနိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am looking to purchase 500 units. Can you offer a volume discount?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Seller:</div>
+                <div class="english">For 500 units, I can offer $95 per unit. That's a 5% discount.</div>
+                <div class="burmese">အလုံး ၅၀၀ အတွက် တစ်ခုကို ၉၅ ဒေါ်လာ ပေးနိုင်ပါတယ်။ ဒါက ၅ ရာခိုင်နှုန်း လျှော့စျေးပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('For 500 units, I can offer 95 dollars per unit. That is a 5 percent discount.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 2: Counter-Offer -->
+    <div class="conversation-section">
+        <h2>🔄 Counter-Offer / တန်ပြန်ကမ်းလှမ်းချက်</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Buyer:</div>
+                <div class="english">$95 is still higher than I was hoping for. Could we do $85 per unit?</div>
+                <div class="burmese">၉၅ ဒေါ်လာက ကျွန်တော်မျှော်လင့်ထားတာထက် ပိုမြင့်နေသေးတယ်။ တစ်ခုကို ၈၅ ဒေါ်လာ လုပ်နိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('95 dollars is still higher than I was hoping for. Could we do 85 dollars per unit?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Seller:</div>
+                <div class="english">$85 is too low. That's below our cost. How about we meet in the middle at $90?</div>
+                <div class="burmese">၈၅ ဒေါ်လာက အရမ်းနည်းတယ်။ ဒါက ကျွန်တော်တို့ရဲ့ ကုန်ကျစရိတ်အောက်မှာရှိတယ်။ အလယ်အလတ်မှာ ၉၀ ဒေါ်လာ ဆိုရင်ကော။</div>
+                <button class="audio-btn" onclick="speakEnglish('85 dollars is too low. That is below our cost. How about we meet in the middle at 90 dollars?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Buyer:</div>
+                <div class="english">$90 is closer. If I increase my order to 750 units, can you do $88?</div>
+                <div class="burmese">၉၀ ဒေါ်လာက ပိုနီးတယ်။ ကျွန်တော် အော်ဒါကို အလုံး ၇၅၀ အထိ တိုးမြှင့်ရင် ၈၈ ဒေါ်လာ လုပ်နိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('90 dollars is closer. If I increase my order to 750 units, can you do 88 dollars?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Seller:</div>
+                <div class="english">You drive a hard bargain! Okay, $88 per unit for 750 units. Deal?</div>
+                <div class="burmese">မင်း ဈေးဆစ်တာ ပြင်းတယ်! အိုကေ၊ အလုံး ၇၅၀ အတွက် တစ်ခု ၈၈ ဒေါ်လာ။ သဘောတူလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('You drive a hard bargain! Okay, 88 dollars per unit for 750 units. Deal?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 3: Terms and Conditions -->
+    <div class="conversation-section">
+        <h2>📄 Terms and Conditions / သတ်မှတ်ချက်များနှင့် အခြေအနေများ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Buyer:</div>
+                <div class="english">What are your payment terms?</div>
+                <div class="burmese">ငွေပေးချေမှု သတ်မှတ်ချက်တွေက ဘာတွေလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What are your payment terms?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Seller:</div>
+                <div class="english">We require 50% deposit upfront and 50% upon delivery.</div>
+                <div class="burmese">ကျွန်တော်တို့ ၅၀ ရာခိုင်နှုန်း ကြိုငွေနဲ့ ၅၀ ရာခိုင်နှုန်း ပို့ဆောင်ပြီးမှ လိုအပ်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('We require 50 percent deposit upfront and 50 percent upon delivery.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Buyer:</div>
+                <div class="english">Could we do 30% deposit and 70% upon delivery? That would help with our cash flow.</div>
+                <div class="burmese">၃၀ ရာခိုင်နှုန်း ကြိုငွေနဲ့ ၇၀ ရာခိုင်နှုန်း ပို့ဆောင်ပြီးမှ လုပ်နိုင်မလား။ ဒါက ငါတို့ရဲ့ငွေသားစီးဆင်းမှုကို ကူညီပေးပါလိမ့်မယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Could we do 30 percent deposit and 70 percent upon delivery? That would help with our cash flow.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Seller:</div>
+                <div class="english">I can agree to 40% deposit and 60% upon delivery. That's the best I can do.</div>
+                <div class="burmese">၄၀ ရာခိုင်နှုန်း ကြိုငွေနဲ့ ၆၀ ရာခိုင်နှုန်း ပို့ဆောင်ပြီးမှ လုပ်ပေးနိုင်ပါတယ်။ ဒါက ကျွန်တော်လုပ်နိုင်တဲ့ အကောင်းဆုံးပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('I can agree to 40 percent deposit and 60 percent upon delivery. That is the best I can do.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 4: Delivery Timeline -->
+    <div class="conversation-section">
+        <h2>🚚 Delivery Timeline / ပို့ဆောင်ချိန်ဇယား</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Buyer:</div>
+                <div class="english">What is the estimated delivery time?</div>
+                <div class="burmese">ခန့်မှန်းပို့ဆောင်ချိန်က ဘယ်လောက်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What is the estimated delivery time?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Seller:</div>
+                <div class="english">Standard delivery is 4-6 weeks from order confirmation.</div>
+                <div class="burmese">စံပို့ဆောင်ချိန်က အော်ဒါအတည်ပြုပြီး ၄-၆ ပတ်ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Standard delivery is 4-6 weeks from order confirmation.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Buyer:</div>
+                <div class="english">We need the products sooner. Could you expedite delivery to 2 weeks?</div>
+                <div class="burmese">ကျွန်တော်တို့ ထုတ်ကုန်တွေကို စောစောလိုအပ်ပါတယ်။ ပို့ဆောင်ချိန်ကို ၂ ပတ်အထိ အမြန်ပို့ပေးနိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('We need the products sooner. Could you expedite delivery to 2 weeks?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Seller:</div>
+                <div class="english">Expedited shipping will cost an additional 10%. Is that acceptable?</div>
+                <div class="burmese">အမြန်ပို့ဆောင်ခ နောက်ထပ် ၁၀ ရာခိုင်နှုန်း ထပ်ကျပါမယ်။ လက်ခံနိုင်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Expedited shipping will cost an additional 10 percent. Is that acceptable?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 5: Warranty and Support -->
+    <div class="conversation-section">
+        <h2>🔧 Warranty and Support / အာမခံနှင့်ပံ့ပိုးမှု</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Buyer:</div>
+                <div class="english">What warranty do you offer on these products?</div>
+                <div class="burmese">ဒီထုတ်ကုန်များအတွက် ဘယ်လိုအာမခံမျိုး ပေးလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What warranty do you offer on these products?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Seller:</div>
+                <div class="english">We offer a standard one-year warranty covering manufacturing defects.</div>
+                <div class="burmese">ကျွန်တော်တို့ ထုတ်လုပ်မှုချို့ယွင်းချက်များအတွက် စံတစ်နှစ်အာမခံ ပေးပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('We offer a standard one-year warranty covering manufacturing defects.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Buyer:</div>
+                <div class="english">Can you extend it to two years? That would give us more confidence in the product.</div>
+                <div class="burmese">နှစ်နှစ်အထိ တိုးပေးနိုင်မလား။ ဒါက ထုတ်ကုန်အပေါ် ယုံကြည်မှုပိုရစေပါလိမ့်မယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Can you extend it to two years? That would give us more confidence in the product.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Seller:</div>
+                <div class="english">For an additional 5% of the total cost, we can extend the warranty to two years.</div>
+                <div class="burmese">စုစုပေါင်းကုန်ကျစရိတ်ရဲ့ နောက်ထပ် ၅ ရာခိုင်နှုန်းအတွက် အာမခံကို နှစ်နှစ်အထိ တိုးပေးနိုင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('For an additional 5 percent of the total cost, we can extend the warranty to two years.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 6: Closing the Deal -->
+    <div class="conversation-section">
+        <h2>🤝 Closing the Deal / သဘောတူညီမှုအဆုံးသတ်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Buyer:</div>
+                <div class="english">Let me summarize what we've agreed on.</div>
+                <div class="burmese">ကျွန်တော်တို့ သဘောတူထားတာတွေကို အကျဉ်းချုပ်ပါရစေ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Let me summarize what we have agreed on.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Buyer:</div>
+                <div class="english">750 units at $88 per unit, 40% deposit and 60% upon delivery, expedited shipping with 10% extra, and two-year warranty for an additional 5%.</div>
+                <div class="burmese">တစ်ခု ၈၈ ဒေါ်လာနှုန်း အလုံး ၇၅၀၊ ၄၀ ရာခိုင်နှုန်းကြိုငွေနဲ့ ၆၀ ရာခိုင်နှုန်းပို့ဆောင်ပြီးမှ၊ ၁၀ ရာခိုင်နှုန်းအပိုနဲ့ အမြန်ပို့ဆောင်မှု၊ နောက်ထပ် ၅ ရာခိုင်နှုန်းအတွက် နှစ်နှစ်အာမခံ။</div>
+                <button class="audio-btn" onclick="speakEnglish('750 units at 88 dollars per unit, 40 percent deposit and 60 percent upon delivery, expedited shipping with 10 percent extra, and two-year warranty for an additional 5 percent.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Seller:</div>
+                <div class="english">That's correct. I'll prepare the contract and send it to you by end of day.</div>
+                <div class="burmese">မှန်ပါတယ်။ ကျွန်တော် စာချုပ်ပြင်ဆင်ပြီး ဒီနေ့ကုန်အတွင်း သင့်ထံ ပို့ပေးပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('That is correct. I will prepare the contract and send it to you by end of day.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Buyer:</div>
+                <div class="english">Great. It's been a pleasure negotiating with you. Looking forward to working together.</div>
+                <div class="burmese">ကောင်းပါတယ်။ မင်းနဲ့ညှိနှိုင်းရတာ ဝမ်းသာပါတယ်။ အတူတူအလုပ်လုပ်ရတာ မျှော်လင့်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Great. It has been a pleasure negotiating with you. Looking forward to working together.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 7: Renegotiation -->
+    <div class="conversation-section">
+        <h2>🔄 Renegotiation / ပြန်လည်ညှိနှိုင်းခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Buyer:</div>
+                <div class="english">I'm sorry, but our budget has been reduced. Can we renegotiate the price?</div>
+                <div class="burmese">စိတ်မကောင်းပါဘူး၊ ကျွန်တော်တို့ရဲ့ ဘတ်ဂျက် လျှော့ချလိုက်ရပါတယ်။ စျေးနှုန်းကို ပြန်လည်ညှိနှိုင်းနိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am sorry, but our budget has been reduced. Can we renegotiate the price?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Seller:</div>
+                <div class="english">I understand. What price do you have in mind?</div>
+                <div class="burmese">နားလည်းပါတယ်။ ဘယ်စျေးနှုန်းကို စဉ်းစားထားလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('I understand. What price do you have in mind?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Buyer:</div>
+                <div class="english">Could we lower it to $85 per unit? We can also reduce our order to 600 units.</div>
+                <div class="burmese">တစ်ခုကို ၈၅ ဒေါ်လာအထိ လျှော့ပေးနိုင်မလား။ ကျွန်တော်တို့ အော်ဒါကိုလည်း အလုံး ၆၀၀ အထိ လျှော့နိုင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Could we lower it to 85 dollars per unit? We can also reduce our order to 600 units.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Seller:</div>
+                <div class="english">That works for me. Let's update the contract accordingly.</div>
+                <div class="burmese">ဒါက ကျွန်တော့်အတွက် အဆင်ပြေပါတယ်။ စာချုပ်ကို လျော်ညီစွာ မွမ်းမံကြရအောင်။</div>
+                <button class="audio-btn" onclick="speakEnglish('That works for me. Let us update the contract accordingly.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 8: Walking Away -->
+    <div class="conversation-section">
+        <h2>🚶 Walking Away / စေ့စပ်ညှိနှိုင်းမှုမှထွက်ခွာခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Buyer:</div>
+                <div class="english">I'm afraid your offer still doesn't meet our requirements. I think we'll have to look elsewhere.</div>
+                <div class="burmese">စိတ်မကောင်းပါဘူး၊ သင့်ကမ်းလှမ်းချက်က ကျွန်တော်တို့ရဲ့လိုအပ်ချက်တွေနဲ့ မကိုက်ညီသေးပါဘူး။ ကျွန်တော်တို့ အခြားနေရာကို ရှာကြည့်ရပါလိမ့်မယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am afraid your offer still does not meet our requirements. I think we will have to look elsewhere.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Seller:</div>
+                <div class="english">I understand. Before you go, can we make one more counter-offer?</div>
+                <div class="burmese">နားလည်းပါတယ်။ မသွားခင်၊ နောက်ထပ် တန်ပြန်ကမ်းလှမ်းချက်တစ်ခု လုပ်နိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('I understand. Before you go, can we make one more counter-offer?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Buyer:</div>
+                <div class="english">Go ahead. This is your last chance to win our business.</div>
+                <div class="burmese">ဆက်ပြောပါ။ ဒါက ကျွန်တော်တို့ရဲ့လုပ်ငန်းကိုရဖို့ နောက်ဆုံးအခွင့်အရေးပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Go ahead. This is your last chance to win our business.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Seller:</div>
+                <div class="english">We'll match the competitor's price of $82 per unit. Plus free shipping. Is that a deal?</div>
+                <div class="burmese">ကျွန်တော်တို့ ပြိုင်ဘက်ရဲ့ စျေးနှုန်းဖြစ်တဲ့ တစ်ခု ၈၂ ဒေါ်လာကို ယှဉ်ပြိုင်ပါမယ်။ ပို့ဆောင်ခ အခမဲ့ပါ။ သဘောတူလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('We will match the competitor\'s price of 82 dollars per unit. Plus free shipping. Is that a deal?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Negotiation Tips -->
+    <div class="conversation-section">
+        <h2>💡 Negotiation Tips / ညှိနှိုင်းမှုအကြံပြုချက်များ</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Key Principles of Negotiation (ညှိနှိုင်းမှု၏ အဓိကအခြေခံမူများ):</strong><br>
+            • <strong>Do your research</strong> - Know the market value before negotiating (သုတေသနလုပ်ပါ)<br>
+            • <strong>Know your BATNA</strong> - Best Alternative to a Negotiated Agreement (သင့် BATNA ကိုသိပါ)<br>
+            • <strong>Listen actively</strong> - Understand the other party's needs (တက်ကြွစွာနားထောင်ပါ)<br>
+            • <strong>Be willing to walk away</strong> - Sometimes no deal is better than a bad deal (ထွက်ခွာရန် ဆန္ဒရှိပါ)<br>
+            • <strong>Focus on interests, not positions</strong> - Find win-win solutions (အနေအထားမဟုတ်ဘဲ အကျိုးစီးပွားကိုအာရုံစိုက်ပါ)<br>
+            • <strong>Build rapport</strong> - People are more likely to agree with people they like (ဆက်ဆံရေးကောင်းအောင်ဆောက်ပါ)<br>
+            • <strong>Use silence as a tool</strong> - Don't be afraid of pauses (တိတ်ဆိတ်ခြင်းကိုကိရိယာအဖြစ်သုံးပါ)<br>
+        </div>
+    </div>
+    
+    <!-- Common Negotiation Phrases -->
+    <div class="conversation-section">
+        <h2>📖 Useful Negotiation Phrases / အသုံးဝင်သော ညှိနှိုင်းမှုစကားစုများ</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Negotiation Language (ညှိနှိုင်းမှုစကားစုများ):</strong><br>
+            • "Let me see if I understand your position correctly." (သင့်အနေအထားကို မှန်ကန်စွာနားလည်သလား ကြည့်ပါရစေ)<br>
+            • "What if we could offer you X instead of Y?" (Y အစား X ကို ကမ်းလှမ်းနိုင်ရင် ကော)<br>
+            • "I'm going to have to push back on that point." (အဲဒီအချက်ကို ပြန်လှန်ရမှာပါ)<br>
+            • "Can we explore other options?" (အခြားရွေးချယ်စရာများကို ရှာဖွေနိုင်မလား)<br>
+            • "Let's put that aside for now and focus on what we can agree on." (အဲဒါကို ခေတ္တဘေးဖယ်ပြီး သဘောတူနိုင်တာကို အာရုံစိုက်ကြရအောင်)<br>
+            • "We're not that far apart. Let's try to bridge the gap." (ကျွန်တော်တို့ သိပ်မကွာပါဘူး။ ကွာဟချက်ကို ပေါင်းကူးဖို့ကြိုးစားကြရအောင်)<br>
+        </div>
+    </div>
+    
+    <!-- Vocabulary Section -->
+    <div class="conversation-section">
+        <h2>📚 Negotiation Vocabulary / ညှိနှိုင်းမှုသုံးဝေါဟာရများ</h2>
+        <div class="vocab-grid">
+            <div class="vocab-item"><span class="vocab-eng">Counter-offer</span><br><span class="vocab-burmese">တန်ပြန်ကမ်းလှမ်းချက်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Concession</span><br><span class="vocab-burmese">လိုက်လျောမှု</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Leverage</span><br><span class="vocab-burmese">သြဇာ/လွှမ်းမိုးမှု</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Compromise</span><br><span class="vocab-burmese">အပေးအယူလုပ်ခြင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Deadlock</span><br><span class="vocab-burmese">သဘောတူညီမှုမရနိုင်သောအခြေအနေ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Walk-away point</span><br><span class="vocab-burmese">ထွက်ခွာရမည့်အမှတ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Win-win</span><br><span class="vocab-burmese">နှစ်ဦးနှစ်ဖက်အကျိုးရှိ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Due diligence</span><br><span class="vocab-burmese">စေ့စေ့စပ်စပ်စစ်ဆေးခြင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Non-negotiable</span><br><span class="vocab-burmese">ညှိနှိုင်း၍မရသော</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Letter of intent</span><br><span class="vocab-burmese">ရည်ရွယ်ချက်စာ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Memorandum of understanding</span><br><span class="vocab-burmese">နားလည်မှုစာချွန်လွှာ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Closing the deal</span><br><span class="vocab-burmese">သဘောတူညီမှုအဆုံးသတ်ခြင်း</span></div>
+        </div>
+    </div>
+    
+    <!-- Practice Section -->
+    <div class="conversation-section">
+        <h2>✏️ Practice Questions / လေ့ကျင့်ခန်းမေးခွန်းများ</h2>
+        <div class="dialogue-box">
+            <div class="quiz-question">
+                <p><strong>1. How do you ask for a volume discount?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can you offer a volume discount?')">Can you increase the price?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can you offer a volume discount?')">Can you offer a volume discount?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can you offer a volume discount?')">Can you cancel the order?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can you offer a volume discount?')">Can you delay delivery?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>2. "အလယ်အလတ်မှာ တွေ့ကြရအောင်" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Let us meet in the middle.')">Let us walk away.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Let us meet in the middle.')">Let us meet in the middle.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Let us meet in the middle.')">Let us increase the price.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Let us meet in the middle.')">Let us cancel the deal.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. What does "deposit upfront" mean?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Payment made before delivery')">Payment made after delivery</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Payment made before delivery')">Payment made in installments</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Payment made before delivery')">Payment made before delivery</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Payment made before delivery')">No payment required</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. "ဒါက ကျွန်တော်လုပ်နိုင်တဲ့ အကောင်းဆုံးပါ" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'That is the best I can do.')">That is the worst I can do.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'That is the best I can do.')">That is the best I can do.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'That is the best I can do.')">That is the only option.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'That is the best I can do.')">That is unacceptable.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. What does "win-win" mean in negotiation?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Both parties benefit')">Only one party benefits</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Both parties benefit')">Both parties lose</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Both parties benefit')">Neither party benefits</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Both parties benefit')">Both parties benefit</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p><i class="fas fa-heart" style="color: #e17055;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p>
+        <p style="font-size: 0.75rem; margin-top: 0.5rem;">Practice these conversations to negotiate with confidence!</p>
+    </footer>
+</div>
+
+<!-- Back to Top Button -->
+<a href="#" class="back-to-top" id="backToTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+<script>
+    function speakEnglish(text) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8;
+        utterance.pitch = 1.0;
+        
+        function setVoice() {
+            const voices = window.speechSynthesis.getVoices();
+            const englishVoice = voices.find(v => v.lang === 'en-US' || v.lang.startsWith('en-'));
+            if (englishVoice) utterance.voice = englishVoice;
+            window.speechSynthesis.speak(utterance);
+        }
+        
+        if (window.speechSynthesis.getVoices().length) setVoice();
+        else window.speechSynthesis.onvoiceschanged = setVoice;
+    }
+    
+    function checkAnswer(element, correctAnswer) {
+        const options = element.parentElement.querySelectorAll('.quiz-option');
+        const isCorrect = element.innerText === correctAnswer;
+        
+        if (isCorrect) {
+            element.style.background = '#2ecc71';
+            element.style.color = 'white';
+            speakEnglish(correctAnswer);
+            setTimeout(() => {
+                options.forEach(opt => {
+                    opt.style.background = '';
+                    opt.style.color = '';
+                });
+            }, 1500);
+        } else {
+            element.style.background = '#e74c3c';
+            element.style.color = 'white';
+            setTimeout(() => {
+                element.style.background = '';
+                element.style.color = '';
+            }, 500);
+        }
+    }
+    
+    // Back to Top Button Functionality
+    (function() {
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        
+        if (backToTopBtn) {
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

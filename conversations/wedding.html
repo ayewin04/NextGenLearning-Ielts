@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding Ceremony - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 1rem;
+        }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        
+        .conversation-section {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .conversation-section h2 {
+            background: #fd79a8;
+            color: white;
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line {
+            display: grid;
+            grid-template-columns: 70px 1fr 1fr;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            align-items: start;
+        }
+        .speaker { font-weight: bold; color: #e84393; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { 
+            color: #8e6b3c; 
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 0.95rem;
+        }
+        .audio-btn {
+            background: #eef4ff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.3rem;
+        }
+        .audio-btn:hover { background: #fd79a8; color: white; }
+        
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+            padding: 1rem;
+        }
+        .vocab-item {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            border-left: 3px solid #fd79a8;
+        }
+        .vocab-eng { font-weight: bold; color: #e84393; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        
+        .quiz-question {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.8rem;
+        }
+        .quiz-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .quiz-option {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .quiz-option:hover { background: #fd79a8; color: white; border-color: #fd79a8; }
+        
+        .tips-box {
+            background: #fdf2f8;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #fd79a8;
+        }
+        .tips-box i { color: #e84393; margin-right: 8px; }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1rem;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: #1e3c72;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid white;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: #f5b042;
+            color: #1e3c72;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .back-to-top i {
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 42px;
+                height: 42px;
+            }
+            .back-to-top i {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 700px) {
+            .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> All Conversations
+    </a>
+    
+    <header>
+        <h1><i class="fas fa-ring"></i> Wedding Ceremony</h1>
+        <p>Learn how to talk about wedding plans, gifts, and celebrations in English</p>
+        <p>မင်္ဂလာဆောင်အစီအစဉ်များ၊ လက်ဆောင်များနှင့် အခမ်းအနားများအကြောင်း အင်္ဂလိပ်လို ပြောဆိုနည်းကို လေ့လာပါ</p>
+    </header>
+    
+    <!-- Dialogue 1: Sharing Wedding News -->
+    <div class="conversation-section">
+        <h2>💍 Sharing Wedding News / မင်္ဂလာဆောင်သတင်းမျှဝေခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Guess what? I'm getting married!</div>
+                <div class="burmese">ဘာလဲထင်လဲ။ ငါ လက်ထပ်တော့မယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Guess what? I am getting married!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Oh my goodness! Congratulations! When is the big day?</div>
+                <div class="burmese">အိုး ကောင်းကင်ဘုံ! ဂုဏ်ယူပါတယ်! မင်္ဂလာပွဲကြီးက ဘယ်တော့လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Oh my goodness! Congratulations! When is the big day?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">June 15th. I'm so excited but also a little nervous!</div>
+                <div class="burmese">ဇွန် ၁၅ ရက်နေ့မှာ။ အရမ်းစိတ်လှုပ်ရှားပေမယ့် နည်းနည်းလည်းစိတ်လှုပ်ရှားမိတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('June 15th. I am so excited but also a little nervous!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">That's wonderful news. I'm so happy for you!</div>
+                <div class="burmese">ဝမ်းသာစရာသတင်းကြီးပါ။ မင်းအတွက် အရမ်းဝမ်းသာတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('That is wonderful news. I am so happy for you!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 2: Wedding Invitation -->
+    <div class="conversation-section">
+        <h2>💌 Wedding Invitation / မင်္ဂလာဆောင်ဖိတ်စာ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">I'm sending out wedding invitations this week. I hope you can come!</div>
+                <div class="burmese">ငါ ဒီသီတင်းပတ် မင်္ဂလာဆောင်ဖိတ်စာတွေ ပို့နေပြီ။ မင်းလာနိုင်မယ်လို့ မျှော်လင့်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am sending out wedding invitations this week. I hope you can come!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">I would love to attend. Where is the ceremony?</div>
+                <div class="burmese">လာရောက်ချင်ပါတယ်။ အခမ်းအနားက ဘယ်မှာလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('I would love to attend. Where is the ceremony?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">At the garden chapel by the lake. The reception will follow at the Grand Hotel.</div>
+                <div class="burmese">အင်းအနားက ဥယျာဉ်ဘုရားကျောင်းမှာပါ။ ဧည့်ခံပွဲက Grand Hotel မှာ ဆက်လက်ကျင်းပမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('At the garden chapel by the lake. The reception will follow at the Grand Hotel.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Sounds lovely! Please save me a seat.</div>
+                <div class="burmese">ချစ်စရာကောင်းပုံရတယ်! ကျေးဇူးပြု၍ ငါ့အတွက် နေရာသီးသန့်ထားပေးပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Sounds lovely! Please save me a seat.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 3: Wedding Dress Shopping -->
+    <div class="conversation-section">
+        <h2>👰 Wedding Dress Shopping / မင်္ဂလာဝတ်စုံဈေးဝယ်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Bride:</div>
+                <div class="english">I found the perfect wedding dress! I'm so excited.</div>
+                <div class="burmese">ငါ ပြီးပြည့်စုံတဲ့ မင်္ဂလာဝတ်စုံကို တွေ့လိုက်ပြီ! အရမ်းစိတ်လှုပ်ရှားမိတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I found the perfect wedding dress! I am so excited.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Friend:</div>
+                <div class="english">Can I see a picture? What does it look like?</div>
+                <div class="burmese">ပုံကြည့်လို့ရမလား။ ဘယ်လိုပုံစံလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Can I see a picture? What does it look like?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Bride:</div>
+                <div class="english">It's white with lace sleeves and a long train. It's very elegant.</div>
+                <div class="burmese">အဖြူရောင်၊ ဇာပန်းလက်စွပ်ပါ၊ နောက်အမြီးရှည်ရှည်ပါတယ်။ အရမ်းသပ်ရပ်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('It is white with lace sleeves and a long train. It is very elegant.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Friend:</div>
+                <div class="english">It's gorgeous! You'll look beautiful on your big day.</div>
+                <div class="burmese">အရမ်းလှတယ်! မင်းရဲ့မင်္ဂလာနေ့မှာ လှနေမှာပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('It is gorgeous! You will look beautiful on your big day.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 4: Wedding Planning -->
+    <div class="conversation-section">
+        <h2>📋 Wedding Planning / မင်္ဂလာဆောင်စီစဉ်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Have you booked the venue yet?</div>
+                <div class="burmese">နေရာ ကြိုမှာထားပြီးပြီလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Have you booked the venue yet?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Yes, we booked the garden pavilion. It fits 150 guests.</div>
+                <div class="burmese">ဟုတ်တယ်၊ ငါတို့ ဥယျာဉ်ခန်းမကို ကြိုမှာထားတယ်။ ဧည့်သည် ၁၅၀ ဆန့်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, we booked the garden pavilion. It fits 150 guests.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">What about the caterer? Have you decided on the menu?</div>
+                <div class="burmese">စားသောက်ဆိုင်ကရော? မီနူး ဆုံးဖြတ်ပြီးပြီလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('What about the caterer? Have you decided on the menu?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">We're having a buffet with both Asian and Western dishes.</div>
+                <div class="burmese">ငါတို့ အာရှနဲ့ အနောက်တိုင်းဟင်းလျာနှစ်မျိုးလုံးပါတဲ့ ဘူဖေးကျွေးမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('We are having a buffet with both Asian and Western dishes.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 5: Wedding Gifts -->
+    <div class="conversation-section">
+        <h2>🎁 Wedding Gifts / မင်္ဂလာဆောင်လက်ဆောင်များ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">What should I get them for a wedding gift?</div>
+                <div class="burmese">မင်္ဂလာဆောင်လက်ဆောင်အတွက် ဘာဝယ်သင့်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What should I get them for a wedding gift?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">They have a gift registry at the department store. You can choose from there.</div>
+                <div class="burmese">သူတို့မှာ ကုန်တိုက်မှာ လက်ဆောင်စာရင်းရှိတယ်။ အဲဒီကနေ ရွေးနိုင်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('They have a gift registry at the department store. You can choose from there.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Or I could give cash. Is that acceptable?</div>
+                <div class="burmese">ဒါမှမဟုတ် ငွေသားပေးလို့ရတယ်။ လက်ခံနိုင်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Or I could give cash. Is that acceptable?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Cash is fine, especially in our culture. Put it in a red envelope for good luck.</div>
+                <div class="burmese">ငွေသားကောင်းပါတယ်၊ အထူးသဖြင့် ငါတို့ယဉ်ကျေးမှုမှာ။ ကံကောင်းခြင်းအတွက် အနီရောင်စာအိတ်ထဲထည့်ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Cash is fine, especially in our culture. Put it in a red envelope for good luck.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 6: At the Wedding Ceremony -->
+    <div class="conversation-section">
+        <h2>💒 At the Wedding Ceremony / မင်္ဂလာဆောင်အခမ်းအနားတွင်</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Guest A:</div>
+                <div class="english">The bride looks stunning! That dress is beautiful.</div>
+                <div class="burmese">သတို့သမီး အရမ်းလှတယ်! အဲဒီဝတ်စုံက လှတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('The bride looks stunning! That dress is beautiful.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Guest B:</div>
+                <div class="english">And the groom looks very handsome in his suit.</div>
+                <div class="burmese">သတို့သားလည်း သူ့ဝတ်စုံနဲ့ အရမ်းချောတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('And the groom looks very handsome in his suit.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Guest A:</div>
+                <div class="english">The flowers are gorgeous. I love the decorations.</div>
+                <div class="burmese">ပန်းတွေ သိပ်လှတယ်။ အလှဆင်ပစ္စည်းတွေကို ကြိုက်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('The flowers are gorgeous. I love the decorations.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Guest B:</div>
+                <div class="english">They really put a lot of thought into every detail.</div>
+                <div class="burmese">သူတို့ အသေးစိတ်တိုင်းကို တကယ်စဉ်းစားထားတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('They really put a lot of thought into every detail.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 7: Wedding Vows -->
+    <div class="conversation-section">
+        <h2>💖 Wedding Vows / မင်္ဂလာကတိစကားများ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Officiant:</div>
+                <div class="english">Do you take this woman to be your lawfully wedded wife?</div>
+                <div class="burmese">ဤအမျိုးသမီးကို တရားဝင်အိမ်ထောင်ဖက်အဖြစ် သင်လက်ခံပါသလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you take this woman to be your lawfully wedded wife?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Groom:</div>
+                <div class="english">I do.</div>
+                <div class="burmese">လက်ခံပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I do.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Officiant:</div>
+                <div class="english">Do you take this man to be your lawfully wedded husband?</div>
+                <div class="burmese">ဤအမျိုးသားကို တရားဝင်အိမ်ထောင်ဖက်အဖြစ် သင်လက်ခံပါသလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you take this man to be your lawfully wedded husband?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Bride:</div>
+                <div class="english">I do.</div>
+                <div class="burmese">လက်ခံပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I do.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Officiant:</div>
+                <div class="english">By the power vested in me, I now pronounce you husband and wife.</div>
+                <div class="burmese">ကျွန်တော့်ထံ အပ်နှင်းထားသော အာဏာဖြင့် သင်တို့ကို ခင်ပွန်းနှင့်ဇနီးအဖြစ် ကြေညာပါသည်။</div>
+                <button class="audio-btn" onclick="speakEnglish('By the power vested in me, I now pronounce you husband and wife.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 8: Wedding Reception -->
+    <div class="conversation-section">
+        <h2>🎉 Wedding Reception / မင်္ဂလာဆောင်ဧည့်ခံပွဲ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Guest A:</div>
+                <div class="english">The cake is beautiful! Have you tried it yet?</div>
+                <div class="burmese">ကိတ်မုန့်က လှတယ်! စားကြည့်ပြီးပြီလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('The cake is beautiful! Have you tried it yet?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Guest B:</div>
+                <div class="english">Not yet, but I heard it's delicious. Look, they're about to cut it!</div>
+                <div class="burmese">မစားရသေးဘူး၊ ဒါပေမယ့် အရသာရှိတယ်လို့ ကြားတယ်။ ကြည့်စမ်း၊ သူတို့ ခုတ်တော့မယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Not yet, but I heard it is delicious. Look, they are about to cut it!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Guest A:</div>
+                <div class="english">Time for the first dance! Let's cheer them on.</div>
+                <div class="burmese">ပထမအကအချိန်ရောက်ပြီ! သူတို့ကို အားပေးကြရအောင်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Time for the first dance! Let us cheer them on.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Guest B:</div>
+                <div class="english">This is such a beautiful celebration. I'm so happy for them!</div>
+                <div class="burmese">ဒါက အရမ်းလှတဲ့ အခမ်းအနားပါ။ ငါ သူတို့အတွက် အရမ်းဝမ်းသာတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('This is such a beautiful celebration. I am so happy for them!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Traditional Wedding Customs -->
+    <div class="conversation-section">
+        <h2>🎎 Traditional Wedding Customs / ရိုးရာမင်္ဂလာဆောင်ထုံးတမ်းများ</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Wedding Traditions Around the World (ကမ္ဘာတစ်ဝှမ်းရှိ မင်္ဂလာဆောင်ထုံးတမ်းများ):</strong><br>
+            • Something old, something new, something borrowed, something blue (အနောက်တိုင်းထုံးတမ်း)<br>
+            • Breaking a glass at the end of the ceremony (ဂျူးရိုးရာ)<br>
+            • Money dance where guests pin money to the bride's dress (ဖိလစ်ပိုင်နှင့် ပိုလန်)<br>
+            • Throwing rice or flower petals (အနောက်တိုင်း)<br>
+            • Tea ceremony to honor parents (တရုတ်နှင့် မြန်မာရိုးရာ)<br>
+            • Henna night before the wedding (အိန္ဒိယနှင့် အရှေ့အလယ်ပိုင်း)<br>
+        </div>
+    </div>
+    
+    <!-- Vocabulary Section -->
+    <div class="conversation-section">
+        <h2>📚 Wedding Vocabulary / မင်္ဂလာဆောင်သုံးဝေါဟာရများ</h2>
+        <div class="vocab-grid">
+            <div class="vocab-item"><span class="vocab-eng">Bride</span><br><span class="vocab-burmese">သတို့သမီး</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Groom</span><br><span class="vocab-burmese">သတို့သား</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Bridesmaid</span><br><span class="vocab-burmese">မင်္ဂလာဖော်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Best man</span><br><span class="vocab-burmese">ဂုဏ်ထူးဆောင်ဧည့်သည်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Officiant / Minister</span><br><span class="vocab-burmese">မင်္ဂလာဆောင်အခမ်းအနားကျင်းပသူ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Flower girl</span><br><span class="vocab-burmese">ပန်းကိုင်ကလေးမ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Ring bearer</span><br><span class="vocab-burmese">လက်စွပ်ကိုင်ကလေး</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Wedding bouquet</span><br><span class="vocab-burmese">မင်္ဂလာပန်းစည်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Honeymoon</span><br><span class="vocab-burmese">မင်္ဂလာဆောင်ပြီးခရီးစဉ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Guest list</span><br><span class="vocab-burmese">ဧည့်သည်စာရင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Wedding band</span><br><span class="vocab-burmese">မင်္ဂလာလက်စွပ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Toasting</span><br><span class="vocab-burmese">ခွက်ခတ်ခြင်း</span></div>
+        </div>
+    </div>
+    
+    <!-- Practice Section -->
+    <div class="conversation-section">
+        <h2>✏️ Practice Questions / လေ့ကျင့်ခန်းမေးခွန်းများ</h2>
+        <div class="dialogue-box">
+            <div class="quiz-question">
+                <p><strong>1. How do you congratulate someone on their wedding?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Congratulations on your wedding!')">Good luck on your exam!</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Congratulations on your wedding!')">Congratulations on your wedding!</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Congratulations on your wedding!')">Happy birthday!</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Congratulations on your wedding!')">Get well soon!</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>2. "သတို့သမီးက လှတယ်" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'The bride is beautiful.')">The groom is handsome.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'The bride is beautiful.')">The bride is beautiful.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'The bride is beautiful.')">The cake is delicious.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'The bride is beautiful.')">The flowers are lovely.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. What is the person who officiates the wedding called?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Officiant')">Bridesmaid</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Officiant')">Best man</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Officiant')">Officiant</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Officiant')">Flower girl</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. "မင်္ဂလာဆောင်ဧည့်ခံပွဲက ဘယ်မှာလဲ" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Where is the wedding reception?')">Where is the wedding ceremony?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Where is the wedding reception?')">Where is the wedding cake?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Where is the wedding reception?')">Where is the wedding reception?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Where is the wedding reception?')">Where is the honeymoon?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. What do the bride and groom do at the end of the ceremony?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Share a kiss')">Cut the cake</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Share a kiss')">Throw rice</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Share a kiss')">Share a kiss</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Share a kiss')">Dance</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p><i class="fas fa-heart" style="color: #fd79a8;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p>
+        <p style="font-size: 0.75rem; margin-top: 0.5rem;">Practice these conversations to talk about weddings and celebrations with confidence!</p>
+    </footer>
+</div>
+
+<!-- Back to Top Button -->
+<a href="#" class="back-to-top" id="backToTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+<script>
+    function speakEnglish(text) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8;
+        utterance.pitch = 1.0;
+        
+        function setVoice() {
+            const voices = window.speechSynthesis.getVoices();
+            const englishVoice = voices.find(v => v.lang === 'en-US' || v.lang.startsWith('en-'));
+            if (englishVoice) utterance.voice = englishVoice;
+            window.speechSynthesis.speak(utterance);
+        }
+        
+        if (window.speechSynthesis.getVoices().length) setVoice();
+        else window.speechSynthesis.onvoiceschanged = setVoice;
+    }
+    
+    function checkAnswer(element, correctAnswer) {
+        const options = element.parentElement.querySelectorAll('.quiz-option');
+        const isCorrect = element.innerText === correctAnswer;
+        
+        if (isCorrect) {
+            element.style.background = '#2ecc71';
+            element.style.color = 'white';
+            speakEnglish(correctAnswer);
+            setTimeout(() => {
+                options.forEach(opt => {
+                    opt.style.background = '';
+                    opt.style.color = '';
+                });
+            }, 1500);
+        } else {
+            element.style.background = '#e74c3c';
+            element.style.color = 'white';
+            setTimeout(() => {
+                element.style.background = '';
+                element.style.color = '';
+            }, 500);
+        }
+    }
+    
+    // Back to Top Button Functionality
+    (function() {
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        
+        if (backToTopBtn) {
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

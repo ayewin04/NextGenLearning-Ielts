@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toy Store - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%); font-family: 'Segoe UI', Roboto, sans-serif; padding: 1rem; }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        .back-btn { display: inline-flex; align-items: center; gap: 8px; background: white; padding: 0.6rem 1.2rem; border-radius: 2rem; text-decoration: none; color: #1e3c72; font-weight: 500; margin-bottom: 1rem; transition: 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        .conversation-section { background: white; border-radius: 1rem; margin-bottom: 2rem; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+        .conversation-section h2 { background: #f39c12; color: white; padding: 1rem; font-size: 1.2rem; }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line { display: grid; grid-template-columns: 70px 1fr 1fr; gap: 0.8rem; padding: 0.8rem; border-bottom: 1px solid #eee; align-items: start; }
+        .speaker { font-weight: bold; color: #f39c12; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.95rem; }
+        .audio-btn { background: #eef4ff; border: none; border-radius: 2rem; padding: 0.3rem 0.8rem; cursor: pointer; transition: 0.2s; margin-top: 0.3rem; }
+        .audio-btn:hover { background: #f39c12; color: white; }
+        .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.8rem; padding: 1rem; }
+        .vocab-item { background: #f8f9fa; padding: 0.8rem; border-radius: 0.8rem; border-left: 3px solid #f39c12; }
+        .vocab-eng { font-weight: bold; color: #f39c12; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        .quiz-question { background: #f8f9fa; padding: 1rem; margin-bottom: 1rem; border-radius: 0.8rem; }
+        .quiz-options { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
+        .quiz-option { background: white; padding: 0.5rem 1rem; border-radius: 2rem; border: 1px solid #ddd; cursor: pointer; transition: 0.2s; }
+        .quiz-option:hover { background: #f39c12; color: white; border-color: #f39c12; }
+        .tips-box { background: #fef9e7; padding: 1rem; border-radius: 0.8rem; margin: 1rem; border-left: 3px solid #f39c12; }
+        .tips-box i { color: #f39c12; margin-right: 8px; }
+        footer { margin-top: 2rem; text-align: center; padding: 1rem; color: #6c757d; font-size: 0.8rem; }
+        .back-to-top { position: fixed; bottom: 1.5rem; right: 1.5rem; background: #1e3c72; color: white; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 1000; opacity: 0; visibility: hidden; border: 2px solid white; }
+        .back-to-top.show { opacity: 1; visibility: visible; }
+        .back-to-top:hover { background: #f5b042; color: #1e3c72; transform: translateY(-3px); }
+        .back-to-top i { font-size: 1.2rem; }
+        @media (max-width: 768px) { .back-to-top { bottom: 1rem; right: 1rem; width: 42px; height: 42px; } .back-to-top i { font-size: 1rem; } }
+        @media (max-width: 700px) { .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; } }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn"><i class="fas fa-arrow-left"></i> All Conversations</a>
+    <header><h1><i class="fas fa-rocket"></i> Toy Store</h1><p>Learn how to buy toys for kids, ask about age recommendations, and find gifts in English</p><p>ကလေးများအတွက်အရုပ်များဝယ်ယူနည်း၊ အသက်အရွယ်အလိုက်အကြံပြုချက်များမေးမြန်းနည်းနှင့် လက်ဆောင်များရှာဖွေနည်းကို အင်္ဂလိပ်လို လေ့လာပါ</p></header>
+    
+    <!-- Dialogue 1: Birthday Gift for a Child -->
+    <div class="conversation-section"><h2>🎁 Birthday Gift for a Child / ကလေးအတွက်မွေးနေ့လက်ဆောင်</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">I need a birthday gift for a 5-year-old boy.</div><div class="burmese">အသက် ၅ နှစ်အရွယ် ယောက်ျားလေးအတွက် မွေးနေ့လက်ဆောင်တစ်ခု လိုအပ်ပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('I need a birthday gift for a 5-year-old boy.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Staff:</div><div class="english">What does he like? Cars, dinosaurs, superheroes, or building toys?</div><div class="burmese">သူဘာကြိုက်လဲ။ ကားများ၊ ဒိုင်နိုဆောများ၊ စူပါဟီးရိုးများ သို့မဟုတ် တည်ဆောက်ရေးအရုပ်များ။</div><button class="audio-btn" onclick="speakEnglish('What does he like? Cars, dinosaurs, superheroes, or building toys?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">He loves dinosaurs! Do you have any dinosaur toys?</div><div class="burmese">သူ ဒိုင်နိုဆောတွေကို ကြိုက်တယ်။ ဒိုင်နိုဆောအရုပ်တွေ ရှိလား။</div><button class="audio-btn" onclick="speakEnglish('He loves dinosaurs! Do you have any dinosaur toys?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Staff:</div><div class="english">This dinosaur playset comes with 10 figures and a volcano. It's $25 and recommended for ages 4-8.</div><div class="burmese">ဒီဒိုင်နိုဆောကစားစုံမှာ ရုပ်တု ၁၀ ခုနှင့် မီးတောင်တစ်ခု ပါဝင်ပါတယ်။ ၂၅ ဒေါ်လာဖြစ်ပြီး အသက် ၄-၈ နှစ်အတွက် အကြံပြုထားပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('This dinosaur playset comes with 10 figures and a volcano. It is 25 dollars and recommended for ages 4-8.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 2: Educational Toys -->
+    <div class="conversation-section"><h2>📚 Educational Toys / ပညာရေးဆိုင်ရာအရုပ်များ</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">I'm looking for educational toys for my 3-year-old.</div><div class="burmese">ကျွန်မ အသက် ၃ နှစ်အရွယ်ကလေးအတွက် ပညာရေးဆိုင်ရာအရုပ်များ ရှာနေပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('I am looking for educational toys for my 3-year-old.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Staff:</div><div class="english">These shape sorters and alphabet puzzles are great for that age. This wooden puzzle is $15.</div><div class="burmese">ဒီပုံစံစီကိရိယာများနှင့် အက္ခရာစီပဟေဠိများက အဲဒီအရွယ်အတွက် ကောင်းပါတယ်။ ဒီသစ်သားပဟေဠိက ၁၅ ဒေါ်လာပါ။</div><button class="audio-btn" onclick="speakEnglish('These shape sorters and alphabet puzzles are great for that age. This wooden puzzle is 15 dollars.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">Are there any STEM toys for preschoolers?</div><div class="burmese">မူလတန်းကြိုကလေးများအတွက် STEM အရုပ်များ ရှိလား။</div><button class="audio-btn" onclick="speakEnglish('Are there any STEM toys for preschoolers?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Staff:</div><div class="english">Yes, this building blocks set teaches basic engineering concepts. It's $30 for 50 pieces.</div><div class="burmese">ဟုတ်ပါတယ်၊ ဒီတည်ဆောက်ရေးတုံးများအစုံက အခြေခံအင်ဂျင်နီယာအယူအဆများကို သင်ပေးပါတယ်။ အပိုင်း ၅၀ အတွက် ၃၀ ဒေါ်လာပါ။</div><button class="audio-btn" onclick="speakEnglish('Yes, this building blocks set teaches basic engineering concepts. It is 30 dollars for 50 pieces.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 3: Board Games -->
+    <div class="conversation-section"><h2>🎲 Board Games / ဘုတ်ဂိမ်းများ</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">We're having a family game night. What board games do you recommend for a 7 and 10-year-old?</div><div class="burmese">ကျွန်တော်တို့ မိသားစုဂိမ်းညကျင်းပနေပါတယ်။ အသက် ၇ နှင့် ၁၀ နှစ်အရွယ်ကလေးများအတွက် ဘုတ်ဂိမ်းဘယ်ဟာကို အကြံပြုလဲ။</div><button class="audio-btn" onclick="speakEnglish('We are having a family game night. What board games do you recommend for a 7 and 10-year-old?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Staff:</div><div class="english">Monopoly Junior and Candy Land are very popular. This cooperative game called "Hoot Owl Hoot" is also great for teamwork.</div><div class="burmese">Monopoly Junior နဲ့ Candy Land က အရမ်းလူကြိုက်များပါတယ်။ "Hoot Owl Hoot" လို့ခေါ်တဲ့ ပူးပေါင်းဆောင်ရွက်ရေးဂိမ်းကလည်း အသင်းအလုပ်အတွက် ကောင်းပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('Monopoly Junior and Candy Land are very popular. This cooperative game called Hoot Owl Hoot is also great for teamwork.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">How much is Monopoly Junior?</div><div class="burmese">Monopoly Junior ဘယ်လောက်လဲ။</div><button class="audio-btn" onclick="speakEnglish('How much is Monopoly Junior?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Staff:</div><div class="english">$18. It takes about 30 minutes to play.</div><div class="burmese">၁၈ ဒေါ်လာပါ။ ကစားရန် ၃၀ မိနစ်ခန့်ကြာပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('18 dollars. It takes about 30 minutes to play.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 4: Remote Control Toys -->
+    <div class="conversation-section"><h2>🚁 Remote Control Toys / အဝေးထိန်းအရုပ်များ</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">My son wants an RC car for his birthday. What do you have?</div><div class="burmese">ကျွန်တော့်သား မွေးနေ့အတွက် အဝေးထိန်းကားတစ်စီး လိုချင်တယ်။ ဘာတွေရှိလဲ။</div><button class="audio-btn" onclick="speakEnglish('My son wants an RC car for his birthday. What do you have?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Staff:</div><div class="english">We have several options. This basic RC car is $25. This off-road truck is $45 and has better battery life.</div><div class="burmese">ကျွန်တော်တို့မှာ ရွေးစရာများစွာရှိပါတယ်။ ဒီအခြေခံ RC ကားက ၂၅ ဒေါ်လာပါ။ ဒီလမ်းကြမ်းသုံးထရပ်ကားက ၄၅ ဒေါ်လာဖြစ်ပြီး ဘက်ထရီသက်တမ်းပိုကောင်းပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('We have several options. This basic RC car is 25 dollars. This off-road truck is 45 dollars and has better battery life.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">Does it come with batteries?</div><div class="burmese">ဘက်ထရီပါလား။</div><button class="audio-btn" onclick="speakEnglish('Does it come with batteries?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Staff:</div><div class="english">The car comes with a rechargeable battery. The remote requires 2 AA batteries, which are not included.</div><div class="burmese">ကားမှာ ပြန်အားသွင်းနိုင်သောဘက်ထရီ ပါဝင်ပါတယ်။ အဝေးထိန်းအတွက် AA ဘက်ထရီ ၂ လုံး လိုအပ်ပြီး မပါဝင်ပါဘူး။</div><button class="audio-btn" onclick="speakEnglish('The car comes with a rechargeable battery. The remote requires 2 AA batteries, which are not included.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 5: Plush Toys -->
+    <div class="conversation-section"><h2>🧸 Plush Toys / အမွေးထူအရုပ်များ</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">I need a stuffed animal for a baby girl.</div><div class="burmese">ကလေးမလေးတစ်ယောက်အတွက် ချစ်စရာအရုပ်တစ်ရုပ် လိုအပ်ပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('I need a stuffed animal for a baby girl.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Staff:</div><div class="english">This pink bunny is very soft and machine washable. It's $12 and safe for all ages.</div><div class="burmese">ဒီပန်းရောင်ယုန်က အရမ်းပျော့ပြီး စက်ဖြင့်လျှော်လို့ရပါတယ်။ ၁၂ ဒေါ်လာဖြစ်ပြီး အသက်အရွယ်မရွေးအတွက် စိတ်ချရပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('This pink bunny is very soft and machine washable. It is 12 dollars and safe for all ages.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">Are there any that play music or have lights?</div><div class="burmese">ဂီတဖွင့်နိုင်တာ သို့မဟုတ် မီးရှိတာမျိုး ရှိလား။</div><button class="audio-btn" onclick="speakEnglish('Are there any that play music or have lights?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Staff:</div><div class="english">This musical elephant plays lullabies and has a soft glow. It's $20.</div><div class="burmese">ဒီဂီတဆင်က မွေးချိုးသီချင်းများဖွင့်ပြီး ပျော့ပျောင်းသောအလင်းရောင်ရှိပါတယ်။ ၂၀ ဒေါ်လာပါ။</div><button class="audio-btn" onclick="speakEnglish('This musical elephant plays lullabies and has a soft glow. It is 20 dollars.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 6: Outdoor Toys -->
+    <div class="conversation-section"><h2>🪁 Outdoor Toys / အပြင်ဘက်အရုပ်များ</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">Spring is coming. What outdoor toys do you recommend?</div><div class="burmese">နွေဦးရာသီ လာနေပြီ။ ဘယ်လိုပြင်ဘက်အရုပ်တွေ အကြံပြုလဲ။</div><button class="audio-btn" onclick="speakEnglish('Spring is coming. What outdoor toys do you recommend?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Staff:</div><div class="english">Jump ropes are $5, sidewalk chalk sets are $8, and bubbles are $3. We also have frisbees for $6.</div><div class="burmese">ခုန်ကြိုး ၅ ဒေါ်လာ၊ လမ်းမထိမြေဖြူခဲအစုံ ၈ ဒေါ်လာ၊ ပူဖောင်းများ ၃ ဒေါ်လာပါ။ frisbee များလည်း ၆ ဒေါ်လာနဲ့ ရှိပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('Jump ropes are 5 dollars, sidewalk chalk sets are 8 dollars, and bubbles are 3 dollars. We also have frisbees for 6 dollars.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">I'll take the chalk set and a frisbee. What about a kite?</div><div class="burmese">မြေဖြူခဲအစုံနဲ့ frisbee တစ်ခု ယူမယ်။ စွန်ကရော။</div><button class="audio-btn" onclick="speakEnglish('I will take the chalk set and a frisbee. What about a kite?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Staff:</div><div class="english">Kites are $12. This rainbow kite is very popular with kids.</div><div class="burmese">စွန်များ ၁၂ ဒေါ်လာပါ။ ဒီသက်တံစွန်က ကလေးတွေကြား အရမ်းလူကြိုက်များပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('Kites are 12 dollars. This rainbow kite is very popular with kids.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 7: Arts and Crafts -->
+    <div class="conversation-section"><h2>🎨 Arts and Crafts / အနုပညာနှင့်လက်မှုပစ္စည်းများ</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">My daughter loves drawing. Do you have art supplies?</div><div class="burmese">ကျွန်မသမီး ပုံဆွဲရတာ ကြိုက်တယ်။ အနုပညာပစ္စည်းများ ရှိလား။</div><button class="audio-btn" onclick="speakEnglish('My daughter loves drawing. Do you have art supplies?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Staff:</div><div class="english">Yes, we have colored pencils ($8), markers ($10), watercolor sets ($12), and sketch pads ($5).</div><div class="burmese">ဟုတ်ပါတယ်၊ ရောင်စုံခဲတံ (၈ ဒေါ်လာ)၊ မာကာ (၁၀ ဒေါ်လာ)၊ ရေဆေးအစုံ (၁၂ ဒေါ်လာ) နှင့် ပုံကြမ်းစာအုပ် (၅ ဒေါ်လာ) ရှိပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('Yes, we have colored pencils (8 dollars), markers (10 dollars), watercolor sets (12 dollars), and sketch pads (5 dollars).')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">I'll take the watercolor set and a sketch pad. Do you have any craft kits?</div><div class="burmese">ရေဆေးအစုံနဲ့ ပုံကြမ်းစာအုပ်ယူမယ်။ လက်မှုပစ္စည်းအစုံတွေ ရှိလား။</div><button class="audio-btn" onclick="speakEnglish('I will take the watercolor set and a sketch pad. Do you have any craft kits?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Staff:</div><div class="english">This bead bracelet making kit is $15. It includes everything needed to make 10 bracelets.</div><div class="burmese">ဒီပုတီးလက်ကောက်ပြုလုပ်ရေးအစုံက ၁၅ ဒေါ်လာပါ။ လက်ကောက် ၁၀ ခုပြုလုပ်ရန် လိုအပ်သမျှ ပါဝင်ပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('This bead bracelet making kit is 15 dollars. It includes everything needed to make 10 bracelets.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 8: Puzzle and Brain Teasers -->
+    <div class="conversation-section"><h2>🧩 Puzzles and Brain Teasers / ပဟေဠိနှင့်ဦးနှောက်လေ့ကျင့်ခန်းများ</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">I need a challenging puzzle for my 12-year-old nephew.</div><div class="burmese">ကျွန်တော့် အသက် ၁၂ နှစ်အရွယ် တူအတွက် စိန်ခေါ်မှုရှိတဲ့ ပဟေဠိတစ်ခု လိုအပ်ပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('I need a challenging puzzle for my 12-year-old nephew.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Staff:</div><div class="english">This 1000-piece puzzle is $18. It shows a map of the world. Very educational and challenging.</div><div class="burmese">ဒီအပိုင်း ၁၀၀၀ ပါပဟေဠိက ၁၈ ဒေါ်လာပါ။ ကမ္ဘာ့မြေပုံကို ပြသထားပါတယ်။ အလွန်ပညာရေးဆိုင်ရာနှင့် စိန်ခေါ်မှုရှိပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('This 1000-piece puzzle is 18 dollars. It shows a map of the world. Very educational and challenging.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">Do you have any Rubik's cubes?</div><div class="burmese">Rubik's cubes ရှိလား။</div><button class="audio-btn" onclick="speakEnglish('Do you have any Rubik\'s cubes?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Staff:</div><div class="english">Yes, we have standard 3x3 cubes for $10, and 4x4 cubes for $15.</div><div class="burmese">ဟုတ်ပါတယ်၊ စံ 3x3 cubes များ ၁၀ ဒေါ်လာ၊ 4x4 cubes များ ၁၅ ဒေါ်လာဖြင့် ရှိပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('Yes, we have standard 3x3 cubes for 10 dollars, and 4x4 cubes for 15 dollars.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <div class="vocab-grid">
+        <div class="vocab-item"><span class="vocab-eng">Action figure</span><br><span class="vocab-burmese">စစ်သားရုပ်</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Dollhouse</span><br><span class="vocab-burmese">အရုပ်အိမ်</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Playdough</span><br><span class="vocab-burmese">ရွှံ့စေး</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Battery-operated</span><br><span class="vocab-burmese">ဘက်ထရီသုံး</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Small parts warning</span><br><span class="vocab-burmese">အစိတ်အပိုင်းသေးသေးသတိပေးချက်</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Age appropriate</span><br><span class="vocab-burmese">အသက်အရွယ်နှင့်လျော်ကန်သော</span></div>
+    </div>
+    
+    <div class="tips-box"><i class="fas fa-lightbulb"></i> <strong>Tips for Buying Toys (အရုပ်များဝယ်ယူရန် အကြံပြုချက်များ):</strong><br>• Check the age recommendation on the box (သေတ္တာပေါ်ရှိ အသက်အရွယ်အကြံပြုချက်ကိုစစ်ဆေးပါ)<br>• Look for safety certifications (ဘေးကင်းရေးအသိအမှတ်ပြုချက်များကိုရှာဖွေပါ)<br>• Consider the child's interests and developmental stage (ကလေး၏စိတ်ဝင်စားမှုနှင့် ဖွံ့ဖြိုးမှုအဆင့်ကိုစဉ်းစားပါ)<br>• Avoid toys with small parts for children under 3 (အသက် ၃ နှစ်အောက်ကလေးများအတွက် အစိတ်အပိုင်းသေးသေးပါသောအရုပ်များကိုရှောင်ပါ)<br>• Read online reviews before purchasing (မဝယ်မီ အွန်လိုင်းသုံးသပ်ချက်များကိုဖတ်ပါ)</div>
+    
+    <div class="quiz-question"><p><strong>1. How do you ask for a toy for a specific age?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'I need a toy for a 5-year-old.')">I need a toy for a 5-year-old.</div><div class="quiz-option" onclick="checkAnswer(this, 'I need a toy for a 5-year-old.')">How much is this toy?</div><div class="quiz-option" onclick="checkAnswer(this, 'I need a toy for a 5-year-old.')">Do you have board games?</div><div class="quiz-option" onclick="checkAnswer(this, 'I need a toy for a 5-year-old.')">Is this toy safe?</div></div></div>
+    <div class="quiz-question"><p><strong>2. "ဒီပဟေဠိက ဘယ်အသက်အရွယ်အတွက်လဲ" in English?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'What age is this puzzle for?')">What age is this puzzle for?</div><div class="quiz-option" onclick="checkAnswer(this, 'What age is this puzzle for?')">How many pieces are in this puzzle?</div><div class="quiz-option" onclick="checkAnswer(this, 'What age is this puzzle for?')">How much is this puzzle?</div><div class="quiz-option" onclick="checkAnswer(this, 'What age is this puzzle for?')">Is this puzzle educational?</div></div></div>
+    <div class="quiz-question"><p><strong>3. What does "STEM" stand for in educational toys?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'Science, Technology, Engineering, Math')">Science, Toys, Energy, Math</div><div class="quiz-option" onclick="checkAnswer(this, 'Science, Technology, Engineering, Math')">Science, Technology, Engineering, Math</div><div class="quiz-option" onclick="checkAnswer(this, 'Science, Technology, Engineering, Math')">Sports, Toys, Education, Music</div><div class="quiz-option" onclick="checkAnswer(this, 'Science, Technology, Engineering, Math')">Simple, Tough, Easy, Moderate</div></div></div>
+    <div class="quiz-question"><p><strong>4. "ဘက်ထရီတွေ ပါဝင်လား" in English?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'Do batteries come included?')">Do batteries come included?</div><div class="quiz-option" onclick="checkAnswer(this, 'Do batteries come included?')">How long do the batteries last?</div><div class="quiz-option" onclick="checkAnswer(this, 'Do batteries come included?')">What size batteries does it need?</div><div class="quiz-option" onclick="checkAnswer(this, 'Do batteries come included?')">Are the batteries rechargeable?</div></div></div>
+    <div class="quiz-question"><p><strong>5. What does "machine washable" mean for a plush toy?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'It can be cleaned in a washing machine')">It must be hand washed</div><div class="quiz-option" onclick="checkAnswer(this, 'It can be cleaned in a washing machine')">It cannot be washed</div><div class="quiz-option" onclick="checkAnswer(this, 'It can be cleaned in a washing machine')">It can be cleaned in a washing machine</div><div class="quiz-option" onclick="checkAnswer(this, 'It can be cleaned in a washing machine')">It is waterproof</div></div></div>
+    
+    <footer><p><i class="fas fa-heart" style="color: #f39c12;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p></footer>
+</div>
+<a href="#" class="back-to-top" id="backToTopBtn"><i class="fas fa-arrow-up"></i></a>
+<script>
+    function speakEnglish(text){if(!window.speechSynthesis)return;window.speechSynthesis.cancel();const utterance=new SpeechSynthesisUtterance(text);utterance.lang='en-US';utterance.rate=0.8;utterance.pitch=1.0;function setVoice(){const voices=window.speechSynthesis.getVoices();const englishVoice=voices.find(v=>v.lang==='en-US'||v.lang.startsWith('en-'));if(englishVoice)utterance.voice=englishVoice;window.speechSynthesis.speak(utterance);}if(window.speechSynthesis.getVoices().length)setVoice();else window.speechSynthesis.onvoiceschanged=setVoice;}
+    function checkAnswer(element,correctAnswer){const options=element.parentElement.querySelectorAll('.quiz-option');const isCorrect=element.innerText===correctAnswer;if(isCorrect){element.style.background='#2ecc71';element.style.color='white';speakEnglish(correctAnswer);setTimeout(()=>{options.forEach(opt=>{opt.style.background='';opt.style.color='';});},1500);}else{element.style.background='#e74c3c';element.style.color='white';setTimeout(()=>{options.forEach(opt=>{opt.style.background='';opt.style.color='';});},500);}}
+    (function(){const btn=document.getElementById('backToTopBtn');if(btn){window.addEventListener('scroll',function(){btn.classList.toggle('show',window.scrollY>300);});btn.addEventListener('click',function(e){e.preventDefault();window.scrollTo({top:0,behavior:'smooth'});});}})();
+</script>
+</body>
+</html>

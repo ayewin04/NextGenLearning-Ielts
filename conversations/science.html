@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Science & Research - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 1rem;
+        }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        
+        .conversation-section {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .conversation-section h2 {
+            background: #00cec9;
+            color: white;
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line {
+            display: grid;
+            grid-template-columns: 70px 1fr 1fr;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            align-items: start;
+        }
+        .speaker { font-weight: bold; color: #00cec9; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { 
+            color: #8e6b3c; 
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 0.95rem;
+        }
+        .audio-btn {
+            background: #eef4ff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.3rem;
+        }
+        .audio-btn:hover { background: #00cec9; color: white; }
+        
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+            padding: 1rem;
+        }
+        .vocab-item {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            border-left: 3px solid #00cec9;
+        }
+        .vocab-eng { font-weight: bold; color: #00cec9; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        
+        .quiz-question {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.8rem;
+        }
+        .quiz-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .quiz-option {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .quiz-option:hover { background: #00cec9; color: white; border-color: #00cec9; }
+        
+        .tips-box {
+            background: #e8f8f5;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #00cec9;
+        }
+        .tips-box i { color: #00cec9; margin-right: 8px; }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1rem;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: #1e3c72;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid white;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: #f5b042;
+            color: #1e3c72;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .back-to-top i {
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 42px;
+                height: 42px;
+            }
+            .back-to-top i {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 700px) {
+            .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> All Conversations
+    </a>
+    
+    <header>
+        <h1><i class="fas fa-flask"></i> Science & Research</h1>
+        <p>Learn how to talk about scientific discoveries, experiments, and research in English</p>
+        <p>သိပ္ပံဆိုင်ရာရှာဖွေတွေ့ရှိမှုများ၊ စမ်းသပ်ချက်များနှင့် သုတေသနအကြောင်း အင်္ဂလိပ်လို ပြောဆိုနည်းကို လေ့လာပါ</p>
+    </header>
+    
+    <!-- Dialogue 1: Talking About a Scientific Discovery -->
+    <div class="conversation-section">
+        <h2>🔬 Scientific Discovery / သိပ္ပံဆိုင်ရာရှာဖွေတွေ့ရှိမှု</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Did you read about the new planet that scientists discovered?</div>
+                <div class="burmese">သိပ္ပံပညာရှင်တွေ ရှာဖွေတွေ့ရှိတဲ့ ဂြိုဟ်အသစ်အကြောင်း ဖတ်ဖူးလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Did you read about the new planet that scientists discovered?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Yes! It's amazing. They say it might have conditions for life.</div>
+                <div class="burmese">ဟုတ်တယ်! အံ့သြစရာကောင်းတယ်။ သူတို့ပြောတာက အဲဒီမှာ သက်ရှိတွေအတွက် အခြေအနေတွေရှိနိုင်တယ်တဲ့။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes! It is amazing. They say it might have conditions for life.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Science is advancing so fast. I wonder what they'll find next.</div>
+                <div class="burmese">သိပ္ပံပညာက အရမ်းမြန်မြန်တိုးတက်နေတယ်။ နောက်ထပ်ဘာတွေထပ်တွေ့မလဲ ငါတွေးမိတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Science is advancing so fast. I wonder what they will find next.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Maybe they'll find signs of alien life. That would be revolutionary!</div>
+                <div class="burmese">ဂြိုဟ်သားဘဝရဲ့သဲလွန်စတွေ တွေ့နိုင်တယ်။ အဲဒါက တော်လှန်ရေးဖြစ်လိမ့်မယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Maybe they will find signs of alien life. That would be revolutionary!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 2: Medical Breakthrough -->
+    <div class="conversation-section">
+        <h2>💊 Medical Breakthrough / ဆေးပညာဆိုင်ရာထိုးဖောက်အောင်မြင်မှု</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Have you heard about the new cancer treatment research?</div>
+                <div class="burmese">ကင်ဆာကုသမှုသုတေသနအသစ်အကြောင်း ကြားဖူးလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Have you heard about the new cancer treatment research?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Yes, scientists have developed a new vaccine that shows promising results.</div>
+                <div class="burmese">ဟုတ်တယ်၊ သိပ္ပံပညာရှင်တွေ အလားအလာကောင်းတဲ့ရလဒ်တွေပြတဲ့ ကာကွယ်ဆေးအသစ်တစ်ခု တီထွင်လိုက်ပြီ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, scientists have developed a new vaccine that shows promising results.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">That's wonderful news. It could save millions of lives.</div>
+                <div class="burmese">ဝမ်းသာစရာသတင်းပါ။ သန်းနဲ့ချီတဲ့အသက်တွေကို ကယ်တင်နိုင်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('That is wonderful news. It could save millions of lives.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">I hope it becomes available soon. Medical research is so important.</div>
+                <div class="burmese">မကြာခင် ရရှိနိုင်မယ်လို့ မျှော်လင့်ပါတယ်။ ဆေးဘက်ဆိုင်ရာသုတေသနက အရမ်းအရေးကြီးတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I hope it becomes available soon. Medical research is so important.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 3: Physics Discussion -->
+    <div class="conversation-section">
+        <h2>⚛️ Physics Discussion / ရူပဗေဒဆွေးနွေးချက်</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Do you find physics interesting?</div>
+                <div class="burmese">မင်း ရူပဗေဒကို စိတ်ဝင်စားလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you find physics interesting?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Absolutely! Quantum mechanics is fascinating. It explains how particles behave at the smallest level.</div>
+                <div class="burmese">လုံးဝစိတ်ဝင်စားတယ်! ကွမ်တမ်မက္ကင်းနစ်က စွဲဆောင်စရာကောင်းတယ်။ အငယ်ဆုံးအဆင့်မှာ အမှုန်တွေ ဘယ်လိုပြုမူတယ်ဆိုတာ ရှင်းပြတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Absolutely! Quantum mechanics is fascinating. It explains how particles behave at the smallest level.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">I find it hard to understand. But Einstein's theories are incredible.</div>
+                <div class="burmese">ငါ နားလည်ဖို့ခက်တယ်။ ဒါပေမယ့် အိုင်းစတိုင်းရဲ့ သီအိုရီတွေက မယုံနိုင်စရာကောင်းတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I find it hard to understand. But Einstein\'s theories are incredible.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">E=mc² is one of the most famous equations in history!</div>
+                <div class="burmese">E=mc² က သမိုင်းမှာ အကျော်ကြားဆုံး ညီမျှခြင်းတွေထဲက တစ်ခုပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('E equals m c squared is one of the most famous equations in history!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 4: Biology and Nature -->
+    <div class="conversation-section">
+        <h2>🧬 Biology and Nature / ဇီဝဗေဒနှင့်သဘာဝ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">I watched a documentary about deep-sea creatures. They're so strange!</div>
+                <div class="burmese">သမုဒ္ဒရာနက်သတ္တဝါတွေအကြောင်း မှတ်တမ်းရုပ်ရှင်ကြည့်လိုက်တယ်။ သူတို့ အရမ်းထူးဆန်းတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I watched a documentary about deep-sea creatures. They are so strange!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Biology is amazing. There are so many species we haven't discovered yet.</div>
+                <div class="burmese">ဇီဝဗေဒက အံ့သြစရာကောင်းတယ်။ ငါတို့ မရှာဖွေတွေ့ရှိသေးတဲ့ မျိုးစိတ်တွေ အများကြီးရှိသေးတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Biology is amazing. There are so many species we have not discovered yet.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Did you know that octopuses have three hearts?</div>
+                <div class="burmese">ရေဘဝဲတွေမှာ နှလုံးသုံးလုံးရှိတယ်ဆိုတာ သိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Did you know that octopuses have three hearts?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Really? That's fascinating! Nature never stops surprising me.</div>
+                <div class="burmese">တကယ်လား? စွဲဆောင်စရာကောင်းတယ်! သဘာဝက ငါ့ကို အံ့အားသင့်စေတာ ဘယ်တော့မှ မရပ်ဘူး။</div>
+                <button class="audio-btn" onclick="speakEnglish('Really? That is fascinating! Nature never stops surprising me.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 5: Space Exploration -->
+    <div class="conversation-section">
+        <h2>🚀 Space Exploration / အာကာသစူးစမ်းရှာဖွေခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Did you watch the rocket launch last week?</div>
+                <div class="burmese">ပြီးခဲ့တဲ့အပတ်က ဒုံးပျံလွှတ်တင်မှု ကြည့်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Did you watch the rocket launch last week?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Yes, it was spectacular. NASA is planning to send humans to Mars soon.</div>
+                <div class="burmese">ဟုတ်တယ်၊ ရင်သပ်ရှုမောဖွယ်ကောင်းတယ်။ NASA က မကြာခင် လူသားတွေကို အင်္ဂါဂြိုဟ်ကို စေလွှတ်ဖို့ စီစဉ်နေတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, it was spectacular. NASA is planning to send humans to Mars soon.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">That would be historic! I can't wait to see it happen.</div>
+                <div class="burmese">ဒါက သမိုင်းဝင်ဖြစ်လိမ့်မယ်! အဲဒါဖြစ်တာကို မြင်ဖို့ မစောင့်နိုင်တော့ဘူး။</div>
+                <button class="audio-btn" onclick="speakEnglish('That would be historic! I cannot wait to see it happen.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Space exploration inspires me. It shows what humans can achieve.</div>
+                <div class="burmese">အာကာသစူးစမ်းရှာဖွေခြင်းက ငါ့ကို လှုံ့ဆော်ပေးတယ်။ လူသားတွေ ဘာတွေအောင်မြင်နိုင်လဲဆိုတာ ပြတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Space exploration inspires me. It shows what humans can achieve.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 6: Chemistry Experiments -->
+    <div class="conversation-section">
+        <h2>🧪 Chemistry Experiments / ဓာတုဗေဒစမ်းသပ်ချက်များ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">I loved chemistry class in school. The experiments were so fun.</div>
+                <div class="burmese">ငါ ကျောင်းတုန်းက ဓာတုဗေဒအတန်းကို ကြိုက်တယ်။ စမ်းသပ်ချက်တွေက အရမ်းပျော်စရာကောင်းတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I loved chemistry class in school. The experiments were so fun.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Me too! Remember when we made the volcano with baking soda and vinegar?</div>
+                <div class="burmese">ငါလည်း! မုန့်ဖုတ်ဆိုဒါနဲ့ ရှာလကာရည်နဲ့ မီးတောင်လုပ်ခဲ့တာ မှတ်မိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Me too! Remember when we made the volcano with baking soda and vinegar?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">That was classic. Chemistry explains so many things around us.</div>
+                <div class="burmese">ဒါက ဂန္ထဝင်ပါ။ ဓာတုဗေဒက ငါတို့ပတ်ဝန်းကျင်က အရာတွေ အများကြီးကို ရှင်းပြတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('That was classic. Chemistry explains so many things around us.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">True. From cooking to medicine, chemistry is everywhere.</div>
+                <div class="burmese">မှန်တယ်။ ချက်ပြုတ်ခြင်းကနေ ဆေးပညာအထိ၊ ဓာတုဗေဒက နေရာတိုင်းမှာရှိတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('True. From cooking to medicine, chemistry is everywhere.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 7: Climate Science -->
+    <div class="conversation-section">
+        <h2>🌍 Climate Science / ရာသီဥတုသိပ္ပံ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">The latest climate report is concerning. Temperatures are rising faster than predicted.</div>
+                <div class="burmese">နောက်ဆုံးရာသီဥတုအစီရင်ခံစာက စိုးရိမ်စရာပါ။ အပူချိန်တွေ ခန့်မှန်းထားတာထက် ပိုမြန်မြန်တက်နေတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('The latest climate report is concerning. Temperatures are rising faster than predicted.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">I know. Scientists are warning that we need to take action now.</div>
+                <div class="burmese">ငါသိတယ်။ သိပ္ပံပညာရှင်တွေ အခုအရေးယူဖို့လိုတယ်လို့ သတိပေးနေတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I know. Scientists are warning that we need to take action now.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Renewable energy research is more important than ever.</div>
+                <div class="burmese">ပြန်လည်ပြည့်ဖြိုးမြဲစွမ်းအင်သုတေသနက ဘယ်တုန်းကမှမရှိခဲ့တဲ့ အရေးကြီးဆုံးပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Renewable energy research is more important than ever.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">I agree. I hope technology can help solve this crisis.</div>
+                <div class="burmese">သဘောတူတယ်။ နည်းပညာက ဒီအကျပ်အတည်းကို ဖြေရှင်းဖို့ ကူညီနိုင်မယ်လို့ မျှော်လင့်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I agree. I hope technology can help solve this crisis.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 8: Artificial Intelligence -->
+    <div class="conversation-section">
+        <h2>🤖 Artificial Intelligence / ဉာဏ်တုနည်းပညာ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">What do you think about artificial intelligence?</div>
+                <div class="burmese">ဉာဏ်တုနည်းပညာအကြောင်း မင်းဘယ်လိုထင်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What do you think about artificial intelligence?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">I think AI is amazing. It's changing every field from medicine to transportation.</div>
+                <div class="burmese">AI က အံ့သြစရာကောင်းတယ်လို့ ငါထင်တယ်။ ဒါက ဆေးပညာကနေ သယ်ယူပို့ဆောင်ရေးအထိ နယ်ပယ်တိုင်းကို ပြောင်းလဲနေတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I think AI is amazing. It is changing every field from medicine to transportation.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Some people worry that AI might take away jobs.</div>
+                <div class="burmese">တချို့လူတွေ AI က အလုပ်တွေကို ဖယ်ရှားနိုင်တယ်လို့ စိုးရိမ်ကြတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Some people worry that AI might take away jobs.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">That's true, but it will also create new opportunities. We need to adapt.</div>
+                <div class="burmese">မှန်ပါတယ်၊ ဒါပေမယ့် အခွင့်အလမ်းသစ်တွေလည်း ဖန်တီးပေးလိမ့်မယ်။ လိုက်လျောညီထွေဖြစ်ဖို့လိုတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('That is true, but it will also create new opportunities. We need to adapt.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Vocabulary Section -->
+    <div class="conversation-section">
+        <h2>📚 Science Vocabulary / သိပ္ပံသုံးဝေါဟာရများ</h2>
+        <div class="vocab-grid">
+            <div class="vocab-item"><span class="vocab-eng">Experiment</span><br><span class="vocab-burmese">စမ်းသပ်ချက်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Hypothesis</span><br><span class="vocab-burmese">ယူဆချက်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Data / Evidence</span><br><span class="vocab-burmese">အချက်အလက်/သက်သေ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Laboratory (Lab)</span><br><span class="vocab-burmese">ဓာတ်ခွဲခန်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Microscope</span><br><span class="vocab-burmese">ဏုကြည့်မှန်ဘီလူး</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Theory</span><br><span class="vocab-burmese">သီအိုရီ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Discovery</span><br><span class="vocab-burmese">ရှာဖွေတွေ့ရှိမှု</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Innovation</span><br><span class="vocab-burmese">ဆန်းသစ်တီထွင်မှု</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Research paper</span><br><span class="vocab-burmese">သုတေသနစာတမ်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Peer review</span><br><span class="vocab-burmese">ရွယ်တူသုံးသပ်ချက်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Scientific method</span><br><span class="vocab-burmese">သိပ္ပံနည်းကျနည်းလမ်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Breakthrough</span><br><span class="vocab-burmese">ထိုးဖောက်အောင်မြင်မှု</span></div>
+        </div>
+    </div>
+    
+    <!-- Famous Scientists -->
+    <div class="conversation-section">
+        <h2>👨‍🔬 Famous Scientists / ကျော်ကြားသော သိပ္ပံပညာရှင်များ</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Scientists Who Changed the World (ကမ္ဘာကြီးကိုပြောင်းလဲစေခဲ့တဲ့ သိပ္ပံပညာရှင်များ):</strong><br>
+            • <strong>Albert Einstein</strong> - Theory of Relativity (နှိုင်းရသီအိုရီ)<br>
+            • <strong>Marie Curie</strong> - Radioactivity research (ရေဒီယိုသတ္တိကြွမှုသုတေသန)<br>
+            • <strong>Isaac Newton</strong> - Laws of motion and gravity (ရွေ့လျားမှုနှင့် ဆွဲငင်အားနိယာမများ)<br>
+            • <strong>Charles Darwin</strong> - Theory of evolution (ဆင့်ကဲဖြစ်စဉ်သီအိုရီ)<br>
+            • <strong>Nikola Tesla</strong> - Alternating current electricity (လျှပ်စစ်သံလိုက်စက်ကွင်း)<br>
+            • <strong>Stephen Hawking</strong> - Black hole research (တွင်းနက်သုတေသန)<br>
+        </div>
+    </div>
+    
+    <!-- Practice Section -->
+    <div class="conversation-section">
+        <h2>✏️ Practice Questions / လေ့ကျင့်ခန်းမေးခွန်းများ</h2>
+        <div class="dialogue-box">
+            <div class="quiz-question">
+                <p><strong>1. How do you say "သိပ္ပံပညာရှင်တွေ ဂြိုဟ်အသစ်ရှာဖွေတွေ့ရှိတယ်" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Scientists discovered a new planet.')">Scientists discovered a new medicine.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Scientists discovered a new planet.')">Scientists discovered a new planet.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Scientists discovered a new planet.')">Scientists discovered a new animal.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Scientists discovered a new planet.')">Scientists discovered a new flower.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>2. What is E=mc² famous for?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Einstein\'s theory of relativity')">Newton's laws</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Einstein\'s theory of relativity')">Darwin's evolution</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Einstein\'s theory of relativity')">Einstein's theory of relativity</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Einstein\'s theory of relativity')">Curie's radiation</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. "သိပ္ပံပညာက နေရာတိုင်းမှာရှိတယ်" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Science is everywhere.')">Science is boring.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Science is everywhere.')">Science is difficult.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Science is everywhere.')">Science is everywhere.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Science is everywhere.')">Science is new.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. What does AI stand for?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Artificial Intelligence')">Automated Internet</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Artificial Intelligence')">Artificial Intelligence</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Artificial Intelligence')">Advanced Interface</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Artificial Intelligence')">Animal Intelligence</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. "ဒါကဆေးပညာဆိုင်ရာထိုးဖောက်အောင်မြင်မှုတစ်ခုပါ" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'This is a medical breakthrough.')">This is a medical problem.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'This is a medical breakthrough.')">This is a medical breakthrough.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'This is a medical breakthrough.')">This is a medical mistake.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'This is a medical breakthrough.')">This is a medical question.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p><i class="fas fa-heart" style="color: #00cec9;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p>
+        <p style="font-size: 0.75rem; margin-top: 0.5rem;">Practice these conversations to discuss science and research confidently!</p>
+    </footer>
+</div>
+
+<!-- Back to Top Button -->
+<a href="#" class="back-to-top" id="backToTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+<script>
+    function speakEnglish(text) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8;
+        utterance.pitch = 1.0;
+        
+        function setVoice() {
+            const voices = window.speechSynthesis.getVoices();
+            const englishVoice = voices.find(v => v.lang === 'en-US' || v.lang.startsWith('en-'));
+            if (englishVoice) utterance.voice = englishVoice;
+            window.speechSynthesis.speak(utterance);
+        }
+        
+        if (window.speechSynthesis.getVoices().length) setVoice();
+        else window.speechSynthesis.onvoiceschanged = setVoice;
+    }
+    
+    function checkAnswer(element, correctAnswer) {
+        const options = element.parentElement.querySelectorAll('.quiz-option');
+        const isCorrect = element.innerText === correctAnswer;
+        
+        if (isCorrect) {
+            element.style.background = '#2ecc71';
+            element.style.color = 'white';
+            speakEnglish(correctAnswer);
+            setTimeout(() => {
+                options.forEach(opt => {
+                    opt.style.background = '';
+                    opt.style.color = '';
+                });
+            }, 1500);
+        } else {
+            element.style.background = '#e74c3c';
+            element.style.color = 'white';
+            setTimeout(() => {
+                element.style.background = '';
+                element.style.color = '';
+            }, 500);
+        }
+    }
+    
+    // Back to Top Button Functionality
+    (function() {
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        
+        if (backToTopBtn) {
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Office - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 1rem;
+        }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        
+        .conversation-section {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .conversation-section h2 {
+            background: #d35400;
+            color: white;
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line {
+            display: grid;
+            grid-template-columns: 70px 1fr 1fr;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            align-items: start;
+        }
+        .speaker { font-weight: bold; color: #d35400; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { 
+            color: #8e6b3c; 
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 0.95rem;
+        }
+        .audio-btn {
+            background: #eef4ff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.3rem;
+        }
+        .audio-btn:hover { background: #d35400; color: white; }
+        
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+            padding: 1rem;
+        }
+        .vocab-item {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            border-left: 3px solid #d35400;
+        }
+        .vocab-eng { font-weight: bold; color: #d35400; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        
+        .quiz-question {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.8rem;
+        }
+        .quiz-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .quiz-option {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .quiz-option:hover { background: #d35400; color: white; border-color: #d35400; }
+        
+        .info-box {
+            background: #fdf2e9;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #d35400;
+        }
+        .info-box i { color: #d35400; margin-right: 8px; }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1rem;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: #1e3c72;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid white;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: #f5b042;
+            color: #1e3c72;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .back-to-top i {
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 42px;
+                height: 42px;
+            }
+            .back-to-top i {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 700px) {
+            .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> All Conversations
+    </a>
+    
+    <header>
+        <h1><i class="fas fa-envelope"></i> Post Office</h1>
+        <p>Learn how to send letters, packages, buy stamps, and use postal services</p>
+        <p>စာများ၊ ပါဆယ်များပို့နည်း၊ တံဆိပ်ခေါင်းများဝယ်ယူနည်းနှင့် စာတိုက်ဝန်ဆောင်မှုများအသုံးပြုနည်းကို လေ့လာပါ</p>
+    </header>
+    
+    <!-- Dialogue 1: Buying Stamps -->
+    <div class="conversation-section">
+        <h2>📮 Buying Stamps / တံဆိပ်ခေါင်းဝယ်ယူခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Hello, I'd like to buy some stamps, please.</div>
+                <div class="burmese">မင်္ဂလာပါ၊ တံဆိပ်ခေါင်းအချို့ ဝယ်ချင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Hello, I would like to buy some stamps, please.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Clerk:</div>
+                <div class="english">Certainly. How many do you need?</div>
+                <div class="burmese">ရပါတယ်။ ဘယ်နှစ်ခုလိုလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Certainly. How many do you need?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I need ten stamps for international mail.</div>
+                <div class="burmese">နိုင်ငံတကာစာအတွက် တံဆိပ်ခေါင်း ဆယ်ခုလိုပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I need ten stamps for international mail.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Clerk:</div>
+                <div class="english">That will be $12. Would you like any domestic stamps as well?</div>
+                <div class="burmese">၁၂ ဒေါ်လာပါ။ ပြည်တွင်းတံဆိပ်ခေါင်းလည်း လိုလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('That will be 12 dollars. Would you like any domestic stamps as well?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Yes, give me five domestic stamps too, please.</div>
+                <div class="burmese">ဟုတ်ကဲ့၊ ပြည်တွင်း ငါးခုလည်း ထည့်ပေးပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, give me five domestic stamps too, please.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 2: Sending a Letter -->
+    <div class="conversation-section">
+        <h2>✉️ Sending a Letter / စာပို့ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I want to send this letter to the United States.</div>
+                <div class="burmese">ဒီစာကို အမေရိကန်နိုင်ငံကို ပို့ချင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I want to send this letter to the United States.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Clerk:</div>
+                <div class="english">How would you like to send it? Regular mail or express?</div>
+                <div class="burmese">ဘယ်လိုပို့ချင်လဲ။ ပုံမှန်လား၊ အမြန်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('How would you like to send it? Regular mail or express?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">How much is regular mail?</div>
+                <div class="burmese">ပုံမှန်က ဘယ်လောက်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('How much is regular mail?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Clerk:</div>
+                <div class="english">Regular mail costs $1.50 and takes 7-10 days. Express costs $15 and takes 3-5 days.</div>
+                <div class="burmese">ပုံမှန်က ၁.၅၀ ဒေါ်လာကျပြီး ၇-၁၀ ရက်ကြာပါတယ်။ အမြန်က ၁၅ ဒေါ်လာကျပြီး ၃-၅ ရက်ကြာပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Regular mail costs 1 dollar 50 cents and takes 7-10 days. Express costs 15 dollars and takes 3-5 days.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I'll send it by regular mail. Here's the letter.</div>
+                <div class="burmese">ပုံမှန်နဲ့ ပို့ပါမယ်။ ဒီမှာ စာပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('I will send it by regular mail. Here is the letter.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 3: Sending a Package -->
+    <div class="conversation-section">
+        <h2>📦 Sending a Package / ပါဆယ်ပို့ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I'd like to send this package to my friend in Japan.</div>
+                <div class="burmese">ဂျပန်နိုင်ငံက ကျွန်တော့်သူငယ်ချင်းဆီကို ဒီပါဆယ်ပို့ချင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I would like to send this package to my friend in Japan.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Clerk:</div>
+                <div class="english">Let me weigh it first. What's inside the package?</div>
+                <div class="burmese">အရင်ချိန်ပါရစေ။ ပါဆယ်ထဲမှာ ဘာတွေပါလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Let me weigh it first. What is inside the package?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">It's a gift - some clothes and a book.</div>
+                <div class="burmese">လက်ဆောင်ပါ - အဝတ်အစားတွေနဲ့ စာအုပ်တစ်အုပ်ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('It is a gift - some clothes and a book.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Clerk:</div>
+                <div class="english">It weighs 1.5 kilograms. The shipping cost to Japan is $25.</div>
+                <div class="burmese">၁.၅ ကီလိုဂရမ် ရှိတယ်။ ဂျပန်ကို ပို့ခက ၂၅ ဒေါ်လာပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('It weighs 1.5 kilograms. The shipping cost to Japan is 25 dollars.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">That's fine. Please send it.</div>
+                <div class="burmese">ရပါတယ်။ ပို့ပေးပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('That is fine. Please send it.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 4: Asking About Postage Rates -->
+    <div class="conversation-section">
+        <h2>💰 Asking About Postage Rates / စာပို့ခနှုန်းထားများမေးမြန်းခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">How much does it cost to send a postcard to Singapore?</div>
+                <div class="burmese">စင်ကာပူကို ပို့စကတ်တစ်ခုပို့ဖို့ ဘယ်လောက်ကျမလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('How much does it cost to send a postcard to Singapore?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Clerk:</div>
+                <div class="english">A postcard costs 80 cents to send internationally.</div>
+                <div class="burmese">ပို့စကတ်တစ်ခု နိုင်ငံတကာပို့ဖို့ ၈၀ ဆင့်ကျပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('A postcard costs 80 cents to send internationally.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Do you have any special rates for large envelopes?</div>
+                <div class="burmese">စာအိတ်ကြီးတွေအတွက် အထူးနှုန်းထားတွေ ရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you have any special rates for large envelopes?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Clerk:</div>
+                <div class="english">Yes, large envelopes cost based on weight. For up to 200 grams, it's $2.50.</div>
+                <div class="burmese">ဟုတ်ပါတယ်၊ စာအိတ်ကြီးတွေက အလေးချိန်အလိုက် ကျပါတယ်။ ၂၀၀ ဂရမ်အထိ ၂.၅၀ ဒေါ်လာပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, large envelopes cost based on weight. For up to 200 grams, it is 2 dollars and 50 cents.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 5: Tracking a Package -->
+    <div class="conversation-section">
+        <h2>🔍 Tracking a Package / ပါဆယ်ခြေရာခံခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Can I track my package online?</div>
+                <div class="burmese">ကျွန်တော့်ပါဆယ်ကို အွန်လိုင်းကနေ ခြေရာခံလို့ရမလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Can I track my package online?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Clerk:</div>
+                <div class="english">Yes, if you choose registered mail. Would you like to add tracking?</div>
+                <div class="burmese">ဟုတ်ပါတယ်၊ မှတ်ပုံတင်စာပို့ရွေးရင် ရပါတယ်။ ခြေရာခံခြင်း ထည့်ချင်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, if you choose registered mail. Would you like to add tracking?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Yes, please. How much extra is it?</div>
+                <div class="burmese">ဟုတ်ကဲ့။ အပိုဘယ်လောက်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, please. How much extra is it?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Clerk:</div>
+                <div class="english">Tracking costs an additional $3. Here's your tracking number.</div>
+                <div class="burmese">ခြေရာခံခြင်းက အပို ၃ ဒေါ်လာပါ။ ဒီမှာ သင့်ခြေရာခံနံပါတ်ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Tracking costs an additional 3 dollars. Here is your tracking number.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 6: Registered Mail -->
+    <div class="conversation-section">
+        <h2>📋 Registered Mail / မှတ်ပုံတင်စာ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I need to send this important document safely.</div>
+                <div class="burmese">ဒီအရေးကြီးစာရွက်ကို လုံခြုံစွာ ပို့ဖို့လိုတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I need to send this important document safely.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Clerk:</div>
+                <div class="english">I recommend registered mail. It's secure and requires a signature upon delivery.</div>
+                <div class="burmese">မှတ်ပုံတင်စာကို အကြံပြုပါတယ်။ လုံခြုံပြီး လက်ခံရရှိချိန်တွင် လက်မှတ်ထိုးရန် လိုအပ်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I recommend registered mail. It is secure and requires a signature upon delivery.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Perfect. How much is registered mail?</div>
+                <div class="burmese">ပြီးပြည့်စုံတယ်။ မှတ်ပုံတင်စာ ဘယ်လောက်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Perfect. How much is registered mail?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Clerk:</div>
+                <div class="english">It's $8.50 including insurance up to $50. Would you like additional insurance?</div>
+                <div class="burmese">ဒေါ်လာ ၅၀ အထိ အာမခံပါပြီး ၈.၅၀ ဒေါ်လာပါ။ နောက်ထပ်အာမခံထည့်ချင်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('It is 8 dollars and 50 cents including insurance up to 50 dollars. Would you like additional insurance?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 7: Picking Up a Package -->
+    <div class="conversation-section">
+        <h2>📬 Picking Up a Package / ပါဆယ်လာရောက်ယူခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I received a notification that I have a package to pick up.</div>
+                <div class="burmese">ကျွန်တော်လာယူရမယ့် ပါဆယ်ရှိတယ်လို့ အကြောင်းကြားစာ ရထားတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I received a notification that I have a package to pick up.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Clerk:</div>
+                <div class="english">May I see your ID and the delivery notice?</div>
+                <div class="burmese">သင့်သက်သေခံနဲ့ ပို့ဆောင်မှုအကြောင်းကြားစာ ကြည့်လို့ရမလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('May I see your ID and the delivery notice?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Here you go. Here's my passport too.</div>
+                <div class="burmese">ဒီမှာပါ။ ဒါက ကျွန်တော့်ပတ်စပို့ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Here you go. Here is my passport too.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Clerk:</div>
+                <div class="english">Thank you. Please sign here to confirm receipt. Here's your package.</div>
+                <div class="burmese">ကျေးဇူးပါ။ ကျေးဇူးပြု၍ လက်ခံရရှိကြောင်း ဒီမှာ လက်မှတ်ထိုးပါ။ ဒီမှာ သင့်ပါဆယ်ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Thank you. Please sign here to confirm receipt. Here is your package.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 8: Buying Packing Supplies -->
+    <div class="conversation-section">
+        <h2>📦 Buying Packing Supplies / ထုပ်ပိုးပစ္စည်းများဝယ်ယူခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Do you sell boxes and packing tape?</div>
+                <div class="burmese">သင်တို့ သေတ္တာများနဲ့ ထုပ်ပိုးတိပ်များ ရောင်းလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you sell boxes and packing tape?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Clerk:</div>
+                <div class="english">Yes, we have boxes of different sizes. Small boxes are $2, medium $3, large $5.</div>
+                <div class="burmese">ဟုတ်ပါတယ်၊ အရွယ်အစားအမျိုးမျိုး သေတ္တာတွေရှိပါတယ်။ သေတ္တာငယ် ၂ ဒေါ်လာ၊ အလတ် ၃ ဒေါ်လာ၊ အကြီး ၅ ဒေါ်လာပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, we have boxes of different sizes. Small boxes are 2 dollars, medium 3 dollars, large 5 dollars.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I'll take one medium box and a roll of packing tape.</div>
+                <div class="burmese">သေတ္တာအလတ် တစ်လုံးနဲ့ ထုပ်ပိုးတိပ် တစ်ခွေ ယူမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I will take one medium box and a roll of packing tape.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Clerk:</div>
+                <div class="english">That will be $5.50. Would you like bubble wrap as well?</div>
+                <div class="burmese">၅.၅၀ ဒေါ်လာပါ။ ပူဖောင်းထုပ် ထပ်လိုလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('That will be 5 dollars and 50 cents. Would you like bubble wrap as well?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Vocabulary Section -->
+    <div class="conversation-section">
+        <h2>📚 Post Office Vocabulary / စာတိုက်သုံးဝေါဟာရများ</h2>
+        <div class="vocab-grid">
+            <div class="vocab-item"><span class="vocab-eng">Stamp</span><br><span class="vocab-burmese">တံဆိပ်ခေါင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Envelope</span><br><span class="vocab-burmese">စာအိတ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Postcard</span><br><span class="vocab-burmese">ပို့စကတ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Package / Parcel</span><br><span class="vocab-burmese">ပါဆယ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Domestic mail</span><br><span class="vocab-burmese">ပြည်တွင်းစာ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">International mail</span><br><span class="vocab-burmese">နိုင်ငံတကာစာ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Regular / Express mail</span><br><span class="vocab-burmese">ပုံမှန်/အမြန်စာ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Registered mail</span><br><span class="vocab-burmese">မှတ်ပုံတင်စာ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Tracking number</span><br><span class="vocab-burmese">ခြေရာခံနံပါတ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Return address</span><br><span class="vocab-burmese">ပြန်လိပ်စာ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Postage</span><br><span class="vocab-burmese">စာပို့ခ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">P.O. Box</span><br><span class="vocab-burmese">စာတိုက်သေတ္တာ</span></div>
+        </div>
+    </div>
+    
+    <!-- Useful Post Office Phrases -->
+    <div class="conversation-section">
+        <h2>💡 Useful Post Office Phrases / အသုံးဝင်သောစာတိုက်စကားစုများ</h2>
+        <div class="info-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Common Questions (အမေးများသောမေးခွန်းများ):</strong><br>
+            • "What is the postage rate for this package?" (ဒီပါဆယ်အတွက် စာပို့ခနှုန်းက ဘယ်လောက်လဲ။)<br>
+            • "How long will it take to arrive?" (ရောက်ဖို့ ဘယ်လောက်ကြာမလဲ။)<br>
+            • "Can I send this by airmail?" (ဒါကို လေကြောင်းစာဖြင့် ပို့လို့ရမလား။)<br>
+            • "Do I need to fill out a customs form?" (အကောက်ခွန်ဖောင်ဖြည့်ဖို့လိုလား။)<br>
+            • "What is your zip code?" (သင့်စာတိုက်သင်္ကေတနံပါတ်က ဘာလဲ။)<br>
+            <br>
+            <i class="fas fa-lightbulb"></i>
+            <strong>Addressing a Letter (စာလိပ်စာရေးသားခြင်း):</strong><br>
+            • "Don't forget to write the return address." (ပြန်လိပ်စာရေးဖို့ မမေ့�ါနဲ့။)<br>
+            • "Please write clearly." (ရှင်းရှင်းလင်းလင်း ရေးပါ။)<br>
+            • "Make sure you have enough postage." (စာပို့ခ လုံလုံလောက်လောက်ရှိဖို့ သေချာပါစေ။)<br>
+        </div>
+    </div>
+    
+    <!-- Practice Section -->
+    <div class="conversation-section">
+        <h2>✏️ Practice Questions / လေ့ကျင့်ခန်းမေးခွန်းများ</h2>
+        <div class="dialogue-box">
+            <div class="quiz-question">
+                <p><strong>1. How do you ask to buy stamps?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like to buy some stamps.')">I need a package.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like to buy some stamps.')">I would like to buy some stamps.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like to buy some stamps.')">Where is the mailbox?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like to buy some stamps.')">Send this letter.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>2. "ဒီပါဆယ်ကို ဂျပန်ကိုပို့ချင်ပါတယ်" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I want to send this package to Japan.')">I want to send this letter to Japan.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I want to send this package to Japan.')">I want to send this package to Japan.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I want to send this package to Japan.')">This package is from Japan.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I want to send this package to Japan.')">Japan sent this package.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. What does registered mail require upon delivery?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A signature')">A stamp</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A signature')">An envelope</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A signature')">A signature</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A signature')">A phone call</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. "ဒီစာပို့ခက ဘယ်လောက်လဲ" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'How much is the postage?')">Where is the postage?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'How much is the postage?')">When is the postage?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'How much is the postage?')">How much is the postage?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'How much is the postage?')">Why is the postage?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. What can you use to track your package online?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Tracking number')">Postage stamp</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Tracking number')">Envelope</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Tracking number')">Tracking number</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Tracking number')">Return address</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p><i class="fas fa-heart" style="color: #d35400;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p>
+        <p style="font-size: 0.75rem; margin-top: 0.5rem;">Practice these conversations to handle all your postal needs with confidence!</p>
+    </footer>
+</div>
+
+<!-- Back to Top Button -->
+<a href="#" class="back-to-top" id="backToTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+<script>
+    function speakEnglish(text) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8;
+        utterance.pitch = 1.0;
+        
+        function setVoice() {
+            const voices = window.speechSynthesis.getVoices();
+            const englishVoice = voices.find(v => v.lang === 'en-US' || v.lang.startsWith('en-'));
+            if (englishVoice) utterance.voice = englishVoice;
+            window.speechSynthesis.speak(utterance);
+        }
+        
+        if (window.speechSynthesis.getVoices().length) setVoice();
+        else window.speechSynthesis.onvoiceschanged = setVoice;
+    }
+    
+    function checkAnswer(element, correctAnswer) {
+        const options = element.parentElement.querySelectorAll('.quiz-option');
+        const isCorrect = element.innerText === correctAnswer;
+        
+        if (isCorrect) {
+            element.style.background = '#2ecc71';
+            element.style.color = 'white';
+            speakEnglish(correctAnswer);
+            setTimeout(() => {
+                options.forEach(opt => {
+                    opt.style.background = '';
+                    opt.style.color = '';
+                });
+            }, 1500);
+        } else {
+            element.style.background = '#e74c3c';
+            element.style.color = 'white';
+            setTimeout(() => {
+                element.style.background = '';
+                element.style.color = '';
+            }, 500);
+        }
+    }
+    
+    // Back to Top Button Functionality
+    (function() {
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        
+        if (backToTopBtn) {
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

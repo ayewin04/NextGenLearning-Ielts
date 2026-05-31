@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel & Accommodation - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 1rem;
+        }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        
+        .conversation-section {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .conversation-section h2 {
+            background: #16a085;
+            color: white;
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line {
+            display: grid;
+            grid-template-columns: 70px 1fr 1fr;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            align-items: start;
+        }
+        .speaker { font-weight: bold; color: #16a085; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { 
+            color: #8e6b3c; 
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 0.95rem;
+        }
+        .audio-btn {
+            background: #eef4ff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.3rem;
+        }
+        .audio-btn:hover { background: #16a085; color: white; }
+        
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+            padding: 1rem;
+        }
+        .vocab-item {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            border-left: 3px solid #16a085;
+        }
+        .vocab-eng { font-weight: bold; color: #16a085; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        
+        .quiz-question {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.8rem;
+        }
+        .quiz-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .quiz-option {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .quiz-option:hover { background: #16a085; color: white; border-color: #16a085; }
+        
+        .info-box {
+            background: #e8f8f5;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #16a085;
+        }
+        .info-box i { color: #16a085; margin-right: 8px; }
+        
+        .room-types {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            padding: 1rem;
+            justify-content: space-around;
+            text-align: center;
+        }
+        .room-card {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            flex: 1;
+            min-width: 120px;
+        }
+        .room-icon { font-size: 2rem; }
+        .room-name { font-weight: bold; color: #16a085; margin-top: 0.3rem; }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1rem;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: #1e3c72;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid white;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: #f5b042;
+            color: #1e3c72;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .back-to-top i {
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 42px;
+                height: 42px;
+            }
+            .back-to-top i {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 700px) {
+            .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> All Conversations
+    </a>
+    
+    <header>
+        <h1><i class="fas fa-hotel"></i> Hotel & Accommodation</h1>
+        <p>Learn how to book a room, check in, and request hotel services</p>
+        <p>ဟိုတယ်အခန်းမှာယူနည်း၊ စာရင်းသွင်းနည်းနှင့် ဟိုတယ်ဝန်ဆောင်မှုများ တောင်းဆိုနည်းကို လေ့လာပါ</p>
+    </header>
+    
+    <!-- Dialogue 1: Booking a Room by Phone -->
+    <div class="conversation-section">
+        <h2>📞 Booking a Room / အခန်းမှာယူခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Guest:</div>
+                <div class="english">Hello, I'd like to book a room for two nights.</div>
+                <div class="burmese">မင်္ဂလာပါ၊ နှစ်ညအတွက် အခန်းတစ်ခန်း မှာယူချင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Hello, I would like to book a room for two nights.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Receptionist:</div>
+                <div class="english">Certainly. What dates do you need?</div>
+                <div class="burmese">ရပါတယ်။ ဘယ်ရက်တွေလိုအပ်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Certainly. What dates do you need?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Guest:</div>
+                <div class="english">From May 15th to May 17th.</div>
+                <div class="burmese">မေ ၁၅ ရက်ကနေ မေ ၁၇ ရက်အထိ။</div>
+                <button class="audio-btn" onclick="speakEnglish('From May 15th to May 17th.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Receptionist:</div>
+                <div class="english">What type of room would you like? We have single, double, and suite.</div>
+                <div class="burmese">ဘယ်လိုအခန်းအမျိုးအစား လိုချင်လဲ။ တစ်ယောက်တည်းခန်း၊ နှစ်ယောက်တည်းခန်း၊ suite ရှိပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('What type of room would you like? We have single, double, and suite.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Guest:</div>
+                <div class="english">A double room, please. How much per night?</div>
+                <div class="burmese">နှစ်ယောက်ခန်း ယူပါမယ်။ တစ်ည ဘယ်လောက်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('A double room, please. How much per night?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Receptionist:</div>
+                <div class="english">It's $120 per night, including breakfast.</div>
+                <div class="burmese">တစ်ည ၁၂၀ ဒေါ်လာ၊ မနက်စာ ပါပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('It is 120 dollars per night, including breakfast.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 2: Checking In -->
+    <div class="conversation-section">
+        <h2>🛎️ Checking In / ဟိုတယ်စာရင်းသွင်းခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Receptionist:</div>
+                <div class="english">Good afternoon! Welcome to Sunrise Hotel. Do you have a reservation?</div>
+                <div class="burmese">မင်္ဂလာနေ့လယ်ခင်းပါ။ Sunrise ဟိုတယ်မှ ကြိုဆိုပါတယ်။ အခန်းမှာထားလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Good afternoon! Welcome to Sunrise Hotel. Do you have a reservation?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Guest:</div>
+                <div class="english">Yes, I have a reservation under the name Aung.</div>
+                <div class="burmese">ဟုတ်ကဲ့၊ အောင်ဆိုတဲ့နာမည်နဲ့ အခန်းမှာထားပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, I have a reservation under the name Aung.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Receptionist:</div>
+                <div class="english">Let me check. Yes, a double room for two nights. May I see your passport?</div>
+                <div class="burmese">စစ်ကြည့်ပါရစေ။ ဟုတ်ကဲ့၊ နှစ်ညအတွက် နှစ်ယောက်ခန်း။ ပတ်စပို့ကြည့်လို့ရမလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Let me check. Yes, a double room for two nights. May I see your passport?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Guest:</div>
+                <div class="english">Here you go.</div>
+                <div class="burmese">ဒီမှာပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Here you go.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Receptionist:</div>
+                <div class="english">Thank you. Here is your room key. You're in room 305. Breakfast is from 7 to 10 AM.</div>
+                <div class="burmese">ကျေးဇူးပါ။ ဒီမှာ အခန်းသော့ပါ။ အခန်း ၃၀၅ ပါ။ မနက်စာ နံနက် ၇ နာရီမှ ၁၀ နာရီအထိပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Thank you. Here is your room key. You are in room 305. Breakfast is from 7 to 10 AM.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 3: Requesting Room Service -->
+    <div class="conversation-section">
+        <h2>🍽️ Room Service / အခန်းဝန်ဆောင်မှု</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Guest:</div>
+                <div class="english">Hello, I'd like to order room service, please.</div>
+                <div class="burmese">မင်္ဂလာပါ၊ အခန်းဝန်ဆောင်မှု မှာယူချင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Hello, I would like to order room service, please.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Staff:</div>
+                <div class="english">What would you like to order?</div>
+                <div class="burmese">ဘာမှာချင်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What would you like to order?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Guest:</div>
+                <div class="english">I'd like a club sandwich and a bottle of water.</div>
+                <div class="burmese">club sandwich တစ်ခုနဲ့ ရေတစ်ပုလင်း မှာချင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I would like a club sandwich and a bottle of water.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Staff:</div>
+                <div class="english">Sure. That will be delivered to your room in 20 minutes.</div>
+                <div class="burmese">ရပါတယ်။ ၂၀ မိနစ်အတွင်း အခန်းကို ပို့ပေးပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Sure. That will be delivered to your room in 20 minutes.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 4: Asking for Hotel Services -->
+    <div class="conversation-section">
+        <h2>❓ Asking for Hotel Services / ဟိုတယ်ဝန်ဆောင်မှုများမေးမြန်းခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Guest:</div>
+                <div class="english">Excuse me, where is the fitness center?</div>
+                <div class="burmese">ခွင့်လွှတ်ပါ၊ အားကစားခန်း ဘယ်မှာလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Excuse me, where is the fitness center?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Staff:</div>
+                <div class="english">It's on the second floor, next to the swimming pool.</div>
+                <div class="burmese">ဒုတိယထပ်မှာ၊ ရေကူးကန်ဘေးမှာရှိပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('It is on the second floor, next to the swimming pool.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Guest:</div>
+                <div class="english">Is there a laundry service?</div>
+                <div class="burmese">အဝတ်လျှော်ဝန်ဆောင်မှုရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Is there a laundry service?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Staff:</div>
+                <div class="english">Yes, we offer laundry and dry cleaning. Just fill out the form in your room.</div>
+                <div class="burmese">ဟုတ်ကဲ့၊ အဝတ်လျှော်နဲ့ ဒရိုင်ကလင်းန်း လုပ်ပေးပါတယ်။ အခန်းထဲက ဖောင်ကို ဖြည့်ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, we offer laundry and dry cleaning. Just fill out the form in your room.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 5: Having a Problem -->
+    <div class="conversation-section">
+        <h2>⚠️ Having a Problem / ပြဿနာတစ်ခုကြုံတွေ့ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Guest:</div>
+                <div class="english">Excuse me, the air conditioner in my room isn't working.</div>
+                <div class="burmese">ခွင့်လွှတ်ပါ၊ ကျွန်တော့်အခန်းက လေအေးပေးစက် အလုပ်မလုပ်ဘူး။</div>
+                <button class="audio-btn" onclick="speakEnglish('Excuse me, the air conditioner in my room is not working.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Staff:</div>
+                <div class="english">I'm sorry to hear that. I'll send someone to fix it right away.</div>
+                <div class="burmese">ကြားရတာ စိတ်မကောင်းပါဘူး။ ချက်ချင်း ပြင်ပေးဖို့ လူလွှတ်ပေးပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am sorry to hear that. I will send someone to fix it right away.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Guest:</div>
+                <div class="english">Thank you. Also, the TV remote is missing.</div>
+                <div class="burmese">ကျေးဇူးပါ။ ပြီးတော့ TV remote ပျောက်နေတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Thank you. Also, the TV remote is missing.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Staff:</div>
+                <div class="english">I'll bring a new one immediately. Is there anything else?</div>
+                <div class="burmese">အသစ်တစ်လုံး ချက်ချင်းယူလာပါမယ်။ နောက်ထပ်လိုအပ်တာရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('I will bring a new one immediately. Is there anything else?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 6: Checking Out -->
+    <div class="conversation-section">
+        <h2>💳 Checking Out / ဟိုတယ်စာရင်းရှင်းခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Guest:</div>
+                <div class="english">I'd like to check out, please.</div>
+                <div class="burmese">စာရင်းရှင်းချင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I would like to check out, please.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Receptionist:</div>
+                <div class="english">Certainly. Here is your bill. Please check if everything is correct.</div>
+                <div class="burmese">ရပါတယ်။ ဒီမှာ ငွေရှင်းပြေစာပါ။ အားလုံးမှန်ကန်ကြောင်း ကျေးဇူးပြု၍ စစ်ကြည့်ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Certainly. Here is your bill. Please check if everything is correct.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Guest:</div>
+                <div class="english">Everything looks fine. Can I pay by credit card?</div>
+                <div class="burmese">အားလုံး အဆင်ပြေပါတယ်။ ခရက်ဒစ်ကဒ်နဲ့ ပေးလို့ရမလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Everything looks fine. Can I pay by credit card?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Receptionist:</div>
+                <div class="english">Yes, of course. Just insert your card here. Please sign here. Thank you for staying with us!</div>
+                <div class="burmese">ဟုတ်ကဲ့၊ ရပါတယ်။ ဒီမှာ ကဒ်ထည့်ပါ။ ဒီမှာ လက်မှတ်ထိုးပါ။ ကျွန်တော်တို့နဲ့အတူ နေထိုင်တဲ့အတွက် ကျေးဇူးတင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, of course. Just insert your card here. Please sign here. Thank you for staying with us!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Room Types -->
+    <div class="conversation-section">
+        <h2>🏨 Room Types / အခန်းအမျိုးအစားများ</h2>
+        <div class="room-types">
+            <div class="room-card">
+                <div class="room-icon">🛏️</div>
+                <div class="room-name">Single Room</div>
+                <div class="room-burmese">တစ်ယောက်တည်းခန်း</div>
+            </div>
+            <div class="room-card">
+                <div class="room-icon">🛏️🛏️</div>
+                <div class="room-name">Double Room</div>
+                <div class="room-burmese">နှစ်ယောက်တည်းခန်း</div>
+            </div>
+            <div class="room-card">
+                <div class="room-icon">👑</div>
+                <div class="room-name">Suite</div>
+                <div class="room-burmese">ဇိမ်ခံခန်း</div>
+            </div>
+            <div class="room-card">
+                <div class="room-icon">👨‍👩‍👧</div>
+                <div class="room-name">Family Room</div>
+                <div class="room-burmese">မိသားစုခန်း</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Vocabulary Section -->
+    <div class="conversation-section">
+        <h2>📚 Hotel Vocabulary / ဟိုတယ်သုံးဝေါဟာရများ</h2>
+        <div class="vocab-grid">
+            <div class="vocab-item"><span class="vocab-eng">Reservation</span><br><span class="vocab-burmese">ကြိုစာရင်းသွင်းခြင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Check in / Check out</span><br><span class="vocab-burmese">စာရင်းသွင်း/ရှင်းခြင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Room key / Card</span><br><span class="vocab-burmese">အခန်းသော့/ကဒ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Lobby</span><br><span class="vocab-burmese">ဧည့်ခန်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Elevator / Lift</span><br><span class="vocab-burmese">လှေကား</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Breakfast included</span><br><span class="vocab-burmese">မနက်စာပါဝင်သည်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Housekeeping</span><br><span class="vocab-burmese">အခန်းသန့်ရှင်းရေး</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Laundry service</span><br><span class="vocab-burmese">အဝတ်လျှော်ဝန်ဆောင်မှု</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Wake-up call</span><br><span class="vocab-burmese">နှိုးဆော်ခေါ်ခြင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Vacancy</span><br><span class="vocab-burmese">အခန်းလွတ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Fully booked</span><br><span class="vocab-burmese">အခန်းပြည့်သည်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Bellboy / Porter</span><br><span class="vocab-burmese">အိတ်စောင့်/အိတ်ဆွဲဝန်</span></div>
+        </div>
+    </div>
+    
+    <!-- Useful Hotel Phrases -->
+    <div class="conversation-section">
+        <h2>💡 Useful Hotel Phrases / အသုံးဝင်သောဟိုတယ်စကားစုများ</h2>
+        <div class="info-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Common Guest Phrases (ဧည့်သည်စကားစုများ):</strong><br>
+            • "Do you have any vacancies tonight?" (ဒီည အခန်းလွတ်ရှိလား။)<br>
+            • "Can I have a late check-out?" (နောက်ကျမှစာရင်းရှင်းလို့ရမလား။)<br>
+            • "Is there Wi-Fi in the room?" (အခန်းထဲမှာ Wi-Fi ရှိလား။)<br>
+            • "Can I have extra towels, please?" (မျက်နှာသုတ်ပုဝါထပ်ရနိုင်မလား။)<br>
+            • "The room is too noisy." (အခန်းက ဆူညံလွန်းတယ်။)<br>
+            • "I'd like to extend my stay for one more night." (နောက်တစ်ညထပ်နေချင်ပါတယ်။)<br>
+            <br>
+            <i class="fas fa-lightbulb"></i>
+            <strong>Receptionist Phrases (ဧည့်ကြိုစကားစုများ):</strong><br>
+            • "Would you like a smoking or non-smoking room?" (ဆေးလိပ်သောက်ခန်း လား၊ မသောက်ခန်းလား။)<br>
+            • "Check-out time is 11 AM." (စာရင်းရှင်းချိန် နံနက် ၁၁ နာရီပါ။)<br>
+            • "Breakfast is served in the main restaurant." (မနက်စာကို ပင်မစားသောက်ဆိုင်မှာ ကျွေးပါတယ်။)<br>
+            • "Please enjoy your stay." (ပျော်ရွှင်စွာ နေထိုင်ပါ။)<br>
+        </div>
+    </div>
+    
+    <!-- Practice Section -->
+    <div class="conversation-section">
+        <h2>✏️ Practice Questions / လေ့ကျင့်ခန်းမေးခွန်းများ</h2>
+        <div class="dialogue-box">
+            <div class="quiz-question">
+                <p><strong>1. How do you book a room for two nights?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like to book a room for two nights.')">I want food.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like to book a room for two nights.')">Where is the pool?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like to book a room for two nights.')">I would like to book a room for two nights.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like to book a room for two nights.')">What time is breakfast?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>2. "ဟိုတယ်စာရင်းသွင်းချိန်ဘယ်အချိန်လဲ?" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What time is check-in?')">How much is the room?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What time is check-in?')">What time is check-in?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What time is check-in?')">Where is the elevator?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What time is check-in?')">Do you have Wi-Fi?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. What do you need to show when checking into a hotel?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Passport')">Driver's license only</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Passport')">Credit card only</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Passport')">Passport</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Passport')">Birth certificate</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. "အခန်းသော့ ဘယ်မှာရလဲ?" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Where can I get my room key?')">Where is my room?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Where can I get my room key?')">Where can I get my room key?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Where can I get my room key?')">How much is the key?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Where can I get my room key?')">I lost my key.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. What do you say when a hotel has no rooms available?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'We are fully booked.')">We have rooms.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'We are fully booked.')">We are fully booked.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'We are fully booked.')">We have a vacancy.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'We are fully booked.')">Please come in.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p><i class="fas fa-heart" style="color: #16a085;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p>
+        <p style="font-size: 0.75rem; margin-top: 0.5rem;">Practice these conversations to feel confident booking and staying at hotels!</p>
+    </footer>
+</div>
+
+<!-- Back to Top Button -->
+<a href="#" class="back-to-top" id="backToTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+<script>
+    function speakEnglish(text) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8;
+        utterance.pitch = 1.0;
+        
+        function setVoice() {
+            const voices = window.speechSynthesis.getVoices();
+            const englishVoice = voices.find(v => v.lang === 'en-US' || v.lang.startsWith('en-'));
+            if (englishVoice) utterance.voice = englishVoice;
+            window.speechSynthesis.speak(utterance);
+        }
+        
+        if (window.speechSynthesis.getVoices().length) setVoice();
+        else window.speechSynthesis.onvoiceschanged = setVoice;
+    }
+    
+    function checkAnswer(element, correctAnswer) {
+        const options = element.parentElement.querySelectorAll('.quiz-option');
+        const isCorrect = element.innerText === correctAnswer;
+        
+        if (isCorrect) {
+            element.style.background = '#2ecc71';
+            element.style.color = 'white';
+            speakEnglish(correctAnswer);
+            setTimeout(() => {
+                options.forEach(opt => {
+                    opt.style.background = '';
+                    opt.style.color = '';
+                });
+            }, 1500);
+        } else {
+            element.style.background = '#e74c3c';
+            element.style.color = 'white';
+            setTimeout(() => {
+                element.style.background = '';
+                element.style.color = '';
+            }, 500);
+        }
+    }
+    
+    // Back to Top Button Functionality
+    (function() {
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        
+        if (backToTopBtn) {
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Florist - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%); font-family: 'Segoe UI', Roboto, sans-serif; padding: 1rem; }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        .back-btn { display: inline-flex; align-items: center; gap: 8px; background: white; padding: 0.6rem 1.2rem; border-radius: 2rem; text-decoration: none; color: #1e3c72; font-weight: 500; margin-bottom: 1rem; transition: 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        .conversation-section { background: white; border-radius: 1rem; margin-bottom: 2rem; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+        .conversation-section h2 { background: #e84393; color: white; padding: 1rem; font-size: 1.2rem; }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line { display: grid; grid-template-columns: 70px 1fr 1fr; gap: 0.8rem; padding: 0.8rem; border-bottom: 1px solid #eee; align-items: start; }
+        .speaker { font-weight: bold; color: #e84393; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.95rem; }
+        .audio-btn { background: #eef4ff; border: none; border-radius: 2rem; padding: 0.3rem 0.8rem; cursor: pointer; transition: 0.2s; margin-top: 0.3rem; }
+        .audio-btn:hover { background: #e84393; color: white; }
+        .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.8rem; padding: 1rem; }
+        .vocab-item { background: #f8f9fa; padding: 0.8rem; border-radius: 0.8rem; border-left: 3px solid #e84393; }
+        .vocab-eng { font-weight: bold; color: #e84393; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        .quiz-question { background: #f8f9fa; padding: 1rem; margin-bottom: 1rem; border-radius: 0.8rem; }
+        .quiz-options { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
+        .quiz-option { background: white; padding: 0.5rem 1rem; border-radius: 2rem; border: 1px solid #ddd; cursor: pointer; transition: 0.2s; }
+        .quiz-option:hover { background: #e84393; color: white; border-color: #e84393; }
+        .tips-box { background: #fdf2f8; padding: 1rem; border-radius: 0.8rem; margin: 1rem; border-left: 3px solid #e84393; }
+        .tips-box i { color: #e84393; margin-right: 8px; }
+        footer { margin-top: 2rem; text-align: center; padding: 1rem; color: #6c757d; font-size: 0.8rem; }
+        .back-to-top { position: fixed; bottom: 1.5rem; right: 1.5rem; background: #1e3c72; color: white; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 1000; opacity: 0; visibility: hidden; border: 2px solid white; }
+        .back-to-top.show { opacity: 1; visibility: visible; }
+        .back-to-top:hover { background: #f5b042; color: #1e3c72; transform: translateY(-3px); }
+        .back-to-top i { font-size: 1.2rem; }
+        @media (max-width: 768px) { .back-to-top { bottom: 1rem; right: 1rem; width: 42px; height: 42px; } .back-to-top i { font-size: 1rem; } }
+        @media (max-width: 700px) { .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; } }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn"><i class="fas fa-arrow-left"></i> All Conversations</a>
+    <header><h1><i class="fas fa-seedling"></i> Florist</h1><p>Learn how to buy flowers, order arrangements, and send bouquets in English</p><p>ပန်းများဝယ်ယူနည်း၊ ပန်းစီစဉ်မှုများမှာယူနည်းနှင့် ပန်းစည်းများပို့ဆောင်နည်းကို အင်္ဂလိပ်လို လေ့လာပါ</p></header>
+    
+    <!-- Dialogue 1: Buying a Bouquet -->
+    <div class="conversation-section"><h2>💐 Buying a Bouquet / ပန်းစည်းဝယ်ယူခြင်း</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">Hello, I'd like to buy a bouquet of flowers.</div><div class="burmese">မင်္ဂလာပါ၊ ပန်းစည်းတစ်စည်း ဝယ်ချင်ပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('Hello, I would like to buy a bouquet of flowers.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Florist:</div><div class="english">What's the occasion? Birthday, anniversary, or just because?</div><div class="burmese">ဘာအခါသမယလဲ။ မွေးနေ့၊ နှစ်ပတ်လည်၊ ဒါမှမဟုတ် အကြောင်းမရှိဘဲလား။</div><button class="audio-btn" onclick="speakEnglish('What is the occasion? Birthday, anniversary, or just because?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">It's for my wife's birthday. She loves pink flowers.</div><div class="burmese">ကျွန်တော့်ဇနီးမွေးနေ့အတွက်ပါ။ သူမ ပန်းရောင်ပန်းတွေ ကြိုက်တယ်။</div><button class="audio-btn" onclick="speakEnglish('It is for my wife\'s birthday. She loves pink flowers.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Florist:</div><div class="english">This mixed pink bouquet has roses, carnations, and lilies. It's $35.</div><div class="burmese">ဒီပန်းရောင်ရောစပ်ပန်းစည်းမှာ နှင်းဆီ၊ ဇော်မွှားနှင့် ကြာပန်းတို့ ပါဝင်ပါတယ်။ ၃၅ ဒေါ်လာပါ။</div><button class="audio-btn" onclick="speakEnglish('This mixed pink bouquet has roses, carnations, and lilies. It is 35 dollars.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 2: Custom Arrangement -->
+    <div class="conversation-section"><h2>🎨 Custom Arrangement / စိတ်ကြိုက်ပန်းစီစဉ်မှု</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">I need a custom arrangement for a funeral.</div><div class="burmese">ဈာပနအတွက် စိတ်ကြိုက်ပန်းစီစဉ်မှုတစ်ခု လိုအပ်ပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('I need a custom arrangement for a funeral.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Florist:</div><div class="english">I'm sorry for your loss. What colors would you like?</div><div class="burmese">ဝမ်းနည်းကြေကွဲခြင်းအတွက် ဝမ်းနည်းပါတယ်။ ဘယ်အရောင်တွေ လိုချင်လဲ။</div><button class="audio-btn" onclick="speakEnglish('I am sorry for your loss. What colors would you like?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">White and light blue. Lilies and roses, please. No strong fragrance.</div><div class="burmese">အဖြူနှင့် အပြာဖျော့။ ကြာပန်းနှင့် နှင်းဆီပါ။ ပြင်းထန်သောရနံ့ မပါစေနှင့်။</div><button class="audio-btn" onclick="speakEnglish('White and light blue. Lilies and roses, please. No strong fragrance.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Florist:</div><div class="english">I'll create a respectful wreath arrangement. It will be $85 and ready in 2 hours.</div><div class="burmese">လေးစားဖွယ်ပန်းကုံးစီစဉ်မှုတစ်ခု ဖန်တီးပါမယ်။ ၈၅ ဒေါ်လာဖြစ်ပြီး ၂ နာရီအတွင်း အဆင်သင့်ဖြစ်ပါလိမ့်မယ်။</div><button class="audio-btn" onclick="speakEnglish('I will create a respectful wreath arrangement. It will be 85 dollars and ready in 2 hours.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 3: Flower Meanings -->
+    <div class="conversation-section"><h2>💖 Flower Meanings / ပန်းအဓိပ္ပာယ်များ</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">What do different flowers symbolize?</div><div class="burmese">မတူညီတဲ့ပန်းတွေက ဘာအဓိပ္ပာယ်တွေရှိလဲ။</div><button class="audio-btn" onclick="speakEnglish('What do different flowers symbolize?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Florist:</div><div class="english">Red roses mean love. Yellow roses mean friendship. White lilies mean purity.</div><div class="burmese">အနီနှင်းဆီက အချစ်ကိုဆိုလိုတယ်။ အဝါနှင်းဆီက ခင်မင်ရင်းနှီးမှု။ အဖြူကြာပန်းက စင်ကြယ်မှု။</div><button class="audio-btn" onclick="speakEnglish('Red roses mean love. Yellow roses mean friendship. White lilies mean purity.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">What about sunflowers?</div><div class="burmese">နေကြာပန်းကရော။</div><button class="audio-btn" onclick="speakEnglish('What about sunflowers?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Florist:</div><div class="english">Sunflowers symbolize happiness, loyalty, and adoration. They're great for cheering someone up.</div><div class="burmese">နေကြာပန်းက ပျော်ရွှင်မှု၊ သစ္စာစောင့်သိမှုနှင့် လေးစားအားကျမှုကို ဆိုလိုတယ်။ တစ်စုံတစ်ယောက်ကို အားပေးဖို့ အကောင်းဆုံးပါ။</div><button class="audio-btn" onclick="speakEnglish('Sunflowers symbolize happiness, loyalty, and adoration. They are great for cheering someone up.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 4: Flower Delivery -->
+    <div class="conversation-section"><h2>🚚 Flower Delivery / ပန်းပို့ဆောင်ခြင်း</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">Can you deliver flowers to my friend's house?</div><div class="burmese">ကျွန်တော့်သူငယ်ချင်းအိမ်ကို ပန်းပို့ပေးနိုင်မလား။</div><button class="audio-btn" onclick="speakEnglish('Can you deliver flowers to my friend\'s house?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Florist:</div><div class="english">Yes, we deliver within a 10-mile radius. Delivery fee is $10.</div><div class="burmese">ဟုတ်ပါတယ်၊ မိုင် ၁၀ အတွင်း ပို့ဆောင်ပေးပါတယ်။ ပို့ဆောင်ခကြေးက ၁၀ ဒေါ်လာပါ။</div><button class="audio-btn" onclick="speakEnglish('Yes, we deliver within a 10-mile radius. Delivery fee is 10 dollars.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">Can I include a gift message?</div><div class="burmese">လက်ဆောင်မက်ဆေ့ချ်တစ်ခု ထည့်လို့ရမလား။</div><button class="audio-btn" onclick="speakEnglish('Can I include a gift message?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Florist:</div><div class="english">Of course. We'll write it on a beautiful card. What would you like to say?</div><div class="burmese">ရပါတယ်။ လှပတဲ့ကဒ်ပေါ်မှာ ရေးပေးပါမယ်။ ဘာပြောချင်လဲ။</div><button class="audio-btn" onclick="speakEnglish('Of course. We will write it on a beautiful card. What would you like to say?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 5: Wedding Flowers -->
+    <div class="conversation-section"><h2>💒 Wedding Flowers / မင်္ဂလာပန်းများ</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Bride:</div><div class="english">I need flowers for my wedding next month. Do you do wedding packages?</div><div class="burmese">လာမယ့်လ ကျွန်မမင်္ဂလာဆောင်အတွက် ပန်းများလိုအပ်ပါတယ်။ မင်္ဂလာပန်းအစုံများ ပြုလုပ်ပေးလား။</div><button class="audio-btn" onclick="speakEnglish('I need flowers for my wedding next month. Do you do wedding packages?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Florist:</div><div class="english">Yes, we specialize in weddings. We'll need to schedule a consultation. What's your color theme?</div><div class="burmese">ဟုတ်ပါတယ်၊ မင်္ဂလာဆောင်များကို အထူးပြုပါတယ်။ တိုင်ပင်ဆွေးနွေးရန် အချိန်ဇယားဆွဲရပါမယ်။ သင့်အရောင်အခင်းအကျင်းက ဘာလဲ။</div><button class="audio-btn" onclick="speakEnglish('Yes, we specialize in weddings. We will need to schedule a consultation. What is your color theme?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Bride:</div><div class="english">Blush pink and ivory. I'll need a bridal bouquet, bridesmaid bouquets, and centerpieces.</div><div class="burmese">ပန်းရောင်ဖျော့နှင့် ဆင်စွယ်ရောင်။ သတို့သမီးပန်းစည်း၊ မင်္ဂလာဖော်ပန်းစည်းများနှင့် စားပွဲအလယ်ပန်းများ လိုအပ်ပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('Blush pink and ivory. I will need a bridal bouquet, bridesmaid bouquets, and centerpieces.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Florist:</div><div class="english">A basic wedding package starts at $300. Let me show you some examples.</div><div class="burmese">အခြေခံမင်္ဂလာပန်းအစုံက ၃၀၀ ဒေါ်လာမှစတင်ပါတယ်။ ဥပမာအချို့ ပြပါရစေ။</div><button class="audio-btn" onclick="speakEnglish('A basic wedding package starts at 300 dollars. Let me show you some examples.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 6: Potted Plants -->
+    <div class="conversation-section"><h2>🌱 Potted Plants / အိုးစိုက်အပင်များ</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">I'd like to buy a houseplant that's easy to care for.</div><div class="burmese">ပြုစုရလွယ်ကူတဲ့ အိမ်တွင်းအပင်တစ်ပင် ဝယ်ချင်ပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('I would like to buy a houseplant that is easy to care for.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Florist:</div><div class="english">Snake plants and succulents are very low-maintenance. This snake plant is $25.</div><div class="burmese">မြွေပွေးပင်နှင့် အရည်ရွှမ်းပင်များက ပြုစုရအလွန်လွယ်ကူပါတယ်။ ဒီမြွေပွေးပင်က ၂၅ ဒေါ်လာပါ။</div><button class="audio-btn" onclick="speakEnglish('Snake plants and succulents are very low-maintenance. This snake plant is 25 dollars.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">How often should I water it?</div><div class="burmese">ဘယ်နှစ်ခါလောက် ရေလောင်းသင့်လဲ။</div><button class="audio-btn" onclick="speakEnglish('How often should I water it?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Florist:</div><div class="english">Only once every 2-3 weeks. They're very forgiving if you forget to water them.</div><div class="burmese">၂-၃ ပတ်တစ်ခါသာ လောင်းပါ။ ရေလောင်းဖို့မေ့ရင်လည်း အန္တရာယ်မရှိပါဘူး။</div><button class="audio-btn" onclick="speakEnglish('Only once every 2-3 weeks. They are very forgiving if you forget to water them.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 7: Subscription Service -->
+    <div class="conversation-section"><h2>📅 Flower Subscription / ပန်းစာရင်းသွင်းမှု</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">Do you have a flower subscription service?</div><div class="burmese">ပန်းစာရင်းသွင်းဝန်ဆောင်မှု ရှိလား။</div><button class="audio-btn" onclick="speakEnglish('Do you have a flower subscription service?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Florist:</div><div class="english">Yes, we offer weekly, bi-weekly, and monthly subscriptions. Weekly is $30 per delivery.</div><div class="burmese">ဟုတ်ပါတယ်၊ အပတ်စဉ်၊ နှစ်ပတ်တစ်ခါနှင့် လစဉ် စာရင်းသွင်းမှုများ ပေးပါတယ်။ အပတ်စဉ်က တစ်ကြိမ်ပို့ဆောင်လျှင် ၃၀ ဒေါ်လာပါ။</div><button class="audio-btn" onclick="speakEnglish('Yes, we offer weekly, bi-weekly, and monthly subscriptions. Weekly is 30 dollars per delivery.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">Can I customize the flowers each time?</div><div class="burmese">အကြိမ်တိုင်း ပန်းများကို စိတ်ကြိုက်ပြုလုပ်လို့ရမလား။</div><button class="audio-btn" onclick="speakEnglish('Can I customize the flowers each time?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Florist:</div><div class="english">Yes, you can choose preferences like colors, flower types, or let us surprise you with seasonal blooms.</div><div class="burmese">ဟုတ်ပါတယ်၊ အရောင်များ၊ ပန်းအမျိုးအစားများ သို့မဟုတ် ရာသီအလိုက်ပန်းများဖြင့် အံ့အားသင့်စေရန် ကျွန်တော်တို့ကို ခွင့်ပြုနိုင်ပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('Yes, you can choose preferences like colors, flower types, or let us surprise you with seasonal blooms.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 8: Sympathy Flowers -->
+    <div class="conversation-section"><h2>🕊️ Sympathy Flowers / ဝမ်းနည်းကြေကွဲမှုပန်းများ</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">I need flowers for a coworker who lost a family member.</div><div class="burmese">မိသားစုဝင်တစ်ဦးဆုံးရှုံးခဲ့ရတဲ့ လုပ်ဖော်ကိုင်ဖက်အတွက် ပန်းများလိုအပ်ပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('I need flowers for a coworker who lost a family member.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Florist:</div><div class="english">White lilies and white roses are traditional for sympathy. This arrangement is $45.</div><div class="burmese">အဖြူကြာပန်းနှင့် အဖြူနှင်းဆီများက ဝမ်းနည်းကြေကွဲမှုအတွက် ရိုးရာဖြစ်ပါတယ်။ ဒီပန်းစီစဉ်မှုက ၄၅ ဒေါ်လာပါ။</div><button class="audio-btn" onclick="speakEnglish('White lilies and white roses are traditional for sympathy. This arrangement is 45 dollars.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">Can you add a card that says "With deepest sympathy"?</div><div class="burmese">"အကြွင်းမဲ့ဝမ်းနည်းကြေကွဲခြင်းဖြင့်" လို့ရေးထားတဲ့ ကဒ်တစ်ခုထည့်ပေးနိုင်မလား။</div><button class="audio-btn" onclick="speakEnglish('Can you add a card that says With deepest sympathy?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Florist:</div><div class="english">Absolutely. We'll deliver it tomorrow morning. Would you like to sign the card?</div><div class="burmese">လုံးဝရပါတယ်။ မနက်ဖြန်မနက်ခင်း ပို့ဆောင်ပေးပါမယ်။ ကဒ်မှာ လက်မှတ်ထိုးချင်လား။</div><button class="audio-btn" onclick="speakEnglish('Absolutely. We will deliver it tomorrow morning. Would you like to sign the card?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <div class="vocab-grid">
+        <div class="vocab-item"><span class="vocab-eng">Bouquet</span><br><span class="vocab-burmese">ပန်းစည်း</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Arrangement</span><br><span class="vocab-burmese">ပန်းစီစဉ်မှု</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Vase</span><br><span class="vocab-burmese">ပန်းအိုး</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Floral foam</span><br><span class="vocab-burmese">ပန်းအမြှုပ်</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Preserved flowers</span><br><span class="vocab-burmese">ထိန်းသိမ်းထားသောပန်းများ</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Dried flowers</span><br><span class="vocab-burmese">အခြောက်ပန်းများ</span></div>
+    </div>
+    
+    <div class="tips-box"><i class="fas fa-lightbulb"></i> <strong>Tips for Keeping Flowers Fresh (ပန်းများလန်းဆန်းအောင်ထားရန် အကြံပြုချက်များ):</strong><br>• Cut stems at an angle before putting in water (ရေမထည့်မီ ပင်စည်များကို ထောင့်ချိုးဖြတ်ပါ)<br>• Change water every 2 days (၂ ရက်တစ်ခါ ရေလဲပါ)<br>• Remove leaves below the water line (ရေမျဉ်းအောက်ရှိ သစ်ရွက်များကိုဖယ်ရှားပါ)<br>• Keep away from direct sunlight and heat (တိုက်ရိုက်နေရောင်နှင့် အပူရှိန်မှ ဝေးဝေးထားပါ)<br>• Use flower food packets (ပန်းအစာအိတ်များသုံးပါ)</div>
+    
+    <div class="quiz-question"><p><strong>1. How do you ask for a bouquet?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'I would like to buy a bouquet.')">I need a vase.</div><div class="quiz-option" onclick="checkAnswer(this, 'I would like to buy a bouquet.')">I would like to buy a bouquet.</div><div class="quiz-option" onclick="checkAnswer(this, 'I would like to buy a bouquet.')">Do you have roses?</div><div class="quiz-option" onclick="checkAnswer(this, 'I would like to buy a bouquet.')">How much are sunflowers?</div></div></div>
+    <div class="quiz-question"><p><strong>2. "ပန်းပို့ဆောင်ခက ဘယ်လောက်လဲ" in English?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'How much is the delivery fee?')">How much is the delivery fee?</div><div class="quiz-option" onclick="checkAnswer(this, 'How much is the delivery fee?')">When will it be delivered?</div><div class="quiz-option" onclick="checkAnswer(this, 'How much is the delivery fee?')">Can you deliver today?</div><div class="quiz-option" onclick="checkAnswer(this, 'How much is the delivery fee?')">Do you deliver on Sunday?</div></div></div>
+    <div class="quiz-question"><p><strong>3. What do red roses symbolize?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'Love')">Friendship</div><div class="quiz-option" onclick="checkAnswer(this, 'Love')">Purity</div><div class="quiz-option" onclick="checkAnswer(this, 'Love')">Happiness</div><div class="quiz-option" onclick="checkAnswer(this, 'Love')">Love</div></div></div>
+    <div class="quiz-question"><p><strong>4. "ဒီပန်းစီစဉ်မှုကို မက်ဆေ့ချ်တစ်ခုထည့်လို့ရမလား" in English?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'Can I add a message to this arrangement?')">Can I add a message to this arrangement?</div><div class="quiz-option" onclick="checkAnswer(this, 'Can I add a message to this arrangement?')">Can I change the color?</div><div class="quiz-option" onclick="checkAnswer(this, 'Can I add a message to this arrangement?')">How much is this arrangement?</div><div class="quiz-option" onclick="checkAnswer(this, 'Can I add a message to this arrangement?')">What flowers are in this?</div></div></div>
+    <div class="quiz-question"><p><strong>5. What is a "low-maintenance" plant?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'A plant that is easy to care for')">A plant that needs daily watering</div><div class="quiz-option" onclick="checkAnswer(this, 'A plant that is easy to care for')">A plant that requires special soil</div><div class="quiz-option" onclick="checkAnswer(this, 'A plant that is easy to care for')">A plant that is easy to care for</div><div class="quiz-option" onclick="checkAnswer(this, 'A plant that is easy to care for')">A plant that needs fertilizer</div></div></div>
+    
+    <footer><p><i class="fas fa-heart" style="color: #e84393;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p></footer>
+</div>
+<a href="#" class="back-to-top" id="backToTopBtn"><i class="fas fa-arrow-up"></i></a>
+<script>
+    function speakEnglish(text){if(!window.speechSynthesis)return;window.speechSynthesis.cancel();const utterance=new SpeechSynthesisUtterance(text);utterance.lang='en-US';utterance.rate=0.8;utterance.pitch=1.0;function setVoice(){const voices=window.speechSynthesis.getVoices();const englishVoice=voices.find(v=>v.lang==='en-US'||v.lang.startsWith('en-'));if(englishVoice)utterance.voice=englishVoice;window.speechSynthesis.speak(utterance);}if(window.speechSynthesis.getVoices().length)setVoice();else window.speechSynthesis.onvoiceschanged=setVoice;}
+    function checkAnswer(element,correctAnswer){const options=element.parentElement.querySelectorAll('.quiz-option');const isCorrect=element.innerText===correctAnswer;if(isCorrect){element.style.background='#2ecc71';element.style.color='white';speakEnglish(correctAnswer);setTimeout(()=>{options.forEach(opt=>{opt.style.background='';opt.style.color='';});},1500);}else{element.style.background='#e74c3c';element.style.color='white';setTimeout(()=>{options.forEach(opt=>{opt.style.background='';opt.style.color='';});},500);}}
+    (function(){const btn=document.getElementById('backToTopBtn');if(btn){window.addEventListener('scroll',function(){btn.classList.toggle('show',window.scrollY>300);});btn.addEventListener('click',function(e){e.preventDefault();window.scrollTo({top:0,behavior:'smooth'});});}})();
+</script>
+</body>
+</html>

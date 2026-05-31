@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Environment - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 1rem;
+        }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        
+        .conversation-section {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .conversation-section h2 {
+            background: #27ae60;
+            color: white;
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line {
+            display: grid;
+            grid-template-columns: 70px 1fr 1fr;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            align-items: start;
+        }
+        .speaker { font-weight: bold; color: #27ae60; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { 
+            color: #8e6b3c; 
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 0.95rem;
+        }
+        .audio-btn {
+            background: #eef4ff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.3rem;
+        }
+        .audio-btn:hover { background: #27ae60; color: white; }
+        
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+            padding: 1rem;
+        }
+        .vocab-item {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            border-left: 3px solid #27ae60;
+        }
+        .vocab-eng { font-weight: bold; color: #27ae60; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        
+        .quiz-question {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.8rem;
+        }
+        .quiz-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .quiz-option {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .quiz-option:hover { background: #27ae60; color: white; border-color: #27ae60; }
+        
+        .tips-box {
+            background: #e8f5e9;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #27ae60;
+        }
+        .tips-box i { color: #27ae60; margin-right: 8px; }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1rem;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: #1e3c72;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid white;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: #f5b042;
+            color: #1e3c72;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .back-to-top i {
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 42px;
+                height: 42px;
+            }
+            .back-to-top i {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 700px) {
+            .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> All Conversations
+    </a>
+    
+    <header>
+        <h1><i class="fas fa-leaf"></i> Environment</h1>
+        <p>Learn how to discuss pollution, recycling, climate change, and conservation</p>
+        <p>လေထုညစ်ညမ်းမှု၊ ပြန်လည်အသုံးပြုခြင်း၊ ရာသီဥတုပြောင်းလဲမှုနှင့် ထိန်းသိမ်းရေးတို့အကြောင်း ဆွေးနွေးနည်းကို လေ့လာပါ</p>
+    </header>
+    
+    <!-- Dialogue 1: Talking About Pollution -->
+    <div class="conversation-section">
+        <h2>🏭 Talking About Pollution / လေထုညစ်ညမ်းမှုအကြောင်းပြောဆိုခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">The air quality in our city has gotten really bad lately.</div>
+                <div class="burmese">ငါတို့မြို့မှာ လေအရည်အသွေးက မကြာခင်တုန်းက တကယ်ဆိုးလာတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('The air quality in our city has gotten really bad lately.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">I agree. I think it's because of all the traffic and factory smoke.</div>
+                <div class="burmese">ငါလည်းသဘောတူတယ်။ ယာဉ်ကြောနဲ့ စက်ရုံမီးခိုးတွေကြောင့်လို့ ငါထင်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I agree. I think it is because of all the traffic and factory smoke.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">We should wear masks when we go outside to protect our lungs.</div>
+                <div class="burmese">ငါတို့ အပြင်သွားတဲ့အခါ အဆုတ်ကိုကာကွယ်ဖို့ မျက်နှာဖုံးတွေဝတ်သင့်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('We should wear masks when we go outside to protect our lungs.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Hopefully the government will take action to reduce pollution.</div>
+                <div class="burmese">လေထုညစ်ညမ်းမှုလျှော့ချဖို့ အစိုးရက အရေးယူဆောင်ရွက်မယ်လို့ မျှော်လင့်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Hopefully the government will take action to reduce pollution.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 2: Recycling at Home -->
+    <div class="conversation-section">
+        <h2>♻️ Recycling at Home / အိမ်တွင်းပြန်လည်အသုံးပြုခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">We should start recycling at home. We throw away too much plastic.</div>
+                <div class="burmese">ငါတို့ အိမ်မှာ ပြန်လည်အသုံးပြုခြင်း စတင်သင့်တယ်။ ပလပ်စတစ်တွေ အများကြီး ပစ်ပစ်နေတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('We should start recycling at home. We throw away too much plastic.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">That's a great idea. We can separate plastic, paper, and glass.</div>
+                <div class="burmese">အကြံကောင်းပါတယ်။ ပလပ်စတစ်၊ စက္ကူနဲ့ ဖန်တွေကို ခွဲခြားနိုင်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('That is a great idea. We can separate plastic, paper, and glass.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Do you know where the recycling center is?</div>
+                <div class="burmese">ပြန်လည်အသုံးပြုရေးစင်တာ ဘယ်မှာလဲသိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you know where the recycling center is?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">There's one on Main Street. We can take our recyclables there every weekend.</div>
+                <div class="burmese">Main Street မှာရှိတယ်။ စနေတနင်္ဂနွေတိုင်း ငါတို့ ပြန်လည်အသုံးပြုနိုင်တဲ့အရာတွေကို အဲဒီကိုယူသွားလို့ရတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('There is one on Main Street. We can take our recyclables there every weekend.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 3: Reducing Plastic Waste -->
+    <div class="conversation-section">
+        <h2>🛍️ Reducing Plastic Waste / ပလပ်စတစ်စွန့်ပစ်ပစ္စည်းလျှော့ချခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Did you know that plastic takes hundreds of years to decompose?</div>
+                <div class="burmese">ပလပ်စတစ်က နှစ်ရာနဲ့ချီပြီး ပြိုကွဲဖို့ကြာတယ်ဆိုတာ သိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Did you know that plastic takes hundreds of years to decompose?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Yes, that's why we should use reusable bags instead of plastic ones.</div>
+                <div class="burmese">ဟုတ်တယ်၊ ဒါကြောင့် ပလပ်စတစ်အိတ်တွေအစား ပြန်သုံးလို့ရတဲ့အိတ်တွေ သုံးသင့်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, that is why we should use reusable bags instead of plastic ones.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">I always bring my own bag to the supermarket now.</div>
+                <div class="burmese">ငါ အခု ကုန်စုံဆိုင်ကို ကိုယ်ပိုင်အိတ် အမြဲယူသွားတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I always bring my own bag to the supermarket now.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Me too! We should also avoid single-use water bottles.</div>
+                <div class="burmese">ငါလည်း! တစ်ခါသုံးရေပုလင်းတွေကိုလည်း ရှောင်သင့်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Me too! We should also avoid single-use water bottles.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 4: Climate Change Discussion -->
+    <div class="conversation-section">
+        <h2>🌡️ Climate Change Discussion / ရာသီဥတုပြောင်းလဲမှုဆွေးနွေးခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Have you noticed how hot the summers have been lately?</div>
+                <div class="burmese">မကြာခင်တုန်းက နွေရာသီတွေ ဘယ်လောက်ပူလာတယ်ဆိုတာ သတိထားမိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Have you noticed how hot the summers have been lately?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Yes, it's definitely getting warmer. I think it's because of climate change.</div>
+                <div class="burmese">ဟုတ်တယ်၊ သေချာပေါက် ပိုပူလာတယ်။ ရာသီဥတုပြောင်းလဲမှုကြောင့်လို့ ငါထင်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, it is definitely getting warmer. I think it is because of climate change.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">What can we do to help?</div>
+                <div class="burmese">ကူညီဖို့ ငါတို့ ဘာလုပ်နိုင်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What can we do to help?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">We can reduce our carbon footprint by using public transportation and saving electricity.</div>
+                <div class="burmese">အများသုံးယာဉ်တွေသုံးပြီး လျှပ်စစ်ချွေတာခြင်းဖြင့် ငါတို့ ကာဗွန်ခြေရာကို လျှော့ချနိုင်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('We can reduce our carbon footprint by using public transportation and saving electricity.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 5: Saving Energy -->
+    <div class="conversation-section">
+        <h2>💡 Saving Energy / စွမ်းအင်ချွေတာခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">You left the lights on again. We should save energy.</div>
+                <div class="burmese">မင်း မီးတွေ ထပ်ဖွင့်ထားတယ်။ ငါတို့ စွမ်းအင်ချွေတာသင့်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('You left the lights on again. We should save energy.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Sorry! I forgot. I'll turn them off right now.</div>
+                <div class="burmese">စိတ်မကောင်းပါဘူး! မေ့သွားတယ်။ အခုချက်ချင်းပိတ်မယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Sorry! I forgot. I will turn them off right now.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Also, unplug chargers when you're not using them. They still use electricity.</div>
+                <div class="burmese">ပြီးတော့၊ မသုံးတဲ့အခါ အားသွင်းကိရိယာတွေ ပလပ်နုတ်ထားပါ။ သူတို့က လျှပ်စစ်ဓာတ်အား ဆက်သုံးနေတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Also, unplug chargers when you are not using them. They still use electricity.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Good point. I'll be more careful from now on.</div>
+                <div class="burmese">မှန်တယ်။ ဒီကနေ့စပြီး ပိုသတိထားပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Good point. I will be more careful from now on.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 6: Planting Trees -->
+    <div class="conversation-section">
+        <h2>🌳 Planting Trees / သစ်ပင်စိုက်ပျိုးခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">There's a community tree-planting event this weekend. Do you want to join?</div>
+                <div class="burmese">ဒီစနေ၊ တနင်္ဂနွေမှာ လူထုသစ်ပင်စိုက်ပျိုးပွဲတစ်ခုရှိတယ်။ ပါဝင်ချင်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('There is a community tree-planting event this weekend. Do you want to join?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Absolutely! Trees are so important for the environment. They produce oxygen.</div>
+                <div class="burmese">လုံးဝပါဝင်ချင်တယ်! သစ်ပင်တွေက ပတ်ဝန်းကျင်အတွက် အရမ်းအရေးကြီးတယ်။ အောက်ဆီဂျင်ထုတ်ပေးတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Absolutely! Trees are so important for the environment. They produce oxygen.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">They also absorb carbon dioxide and help cool the planet.</div>
+                <div class="burmese">ကာဗွန်ဒိုင်အောက်ဆိုဒ်ကိုလည်း စုပ်ယူပြီး ကမ္ဘာကြီးကို အေးစေတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('They also absorb carbon dioxide and help cool the planet.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Let's go! I'll bring my own shovel and gloves.</div>
+                <div class="burmese">သွားကြရအောင်! ငါ့တူးရွင်းနဲ့ လက်အိတ်ယူလာမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Let us go! I will bring my own shovel and gloves.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 7: Water Conservation -->
+    <div class="conversation-section">
+        <h2>💧 Water Conservation / ရေထိန်းသိမ်းခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">We need to save water. There's a drought in our region.</div>
+                <div class="burmese">ငါတို့ ရေချွေတာဖို့လိုတယ်။ ငါတို့ဒေသမှာ မိုးခေါင်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('We need to save water. There is a drought in our region.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">You're right. I'll take shorter showers.</div>
+                <div class="burmese">မင်းမှန်တယ်။ ငါ ရေချိုးချိန်တိုတောင်းအောင်လုပ်မယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('You are right. I will take shorter showers.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Also, turn off the tap while brushing your teeth.</div>
+                <div class="burmese">သွားတိုက်တဲ့အခါ ဘုံဘိုင်ကိုလည်းပိတ်ထားပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Also, turn off the tap while brushing your teeth.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Good idea. We can also collect rainwater for watering plants.</div>
+                <div class="burmese">အကြံကောင်းပါတယ်။ အပင်တွေရေလောင်းဖို့ မိုးရေကိုလည်း စုဆောင်းနိုင်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Good idea. We can also collect rainwater for watering plants.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 8: Wildlife Conservation -->
+    <div class="conversation-section">
+        <h2>🐘 Wildlife Conservation / တောရိုင်းတိရစ္ဆာန်များထိန်းသိမ်းခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Did you hear about the elephants losing their habitat?</div>
+                <div class="burmese">ဆင်တွေ သူတို့ရဲ့နေရပ်ဆုံးရှုံးနေတယ်ဆိုတာ ကြားဖူးလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Did you hear about the elephants losing their habitat?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">That's terrible. Deforestation is destroying wildlife homes.</div>
+                <div class="burmese">အရမ်းဆိုးတယ်။ သစ်တောပြုန်းတီးမှုက တောရိုင်းတိရစ္ဆာန်အိမ်တွေကို ဖျက်ဆီးနေတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('That is terrible. Deforestation is destroying wildlife homes.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">We should support organizations that protect endangered species.</div>
+                <div class="burmese">မျိုးသုဉ်းလုနီးမျိုးစိတ်တွေကို ကာကွယ်တဲ့အဖွဲ့အစည်းတွေကို ငါတို့ ထောက်ပံ့သင့်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('We should support organizations that protect endangered species.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">I donate to a wildlife fund every month. Every little bit helps.</div>
+                <div class="burmese">ငါ တစ်လတစ်ခါ တောရိုင်းတိရစ္ဆာန်ရန်ပုံငွေကို လှူတယ်။ နည်းနည်းလေးတိုင်း အကူအညီဖြစ်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I donate to a wildlife fund every month. Every little bit helps.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Vocabulary Section -->
+    <div class="conversation-section">
+        <h2>📚 Environment Vocabulary / ပတ်ဝန်းကျင်သုံးဝေါဟာရများ</h2>
+        <div class="vocab-grid">
+            <div class="vocab-item"><span class="vocab-eng">Pollution</span><br><span class="vocab-burmese">ညစ်ညမ်းမှု</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Recycle</span><br><span class="vocab-burmese">ပြန်လည်အသုံးပြုခြင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Climate change</span><br><span class="vocab-burmese">ရာသီဥတုပြောင်းလဲမှု</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Carbon footprint</span><br><span class="vocab-burmese">ကာဗွန်ခြေရာ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Greenhouse gases</span><br><span class="vocab-burmese">ဖန်လုံအိမ်ဓာတ်ငွေ့</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Renewable energy</span><br><span class="vocab-burmese">ပြန်လည်ပြည့်ဖြိုးမြဲစွမ်းအင်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Deforestation</span><br><span class="vocab-burmese">သစ်တောပြုန်းတီးခြင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Endangered species</span><br><span class="vocab-burmese">မျိုးသုဉ်းလုနီးမျိုးစိတ်များ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Compost</span><br><span class="vocab-burmese">မြေဆွေး</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Eco-friendly</span><br><span class="vocab-burmese">ဂေဟစနစ်သဟဇာတ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Biodiversity</span><br><span class="vocab-burmese">ဇီဝမျိုးစုံမျိုးကွဲ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Conservation</span><br><span class="vocab-burmese">ထိန်းသိမ်းရေး</span></div>
+        </div>
+    </div>
+    
+    <!-- Tips for Helping the Environment -->
+    <div class="conversation-section">
+        <h2>💡 Tips for Helping the Environment / ပတ်ဝန်းကျင်ကိုကူညီရန် အကြံပြုချက်များ</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Easy Ways to Go Green (သဘာဝပတ်ဝန်းကျင်နှင့်သဟဇာတဖြစ်ရန် လွယ်ကူသောနည်းလမ်းများ):</strong><br>
+            • Use reusable shopping bags (ပြန်သုံးလို့ရတဲ့ ဈေးဝယ်အိတ်များသုံးပါ)<br>
+            • Bring your own coffee cup (ကိုယ်ပိုင်ကော်ဖီခွက်ယူလာပါ)<br>
+            • Walk, bike, or use public transport (လမ်းလျှောက်၊ စက်ဘီးစီး၊ သို့မဟုတ် အများသုံးယာဉ်စီးပါ)<br>
+            • Turn off lights when leaving a room (အခန်းမှထွက်ချိန်တွင် မီးများပိတ်ပါ)<br>
+            • Eat less meat (အသားလျှော့စားပါ)<br>
+            • Buy local produce (ပြည်တွင်းထွက်ကုန်များဝယ်ယူပါ)<br>
+            • Fix leaks instead of wasting water (ရေဖြုန်းတီးမှုအစား ပေါက်ကြားမှုများကိုပြုပြင်ပါ)<br>
+        </div>
+    </div>
+    
+    <!-- Practice Section -->
+    <div class="conversation-section">
+        <h2>✏️ Practice Questions / လေ့ကျင့်ခန်းမေးခွန်းများ</h2>
+        <div class="dialogue-box">
+            <div class="quiz-question">
+                <p><strong>1. How do you say "ပလပ်စတစ်အိတ်တွေအစား ပြန်သုံးလို့ရတဲ့အိတ်တွေသုံးသင့်တယ်" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'We should use reusable bags instead of plastic ones.')">We should use plastic bags.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'We should use reusable bags instead of plastic ones.')">We should use reusable bags instead of plastic ones.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'We should use reusable bags instead of plastic ones.')">We should throw away plastic bags.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'We should use reusable bags instead of plastic ones.')">Plastic bags are good.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>2. What does "recycle" mean?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Convert waste into reusable material')">Throw everything away</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Convert waste into reusable material')">Burn trash</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Convert waste into reusable material')">Convert waste into reusable material</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Convert waste into reusable material')">Bury garbage</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. "ရေချွေတာဖို့ ရေချိုးချိန်တိုတောင်းအောင်လုပ်ပါ" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Take shorter showers to save water.')">Take longer showers to save water.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Take shorter showers to save water.')">Take shorter showers to save water.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Take shorter showers to save water.')">Don't take showers.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Take shorter showers to save water.')">Use more water.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. What is one way to reduce your carbon footprint?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Use public transportation')">Drive alone everywhere</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Use public transportation')">Use public transportation</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Use public transportation')">Leave lights on</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Use public transportation')">Use plastic water bottles</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. "သစ်ပင်တွေက အောက်ဆီဂျင်ထုတ်ပေးတယ်" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Trees produce oxygen.')">Trees produce carbon dioxide.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Trees produce oxygen.')">Trees produce oxygen.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Trees produce oxygen.')">Trees produce pollution.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Trees produce oxygen.')">Trees produce waste.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p><i class="fas fa-heart" style="color: #27ae60;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p>
+        <p style="font-size: 0.75rem; margin-top: 0.5rem;">Practice these conversations to discuss environmental issues and solutions confidently!</p>
+    </footer>
+</div>
+
+<!-- Back to Top Button -->
+<a href="#" class="back-to-top" id="backToTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+<script>
+    function speakEnglish(text) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8;
+        utterance.pitch = 1.0;
+        
+        function setVoice() {
+            const voices = window.speechSynthesis.getVoices();
+            const englishVoice = voices.find(v => v.lang === 'en-US' || v.lang.startsWith('en-'));
+            if (englishVoice) utterance.voice = englishVoice;
+            window.speechSynthesis.speak(utterance);
+        }
+        
+        if (window.speechSynthesis.getVoices().length) setVoice();
+        else window.speechSynthesis.onvoiceschanged = setVoice;
+    }
+    
+    function checkAnswer(element, correctAnswer) {
+        const options = element.parentElement.querySelectorAll('.quiz-option');
+        const isCorrect = element.innerText === correctAnswer;
+        
+        if (isCorrect) {
+            element.style.background = '#2ecc71';
+            element.style.color = 'white';
+            speakEnglish(correctAnswer);
+            setTimeout(() => {
+                options.forEach(opt => {
+                    opt.style.background = '';
+                    opt.style.color = '';
+                });
+            }, 1500);
+        } else {
+            element.style.background = '#e74c3c';
+            element.style.color = 'white';
+            setTimeout(() => {
+                element.style.background = '';
+                element.style.color = '';
+            }, 500);
+        }
+    }
+    
+    // Back to Top Button Functionality
+    (function() {
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        
+        if (backToTopBtn) {
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

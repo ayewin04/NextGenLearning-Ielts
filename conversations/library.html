@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 1rem;
+        }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        
+        .conversation-section {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .conversation-section h2 {
+            background: #0984e3;
+            color: white;
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line {
+            display: grid;
+            grid-template-columns: 70px 1fr 1fr;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            align-items: start;
+        }
+        .speaker { font-weight: bold; color: #0984e3; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { 
+            color: #8e6b3c; 
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 0.95rem;
+        }
+        .audio-btn {
+            background: #eef4ff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.3rem;
+        }
+        .audio-btn:hover { background: #0984e3; color: white; }
+        
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+            padding: 1rem;
+        }
+        .vocab-item {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            border-left: 3px solid #0984e3;
+        }
+        .vocab-eng { font-weight: bold; color: #0984e3; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        
+        .quiz-question {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.8rem;
+        }
+        .quiz-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .quiz-option {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .quiz-option:hover { background: #0984e3; color: white; border-color: #0984e3; }
+        
+        .info-box {
+            background: #e3f2fd;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #0984e3;
+        }
+        .info-box i { color: #0984e3; margin-right: 8px; }
+        
+        .tips-box {
+            background: #e3f2fd;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #0984e3;
+        }
+        .tips-box i { color: #0984e3; margin-right: 8px; }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1rem;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: #1e3c72;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid white;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: #f5b042;
+            color: #1e3c72;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .back-to-top i {
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 42px;
+                height: 42px;
+            }
+            .back-to-top i {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 700px) {
+            .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> All Conversations
+    </a>
+    
+    <header>
+        <h1><i class="fas fa-book"></i> Library</h1>
+        <p>Learn how to borrow books, get a library card, and use library services in English</p>
+        <p>စာအုပ်များငှားရမ်းနည်း၊ စာကြည့်တိုက်ကတ်ရယူနည်းနှင့် စာကြည့်တိုက်ဝန်ဆောင်မှုများကို အင်္ဂလိပ်လို အသုံးပြုနည်း လေ့လာပါ</p>
+    </header>
+    
+    <!-- Dialogue 1: Getting a Library Card -->
+    <div class="conversation-section">
+        <h2>🪪 Getting a Library Card / စာကြည့်တိုက်ကတ်ရယူခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Hello, I'd like to get a library card, please.</div>
+                <div class="burmese">မင်္ဂလာပါ၊ စာကြည့်တိုက်ကတ်တစ်ခု ရယူချင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Hello, I would like to get a library card, please.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Librarian:</div>
+                <div class="english">Certainly. Do you have a photo ID and proof of address?</div>
+                <div class="burmese">ရပါတယ်။ ဓာတ်ပုံပါသက်သေခံနဲ့ နေရပ်လိပ်စာအထောက်အထား ရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Certainly. Do you have a photo ID and proof of address?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Yes, here's my driver's license and a utility bill.</div>
+                <div class="burmese">ဟုတ်ကဲ့၊ ဒီမှာ ကျွန်တော့်ကားမောင်းလိုင်စင်နဲ့ မီတာခေါက်ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, here is my driver\'s license and a utility bill.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Librarian:</div>
+                <div class="english">Perfect. Please fill out this application form. The card is free.</div>
+                <div class="burmese">ပြီးပြည့်စုံပါတယ်။ ဒီလျှောက်လွှာပုံစံကို ဖြည့်ပါ။ ကတ်က အခမဲ့ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Perfect. Please fill out this application form. The card is free.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 2: Searching for a Book -->
+    <div class="conversation-section">
+        <h2>🔍 Searching for a Book / စာအုပ်ရှာဖွေခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Can you help me find a book?</div>
+                <div class="burmese">စာအုပ်တစ်အုပ်ရှာဖွေဖို့ ကူညီနိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Can you help me find a book?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Librarian:</div>
+                <div class="english">Of course. What's the title or author?</div>
+                <div class="burmese">ရပါတယ်။ စာအုပ်ခေါင်းစဉ် ဒါမှမဟုတ် စာရေးဆရာက ဘာလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Of course. What is the title or author?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">"The Great Gatsby" by F. Scott Fitzgerald.</div>
+                <div class="burmese">F. Scott Fitzgerald ရေးတဲ့ "The Great Gatsby" ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('The Great Gatsby by F. Scott Fitzgerald.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Librarian:</div>
+                <div class="english">Let me check the computer. It's in the fiction section, shelf A7. I'll show you where it is.</div>
+                <div class="burmese">ကွန်ပျူတာမှာ စစ်ကြည့်ပါရစေ။ ဝတ္ထုကဏ္ဍ၊ စင် A7 မှာပါ။ ဘယ်မှာလဲ လိုက်ပြပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Let me check the computer. It is in the fiction section, shelf A7. I will show you where it is.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 3: Borrowing Books -->
+    <div class="conversation-section">
+        <h2>📚 Borrowing Books / စာအုပ်များငှားရမ်းခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Librarian:</div>
+                <div class="english">How many books would you like to borrow today?</div>
+                <div class="burmese">ဒီနေ့ စာအုပ်ဘယ်နှစ်အုပ် ငှားချင်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('How many books would you like to borrow today?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Three, please. What's the loan period?</div>
+                <div class="burmese">သုံးအုပ်ပါ။ ငှားရမ်းကာလက ဘယ်လောက်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Three, please. What is the loan period?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Librarian:</div>
+                <div class="english">Books can be borrowed for three weeks. You can renew them online if you need more time.</div>
+                <div class="burmese">စာအုပ်တွေကို သုံးပတ်ကြာ ငှားရမ်းနိုင်ပါတယ်။ အချိန်ပိုလိုရင် အွန်လိုင်းကနေ သက်တမ်းတိုးနိုင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Books can be borrowed for three weeks. You can renew them online if you need more time.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Great. Here are my books and my library card.</div>
+                <div class="burmese">ကောင်းပါတယ်။ ဒီမှာ ကျွန်တော့်စာအုပ်တွေနဲ့ စာကြည့်တိုက်ကတ်ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Great. Here are my books and my library card.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 4: Returning Books -->
+    <div class="conversation-section">
+        <h2>📤 Returning Books / စာအုပ်များပြန်အပ်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I'd like to return these books.</div>
+                <div class="burmese">ဒီစာအုပ်တွေ ပြန်အပ်ချင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I would like to return these books.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Librarian:</div>
+                <div class="english">Let me scan them. Were there any issues with the books?</div>
+                <div class="burmese">စကင်ဖတ်ပါရစေ။ စာအုပ်တွေမှာ ပြဿနာတစ်စုံတစ်ရာရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Let me scan them. Were there any issues with the books?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">No, they were in good condition. Are they all returned?</div>
+                <div class="burmese">မရှိပါဘူး၊ အခြေအနေကောင်းပါတယ်။ အားလုံးပြန်အပ်ပြီးပြီလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('No, they were in good condition. Are they all returned?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Librarian:</div>
+                <div class="english">Yes, all clear. You have no late fees. Thank you!</div>
+                <div class="burmese">ဟုတ်ပါတယ်၊ အားလုံးရှင်းပါတယ်။ နောက်ကျကြေးမရှိပါဘူး။ ကျေးဇူးပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, all clear. You have no late fees. Thank you!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 5: Late Fees -->
+    <div class="conversation-section">
+        <h2>💰 Late Fees / နောက်ကျကြေးများ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I'm sorry, I'm late returning this book. How much do I owe?</div>
+                <div class="burmese">စိတ်မကောင်းပါဘူး၊ ဒီစာအုပ်ပြန်အပ်ဖို့ နောက်ကျသွားတယ်။ ဘယ်လောက်ပေးရမလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am sorry, I am late returning this book. How much do I owe?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Librarian:</div>
+                <div class="english">The late fee is 25 cents per day. It's 5 days late, so that's $1.25.</div>
+                <div class="burmese">နောက်ကျကြေးက တစ်ရက် ၂၅ ဆင့်ပါ။ ၅ ရက်နောက်ကျတာမို့ ၁.၂၅ ဒေါ်လာပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('The late fee is 25 cents per day. It is 5 days late, so that is 1 dollar and 25 cents.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I'll pay that now. Can I still borrow books?</div>
+                <div class="burmese">အခုပေးလိုက်ပါမယ်။ စာအုပ်တွေ ဆက်ငှားလို့ရမလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('I will pay that now. Can I still borrow books?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Librarian:</div>
+                <div class="english">Yes, once the fee is paid, your borrowing privileges are restored.</div>
+                <div class="burmese">ဟုတ်ပါတယ်၊ အခကြေးငွေပေးပြီးတာနဲ့ သင့်ငှားရမ်းခွင့်တွေ ပြန်ရပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, once the fee is paid, your borrowing privileges are restored.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 6: Renewing Books -->
+    <div class="conversation-section">
+        <h2>🔄 Renewing Books / စာအုပ်သက်တမ်းတိုးခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I need to renew these books. I'm not finished reading them.</div>
+                <div class="burmese">ဒီစာအုပ်တွေ သက်တမ်းတိုးဖို့လိုတယ်။ ဖတ်မပြီးသေးဘူး။</div>
+                <button class="audio-btn" onclick="speakEnglish('I need to renew these books. I am not finished reading them.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Librarian:</div>
+                <div class="english">You can renew them online or here at the desk. No one has reserved them, so you can renew for another three weeks.</div>
+                <div class="burmese">အွန်လိုင်းကနေ ဒါမှမဟုတ် ဒီစားပွဲမှာ သက်တမ်းတိုးလို့ရပါတယ်။ ဘယ်သူမှ ကြိုမှာထားတာမရှိလို့ နောက်ထပ် သုံးပတ် သက်တမ်းတိုးနိုင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('You can renew them online or here at the desk. No one has reserved them, so you can renew for another three weeks.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Great! I'll renew them here, please.</div>
+                <div class="burmese">ကောင်းပါတယ်! ဒီမှာ သက်တမ်းတိုးပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Great! I will renew them here, please.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 7: Reserving a Book -->
+    <div class="conversation-section">
+        <h2>📝 Reserving a Book / စာအုပ်ကြိုမှာယူခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">The book I want is currently checked out. Can I reserve it?</div>
+                <div class="burmese">ငါလိုချင်တဲ့စာအုပ်က လောလောဆယ် ငှားထားလို့မရဘူး။ ကြိုမှာလို့ရမလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('The book I want is currently checked out. Can I reserve it?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Librarian:</div>
+                <div class="english">Yes, you can place a hold on it. When it's returned, we'll notify you.</div>
+                <div class="burmese">ဟုတ်ပါတယ်၊ ကြိုမှာနိုင်ပါတယ်။ ပြန်အပ်လာရင် သင့်ကို အသိပေးပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, you can place a hold on it. When it is returned, we will notify you.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">How will you contact me?</div>
+                <div class="burmese">ကျွန်တော့်ကို ဘယ်လိုဆက်သွယ်မလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('How will you contact me?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Librarian:</div>
+                <div class="english">By email or phone. What's your email address?</div>
+                <div class="burmese">အီးမေးလ် သို့မဟုတ် ဖုန်းနဲ့ပါ။ သင့်အီးမေးလ်လိပ်စာက ဘာလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('By email or phone. What is your email address?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 8: Using Computers at the Library -->
+    <div class="conversation-section">
+        <h2>💻 Using Library Computers / စာကြည့်တိုက်ကွန်ပျူတာများအသုံးပြုခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Do you have computers available for public use?</div>
+                <div class="burmese">အများသုံးအတွက် ကွန်ပျူတာတွေ ရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you have computers available for public use?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Librarian:</div>
+                <div class="english">Yes, we have 20 computers. You can use them for up to 2 hours a day.</div>
+                <div class="burmese">ဟုတ်ကဲ့၊ ကျွန်တော်တို့မှာ ၂၀ လုံးရှိပါတယ်။ တစ်နေ့ကို အများဆုံး ၂ နာရီသုံးနိုင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, we have 20 computers. You can use them for up to 2 hours a day.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Do I need to book in advance?</div>
+                <div class="burmese">ကြိုတင်မှာယူဖို့လိုအပ်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do I need to book in advance?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Librarian:</div>
+                <div class="english">No, just log in with your library card number. Printing is available for 10 cents per page.</div>
+                <div class="burmese">မလိုပါဘူး၊ သင့်စာကြည့်တိုက်ကတ်နံပါတ်နဲ့ ဝင်ရုံပါပဲ။ ပုံနှိပ်ခြင်းက စာမျက်နှာတစ်မျက်နှာ ၁၀ ဆင့်နဲ့ ရနိုင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('No, just log in with your library card number. Printing is available for 10 cents per page.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Library Services Info -->
+    <div class="conversation-section">
+        <h2>📋 Library Services / စာကြည့်တိုက်ဝန်ဆောင်မှုများ</h2>
+        <div class="info-box">
+            <p><strong>📚 Book Borrowing (စာအုပ်ငှားရမ်းခြင်း)</strong> - 3 weeks, renew online (သုံးပတ်၊ အွန်လိုင်းမှသက်တမ်းတိုးနိုင်)</p>
+            <p><strong>💻 Computer Access (ကွန်ပျူတာအသုံးပြုခွင့်)</strong> - 2 hours per day (တစ်နေ့ ၂ နာရီ)</p>
+            <p><strong>📖 E-books & Audiobooks (အီးစာအုပ်နှင့်အသံစာအုပ်များ)</strong> - Free download (အခမဲ့ဒေါင်းလုတ်)</p>
+            <p><strong>🎓 Study Rooms (လေ့လာရေးအခန်းများ)</strong> - Reserve for group study (အုပ်စုလေ့လာရန် ကြိုမှာယူနိုင်)</p>
+            <p><strong>📚 Interlibrary Loan (စာကြည့်တိုက်ချင်းချေးငှားခြင်း)</strong> - Request books from other libraries (အခြားစာကြည့်တိုက်များမှ စာအုပ်များတောင်းယူနိုင်)</p>
+            <p><strong>👧 Children's Programs (ကလေးအစီအစဉ်များ)</strong> - Story time, reading clubs (ပုံပြင်ဖတ်ပြချိန်၊ စာဖတ်အသင်းများ)</p>
+        </div>
+    </div>
+    
+    <!-- Vocabulary Section -->
+    <div class="conversation-section">
+        <h2>📚 Library Vocabulary / စာကြည့်တိုက်သုံးဝေါဟာရများ</h2>
+        <div class="vocab-grid">
+            <div class="vocab-item"><span class="vocab-eng">Librarian</span><br><span class="vocab-burmese">စာကြည့်တိုက်မှူး</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Check out / Borrow</span><br><span class="vocab-burmese">ငှားရမ်းသည်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Return</span><br><span class="vocab-burmese">ပြန်အပ်သည်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Due date</span><br><span class="vocab-burmese">ပြန်အပ်ရမည့်ရက်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Overdue</span><br><span class="vocab-burmese">ရက်လွန်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Late fee / Fine</span><br><span class="vocab-burmese">နောက်ကျကြေး</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Renew</span><br><span class="vocab-burmese">သက်တမ်းတိုး</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Place a hold / Reserve</span><br><span class="vocab-burmese">ကြိုမှာယူသည်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Catalog</span><br><span class="vocab-burmese">စာအုပ်စာရင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Non-fiction / Fiction</span><br><span class="vocab-burmese">ဖြစ်ရပ်မှန်/ဝတ္ထု</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Reference section</span><br><span class="vocab-burmese">ကိုးကားစာစုကဏ္ဍ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Quiet zone</span><br><span class="vocab-burmese">တိတ်ဆိတ်သောဇုန်</span></div>
+        </div>
+    </div>
+    
+    <!-- Library Etiquette -->
+    <div class="conversation-section">
+        <h2>💡 Library Etiquette / စာကြည့်တိုက်ကျင့်ဝတ်</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Do's and Don'ts in the Library (စာကြည့်တိုက်တွင် လုပ်ရန်/မလုပ်ရန်):</strong><br>
+            • <strong>DO</strong> speak quietly (တိတ်တိတ်ဆိတ်ဆိတ် ပြောပါ)<br>
+            • <strong>DON'T</strong> eat or drink near the books (စာအုပ်များအနားတွင် စားသောက်ခြင်းမပြုပါနှင့်)<br>
+            • <strong>DO</strong> return books on time (စာအုပ်များကို အချိန်မီ ပြန်အပ်ပါ)<br>
+            • <strong>DON'T</strong> dog-ear pages (စာမျက်နှာများကို ခေါက်ခြင်းမပြုပါနှင့်)<br>
+            • <strong>DO</strong> silence your phone (ဖုန်းကို အသံတိတ်ထားပါ)<br>
+            • <strong>DON'T</strong> leave books on the floor (စာအုပ်များကို ကြမ်းပြင်ပေါ်တွင် မထားခဲ့ပါနှင့်)<br>
+            • <strong>DO</strong> ask the librarian for help (အကူအညီအတွက် စာကြည့်တိုက်မှူးကို မေးပါ)<br>
+        </div>
+    </div>
+    
+    <!-- Practice Section -->
+    <div class="conversation-section">
+        <h2>✏️ Practice Questions / လေ့ကျင့်ခန်းမေးခွန်းများ</h2>
+        <div class="dialogue-box">
+            <div class="quiz-question">
+                <p><strong>1. How do you ask for a library card?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like to get a library card.')">I would like to buy a book.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like to get a library card.')">I would like to get a library card.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like to get a library card.')">I would like to return a book.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like to get a library card.')">I would like to read a magazine.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>2. "ဒီစာအုပ်ကို သက်တမ်းတိုးချင်ပါတယ်" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like to renew this book.')">I would like to return this book.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like to renew this book.')">I would like to borrow this book.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like to renew this book.')">I would like to renew this book.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I would like to renew this book.')">I would like to buy this book.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. What happens if you return a book late?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'You pay a late fee')">You get a reward</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'You pay a late fee')">You get a discount</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'You pay a late fee')">You pay a late fee</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'You pay a late fee')">You get banned</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. "စာအုပ်စာရင်းမှာ ဒီစာအုပ်ရှာဖွေနိုင်မလား" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can you find this book in the catalog?')">Can you return this book?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can you find this book in the catalog?')">Can you find this book in the catalog?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can you find this book in the catalog?')">Can you buy this book?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Can you find this book in the catalog?')">Can you sell this book?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. What is a "quiet zone" in a library?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'An area where talking is not allowed')">An area for eating</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'An area where talking is not allowed')">An area for children</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'An area where talking is not allowed')">An area where talking is not allowed</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'An area where talking is not allowed')">An area for computers</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p><i class="fas fa-heart" style="color: #0984e3;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p>
+        <p style="font-size: 0.75rem; margin-top: 0.5rem;">Practice these conversations to use the library with confidence!</p>
+    </footer>
+</div>
+
+<!-- Back to Top Button -->
+<a href="#" class="back-to-top" id="backToTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+<script>
+    function speakEnglish(text) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8;
+        utterance.pitch = 1.0;
+        
+        function setVoice() {
+            const voices = window.speechSynthesis.getVoices();
+            const englishVoice = voices.find(v => v.lang === 'en-US' || v.lang.startsWith('en-'));
+            if (englishVoice) utterance.voice = englishVoice;
+            window.speechSynthesis.speak(utterance);
+        }
+        
+        if (window.speechSynthesis.getVoices().length) setVoice();
+        else window.speechSynthesis.onvoiceschanged = setVoice;
+    }
+    
+    function checkAnswer(element, correctAnswer) {
+        const options = element.parentElement.querySelectorAll('.quiz-option');
+        const isCorrect = element.innerText === correctAnswer;
+        
+        if (isCorrect) {
+            element.style.background = '#2ecc71';
+            element.style.color = 'white';
+            speakEnglish(correctAnswer);
+            setTimeout(() => {
+                options.forEach(opt => {
+                    opt.style.background = '';
+                    opt.style.color = '';
+                });
+            }, 1500);
+        } else {
+            element.style.background = '#e74c3c';
+            element.style.color = 'white';
+            setTimeout(() => {
+                element.style.background = '';
+                element.style.color = '';
+            }, 500);
+        }
+    }
+    
+    // Back to Top Button Functionality
+    (function() {
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        
+        if (backToTopBtn) {
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

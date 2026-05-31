@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Train Travel - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%); font-family: 'Segoe UI', Roboto, sans-serif; padding: 1rem; }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        .back-btn { display: inline-flex; align-items: center; gap: 8px; background: white; padding: 0.6rem 1.2rem; border-radius: 2rem; text-decoration: none; color: #1e3c72; font-weight: 500; margin-bottom: 1rem; transition: 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        .conversation-section { background: white; border-radius: 1rem; margin-bottom: 2rem; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+        .conversation-section h2 { background: #8e44ad; color: white; padding: 1rem; font-size: 1.2rem; }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line { display: grid; grid-template-columns: 70px 1fr 1fr; gap: 0.8rem; padding: 0.8rem; border-bottom: 1px solid #eee; align-items: start; }
+        .speaker { font-weight: bold; color: #8e44ad; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.95rem; }
+        .audio-btn { background: #eef4ff; border: none; border-radius: 2rem; padding: 0.3rem 0.8rem; cursor: pointer; transition: 0.2s; margin-top: 0.3rem; }
+        .audio-btn:hover { background: #8e44ad; color: white; }
+        .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.8rem; padding: 1rem; }
+        .vocab-item { background: #f8f9fa; padding: 0.8rem; border-radius: 0.8rem; border-left: 3px solid #8e44ad; }
+        .vocab-eng { font-weight: bold; color: #8e44ad; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        .quiz-question { background: #f8f9fa; padding: 1rem; margin-bottom: 1rem; border-radius: 0.8rem; }
+        .quiz-options { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
+        .quiz-option { background: white; padding: 0.5rem 1rem; border-radius: 2rem; border: 1px solid #ddd; cursor: pointer; transition: 0.2s; }
+        .quiz-option:hover { background: #8e44ad; color: white; border-color: #8e44ad; }
+        .tips-box { background: #f3e5f5; padding: 1rem; border-radius: 0.8rem; margin: 1rem; border-left: 3px solid #8e44ad; }
+        .tips-box i { color: #8e44ad; margin-right: 8px; }
+        footer { margin-top: 2rem; text-align: center; padding: 1rem; color: #6c757d; font-size: 0.8rem; }
+        .back-to-top { position: fixed; bottom: 1.5rem; right: 1.5rem; background: #1e3c72; color: white; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 1000; opacity: 0; visibility: hidden; border: 2px solid white; }
+        .back-to-top.show { opacity: 1; visibility: visible; }
+        .back-to-top:hover { background: #f5b042; color: #1e3c72; transform: translateY(-3px); }
+        .back-to-top i { font-size: 1.2rem; }
+        @media (max-width: 768px) { .back-to-top { bottom: 1rem; right: 1rem; width: 42px; height: 42px; } .back-to-top i { font-size: 1rem; } }
+        @media (max-width: 700px) { .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; } }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn"><i class="fas fa-arrow-left"></i> All Conversations</a>
+    <header><h1><i class="fas fa-train"></i> Train Travel</h1><p>Learn how to book train tickets, ask about schedules, and find platforms in English</p><p>ရထားလက်မှတ်များကြိုမှာယူနည်း၊ အချိန်ဇယားများအကြောင်းမေးမြန်းနည်းနှင့် ပလက်ဖောင်းများရှာဖွေနည်းကို အင်္ဂလိပ်လို လေ့လာပါ</p></header>
+    
+    <!-- Dialogue 1: Booking a Ticket -->
+    <div class="conversation-section"><h2>🎫 Booking a Ticket / လက်မှတ်ကြိုမှာယူခြင်း</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">I'd like to book a train ticket to Mandalay for tomorrow.</div><div class="burmese">မနက်ဖြန်အတွက် မန္တလေးကို ရထားလက်မှတ်ကြိုမှာယူချင်ပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('I would like to book a train ticket to Mandalay for tomorrow.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Agent:</div><div class="english">One way or round trip?</div><div class="burmese">တစ်ကြောင်းသွားလား အပြန်လား။</div><button class="audio-btn" onclick="speakEnglish('One way or round trip?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">Round trip, please. I'll return on Sunday.</div><div class="burmese">အပြန်ပါ။ တနင်္ဂနွေနေ့မှာ ပြန်ပါမယ်။</div><button class="audio-btn" onclick="speakEnglish('Round trip, please. I will return on Sunday.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Agent:</div><div class="english">That will be $45. Would you like a window or aisle seat?</div><div class="burmese">၄၅ ဒေါ်လာပါ။ ပြတင်းပေါက်နားလား လူသွားလမ်းနားလား လိုချင်လဲ။</div><button class="audio-btn" onclick="speakEnglish('That will be 45 dollars. Would you like a window or aisle seat?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 2: Train Schedule -->
+    <div class="conversation-section"><h2>📅 Train Schedule / ရထားအချိန်ဇယား</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Passenger:</div><div class="english">What time does the next train to Bagan leave?</div><div class="burmese">ပုဂံကို နောက်ရထား ဘယ်အချိန်ထွက်လဲ။</div><button class="audio-btn" onclick="speakEnglish('What time does the next train to Bagan leave?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Staff:</div><div class="english">There's a train at 8:30 AM and another at 2:15 PM.</div><div class="burmese">နံနက် ၈:၃၀ နာရီနဲ့ နေ့လယ် ၂:၁၅ နာရီမှာ ရထားရှိပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('There is a train at 8:30 AM and another at 2:15 PM.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Passenger:</div><div class="english">How long is the journey?</div><div class="burmese">ခရီးစဉ်က ဘယ်လောက်ကြာလဲ။</div><button class="audio-btn" onclick="speakEnglish('How long is the journey?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Staff:</div><div class="english">About 7 hours. The 8:30 AM train arrives at 3:30 PM.</div><div class="burmese">၇ နာရီခန့်ပါ။ နံနက် ၈:၃၀ ရထားက ညနေ ၃:၃၀ တွင် ရောက်ရှိပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('About 7 hours. The 8:30 AM train arrives at 3:30 PM.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 3: Ticket Types -->
+    <div class="conversation-section"><h2>🎟️ Ticket Types / လက်မှတ်အမျိုးအစားများ</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">What types of tickets do you have?</div><div class="burmese">ဘယ်လိုလက်မှတ်အမျိုးအစားတွေ ရှိလဲ။</div><button class="audio-btn" onclick="speakEnglish('What types of tickets do you have?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Agent:</div><div class="english">We have economy class, business class, and sleeper cars.</div><div class="burmese">ကျွန်တော်တို့မှာ economy class၊ business class နှင့် အိပ်စက်ခန်းများ ရှိပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('We have economy class, business class, and sleeper cars.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">What's the difference in price?</div><div class="burmese">စျေးနှုန်းကွာခြားချက်က ဘာလဲ။</div><button class="audio-btn" onclick="speakEnglish('What is the difference in price?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Agent:</div><div class="english">Economy is $25, business is $45, and a sleeper is $60 for a one-way ticket.</div><div class="burmese">Economy က ၂၅ ဒေါ်လာ၊ business က ၄၅ ဒေါ်လာ၊ အိပ်စက်ခန်းက တစ်ကြောင်းသွားအတွက် ၆၀ ဒေါ်လာပါ။</div><button class="audio-btn" onclick="speakEnglish('Economy is 25 dollars, business is 45 dollars, and a sleeper is 60 dollars for a one-way ticket.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 4: Finding the Platform -->
+    <div class="conversation-section"><h2>🚉 Finding the Platform / ပလက်ဖောင်းရှာဖွေခြင်း</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Passenger:</div><div class="english">Which platform does the train to Yangon depart from?</div><div class="burmese">ရန်ကုန်ကိုသွားတဲ့ ရထားက ဘယ်ပလက်ဖောင်းကထွက်လဲ။</div><button class="audio-btn" onclick="speakEnglish('Which platform does the train to Yangon depart from?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Staff:</div><div class="english">Platform 3. The train is scheduled to depart at 9:15 AM.</div><div class="burmese">ပလက်ဖောင်း ၃ ပါ။ ရထားက နံနက် ၉:၁၅ တွင် ထွက်ခွာရန် စီစဉ်ထားပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('Platform 3. The train is scheduled to depart at 9:15 AM.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Passenger:</div><div class="english">Is the train on time?</div><div class="burmese">ရထား အချိန်မှန်လား။</div><button class="audio-btn" onclick="speakEnglish('Is the train on time?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Staff:</div><div class="english">Yes, it's on schedule. Boarding will begin 15 minutes before departure.</div><div class="burmese">ဟုတ်ပါတယ်၊ အချိန်မှန်ပါတယ်။ ထွက်ခွာမီ ၁၅ မိနစ်အလိုတွင် စတင်တက်ပါမယ်။</div><button class="audio-btn" onclick="speakEnglish('Yes, it is on schedule. Boarding will begin 15 minutes before departure.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 5: Onboard Experience -->
+    <div class="conversation-section"><h2>🚇 Onboard Experience / ရထားပေါ်အတွေ့အကြုံ</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Passenger:</div><div class="english">Is there a dining car on the train?</div><div class="burmese">ရထားပေါ်မှာ စားသောက်ခန်းရှိလား။</div><button class="audio-btn" onclick="speakEnglish('Is there a dining car on the train?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Staff:</div><div class="english">Yes, there's a dining car in the middle of the train. Meals are available for purchase.</div><div class="burmese">ဟုတ်ပါတယ်၊ ရထားအလယ်မှာ စားသောက်ခန်းရှိပါတယ်။ အစားအသောက်များကို ဝယ်ယူရရှိနိုင်ပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('Yes, there is a dining car in the middle of the train. Meals are available for purchase.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Passenger:</div><div class="english">Is there Wi-Fi on board?</div><div class="burmese">ရထားပေါ်မှာ Wi-Fi ရှိလား။</div><button class="audio-btn" onclick="speakEnglish('Is there Wi-Fi on board?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Staff:</div><div class="english">Free Wi-Fi is available in business class and sleeper cars. Economy class has limited access.</div><div class="burmese">business class နှင့် အိပ်စက်ခန်းများတွင် အခမဲ့ Wi-Fi ရနိုင်ပါတယ်။ Economy class တွင် အကန့်အသတ်ဖြင့်သာ ရနိုင်ပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('Free Wi-Fi is available in business class and sleeper cars. Economy class has limited access.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 6: Luggage -->
+    <div class="conversation-section"><h2>🧳 Luggage / ခရီးဆောင်အိတ်</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Passenger:</div><div class="english">How much luggage can I bring on the train?</div><div class="burmese">ရထားပေါ်မှာ ခရီးဆောင်အိတ် ဘယ်လောက်ယူလို့ရလဲ။</div><button class="audio-btn" onclick="speakEnglish('How much luggage can I bring on the train?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Staff:</div><div class="english">You can bring up to two bags weighing 50 pounds each. There are overhead racks and luggage areas.</div><div class="burmese">အိတ်နှစ်လုံးအထိ၊ တစ်လုံးလျှင် ၅၀ ပေါင်အထိ ယူလာနိုင်ပါတယ်။ အပေါ်စင် နှင့် ခရီးဆောင်အိတ်နေရာများ ရှိပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('You can bring up to two bags weighing 50 pounds each. There are overhead racks and luggage areas.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Passenger:</div><div class="english">What if I have oversized luggage?</div><div class="burmese">အရွယ်ကြီးမားတဲ့ ခရီးဆောင်အိတ်ရှိရင်ကော။</div><button class="audio-btn" onclick="speakEnglish('What if I have oversized luggage?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Staff:</div><div class="english">Oversized luggage must be checked in the baggage car. There's an extra fee of $10 per item.</div><div class="burmese">အရွယ်ကြီးမားသောခရီးဆောင်အိတ်များကို ကုန်တင်တွဲတွင် စစ်ဆေးရပါမယ်။ ပစ္စည်းတစ်ခုလျှင် အပိုကြေး ၁၀ ဒေါ်လာပါ။</div><button class="audio-btn" onclick="speakEnglish('Oversized luggage must be checked in the baggage car. There is an extra fee of 10 dollars per item.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 7: Delay Announcement -->
+    <div class="conversation-section"><h2>⏰ Delay Announcement / နောက်ကျကြေညာချက်</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Announcement:</div><div class="english">Attention passengers. Train 205 to Mandalay is delayed by 45 minutes due to technical issues.</div><div class="burmese">ခရီးသည်များ သတိပြုပါ။ နည်းပညာဆိုင်ရာပြဿနာများကြောင့် မန္တလေးသို့သွားမည့် ရထားအမှတ် ၂၀၅ သည် ၄၅ မိနစ်နောက်ကျမည်ဖြစ်ပါသည်။</div><button class="audio-btn" onclick="speakEnglish('Attention passengers. Train 205 to Mandalay is delayed by 45 minutes due to technical issues.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Passenger:</div><div class="english">Oh no, I have a connection to catch. What should I do?</div><div class="burmese">အိုး မဟုတ်ဘူး၊ ကျွန်တော် ဆက်စီးဖို့ရှိတယ်။ ဘာလုပ်ရမလဲ။</div><button class="audio-btn" onclick="speakEnglish('Oh no, I have a connection to catch. What should I do?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Staff:</div><div class="english">Please go to the customer service desk. They can rebook your connecting train for free.</div><div class="burmese">ကျေးဇူးပြု၍ ဖောက်သည်ဝန်ဆောင်မှုကောင်တာသို့ သွားပါ။ သင့်ဆက်စီးရထားကို အခမဲ့ ပြန်လည်စီစဉ်ပေးနိုင်ပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('Please go to the customer service desk. They can rebook your connecting train for free.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 8: Platform Change -->
+    <div class="conversation-section"><h2>🔄 Platform Change / ပလက်ဖောင်းပြောင်းလဲခြင်း</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Announcement:</div><div class="english">Attention: The train to Bagan will now depart from Platform 5 instead of Platform 2.</div><div class="burmese">သတိပြုပါ- ပုဂံသို့သွားမည့် ရထားသည် ပလက်ဖောင်း ၂ အစား ပလက်ဖောင်း ၅ မှ ထွက်ခွာမည်ဖြစ်ပါသည်။</div><button class="audio-btn" onclick="speakEnglish('Attention: The train to Bagan will now depart from Platform 5 instead of Platform 2.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Passenger:</div><div class="english">Where is Platform 5?</div><div class="burmese">ပလက်ဖောင်း ၅ ဘယ်မှာလဲ။</div><button class="audio-btn" onclick="speakEnglish('Where is Platform 5?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Staff:</div><div class="english">It's at the end of the corridor. Follow the signs. You have 15 minutes.</div><div class="burmese">စင်္ကြံအဆုံးမှာပါ။ ဆိုင်းဘုတ်များကို လိုက်ပါ။ သင့်မှာ ၁၅ မိနစ်ရှိပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('It is at the end of the corridor. Follow the signs. You have 15 minutes.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <div class="conversation-section">
+    <h2>📚 Train Travel Vocabulary / ရထားခရီးသွားသုံးဝေါဟာရများ</h2>
+    <div class="vocab-grid">
+        <div class="vocab-item"><span class="vocab-eng">Platform</span><br><span class="vocab-burmese">ပလက်ဖောင်း</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Departure / Arrival</span><br><span class="vocab-burmese">ထွက်ခွာ/ရောက်ရှိ</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Ticket collector</span><br><span class="vocab-burmese">လက်မှတ်စစ်သူ</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Conductor</span><br><span class="vocab-burmese">ရထားမှူး</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Sleeping car / Sleeper</span><br><span class="vocab-burmese">အိပ်စက်တွဲ</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Dining car</span><br><span class="vocab-burmese">စားသောက်တွဲ</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Observation car</span><br><span class="vocab-burmese">အပန်းဖြေတွဲ</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Track</span><br><span class="vocab-burmese">ရထားလမ်းကြောင်း</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Ticket machine</span><br><span class="vocab-burmese">လက်မှတ်စက်</span></div>
+    </div></div>
+    
+    <div class="tips-box"><i class="fas fa-lightbulb"></i> <strong>Tips for Train Travel (ရထားခရီးသွားရန် အကြံပြုချက်များ):</strong><br>• Book tickets in advance, especially during holidays (အထူးသဖြင့် အားလပ်ရက်များတွင် လက်မှတ်များကို ကြိုတင်မှာယူပါ)<br>• Arrive at least 30 minutes before departure (ထွက်ခွာမီ အနည်းဆုံး ၃၀ မိနစ်အလိုတွင် ရောက်ပါ)<br>• Keep your ticket accessible for inspection (စစ်ဆေးရန်အတွက် သင့်လက်မှတ်ကို အလွယ်တကူရနိုင်အောင်ထားပါ)<br>• Listen for announcements about delays or platform changes (နောက်ကျခြင်း သို့မဟုတ် ပလက်ဖောင်းပြောင်းလဲမှုများအတွက် ကြေညာချက်များကို နားထောင်ပါ)</div>
+    
+    <div class="conversation-section"><div class="quiz-question"><p><strong>1. How do you ask for a train ticket?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'I would like to book a train ticket.')">I would like to rent a car.</div><div class="quiz-option" onclick="checkAnswer(this, 'I would like to book a train ticket.')">I would like to book a train ticket.</div><div class="quiz-option" onclick="checkAnswer(this, 'I would like to book a train ticket.')">I would like to buy a bus pass.</div><div class="quiz-option" onclick="checkAnswer(this, 'I would like to book a train ticket.')">I would like to fly.</div></div></div>
+    <div class="quiz-question"><p><strong>2. "ပလက်ဖောင်း ၃ က ဘယ်မှာလဲ" in English?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'Where is Platform 3?')">When does the train leave?</div><div class="quiz-option" onclick="checkAnswer(this, 'Where is Platform 3?')">Where is Platform 3?</div><div class="quiz-option" onclick="checkAnswer(this, 'Where is Platform 3?')">How much is the ticket?</div><div class="quiz-option" onclick="checkAnswer(this, 'Where is Platform 3?')">Is the train on time?</div></div></div>
+    <div class="quiz-question"><p><strong>3. What is a "sleeper car"?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'A train car with beds for overnight travel')">A dining car</div><div class="quiz-option" onclick="checkAnswer(this, 'A train car with beds for overnight travel')">A luggage car</div><div class="quiz-option" onclick="checkAnswer(this, 'A train car with beds for overnight travel')">A train car with beds for overnight travel</div><div class="quiz-option" onclick="checkAnswer(this, 'A train car with beds for overnight travel')">A first-class car</div></div></div>
+    <div class="quiz-question"><p><strong>4. "ရထား အချိန်မှန်လား" in English?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'Is the train on time?')">Is the train delayed?</div><div class="quiz-option" onclick="checkAnswer(this, 'Is the train on time?')">Is the train on time?</div><div class="quiz-option" onclick="checkAnswer(this, 'Is the train on time?')">Is the train crowded?</div><div class="quiz-option" onclick="checkAnswer(this, 'Is the train on time?')">Is the train fast?</div></div></div>
+    <div class="quiz-question"><p><strong>5. What should you do if your platform changes?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'Follow the signs to the new platform')">Stay where you are</div><div class="quiz-option" onclick="checkAnswer(this, 'Follow the signs to the new platform')">Go home</div><div class="quiz-option" onclick="checkAnswer(this, 'Follow the signs to the new platform')">Follow the signs to the new platform</div><div class="quiz-option" onclick="checkAnswer(this, 'Follow the signs to the new platform')">Ask for a refund</div></div></div>
+    </div>
+    <footer><p><i class="fas fa-heart" style="color: #8e44ad;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p><p style="font-size: 0.75rem; margin-top: 0.5rem;">Practice these conversations to travel by train with confidence!</p></footer>
+</div>
+<a href="#" class="back-to-top" id="backToTopBtn"><i class="fas fa-arrow-up"></i></a>
+<script>
+    function speakEnglish(text){if(!window.speechSynthesis)return;window.speechSynthesis.cancel();const utterance=new SpeechSynthesisUtterance(text);utterance.lang='en-US';utterance.rate=0.8;utterance.pitch=1.0;function setVoice(){const voices=window.speechSynthesis.getVoices();const englishVoice=voices.find(v=>v.lang==='en-US'||v.lang.startsWith('en-'));if(englishVoice)utterance.voice=englishVoice;window.speechSynthesis.speak(utterance);}if(window.speechSynthesis.getVoices().length)setVoice();else window.speechSynthesis.onvoiceschanged=setVoice;}
+    function checkAnswer(element,correctAnswer){const options=element.parentElement.querySelectorAll('.quiz-option');const isCorrect=element.innerText===correctAnswer;if(isCorrect){element.style.background='#2ecc71';element.style.color='white';speakEnglish(correctAnswer);setTimeout(()=>{options.forEach(opt=>{opt.style.background='';opt.style.color='';});},1500);}else{element.style.background='#e74c3c';element.style.color='white';setTimeout(()=>{options.forEach(opt=>{opt.style.background='';opt.style.color='';});},500);}}
+    (function(){const btn=document.getElementById('backToTopBtn');if(btn){window.addEventListener('scroll',function(){btn.classList.toggle('show',window.scrollY>300);});btn.addEventListener('click',function(e){e.preventDefault();window.scrollTo({top:0,behavior:'smooth'});});}})();
+</script>
+</body>
+</html>

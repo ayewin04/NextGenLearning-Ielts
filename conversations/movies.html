@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movies & Cinema - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 1rem;
+        }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        
+        .conversation-section {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .conversation-section h2 {
+            background: #6c5ce7;
+            color: white;
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line {
+            display: grid;
+            grid-template-columns: 70px 1fr 1fr;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            align-items: start;
+        }
+        .speaker { font-weight: bold; color: #6c5ce7; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { 
+            color: #8e6b3c; 
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 0.95rem;
+        }
+        .audio-btn {
+            background: #eef4ff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.3rem;
+        }
+        .audio-btn:hover { background: #6c5ce7; color: white; }
+        
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+            padding: 1rem;
+        }
+        .vocab-item {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            border-left: 3px solid #6c5ce7;
+        }
+        .vocab-eng { font-weight: bold; color: #6c5ce7; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        
+        .quiz-question {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.8rem;
+        }
+        .quiz-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .quiz-option {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .quiz-option:hover { background: #6c5ce7; color: white; border-color: #6c5ce7; }
+        
+        .genre-box {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            padding: 1rem;
+            justify-content: center;
+        }
+        .genre-tag {
+            background: #f3e5f5;
+            padding: 0.4rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.85rem;
+            color: #6c5ce7;
+            border: 1px solid #6c5ce7;
+        }
+        
+        .tips-box {
+            background: #f3e5f5;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #6c5ce7;
+        }
+        .tips-box i { color: #6c5ce7; margin-right: 8px; }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1rem;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: #1e3c72;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid white;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: #f5b042;
+            color: #1e3c72;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .back-to-top i {
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 42px;
+                height: 42px;
+            }
+            .back-to-top i {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 700px) {
+            .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> All Conversations
+    </a>
+    
+    <header>
+        <h1><i class="fas fa-film"></i> Movies & Cinema</h1>
+        <p>Learn how to talk about films, actors, and movie recommendations in English</p>
+        <p>ရုပ်ရှင်များ၊ သရုပ်ဆောင်များနှင့် ရုပ်ရှင်အကြံပြုချက်များအကြောင်း အင်္ဂလိပ်လို ပြောဆိုနည်းကို လေ့လာပါ</p>
+    </header>
+    
+    <!-- Dialogue 1: Talking About a Movie You Watched -->
+    <div class="conversation-section">
+        <h2>🎬 Talking About a Movie You Watched / ကြည့်ခဲ့တဲ့ရုပ်ရှင်အကြောင်းပြောခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">I watched an amazing movie last night. Have you seen "Oppenheimer"?</div>
+                <div class="burmese">မနေ့ညက အံ့သြစရာကောင်းတဲ့ ရုပ်ရှင်တစ်ကားကြည့်လိုက်တယ်။ "Oppenheimer" ကြည့်ဖူးလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('I watched an amazing movie last night. Have you seen Oppenheimer?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Not yet. Is it good?</div>
+                <div class="burmese">မကြည့်ရသေးဘူး။ ကောင်းလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Not yet. Is it good?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">It was incredible! The acting, the music, everything was perfect.</div>
+                <div class="burmese">မယုံနိုင်စရာကောင်းတယ်! သရုပ်ဆောင်မှု၊ ဂီတ၊ အားလုံးက ပြီးပြည့်စုံတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('It was incredible! The acting, the music, everything was perfect.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">I'll have to watch it this weekend. Thanks for the recommendation!</div>
+                <div class="burmese">ဒီအပတ်အကုန်မှာ ကြည့်ဖို့လိုမယ်။ အကြံပြုတဲ့အတွက် ကျေးဇူးပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('I will have to watch it this weekend. Thanks for the recommendation!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 2: Movie Genres -->
+    <div class="conversation-section">
+        <h2>🎭 Movie Genres / ရုပ်ရှင်အမျိုးအစားများ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">What kind of movies do you like?</div>
+                <div class="burmese">မင်း ဘယ်လိုရုပ်ရှင်မျိုး ကြိုက်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What kind of movies do you like?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">I love action movies and comedies. What about you?</div>
+                <div class="burmese">အက်ရှင်ရုပ်ရှင်နဲ့ ဟာသရုပ်ရှင်တွေ ကြိုက်တယ်။ မင်းကရော။</div>
+                <button class="audio-btn" onclick="speakEnglish('I love action movies and comedies. What about you?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">I'm more into dramas and thrillers. I like movies that make me think.</div>
+                <div class="burmese">ငါ ဒရာမာနဲ့ သည်းဖိုစရာရုပ်ရှင်တွေ ပိုကြိုက်တယ်။ စဉ်းစားစေတဲ့ ရုပ်ရှင်တွေ ကြိုက်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am more into dramas and thrillers. I like movies that make me think.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Have you seen any good thrillers recently?</div>
+                <div class="burmese">မကြာခင်တုန်းက သည်းဖိုစရာရုပ်ရှင်ကောင်းကောင်း ကြည့်ဖူးလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Have you seen any good thrillers recently?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 3: Favorite Actor/Actress -->
+    <div class="conversation-section">
+        <h2>⭐ Favorite Actor/Actress / အကြိုက်ဆုံးသရုပ်ဆောင်</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Who is your favorite actor or actress?</div>
+                <div class="burmese">မင်းရဲ့ အကြိုက်ဆုံး သရုပ်ဆောင် ဒါမှမဟုတ် မင်းသမီးက ဘယ်သူလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Who is your favorite actor or actress?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">I really like Leonardo DiCaprio. He's so talented.</div>
+                <div class="burmese">ငါ Leonardo DiCaprio ကို တကယ်ကြိုက်တယ်။ သူက အရမ်းထူးချွန်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I really like Leonardo DiCaprio. He is so talented.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">What's your favorite movie of his?</div>
+                <div class="burmese">သူ့ရဲ့ အကြိုက်ဆုံးရုပ်ရှင်က ဘာလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What is your favorite movie of his?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Definitely "Inception." It's a masterpiece.</div>
+                <div class="burmese">သေချာပေါက် "Inception" ပါ။ ဒါက အကောင်းဆုံးလက်ရာပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Definitely Inception. It is a masterpiece.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 4: At the Movie Theater -->
+    <div class="conversation-section">
+        <h2>🍿 At the Movie Theater / ရုပ်ရှင်ရုံတွင်</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">What time does the movie start?</div>
+                <div class="burmese">ရုပ်ရှင် ဘယ်အချိန်စလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What time does the movie start?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">At 7:30 PM. We should get popcorn first.</div>
+                <div class="burmese">ည ၇ နာရီခွဲမှာ။ အရင်ဆုံး ပြောင်းဖူးပေါက်ပေါက်သွားဝယ်သင့်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('At 7:30 PM. We should get popcorn first.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Good idea. Do you want anything to drink?</div>
+                <div class="burmese">အကြံကောင်းပါတယ်။ သောက်စရာတစ်ခုခု လိုချင်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Good idea. Do you want anything to drink?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Just a soda, please. Let's find our seats before the trailers start.</div>
+                <div class="burmese">ဆိုဒါတစ်ဘူးပါ။ ရုပ်ရှင်ကြိုရုပ်ရှင်မစခင်ကိုယ်တို့နေရာသွားရှာကြရအောင်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Just a soda, please. Let us find our seats before the trailers start.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 5: Movie Reviews -->
+    <div class="conversation-section">
+        <h2>⭐ Movie Reviews / ရုပ်ရှင်သုံးသပ်ချက်များ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Did you read the reviews for the new Marvel movie?</div>
+                <div class="burmese">Marvel ရုပ်ရှင်အသစ်အတွက် သုံးသပ်ချက်တွေ ဖတ်ဖူးလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Did you read the reviews for the new Marvel movie?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Yes, critics loved it. It has a 95% rating on Rotten Tomatoes.</div>
+                <div class="burmese">ဟုတ်တယ်၊ ဝေဖန်သူတွေ ကြိုက်ကြတယ်။ Rotten Tomatoes မှာ ၉၅ ရာခိုင်နှုန်းရှိတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, critics loved it. It has a 95 percent rating on Rotten Tomatoes.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">That's impressive! We should go see it this weekend.</div>
+                <div class="burmese">အထင်ကြီးစရာပဲ! ဒီအပတ်အကုန်မှာ သွားကြည့်သင့်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('That is impressive! We should go see it this weekend.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">I'll buy the tickets online to avoid the lines.</div>
+                <div class="burmese">တန်းစီရတာရှောင်ဖို့ အွန်လိုင်းကနေ လက်မှတ်ဝယ်မယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I will buy the tickets online to avoid the lines.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 6: Comparing Movies -->
+    <div class="conversation-section">
+        <h2>📊 Comparing Movies / ရုပ်ရှင်များကိုနှိုင်းယှဉ်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Which movie did you like better? "Avatar" or "Titanic"?</div>
+                <div class="burmese">ဘယ်ရုပ်ရှင်က ပိုကြိုက်လဲ။ "Avatar" လား "Titanic" လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Which movie did you like better? Avatar or Titanic?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">That's a tough question. I think "Titanic" has a better love story, but "Avatar" has amazing visuals.</div>
+                <div class="burmese">ခက်တဲ့မေးခွန်းပါ။ "Titanic" က ပိုကောင်းတဲ့အချစ်ဇာတ်လမ်းရှိတယ်လို့ထင်တယ်၊ ဒါပေမယ့် "Avatar" က အံ့သြစရာကောင်းတဲ့ရုပ်ပုံတွေရှိတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('That is a tough question. I think Titanic has a better love story, but Avatar has amazing visuals.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">I agree. Both are great in different ways.</div>
+                <div class="burmese">သဘောတူတယ်။ နှစ်မျိုးစလုံးက မတူညီတဲ့နည်းလမ်းတွေနဲ့ ကောင်းပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I agree. Both are great in different ways.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 7: Movie Spoilers -->
+    <div class="conversation-section">
+        <h2>🤫 Movie Spoilers / ရုပ်ရှင်ဇာတ်လမ်းကြိုဖွင့်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Have you seen the new horror movie yet?</div>
+                <div class="burmese">ထိတ်လန့်စရာရုပ်ရှင်အသစ် ကြည့်ပြီးပြီလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Have you seen the new horror movie yet?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Not yet. No spoilers, please!</div>
+                <div class="burmese">မကြည့်ရသေးဘူး။ ကျေးဇူးပြု၍ ဇာတ်လမ်းကြိုမဖွင့်ပါနဲ့။</div>
+                <button class="audio-btn" onclick="speakEnglish('Not yet. No spoilers, please!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Don't worry, I won't spoil it. But I'll just say the ending is surprising.</div>
+                <div class="burmese">စိတ်မပူပါနဲ့၊ မဖွင့်ပါဘူး။ ဒါပေမယ့် ဇာတ်သိမ်းက အံ့သြစရာကောင်းတယ်လို့ ပြောပါရစေ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do not worry, I will not spoil it. But I will just say the ending is surprising.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Okay, I'm even more excited to watch it now!</div>
+                <div class="burmese">အိုကေ၊ အခုကြည့်ဖို့ ပိုစိတ်လှုပ်ရှားမိတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Okay, I am even more excited to watch it now!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 8: Streaming vs Theater -->
+    <div class="conversation-section">
+        <h2>📺 Streaming vs Theater / စတြီမင်နှင့် ရုပ်ရှင်ရုံနှိုင်းယှဉ်</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Do you prefer watching movies at home or in the theater?</div>
+                <div class="burmese">ရုပ်ရှင်ရုံမှာလား အိမ်မှာလား ကြည့်ရတာ ပိုကြိုက်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you prefer watching movies at home or in the theater?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">I prefer the theater for action movies because of the big screen and sound system.</div>
+                <div class="burmese">မျက်နှာပြင်ကြီးနဲ့ အသံစနစ်ကောင်းတာကြောင့် အက်ရှင်ရုပ်ရှင်တွေအတွက် ရုပ်ရှင်ရုံကို ပိုကြိုက်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I prefer the theater for action movies because of the big screen and sound system.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">That's true. But for comedies and dramas, I like watching at home on my couch.</div>
+                <div class="burmese">မှန်ပါတယ်။ ဒါပေမယ့် ဟာသနဲ့ဒရာမာတွေအတွက် အိမ်မှာ ငါ့ဆိုဖာပေါ်မှာ ကြည့်ရတာ ကြိုက်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('That is true. But for comedies and dramas, I like watching at home on my couch.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Same here. It's more comfortable and cheaper.</div>
+                <div class="burmese">ငါလည်း အတူတူပါ။ ပိုသက်တောင့်သက်သာရှိပြီး ပိုစျေးသက်သာတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Same here. It is more comfortable and cheaper.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Movie Genres List -->
+    <div class="conversation-section">
+        <h2>🎬 Movie Genres / ရုပ်ရှင်အမျိုးအစားများ</h2>
+        <div class="genre-box">
+            <span class="genre-tag">Action (အက်ရှင်)</span>
+            <span class="genre-tag">Comedy (ဟာသ)</span>
+            <span class="genre-tag">Drama (ဒရာမာ)</span>
+            <span class="genre-tag">Horror (ထိတ်လန့်စရာ)</span>
+            <span class="genre-tag">Thriller (သည်းဖိုစရာ)</span>
+            <span class="genre-tag">Romance (အချစ်)</span>
+            <span class="genre-tag">Sci-Fi (သိပ္ပံဝတ္ထု)</span>
+            <span class="genre-tag">Fantasy (စိတ်ကူးယဉ်)</span>
+            <span class="genre-tag">Animation (ကာတွန်း)</span>
+            <span class="genre-tag">Documentary (မှတ်တမ်းရုပ်ရှင်)</span>
+            <span class="genre-tag">Musical (ဂီတ)</span>
+            <span class="genre-tag">Western (အနောက်တိုင်း)</span>
+        </div>
+    </div>
+    
+    <!-- Vocabulary Section -->
+    <div class="conversation-section">
+        <h2>📖 Movie Vocabulary / ရုပ်ရှင်သုံးဝေါဟာရများ</h2>
+        <div class="vocab-grid">
+            <div class="vocab-item"><span class="vocab-eng">Director</span><br><span class="vocab-burmese">ဒါရိုက်တာ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Actor / Actress</span><br><span class="vocab-burmese">သရုပ်ဆောင်/မင်းသမီး</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Plot / Storyline</span><br><span class="vocab-burmese">ဇာတ်ကွက်/ဇာတ်လမ်းကြောင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Scene</span><br><span class="vocab-burmese">မြင်ကွင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Soundtrack</span><br><span class="vocab-burmese">ဇာတ်ဝင်တေး</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Special effects</span><br><span class="vocab-burmese">အထူးပြုလုပ်ချက်များ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Box office hit</span><br><span class="vocab-burmese">အဝင်ငွေအောင်မြင်သောရုပ်ရှင်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Flop</span><br><span class="vocab-burmese">ကျရှုံးသောရုပ်ရှင်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Premiere</span><br><span class="vocab-burmese">ပွဲဦးထွက်ပြသ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Sequel / Prequel</span><br><span class="vocab-burmese">နောက်ဆက်/ရှေ့ဆက်ရုပ်ရှင်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Spoiler</span><br><span class="vocab-burmese">ဇာတ်လမ်းကြိုဖွင့်ခြင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Trailer</span><br><span class="vocab-burmese">ရုပ်ရှင်ကြော်ငြာ</span></div>
+        </div>
+    </div>
+    
+    <!-- Useful Movie Phrases -->
+    <div class="conversation-section">
+        <h2>💡 Useful Movie Phrases / အသုံးဝင်သောရုပ်ရှင်စကားစုများ</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Describing Movies (ရုပ်ရှင်များကိုဖော်ပြခြင်း):</strong><br>
+            • "It's a must-see!" (ကြည့်ဖူးမှဖြစ်မယ်။)<br>
+            • "The acting was brilliant." (သရုပ်ဆောင်မှုက ထက်မြက်တယ်။)<br>
+            • "It kept me on the edge of my seat." (ငါ့ကို စိတ်လှုပ်ရှားစေခဲ့တယ်။)<br>
+            • "The plot was predictable." (ဇာတ်ကွက်က ကြိုတင်ခန့်မှန်းလို့ရတယ်။)<br>
+            • "It was a tearjerker." (ဝမ်းနည်းစရာကောင်းတယ်။)<br>
+            • "The visuals were stunning." (ရုပ်ပုံတွေ ရင်သပ်ရှုမောဖွယ်ကောင်းတယ်။)<br>
+            • "It was a waste of time." (အချိန်ဖြုန်းတယ်။)<br>
+            <br>
+            <i class="fas fa-lightbulb"></i>
+            <strong>At the Cinema (ရုပ်ရှင်ရုံတွင်):</strong><br>
+            • "Is this seat taken?" (ဒီနေရာ ရှိလား။)<br>
+            • "Please turn off your phone." (ကျေးဇူးပြု၍ ဖုန်းပိတ်ပါ။)<br>
+            • "Excuse me, you're blocking my view." (ခွင့်လွှတ်ပါ၊ ခင်ဗျား ငါ့မြင်ကွင်းကို ပိတ်နေတယ်။)<br>
+        </div>
+    </div>
+    
+    <!-- Practice Section -->
+    <div class="conversation-section">
+        <h2>✏️ Practice Questions / လေ့ကျင့်ခန်းမေးခွန်းများ</h2>
+        <div class="dialogue-box">
+            <div class="quiz-question">
+                <p><strong>1. How do you ask someone what movies they like?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What kind of movies do you like?')">What is your name?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What kind of movies do you like?')">What kind of movies do you like?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What kind of movies do you like?')">Where do you live?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What kind of movies do you like?')">How old are you?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>2. "ရုပ်ရှင်သုံးသပ်ချက်တွေ ဖတ်ဖူးလား" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Did you read the reviews?')">Did you watch the movie?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Did you read the reviews?')">Did you read the reviews?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Did you read the reviews?')">Did you like the actor?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Did you read the reviews?')">Did you buy tickets?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. What do you call a short video that shows previews of a movie?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Trailer')">Sequel</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Trailer')">Trailer</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Trailer')">Scene</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Trailer')">Poster</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. "ဒီရုပ်ရှင်ရဲ့သရုပ်ဆောင်မှုက ထက်မြက်တယ်" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'The acting was brilliant.')">The acting was terrible.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'The acting was brilliant.')">The acting was brilliant.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'The acting was brilliant.')">The acting was boring.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'The acting was brilliant.')">The acting was average.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. What does "spoiler" mean?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Revealing important plot details')">Watching a movie</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Revealing important plot details')">Buying tickets</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Revealing important plot details')">Revealing important plot details</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Revealing important plot details')">Reading reviews</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p><i class="fas fa-heart" style="color: #6c5ce7;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p>
+        <p style="font-size: 0.75rem; margin-top: 0.5rem;">Practice these conversations to talk about movies and cinema with confidence!</p>
+    </footer>
+</div>
+
+<!-- Back to Top Button -->
+<a href="#" class="back-to-top" id="backToTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+<script>
+    function speakEnglish(text) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8;
+        utterance.pitch = 1.0;
+        
+        function setVoice() {
+            const voices = window.speechSynthesis.getVoices();
+            const englishVoice = voices.find(v => v.lang === 'en-US' || v.lang.startsWith('en-'));
+            if (englishVoice) utterance.voice = englishVoice;
+            window.speechSynthesis.speak(utterance);
+        }
+        
+        if (window.speechSynthesis.getVoices().length) setVoice();
+        else window.speechSynthesis.onvoiceschanged = setVoice;
+    }
+    
+    function checkAnswer(element, correctAnswer) {
+        const options = element.parentElement.querySelectorAll('.quiz-option');
+        const isCorrect = element.innerText === correctAnswer;
+        
+        if (isCorrect) {
+            element.style.background = '#2ecc71';
+            element.style.color = 'white';
+            speakEnglish(correctAnswer);
+            setTimeout(() => {
+                options.forEach(opt => {
+                    opt.style.background = '';
+                    opt.style.color = '';
+                });
+            }, 1500);
+        } else {
+            element.style.background = '#e74c3c';
+            element.style.color = 'white';
+            setTimeout(() => {
+                element.style.background = '';
+                element.style.color = '';
+            }, 500);
+        }
+    }
+    
+    // Back to Top Button Functionality
+    (function() {
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        
+        if (backToTopBtn) {
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

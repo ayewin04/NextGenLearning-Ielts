@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School & Education - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 1rem;
+        }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        
+        .conversation-section {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .conversation-section h2 {
+            background: #8e44ad;
+            color: white;
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line {
+            display: grid;
+            grid-template-columns: 70px 1fr 1fr;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            align-items: start;
+        }
+        .speaker { font-weight: bold; color: #8e44ad; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { 
+            color: #8e6b3c; 
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 0.95rem;
+        }
+        .audio-btn {
+            background: #eef4ff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.3rem;
+        }
+        .audio-btn:hover { background: #8e44ad; color: white; }
+        
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+            padding: 1rem;
+        }
+        .vocab-item {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            border-left: 3px solid #8e44ad;
+        }
+        .vocab-eng { font-weight: bold; color: #8e44ad; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        
+        .quiz-question {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.8rem;
+        }
+        .quiz-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .quiz-option {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .quiz-option:hover { background: #8e44ad; color: white; border-color: #8e44ad; }
+        
+        .subjects-box {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            padding: 1rem;
+        }
+        .subject-tag {
+            background: #f3e5f5;
+            padding: 0.4rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.85rem;
+            color: #8e44ad;
+            border: 1px solid #8e44ad;
+        }
+        
+        .tips-box {
+            background: #f3e5f5;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #8e44ad;
+        }
+        .tips-box i { color: #8e44ad; margin-right: 8px; }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1rem;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: #1e3c72;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid white;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: #f5b042;
+            color: #1e3c72;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .back-to-top i {
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 42px;
+                height: 42px;
+            }
+            .back-to-top i {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 700px) {
+            .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> All Conversations
+    </a>
+    
+    <header>
+        <h1><i class="fas fa-graduation-cap"></i> School & Education</h1>
+        <p>Learn how to talk about school, subjects, exams, and classroom situations</p>
+        <p>ကျောင်း၊ ဘာသာရပ်များ၊ စာမေးပွဲများနှင့် စာသင်ခန်းအခြေအနေများအကြောင်း ပြောဆိုနည်းကို လေ့လာပါ</p>
+    </header>
+    
+    <!-- Dialogue 1: Talking About School -->
+    <div class="conversation-section">
+        <h2>🏫 Talking About School / ကျောင်းအကြောင်းပြောဆိုခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">Where do you go to school?</div>
+                <div class="burmese">မင်း ဘယ်ကျောင်းမှာ သင်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Where do you go to school?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">I go to Yangon International School.</div>
+                <div class="burmese">ကျွန်တော် ရန်ကုန်အပြည်ပြည်ဆိုင်ရာကျောင်းမှာ သင်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I go to Yangon International School.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">What grade are you in?</div>
+                <div class="burmese">မင်း ဘယ်အတန်းလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What grade are you in?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">I'm in 10th grade. What about you?</div>
+                <div class="burmese">ကျွန်တော် ၁၀ တန်းပါ။ မင်းကရော။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am in 10th grade. What about you?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 2: Favorite Subjects -->
+    <div class="conversation-section">
+        <h2>📚 Favorite Subjects / အကြိုက်ဆုံးဘာသာရပ်များ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">What's your favorite subject?</div>
+                <div class="burmese">မင်းရဲ့ အကြိုက်ဆုံးဘာသာရပ်က ဘာလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What is your favorite subject?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">I love English. It's very interesting.</div>
+                <div class="burmese">ကျွန်တော် အင်္ဂလိပ်စာကို ကြိုက်တယ်။ အရမ်းစိတ်ဝင်စားစရာကောင်းတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I love English. It is very interesting.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 A:</div>
+                <div class="english">What about math? Do you like it?</div>
+                <div class="burmese">သင်္ချာကရော? ကြိုက်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('What about math? Do you like it?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 B:</div>
+                <div class="english">Math is a bit difficult for me, but I try my best.</div>
+                <div class="burmese">သင်္ချာက ကျွန်တော့်အတွက် နည်းနည်းခက်ပေမယ့် အကောင်းဆုံးကြိုးစားတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Math is a bit difficult for me, but I try my best.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 3: In the Classroom -->
+    <div class="conversation-section">
+        <h2>📝 In the Classroom / စာသင်ခန်းထဲတွင်</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Teacher:</div>
+                <div class="english">Good morning, class. Please open your textbooks to page 25.</div>
+                <div class="burmese">မင်္ဂလာနံနက်ခင်းပါ အတန်းသားတို့။ ကျေးဇူးပြု၍ စာမျက်နှာ ၂၅ ကိုဖွင့်ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Good morning, class. Please open your textbooks to page 25.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Student:</div>
+                <div class="english">Excuse me, teacher. I don't understand this question.</div>
+                <div class="burmese">ခွင့်လွှတ်ပါ ဆရာ။ ကျွန်တော် ဒီမေးခွန်းကို နားမလည်ဘူး။</div>
+                <button class="audio-btn" onclick="speakEnglish('Excuse me, teacher. I do not understand this question.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Teacher:</div>
+                <div class="english">Let me explain it again. Pay attention, please.</div>
+                <div class="burmese">နောက်တစ်ခါ ရှင်းပြပါရစေ။ ကျေးဇူးပြု၍ အာရုံစိုက်ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Let me explain it again. Pay attention, please.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Teacher:</div>
+                <div class="english">Does anyone have any questions?</div>
+                <div class="burmese">မေးခွန်းရှိသူ တစ်ယောက်ယောက် ရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Does anyone have any questions?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 4: Homework and Assignments -->
+    <div class="conversation-section">
+        <h2>📖 Homework & Assignments / အိမ်စာနှင့်တာဝန်များ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Student:</div>
+                <div class="english">Do we have any homework today?</div>
+                <div class="burmese">ဒီနေ့ အိမ်စာရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do we have any homework today?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Teacher:</div>
+                <div class="english">Yes, complete exercises 1 to 5 on page 30. It's due tomorrow.</div>
+                <div class="burmese">ဟုတ်တယ်၊ စာမျက်နှာ ၃၀ က လေ့ကျင့်ခန်း ၁ ကနေ ၅ အထိ ပြီးအောင်လုပ်ပါ။ မနက်ဖြန် ပေးရမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, complete exercises 1 to 5 on page 30. It is due tomorrow.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Student:</div>
+                <div class="english">When is the deadline for the project?</div>
+                <div class="burmese">ပရောဂျက်အတွက် နောက်ဆုံးရက်က ဘယ်တော့လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('When is the deadline for the project?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Teacher:</div>
+                <div class="english">The project is due next Friday. Work in groups of four.</div>
+                <div class="burmese">ပရောဂျက်က လာမယ့်သောကြာနေ့မှာ ပေးရမယ်။ လေးယောက်စီ အုပ်စုဖွဲ့ပြီး လုပ်ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('The project is due next Friday. Work in groups of four.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 5: Exams and Tests -->
+    <div class="conversation-section">
+        <h2>📝 Exams & Tests / စာမေးပွဲများ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Student A:</div>
+                <div class="english">Are you ready for the final exam?</div>
+                <div class="burmese">စာမေးပွဲအတွက် အဆင်သင့်ဖြစ်ပြီလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Are you ready for the final exam?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Student B:</div>
+                <div class="english">Not really. I'm a little nervous. Have you studied everything?</div>
+                <div class="burmese">သိပ်မဖြစ်သေးဘူး။ ကျွန်တော် နည်းနည်းစိတ်လှုပ်ရှားနေတယ်။ မင်း အကုန်လုံး ကျက်ပြီးပြီလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Not really. I am a little nervous. Have you studied everything?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Student A:</div>
+                <div class="english">I studied the main topics, but I need to review more.</div>
+                <div class="burmese">အဓိကအကြောင်းအရာတွေ ကျက်ထားပေမယ့် ထပ်ပြီး ပြန်လေ့လာဖို့လိုတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I studied the main topics, but I need to review more.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Student B:</div>
+                <div class="english">Let's study together after school. We can help each other.</div>
+                <div class="burmese">ကျောင်းပြီးရင် အတူတူလေ့လာကြရအောင်။ တစ်ယောက်ကိုတစ်ယောက် ကူညီနိုင်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Let us study together after school. We can help each other.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 6: Test Results -->
+    <div class="conversation-section">
+        <h2>📊 Test Results / စာမေးပွဲရလဒ်များ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Teacher:</div>
+                <div class="english">I'm returning your test papers today. Overall, the class did well.</div>
+                <div class="burmese">ဒီနေ့ စာမေးပွဲစာရွက်တွေ ပြန်အပ်ပါမယ်။ ခြုံငုံကြည့်ရင် အတန်းက ကောင်းကောင်းလုပ်ထားတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am returning your test papers today. Overall, the class did well.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Student:</div>
+                <div class="english">What grade did I get?</div>
+                <div class="burmese">ကျွန်တော် ဘယ်အမှတ်ရလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What grade did I get?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Teacher:</div>
+                <div class="english">You got a B+. Good job! Keep up the great work.</div>
+                <div class="burmese">မင်း B+ ရတယ်။ ကောင်းတယ်။ ဆက်ပြီးကြိုးစားပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('You got a B plus. Good job! Keep up the great work.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Student:</div>
+                <div class="english">Thank you, teacher. I'll try to do better next time.</div>
+                <div class="burmese">ကျေးဇူးပါဆရာ။ နောက်တစ်ခါ ပိုကောင်းအောင် ကြိုးစားပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Thank you, teacher. I will try to do better next time.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 7: University Application -->
+    <div class="conversation-section">
+        <h2>🎓 University Application / တက္ကသိုလ်လျှောက်လွှာ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Friend A:</div>
+                <div class="english">Which university do you want to apply to?</div>
+                <div class="burmese">မင်း ဘယ်တက္ကသိုလ်ကို လျှောက်ထားချင်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Which university do you want to apply to?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Friend B:</div>
+                <div class="english">I want to study at Yangon University. What about you?</div>
+                <div class="burmese">ကျွန်တော် ရန်ကုန်တက္ကသိုလ်မှာ သင်ချင်တယ်။ မင်းကရော။</div>
+                <button class="audio-btn" onclick="speakEnglish('I want to study at Yangon University. What about you?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Friend A:</div>
+                <div class="english">I'm interested in studying abroad, maybe in Singapore.</div>
+                <div class="burmese">ကျွန်တော် ပြည်ပမှာ သင်ချင်တယ်၊ စင်ကာပူဖြစ်နိုင်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I am interested in studying abroad, maybe in Singapore.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Friend B:</div>
+                <div class="english">That's amazing! What do you want to major in?</div>
+                <div class="burmese">အံ့သြစရာကောင်းတယ်။ ဘာအဓိကဘာသာရပ် သင်ချင်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('That is amazing! What do you want to major in?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Friend A:</div>
+                <div class="english">I want to major in Computer Science.</div>
+                <div class="burmese">ကွန်ပျူတာသိပ္ပံဘာသာရပ်ကို အဓိကသင်ချင်တယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I want to major in Computer Science.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- School Subjects List -->
+    <div class="conversation-section">
+        <h2>📖 School Subjects / ကျောင်းဘာသာရပ်များ</h2>
+        <div class="subjects-box">
+            <span class="subject-tag">English (အင်္ဂလိပ်စာ)</span>
+            <span class="subject-tag">Math (သင်္ချာ)</span>
+            <span class="subject-tag">Science (သိပ္ပံ)</span>
+            <span class="subject-tag">History (သမိုင်း)</span>
+            <span class="subject-tag">Geography (ပထဝီဝင်)</span>
+            <span class="subject-tag">Physics (ရူပဗေဒ)</span>
+            <span class="subject-tag">Chemistry (ဓာတုဗေဒ)</span>
+            <span class="subject-tag">Biology (ဇီဝဗေဒ)</span>
+            <span class="subject-tag">Economics (ဘောဂဗေဒ)</span>
+            <span class="subject-tag">Art (ပန်းချီ)</span>
+            <span class="subject-tag">Music (ဂီတ)</span>
+            <span class="subject-tag">PE (ကာယပညာ)</span>
+            <span class="subject-tag">IT (ကွန်ပျူတာ)</span>
+            <span class="subject-tag">Literature (စာပေ)</span>
+        </div>
+    </div>
+    
+    <!-- Vocabulary Section -->
+    <div class="conversation-section">
+        <h2>📚 School Vocabulary / ကျောင်းသုံးဝေါဟာရများ</h2>
+        <div class="vocab-grid">
+            <div class="vocab-item"><span class="vocab-eng">Teacher / Student</span><br><span class="vocab-burmese">ဆရာ/ဆရာမ / ကျောင်းသား/သူ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Classroom</span><br><span class="vocab-burmese">စာသင်ခန်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Textbook</span><br><span class="vocab-burmese">ဖတ်စာ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Homework</span><br><span class="vocab-burmese">အိမ်စာ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Exam / Test</span><br><span class="vocab-burmese">စာမေးပွဲ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Grade / Score</span><br><span class="vocab-burmese">အမှတ်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Assignment / Project</span><br><span class="vocab-burmese">တာဝန်/ပရောဂျက်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Deadline</span><br><span class="vocab-burmese">နောက်ဆုံးရက်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Scholarship</span><br><span class="vocab-burmese">ပညာတော်သင်ဆု</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Degree</span><br><span class="vocab-burmese">ဘွဲ့</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Diploma</span><br><span class="vocab-burmese">ဒီပလိုမာ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Graduate</span><br><span class="vocab-burmese">ဘွဲ့ရသည်</span></div>
+        </div>
+    </div>
+    
+    <!-- Useful School Phrases -->
+    <div class="conversation-section">
+        <h2>💡 Useful School Phrases / အသုံးဝင်သောကျောင်းစကားစုများ</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Student Phrases (ကျောင်းသားစကားစုများ):</strong><br>
+            • "May I go to the bathroom?" (အိမ်သာသွားလို့ရမလား။)<br>
+            • "I forgot my homework at home." (အိမ်စာကို အိမ်မှာ မေ့ခဲ့တယ်။)<br>
+            • "Can you help me with this problem?" (ဒီပြဿနာအတွက် ကူညီနိုင်မလား။)<br>
+            • "What page are we on?" (ဘယ်စာမျက်နှာမှာ ရှိနေတာလဲ။)<br>
+            • "I'm having trouble understanding this lesson." (ဒီသင်ခန်းစာကို နားလည်ရခက်နေတယ်။)<br>
+            <br>
+            <i class="fas fa-lightbulb"></i>
+            <strong>Teacher Phrases (ဆရာစကားစုများ):</strong><br>
+            • "Please raise your hand before speaking." (စကားမပြောခင် ကျေးဇူးပြု၍ လက်မြှောက်ပါ။)<br>
+            • "Be quiet and listen carefully." (တိတ်ဆိတ်စွာနေပြီး သေသေချာချာ နားထောင်ပါ။)<br>
+            • "Form a line, please." (ကျေးဇူးပြု၍ တန်းစီပါ။)<br>
+            • "Take out your notebooks." (မှတ်စုစာအုပ်တွေ ထုတ်ပါ။)<br>
+            • "Excellent work, everyone!" (အားလုံး အလွန်ကောင်းပါတယ်။)<br>
+        </div>
+    </div>
+    
+    <!-- Practice Section -->
+    <div class="conversation-section">
+        <h2>✏️ Practice Questions / လေ့ကျင့်ခန်းမေးခွန်းများ</h2>
+        <div class="dialogue-box">
+            <div class="quiz-question">
+                <p><strong>1. How do you ask someone what grade they are in?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What grade are you in?')">How old are you?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What grade are you in?')">What is your name?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What grade are you in?')">What grade are you in?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What grade are you in?')">Where is your school?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>2. "အိမ်စာ" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Homework')">Exam</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Homework')">Project</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Homework')">Homework</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Homework')">Textbook</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. What do you call the person who teaches at a school?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Teacher')">Student</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Teacher')">Principal</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Teacher')">Teacher</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Teacher')">Doctor</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. "ကျွန်တော် အင်္ဂလိပ်စာကို ကြိုက်တယ်" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I like English.')">I like Math.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I like English.')">I like Science.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I like English.')">I like History.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I like English.')">I like English.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. What do you call the final test at the end of a school term?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Final exam')">Quiz</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Final exam')">Homework</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Final exam')">Final exam</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Final exam')">Practice test</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p><i class="fas fa-heart" style="color: #8e44ad;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p>
+        <p style="font-size: 0.75rem; margin-top: 0.5rem;">Practice these conversations to talk about school and education confidently!</p>
+    </footer>
+</div>
+
+<!-- Back to Top Button -->
+<a href="#" class="back-to-top" id="backToTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+<script>
+    function speakEnglish(text) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8;
+        utterance.pitch = 1.0;
+        
+        function setVoice() {
+            const voices = window.speechSynthesis.getVoices();
+            const englishVoice = voices.find(v => v.lang === 'en-US' || v.lang.startsWith('en-'));
+            if (englishVoice) utterance.voice = englishVoice;
+            window.speechSynthesis.speak(utterance);
+        }
+        
+        if (window.speechSynthesis.getVoices().length) setVoice();
+        else window.speechSynthesis.onvoiceschanged = setVoice;
+    }
+    
+    function checkAnswer(element, correctAnswer) {
+        const options = element.parentElement.querySelectorAll('.quiz-option');
+        const isCorrect = element.innerText === correctAnswer;
+        
+        if (isCorrect) {
+            element.style.background = '#2ecc71';
+            element.style.color = 'white';
+            speakEnglish(correctAnswer);
+            setTimeout(() => {
+                options.forEach(opt => {
+                    opt.style.background = '';
+                    opt.style.color = '';
+                });
+            }, 1500);
+        } else {
+            element.style.background = '#e74c3c';
+            element.style.color = 'white';
+            setTimeout(() => {
+                element.style.background = '';
+                element.style.color = '';
+            }, 500);
+        }
+    }
+    
+    // Back to Top Button Functionality
+    (function() {
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        
+        if (backToTopBtn) {
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sporting Goods Store - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%); font-family: 'Segoe UI', Roboto, sans-serif; padding: 1rem; }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        .back-btn { display: inline-flex; align-items: center; gap: 8px; background: white; padding: 0.6rem 1.2rem; border-radius: 2rem; text-decoration: none; color: #1e3c72; font-weight: 500; margin-bottom: 1rem; transition: 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        .conversation-section { background: white; border-radius: 1rem; margin-bottom: 2rem; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+        .conversation-section h2 { background: #00b894; color: white; padding: 1rem; font-size: 1.2rem; }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line { display: grid; grid-template-columns: 70px 1fr 1fr; gap: 0.8rem; padding: 0.8rem; border-bottom: 1px solid #eee; align-items: start; }
+        .speaker { font-weight: bold; color: #00b894; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.95rem; }
+        .audio-btn { background: #eef4ff; border: none; border-radius: 2rem; padding: 0.3rem 0.8rem; cursor: pointer; transition: 0.2s; margin-top: 0.3rem; }
+        .audio-btn:hover { background: #00b894; color: white; }
+        .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.8rem; padding: 1rem; }
+        .vocab-item { background: #f8f9fa; padding: 0.8rem; border-radius: 0.8rem; border-left: 3px solid #00b894; }
+        .vocab-eng { font-weight: bold; color: #00b894; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        .quiz-question { background: #f8f9fa; padding: 1rem; margin-bottom: 1rem; border-radius: 0.8rem; }
+        .quiz-options { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
+        .quiz-option { background: white; padding: 0.5rem 1rem; border-radius: 2rem; border: 1px solid #ddd; cursor: pointer; transition: 0.2s; }
+        .quiz-option:hover { background: #00b894; color: white; border-color: #00b894; }
+        .tips-box { background: #e8f8f5; padding: 1rem; border-radius: 0.8rem; margin: 1rem; border-left: 3px solid #00b894; }
+        .tips-box i { color: #00b894; margin-right: 8px; }
+        footer { margin-top: 2rem; text-align: center; padding: 1rem; color: #6c757d; font-size: 0.8rem; }
+        .back-to-top { position: fixed; bottom: 1.5rem; right: 1.5rem; background: #1e3c72; color: white; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 1000; opacity: 0; visibility: hidden; border: 2px solid white; }
+        .back-to-top.show { opacity: 1; visibility: visible; }
+        .back-to-top:hover { background: #f5b042; color: #1e3c72; transform: translateY(-3px); }
+        .back-to-top i { font-size: 1.2rem; }
+        @media (max-width: 768px) { .back-to-top { bottom: 1rem; right: 1rem; width: 42px; height: 42px; } .back-to-top i { font-size: 1rem; } }
+        @media (max-width: 700px) { .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; } }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn"><i class="fas fa-arrow-left"></i> All Conversations</a>
+    <header><h1><i class="fas fa-football-ball"></i> Sporting Goods Store</h1><p>Learn how to buy sports equipment, find the right sizes, and get advice in English</p><p>အားကစားပစ္စည်းများဝယ်ယူနည်း၊ မှန်ကန်သောအရွယ်အစားများရှာဖွေနည်းနှင့် အကြံဉာဏ်ရယူနည်းကို အင်္ဂလိပ်လို လေ့လာပါ</p></header>
+    
+    <!-- Dialogue 1: Soccer Ball -->
+    <div class="conversation-section"><h2>⚽ Soccer Ball / ဘောလုံးဘောလုံး</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">I need a soccer ball for my 10-year-old son.</div><div class="burmese">ကျွန်တော့် အသက် ၁၀ နှစ်အရွယ် သားအတွက် ဘောလုံးတစ်လုံး လိုအပ်ပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('I need a soccer ball for my 10-year-old son.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Staff:</div><div class="english">We have size 4 and size 5. Size 4 is for ages 8-12, size 5 is for teens and adults.</div><div class="burmese">ကျွန်တော်တို့မှာ အရွယ်အစား ၄ နှင့် ၅ ရှိပါတယ်။ အရွယ်အစား ၄ က အသက် ၈-၁၂ နှစ်အတွက်၊ အရွယ်အစား ၅ က ဆယ်ကျော်သက်နှင့် လူကြီးများအတွက်ပါ။</div><button class="audio-btn" onclick="speakEnglish('We have size 4 and size 5. Size 4 is for ages 8-12, size 5 is for teens and adults.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">I'll take a size 4. How much is this one?</div><div class="burmese">အရွယ်အစား ၄ ယူမယ်။ ဒီတစ်လုံးက ဘယ်လောက်လဲ။</div><button class="audio-btn" onclick="speakEnglish('I will take a size 4. How much is this one?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Staff:</div><div class="english">The basic model is $20. The official match ball is $40.</div><div class="burmese">အခြေခံမော်ဒယ်က ၂၀ ဒေါ်လာ။ တရားဝင်ပွဲစဉ်ဘောလုံးက ၄၀ ဒေါ်လာပါ။</div><button class="audio-btn" onclick="speakEnglish('The basic model is 20 dollars. The official match ball is 40 dollars.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 2: Running Shoes -->
+    <div class="conversation-section"><h2>👟 Running Shoes / အပြေးဖိနပ်</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">I'm looking for running shoes for beginners.</div><div class="burmese">ကျွန်တော် အစပြုသူများအတွက် အပြေးဖိနပ်ရှာနေပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('I am looking for running shoes for beginners.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Staff:</div><div class="english">What's your shoe size? And do you have flat feet or high arches?</div><div class="burmese">သင့်ဖိနပ်အရွယ်အစားက ဘယ်လောက်လဲ။ ပြားနေတဲ့ခြေထောက် သို့မဟုတ် မြင့်မားတဲ့ခုံးများ ရှိလား။</div><button class="audio-btn" onclick="speakEnglish('What is your shoe size? And do you have flat feet or high arches?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">Size 9. I think I have normal arches.</div><div class="burmese">အရွယ်အစား ၉။ ကျွန်တော် ပုံမှန်ခုံးတွေရှိတယ်ထင်တယ်။</div><button class="audio-btn" onclick="speakEnglish('Size 9. I think I have normal arches.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Staff:</div><div class="english">This neutral running shoe is great for beginners. It's $75 and has good cushioning.</div><div class="burmese">ဒီကြားနေအပြေးဖိနပ်က အစပြုသူများအတွက် ကောင်းပါတယ်။ ၇၅ ဒေါ်လာဖြစ်ပြီး ကူရှင်ကောင်းပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('This neutral running shoe is great for beginners. It is 75 dollars and has good cushioning.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 3: Basketball -->
+    <div class="conversation-section"><h2>🏀 Basketball / ဘတ်စကတ်ဘော</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">I need a basketball for outdoor use.</div><div class="burmese">အပြင်ဘက်အသုံးပြုရန်အတွက် ဘတ်စကတ်ဘောတစ်လုံး လိုအပ်ပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('I need a basketball for outdoor use.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Staff:</div><div class="english">This rubber basketball is designed for outdoor courts. It's $25 and very durable.</div><div class="burmese">ဒီရော်ဘာဘတ်စကတ်ဘောက အပြင်ဘက်ကွင်းများအတွက် ဒီဇိုင်းထုတ်ထားပါတယ်။ ၂၅ ဒေါ်လာဖြစ်ပြီး အလွန်တာရှည်ခံပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('This rubber basketball is designed for outdoor courts. It is 25 dollars and very durable.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">Does it come inflated?</div><div class="burmese">လေသွင်းပြီးသား လာလား။</div><button class="audio-btn" onclick="speakEnglish('Does it come inflated?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Staff:</div><div class="english">Yes, but you may need to add a little air after a few weeks. We sell pumps for $8.</div><div class="burmese">ဟုတ်ပါတယ်၊ ဒါပေမယ့် ရက်သတ္တပတ်အနည်းငယ်ကြာရင် လေနည်းနည်းထပ်ထည့်ဖို့ လိုအပ်နိုင်ပါတယ်။ ပန့်များကို ၈ ဒေါ်လာနဲ့ ရောင်းပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('Yes, but you may need to add a little air after a few weeks. We sell pumps for 8 dollars.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 4: Tennis Racket -->
+    <div class="conversation-section"><h2>🎾 Tennis Racket / တင်းနစ်ရက်ကက်</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">I want to start playing tennis. Which racket do you recommend?</div><div class="burmese">ကျွန်တော် တင်းနစ်ကစားဖို့ စတင်ချင်ပါတယ်။ ဘယ်ရက်ကက်ကို အကြံပြုလဲ။</div><button class="audio-btn" onclick="speakEnglish('I want to start playing tennis. Which racket do you recommend?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Staff:</div><div class="english">This beginner racket has a larger head for more forgiveness. It's $45 and comes with a cover.</div><div class="burmese">ဒီအစပြုသူရက်ကက်က ပိုမိုခွင့်လွှတ်နိုင်မှုအတွက် ခေါင်းပိုကြီးပါတယ်။ ၄၅ ဒေါ်လာဖြစ်ပြီး အကာပါလာပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('This beginner racket has a larger head for more forgiveness. It is 45 dollars and comes with a cover.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">Do I need to buy tennis balls too?</div><div class="burmese">တင်းနစ်ဘောလုံးတွေလည်း ဝယ်ဖို့လိုအပ်လား။</div><button class="audio-btn" onclick="speakEnglish('Do I need to buy tennis balls too?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Staff:</div><div class="english">Yes, a can of three balls is $5. Pressureless balls last longer for practice.</div><div class="burmese">ဟုတ်ပါတယ်၊ ဘောလုံး သုံးလုံးတစ်ဘူး ၅ ဒေါ်လာပါ။ ဖိအားမဲ့ဘောလုံးများက လေ့ကျင့်ရန်အတွက် ပိုကြာရှည်ခံပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('Yes, a can of three balls is 5 dollars. Pressureless balls last longer for practice.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 5: Swimming Goggles -->
+    <div class="conversation-section"><h2>🥽 Swimming Goggles / ရေကူးမျက်မှန်</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">I need swimming goggles for lap swimming.</div><div class="burmese">ရေကူးသွားလေ့ကျင့်မှုအတွက် ရေကူးမျက်မှန် လိုအပ်ပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('I need swimming goggles for lap swimming.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Staff:</div><div class="english">These anti-fog goggles are $18. They also have UV protection.</div><div class="burmese">ဒီမြူမှုန်ကာကွယ်ရေးမျက်မှန်များက ၁၈ ဒေါ်လာပါ။ UV ကာကွယ်ရေးလည်း ပါရှိပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('These anti-fog goggles are 18 dollars. They also have UV protection.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">Are they available in prescription?</div><div class="burmese">ဆေးညွှန်းပါတာ ရနိုင်လား။</div><button class="audio-btn" onclick="speakEnglish('Are they available in prescription?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Staff:</div><div class="english">Yes, we have prescription goggles starting at $40. You'll need to know your prescription.</div><div class="burmese">ဟုတ်ပါတယ်၊ ၄၀ ဒေါ်လာမှစသော ဆေးညွှန်းပါမျက်မှန်များ ရှိပါတယ်။ သင့်ဆေးညွှန်းကို သိရပါမယ်။</div><button class="audio-btn" onclick="speakEnglish('Yes, we have prescription goggles starting at 40 dollars. You will need to know your prescription.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 6: Yoga Mat -->
+    <div class="conversation-section"><h2>🧘 Yoga Mat / ယောဂဖျာ</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">I'm new to yoga. What yoga mat do you recommend?</div><div class="burmese">ကျွန်တော် ယောဂအသစ်ပါ။ ဘယ်ယောဂဖျာကို အကြံပြုလဲ။</div><button class="audio-btn" onclick="speakEnglish('I am new to yoga. What yoga mat do you recommend?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Staff:</div><div class="english">This 6mm thick mat provides good cushioning for beginners. It's $25 and non-slip.</div><div class="burmese">ဒီ ၆ မီလီမီတာ အထူရှိတဲ့ဖျာက အစပြုသူများအတွက် ကောင်းမွန်တဲ့ကူရှင်ကို ပေးပါတယ်။ ၂၅ ဒေါ်လာဖြစ်ပြီး မချော်ပါဘူး။</div><button class="audio-btn" onclick="speakEnglish('This 6mm thick mat provides good cushioning for beginners. It is 25 dollars and non-slip.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">Do I need a yoga towel as well?</div><div class="burmese">ယောဂသုတ်ပဝါလည်း လိုအပ်လား။</div><button class="audio-btn" onclick="speakEnglish('Do I need a yoga towel as well?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Staff:</div><div class="english">Only if you sweat a lot during hot yoga. It's optional for regular yoga.</div><div class="burmese">ဟော့ယောဂအတွင်း ချွေးအများကြီးထွက်မှသာ လိုအပ်ပါတယ်။ ပုံမှန်ယောဂအတွက် ရွေးချယ်နိုင်ပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('Only if you sweat a lot during hot yoga. It is optional for regular yoga.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 7: Baseball Equipment -->
+    <div class="conversation-section"><h2>⚾ Baseball Equipment / ဘေ့စ်ဘောပစ္စည်းများ</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">My son joined a baseball team. What equipment does he need?</div><div class="burmese">ကျွန်တော့်သား ဘေ့စ်ဘောအသင်းတစ်ခုမှာ ပါဝင်လိုက်ပြီ။ ဘယ်ပစ္စည်းတွေ လိုအပ်လဲ။</div><button class="audio-btn" onclick="speakEnglish('My son joined a baseball team. What equipment does he need?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Staff:</div><div class="english">He'll need a glove, bat, helmet, and cleats. We have youth sizes for all.</div><div class="burmese">လက်အိတ်၊ ဘတ်၊ ဦးထုပ်နှင့် ဖိနပ်များ လိုအပ်ပါလိမ့်မယ်။ အားလုံးအတွက် လူငယ်အရွယ်အစားများ ရှိပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('He will need a glove, bat, helmet, and cleats. We have youth sizes for all.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">How much for a complete set?</div><div class="burmese">အပြည့်အစုံအတွက် ဘယ်လောက်လဲ။</div><button class="audio-btn" onclick="speakEnglish('How much for a complete set?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Staff:</div><div class="english">A starter set including glove, bat, and helmet is $60. Cleats are an additional $25.</div><div class="burmese">လက်အိတ်၊ ဘတ်နှင့် ဦးထုပ်ပါဝင်တဲ့ စတင်သူအစုံက ၆၀ ဒေါ်လာပါ။ ဖိနပ်များ အပို ၂၅ ဒေါ်လာပါ။</div><button class="audio-btn" onclick="speakEnglish('A starter set including glove, bat, and helmet is 60 dollars. Cleats are an additional 25 dollars.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 8: Fitness Tracker -->
+    <div class="conversation-section"><h2>⌚ Fitness Tracker / ကြံ့ခိုင်ရေးခြေရာခံကိရိယာ</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">I'm looking for a fitness tracker to monitor my steps and heart rate.</div><div class="burmese">ကျွန်တော်လမ်းလျှောက်ခြေလှမ်းများနှင့် နှလုံးခုန်နှုန်းကို စောင့်ကြည့်ရန် ကြံ့ခိုင်ရေးခြေရာခံကိရိယာတစ်ခု ရှာနေပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('I am looking for a fitness tracker to monitor my steps and heart rate.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Staff:</div><div class="english">This basic model tracks steps, calories, and sleep. It's $40. This advanced model has GPS and heart rate for $80.</div><div class="burmese">ဒီအခြေခံမော်ဒယ်က ခြေလှမ်းများ၊ ကယ်လိုရီများနှင့် အိပ်စက်ခြင်းကို ခြေရာခံပါတယ်။ ၄၀ ဒေါ်လာပါ။ ဒီအဆင့်မြင့်မော်ဒယ်မှာ GPS နှင့် နှလုံးခုန်နှုန်းပါရှိပြီး ၈၀ ဒေါ်လာပါ။</div><button class="audio-btn" onclick="speakEnglish('This basic model tracks steps, calories, and sleep. It is 40 dollars. This advanced model has GPS and heart rate for 80 dollars.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Customer:</div><div class="english">Does it sync with my phone?</div><div class="burmese">ကျွန်တော့်ဖုန်းနဲ့ ချိတ်ဆက်လား။</div><button class="audio-btn" onclick="speakEnglish('Does it sync with my phone?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Staff:</div><div class="english">Yes, both models connect via Bluetooth to our free app. Water-resistant up to 50 meters.</div><div class="burmese">ဟုတ်ပါတယ်၊ မော်ဒယ်နှစ်မျိုးစလုံး ကျွန်တော်တို့ရဲ့ အခမဲ့အက်ပ်သို့ Bluetooth မှတစ်ဆင့် ချိတ်ဆက်ပါတယ်။ မီတာ ၅၀ အထိ ရေစိုခံပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('Yes, both models connect via Bluetooth to our free app. Water-resistant up to 50 meters.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <div class="vocab-grid">
+        <div class="vocab-item"><span class="vocab-eng">Cleats</span><br><span class="vocab-burmese">ဖိနပ်တုံး</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Shin guards</span><br><span class="vocab-burmese">ခြေသလုံးအကာ</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Mouthguard</span><br><span class="vocab-burmese">ပါးစပ်အကာ</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Resistance bands</span><br><span class="vocab-burmese">ခံနိုင်ရည်ကြိုးများ</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Dumbbells</span><br><span class="vocab-burmese">အလေးတုံးများ</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Foam roller</span><br><span class="vocab-burmese">အမြှုပ်ရော်လာ</span></div>
+    </div>
+    
+    <div class="tips-box"><i class="fas fa-lightbulb"></i> <strong>Tips for Buying Sports Equipment (အားကစားပစ္စည်းများဝယ်ယူရန် အကြံပြုချက်များ):</strong><br>• Try on shoes at the end of the day when feet are largest (ခြေထောက်အကြီးဆုံးဖြစ်တဲ့ နေ့ကုန်ချိန်တွင် ဖိနပ်စမ်းဝတ်ပါ)<br>• Invest in good quality for frequently used items (မကြာခဏသုံးသောပစ္စည်းများအတွက် အရည်အသွေးကောင်းကို ရင်းနှီးမြှုပ်နှံပါ)<br>• Ask about return policies for online purchases (အွန်လိုင်းဝယ်ယူမှုများအတွက် ပြန်အပ်မူဝါဒများအကြောင်းမေးမြန်းပါ)<br>• Check for warranty on expensive equipment (စျေးကြီးသောပစ္စည်းများအတွက် အာမခံရှိမရှိစစ်ဆေးပါ)<br>• Read reviews before buying (မဝယ်မီ သုံးသပ်ချက်များကိုဖတ်ပါ)</div>
+    
+    <div class="quiz-question"><p><strong>1. How do you ask for a soccer ball size?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'What size soccer ball do you recommend?')">What size soccer ball do you recommend?</div><div class="quiz-option" onclick="checkAnswer(this, 'What size soccer ball do you recommend?')">How much is the soccer ball?</div><div class="quiz-option" onclick="checkAnswer(this, 'What size soccer ball do you recommend?')">Is this soccer ball for outdoor use?</div><div class="quiz-option" onclick="checkAnswer(this, 'What size soccer ball do you recommend?')">Does it come with a pump?</div></div></div>
+    <div class="quiz-question"><p><strong>2. "ဒီဖိနပ်ကို စမ်းဝတ်လို့ရမလား" in English?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'Can I try on these shoes?')">Can I try on these shoes?</div><div class="quiz-option" onclick="checkAnswer(this, 'Can I try on these shoes?')">What size are these shoes?</div><div class="quiz-option" onclick="checkAnswer(this, 'Can I try on these shoes?')">Are these shoes comfortable?</div><div class="quiz-option" onclick="checkAnswer(this, 'Can I try on these shoes?')">How much are these shoes?</div></div></div>
+    <div class="quiz-question"><p><strong>3. What does "anti-fog" mean for swimming goggles?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'Prevents condensation from forming on the lenses')">Protects from UV rays</div><div class="quiz-option" onclick="checkAnswer(this, 'Prevents condensation from forming on the lenses')">Makes the lenses darker</div><div class="quiz-option" onclick="checkAnswer(this, 'Prevents condensation from forming on the lenses')">Prevents condensation from forming on the lenses</div><div class="quiz-option" onclick="checkAnswer(this, 'Prevents condensation from forming on the lenses')">Makes the lenses scratch-resistant</div></div></div>
+    <div class="quiz-question"><p><strong>4. "ဒီရက်ကက်က စတင်သူများအတွက်လား" in English?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'Is this racket for beginners?')">Is this racket for beginners?</div><div class="quiz-option" onclick="checkAnswer(this, 'Is this racket for beginners?')">Is this racket heavy?</div><div class="quiz-option" onclick="checkAnswer(this, 'Is this racket for beginners?')">Does this racket come with a cover?</div><div class="quiz-option" onclick="checkAnswer(this, 'Is this racket for beginners?')">What material is this racket?</div></div></div>
+    <div class="quiz-question"><p><strong>5. What does a fitness tracker measure?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'Steps, heart rate, calories, and sleep')">Only time and date</div><div class="quiz-option" onclick="checkAnswer(this, 'Steps, heart rate, calories, and sleep')">Only steps</div><div class="quiz-option" onclick="checkAnswer(this, 'Steps, heart rate, calories, and sleep')">Steps, heart rate, calories, and sleep</div><div class="quiz-option" onclick="checkAnswer(this, 'Steps, heart rate, calories, and sleep')">Only heart rate</div></div></div>
+    
+    <footer><p><i class="fas fa-heart" style="color: #00b894;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p></footer>
+</div>
+<a href="#" class="back-to-top" id="backToTopBtn"><i class="fas fa-arrow-up"></i></a>
+<script>
+    function speakEnglish(text){if(!window.speechSynthesis)return;window.speechSynthesis.cancel();const utterance=new SpeechSynthesisUtterance(text);utterance.lang='en-US';utterance.rate=0.8;utterance.pitch=1.0;function setVoice(){const voices=window.speechSynthesis.getVoices();const englishVoice=voices.find(v=>v.lang==='en-US'||v.lang.startsWith('en-'));if(englishVoice)utterance.voice=englishVoice;window.speechSynthesis.speak(utterance);}if(window.speechSynthesis.getVoices().length)setVoice();else window.speechSynthesis.onvoiceschanged=setVoice;}
+    function checkAnswer(element,correctAnswer){const options=element.parentElement.querySelectorAll('.quiz-option');const isCorrect=element.innerText===correctAnswer;if(isCorrect){element.style.background='#2ecc71';element.style.color='white';speakEnglish(correctAnswer);setTimeout(()=>{options.forEach(opt=>{opt.style.background='';opt.style.color='';});},1500);}else{element.style.background='#e74c3c';element.style.color='white';setTimeout(()=>{options.forEach(opt=>{opt.style.background='';opt.style.color='';});},500);}}
+    (function(){const btn=document.getElementById('backToTopBtn');if(btn){window.addEventListener('scroll',function(){btn.classList.toggle('show',window.scrollY>300);});btn.addEventListener('click',function(e){e.preventDefault();window.scrollTo({top:0,behavior:'smooth'});});}})();
+</script>
+</body>
+</html>

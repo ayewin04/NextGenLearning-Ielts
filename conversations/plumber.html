@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plumber - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 1rem;
+        }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        
+        .conversation-section {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .conversation-section h2 {
+            background: #3498db;
+            color: white;
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line {
+            display: grid;
+            grid-template-columns: 70px 1fr 1fr;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            align-items: start;
+        }
+        .speaker { font-weight: bold; color: #2980b9; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { 
+            color: #8e6b3c; 
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 0.95rem;
+        }
+        .audio-btn {
+            background: #eef4ff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.3rem;
+        }
+        .audio-btn:hover { background: #3498db; color: white; }
+        
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+            padding: 1rem;
+        }
+        .vocab-item {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            border-left: 3px solid #3498db;
+        }
+        .vocab-eng { font-weight: bold; color: #2980b9; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        
+        .quiz-question {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.8rem;
+        }
+        .quiz-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .quiz-option {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .quiz-option:hover { background: #3498db; color: white; border-color: #3498db; }
+        
+        .tips-box {
+            background: #e8f0f8;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #3498db;
+        }
+        .tips-box i { color: #2980b9; margin-right: 8px; }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1rem;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: #1e3c72;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid white;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: #f5b042;
+            color: #1e3c72;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .back-to-top i {
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 42px;
+                height: 42px;
+            }
+            .back-to-top i {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (max-width: 700px) {
+            .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> All Conversations
+    </a>
+    
+    <header>
+        <h1><i class="fas fa-wrench"></i> Plumber</h1>
+        <p>Learn how to fix leaking pipes, unclog drains, and repair water heaters in English</p>
+        <p>ပိုက်များယိုစိမ့်မှုပြုပြင်နည်း၊ ရေဆိုးပိုက်များရှင်းလင်းနည်းနှင့် ရေအပူပေးစက်များပြုပြင်နည်းတို့ကို အင်္ဂလိပ်လို လေ့လာပါ</p>
+    </header>
+    
+    <!-- Dialogue 1: Calling for Emergency Plumbing -->
+    <div class="conversation-section">
+        <h2>📞 Emergency Call / အရေးပေါ်ဖုန်းခေါ်ဆိုမှု</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Homeowner:</div>
+                <div class="english">Hello, I have a plumbing emergency. There's water leaking everywhere!</div>
+                <div class="burmese">မင်္ဂလာပါ၊ ကျွန်တော်မှာ ပိုက်ဆိုင်ရာအရေးပေါ်အခြေအနေရှိပါတယ်။ ရေတွေ အနှံ့အပြားယိုနေတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Hello, I have a plumbing emergency. There is water leaking everywhere!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Plumber:</div>
+                <div class="english">Please stay calm. Where is the leak coming from?</div>
+                <div class="burmese">စိတ်အေးအေးထားပါ။ ယိုစိမ့်မှုက ဘယ်ကလာတာလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Please stay calm. Where is the leak coming from?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Homeowner:</div>
+                <div class="english">It's coming from under the kitchen sink. A pipe burst.</div>
+                <div class="burmese">မီးဖိုချောင်ဇိမ်အောက်ကနေ လာတယ်။ ပိုက်တစ်ခု ပေါက်သွားတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('It is coming from under the kitchen sink. A pipe burst.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Plumber:</div>
+                <div class="english">Turn off the main water valve immediately. I'll be there within 30 minutes.</div>
+                <div class="burmese">ပင်မရေပိုက်အဆို့ကို ချက်ချင်းပိတ်လိုက်ပါ။ ကျွန်တော် ၃၀ မိနစ်အတွင်း ရောက်ပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Turn off the main water valve immediately. I will be there within 30 minutes.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 2: Fixing a Leaky Faucet -->
+    <div class="conversation-section">
+        <h2>🚰 Fixing a Leaky Faucet / ရေပိုက်ခေါင်းယိုစိမ့်မှုပြုပြင်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Homeowner:</div>
+                <div class="english">My bathroom faucet has been dripping for weeks. Can you fix it?</div>
+                <div class="burmese">ကျွန်တော့်ရေချိုးခန်းရေပိုက်ခေါင်းက ရက်သတ္တပတ်ကြာ ယိုနေတယ်။ ပြင်ပေးနိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('My bathroom faucet has been dripping for weeks. Can you fix it?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Plumber:</div>
+                <div class="english">Usually it's just a worn-out washer. I can replace it quickly.</div>
+                <div class="burmese">များသောအားဖြင့် ဝက်အူခေါင်းကြိုးဟောင်းနေတာပါ။ မြန်မြန်အစားထိုးနိုင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Usually it is just a worn-out washer. I can replace it quickly.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Plumber:</div>
+                <div class="english">I'll need to turn off the water supply to the bathroom first.</div>
+                <div class="burmese">အရင်ဆုံး ရေချိုးခန်းဆီကို ရေပေးဝေမှုကို ပိတ်ဖို့လိုပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I will need to turn off the water supply to the bathroom first.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Homeowner:</div>
+                <div class="english">How much will it cost?</div>
+                <div class="burmese">ဘယ်လောက်ကုန်ကျမလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('How much will it cost?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 3: Unclogging a Drain -->
+    <div class="conversation-section">
+        <h2>🚽 Unclogging a Drain / ရေဆိုးပိုက်ရှင်းလင်းခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Homeowner:</div>
+                <div class="english">The kitchen sink is completely clogged. Water won't go down.</div>
+                <div class="burmese">မီးဖိုချောင်ဇိမ် လုံးဝပိတ်နေတယ်။ ရေ မစီးဘူး။</div>
+                <button class="audio-btn" onclick="speakEnglish('The kitchen sink is completely clogged. Water will not go down.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Plumber:</div>
+                <div class="english">I'll use a drain snake to clear the blockage. Did you pour grease down the drain?</div>
+                <div class="burmese">ပိတ်ဆို့မှုကိုရှင်းဖို့ ပိုက်ရှင်းကိရိယာကို သုံးပါမယ်။ အဆီတွေ ရေဆိုးပိုက်ထဲ လောင်းချခဲ့လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('I will use a drain snake to clear the blockage. Did you pour grease down the drain?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Homeowner:</div>
+                <div class="english">Yes, I think so. I didn't know it was bad for the pipes.</div>
+                <div class="burmese">ဟုတ်တယ် ထင်တယ်။ ပိုက်တွေအတွက် မကောင်းဘူးဆိုတာ ကျွန်တော် မသိခဲ့ဘူး။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, I think so. I did not know it was bad for the pipes.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Plumber:</div>
+                <div class="english">Grease solidifies and causes clogs. I'll clear it out and give you some tips to prevent future issues.</div>
+                <div class="burmese">အဆီက ခဲပြီး ပိတ်ဆို့မှုတွေဖြစ်စေပါတယ်။ ကျွန်တော်ရှင်းပေးပြီး နောင်ပြဿနာများကာကွယ်ရန် အကြံပြုချက်အချို့ပေးပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Grease solidifies and causes clogs. I will clear it out and give you some tips to prevent future issues.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 4: Water Heater Problems -->
+    <div class="conversation-section">
+        <h2>💧 Water Heater Problems / ရေအပူပေးစက်ပြဿနာများ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Homeowner:</div>
+                <div class="english">The water heater isn't working. There's no hot water at all.</div>
+                <div class="burmese">ရေအပူပေးစက် အလုပ်မလုပ်ဘူး။ ရေနွေးလုံးဝမရှိဘူး။</div>
+                <button class="audio-btn" onclick="speakEnglish('The water heater is not working. There is no hot water at all.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Plumber:</div>
+                <div class="english">Let me check. Have you checked the circuit breaker?</div>
+                <div class="burmese">စစ်ကြည့်ပါရစေ။ ဆားကစ်ဘရိတ်ကို စစ်ကြည့်ဖူးလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Let me check. Have you checked the circuit breaker?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Homeowner:</div>
+                <div class="english">Yes, it's not tripped. The heater is making a strange noise too.</div>
+                <div class="burmese">ဟုတ်တယ်၊ မပြတ်ဘူး။ အပူပေးစက်က ထူးဆန်းတဲ့အသံလည်း မြည်နေတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, it is not tripped. The heater is making a strange noise too.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Plumber:</div>
+                <div class="english">The heating element might be burned out. I'll need to replace it. That'll cost about $150.</div>
+                <div class="burmese">အပူပေးအစိတ်အပိုင်း လောင်ကျွမ်းသွားနိုင်ပါတယ်။ အစားထိုးဖို့လိုပါမယ်။ ၁၅၀ ဒေါ်လာလောက် ကျပါလိမ့်မယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('The heating element might be burned out. I will need to replace it. That will cost about 150 dollars.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 5: Toilet Repair -->
+    <div class="conversation-section">
+        <h2>🚽 Toilet Repair / အိမ်သာပြုပြင်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Homeowner:</div>
+                <div class="english">The toilet keeps running. It won't stop filling.</div>
+                <div class="burmese">အိမ်သာက ဆက်တိုက်စီးနေတယ်။ ရေဖြည့်တာ မရပ်ဘူး။</div>
+                <button class="audio-btn" onclick="speakEnglish('The toilet keeps running. It will not stop filling.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Plumber:</div>
+                <div class="english">Probably the flapper valve is worn out. I can replace it in 10 minutes.</div>
+                <div class="burmese">ဖြစ်နိုင်တာက အဆို့အပိတ် ဟောင်းနေတာပါ။ ၁၀ မိနစ်အတွင်း အစားထိုးနိုင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Probably the flapper valve is worn out. I can replace it in 10 minutes.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Homeowner:</div>
+                <div class="english">I also noticed water pooling around the base of the toilet.</div>
+                <div class="burmese">အိမ်သာအောက်ခြေမှာလည်း ရေတွေ စုနေတာ သတိထားမိတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I also noticed water pooling around the base of the toilet.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Plumber:</div>
+                <div class="english">That could be a broken wax seal. I'll check that too. The seal needs to be replaced.</div>
+                <div class="burmese">ဒါက ဖယောင်းတံဆိပ် ကျိုးနေတာဖြစ်နိုင်ပါတယ်။ အဲဒါကိုလည်း စစ်ဆေးပါမယ်။ တံဆိပ်ကို အစားထိုးဖို့လိုပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('That could be a broken wax seal. I will check that too. The seal needs to be replaced.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 6: Installing New Fixtures -->
+    <div class="conversation-section">
+        <h2>🚿 Installing New Fixtures / အသုံးအဆောင်အသစ်များတပ်ဆင်ခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Homeowner:</div>
+                <div class="english">I bought a new showerhead and faucet. Can you install them?</div>
+                <div class="burmese">ကျွန်တော် ရေချိုးခေါင်းနဲ့ ရေပိုက်ခေါင်းအသစ်တွေ ဝယ်ခဲ့တယ်။ တပ်ဆင်ပေးနိုင်မလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('I bought a new showerhead and faucet. Can you install them?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Plumber:</div>
+                <div class="english">Yes, that's easy. I can install both in about an hour.</div>
+                <div class="burmese">ဟုတ်ပါတယ်၊ ဒါက လွယ်ပါတယ်။ နှစ်ခုလုံးကို တစ်နာရီအတွင်း တပ်ဆင်နိုင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, that is easy. I can install both in about an hour.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Homeowner:</div>
+                <div class="english">Do you provide the parts or should I buy them myself?</div>
+                <div class="burmese">အစိတ်အပိုင်းတွေကို သင်ပေးလား ဒါမှမဟုတ် ကျွန်တော်ကိုယ်တိုင်ဝယ်သင့်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you provide the parts or should I buy them myself?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Plumber:</div>
+                <div class="english">I have standard parts, but if you want specific brands, you can buy them. Just labor will be $80.</div>
+                <div class="burmese">ကျွန်တော်မှာ စံအစိတ်အပိုင်းများရှိပါတယ်၊ ဒါပေမယ့် သတ်မှတ်အမှတ်တံဆိပ်များလိုချင်ရင် သင်ဝယ်နိုင်ပါတယ်။ အလုပ်သမားခတစ်ခုတည်း ၈၀ ဒေါ်လာပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('I have standard parts, but if you want specific brands, you can buy them. Just labor will be 80 dollars.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 7: Preventative Maintenance -->
+    <div class="conversation-section">
+        <h2>🛡️ Preventative Maintenance / ကြိုတင်ကာကွယ်ထိန်းသိမ်းခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Homeowner:</div>
+                <div class="english">What can I do to prevent plumbing problems in the future?</div>
+                <div class="burmese">အနာဂတ်မှာ ပိုက်ဆိုင်ရာပြဿနာများကို ကာကွယ်ဖို့ ကျွန်တော် ဘာလုပ်နိုင်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What can I do to prevent plumbing problems in the future?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Plumber:</div>
+                <div class="english">Don't pour grease down the drain. Use drain screens. Check for leaks regularly.</div>
+                <div class="burmese">အဆီတွေ ရေဆိုးပိုက်ထဲ မလောင်းပါနဲ့။ ရေဆိုးပိုက်အကာများသုံးပါ။ ယိုစိမ့်မှုများအတွက် ပုံမှန်စစ်ဆေးပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do not pour grease down the drain. Use drain screens. Check for leaks regularly.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Homeowner:</div>
+                <div class="english">Should I get an annual inspection?</div>
+                <div class="burmese">နှစ်စဉ်စစ်ဆေးမှု ခံယူသင့်လား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Should I get an annual inspection?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Plumber:</div>
+                <div class="english">It's a good idea, especially for older homes. I can schedule one for you.</div>
+                <div class="burmese">ဒါက အကြံကောင်းပါ၊ အထူးသဖြင့် အိမ်ဟောင်းများအတွက်ပါ။ သင့်အတွက် အချိန်ဇယားဆွဲပေးနိုင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('It is a good idea, especially for older homes. I can schedule one for you.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 8: After Service -->
+    <div class="conversation-section">
+        <h2>📋 After Service / ဝန်ဆောင်မှုအပြီး</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Plumber:</div>
+                <div class="english">The repair is complete. Everything is working properly now.</div>
+                <div class="burmese">ပြုပြင်ခြင်း ပြီးစီးပါပြီ။ အခု အားလုံး ကောင်းကောင်းအလုပ်လုပ်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('The repair is complete. Everything is working properly now.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Homeowner:</div>
+                <div class="english">Thank you so much. How much do I owe you?</div>
+                <div class="burmese">ကျေးဇူးအရမ်းတင်ပါတယ်။ ဘယ်လောက်ပေးရမလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Thank you so much. How much do I owe you?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Plumber:</div>
+                <div class="english">The total is $120 for labor and parts. Do you accept the invoice by email?</div>
+                <div class="burmese">စုစုပေါင်း အလုပ်သမားခနှင့် အစိတ်အပိုင်းများအတွက် ၁၂၀ ဒေါ်လာပါ။ ငွေတောင်းခံလွှာကို အီးမေးလ်ဖြင့် လက်ခံပါသလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('The total is 120 dollars for labor and parts. Do you accept the invoice by email?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Homeowner:</div>
+                <div class="english">Yes, that works. I'll pay by credit card. Thank you for the fast service!</div>
+                <div class="burmese">ဟုတ်ကဲ့၊ အဆင်ပြေပါတယ်။ ခရက်ဒစ်ကဒ်နဲ့ ပေးပါမယ်။ အမြန်ဝန်ဆောင်မှုအတွက် ကျေးဇူးပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, that works. I will pay by credit card. Thank you for the fast service!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Plumbing Vocabulary -->
+    <div class="conversation-section">
+        <h2>🔧 Plumbing Vocabulary / ပိုက်ဆိုင်ရာသုံးဝေါဟာရများ</h2>
+        <div class="vocab-grid">
+            <div class="vocab-item"><span class="vocab-eng">Pipe</span><br><span class="vocab-burmese">ပိုက်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Faucet / Tap</span><br><span class="vocab-burmese">ရေပိုက်ခေါင်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Drain</span><br><span class="vocab-burmese">ရေဆိုးပိုက်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Valve</span><br><span class="vocab-burmese">အဆို့</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Washer / Gasket</span><br><span class="vocab-burmese">အဝိုင်းခေါင်းကြိုး</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Wrench</span><br><span class="vocab-burmese">ပိုက်ဖြုတ်တံ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Plunger</span><br><span class="vocab-burmese">ရေဆိုးပိုက်ဖွင့်ကိရိယာ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Auger / Drain snake</span><br><span class="vocab-burmese">ပိုက်ရှင်းကိရိယာ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Sump pump</span><br><span class="vocab-burmese">ရေစုပ်စက်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Sewer line</span><br><span class="vocab-burmese">မိလ္လာပိုက်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Pressure gauge</span><br><span class="vocab-burmese">ဖိအားတိုင်းကိရိယာ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Leak detection</span><br><span class="vocab-burmese">ယိုစိမ့်မှုရှာဖွေခြင်း</span></div>
+        </div>
+    </div>
+    
+    <!-- DIY vs Professional -->
+    <div class="conversation-section">
+        <h2>💡 DIY vs Professional Help / ကိုယ်တိုင်လုပ်ခြင်း vs ပညာရှင်အကူအညီ</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>When to Call a Plumber (မည်သည့်အခါတွင် ပိုက်ဆရာကိုခေါ်ရမည်):</strong><br>
+            • Major leaks or burst pipes (ကြီးမားသောယိုစိမ့်မှု သို့မဟုတ် ပိုက်ပေါက်ခြင်း)<br>
+            • No hot water (ရေနွေးမရှိခြင်း)<br>
+            • Sewage smell or backup (မိလ္လာနံ့ သို့မဟုတ် ပြန်တက်ခြင်း)<br>
+            • Low water pressure throughout the house (အိမ်တစ်အိမ်လုံး ရေဖိအားနည်းခြင်း)<br>
+            • Water heater issues (ရေအပူပေးစက်ပြဿနာများ)<br>
+            • Frozen pipes (ပိုက်များအေးခဲခြင်း)<br>
+            <br>
+            <strong>Simple DIY Fixes (ကိုယ်တိုင်လုပ်နိုင်သောအရာများ):</strong><br>
+            • Unclogging a toilet with a plunger (ရေဆိုးပိုက်ဖွင့်ကိရိယာဖြင့် အိမ်သာရှင်းလင်းခြင်း)<br>
+            • Replacing a showerhead (ရေချိုးခေါင်းအစားထိုးခြင်း)<br>
+            • Fixing a running toilet by replacing the flapper (အဆို့အပိတ်အစားထိုးခြင်းဖြင့် အဆက်မပြတ်စီးနေသောအိမ်သာပြုပြင်ခြင်း)<br>
+            • Cleaning aerators on faucets (ရေပိုက်ခေါင်းရှိ လေဝင်အပေါက်များသန့်ရှင်းခြင်း)<br>
+        </div>
+    </div>
+    
+    <!-- Practice Section -->
+    <div class="conversation-section">
+        <h2>✏️ Practice Questions / လေ့ကျင့်ခန်းမေးခွန်းများ</h2>
+        <div class="dialogue-box">
+            <div class="quiz-question">
+                <p><strong>1. How do you report a plumbing emergency?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I have a plumbing emergency. There is water everywhere.')">I need a new faucet.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I have a plumbing emergency. There is water everywhere.')">I have a plumbing emergency. There is water everywhere.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I have a plumbing emergency. There is water everywhere.')">I want to install a new shower.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'I have a plumbing emergency. There is water everywhere.')">I need to buy a water heater.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>2. "ရေဆိုးပိုက် ပိတ်နေတယ်" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'The drain is clogged.')">The faucet is leaking.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'The drain is clogged.')">The drain is clogged.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'The drain is clogged.')">The pipe is burst.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'The drain is clogged.')">The toilet is running.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. What should you do if a pipe bursts?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Turn off the main water valve')">Call a friend first</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Turn off the main water valve')">Turn off the main water valve</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Turn off the main water valve')">Wait for the water to stop</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Turn off the main water valve')">Use more water</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. "ရေအပူပေးစက် အလုပ်မလုပ်ဘူး" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'The water heater is not working.')">The water heater is working.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'The water heater is not working.')">The water heater is new.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'The water heater is not working.')">The water heater is not working.</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'The water heater is not working.')">The water heater is expensive.</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. What is a "plunger" used for?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'To unclog toilets and drains')">To fix leaky faucets</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'To unclog toilets and drains')">To install new pipes</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'To unclog toilets and drains')">To unclog toilets and drains</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'To unclog toilets and drains')">To measure water pressure</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p><i class="fas fa-heart" style="color: #3498db;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p>
+        <p style="font-size: 0.75rem; margin-top: 0.5rem;">Practice these conversations to handle plumbing problems with confidence!</p>
+    </footer>
+</div>
+
+<!-- Back to Top Button -->
+<a href="#" class="back-to-top" id="backToTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+<script>
+    function speakEnglish(text) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8;
+        utterance.pitch = 1.0;
+        
+        function setVoice() {
+            const voices = window.speechSynthesis.getVoices();
+            const englishVoice = voices.find(v => v.lang === 'en-US' || v.lang.startsWith('en-'));
+            if (englishVoice) utterance.voice = englishVoice;
+            window.speechSynthesis.speak(utterance);
+        }
+        
+        if (window.speechSynthesis.getVoices().length) setVoice();
+        else window.speechSynthesis.onvoiceschanged = setVoice;
+    }
+    
+    function checkAnswer(element, correctAnswer) {
+        const options = element.parentElement.querySelectorAll('.quiz-option');
+        const isCorrect = element.innerText === correctAnswer;
+        
+        if (isCorrect) {
+            element.style.background = '#2ecc71';
+            element.style.color = 'white';
+            speakEnglish(correctAnswer);
+            setTimeout(() => {
+                options.forEach(opt => {
+                    opt.style.background = '';
+                    opt.style.color = '';
+                });
+            }, 1500);
+        } else {
+            element.style.background = '#e74c3c';
+            element.style.color = 'white';
+            setTimeout(() => {
+                element.style.background = '';
+                element.style.color = '';
+            }, 500);
+        }
+    }
+    
+    // Back to Top Button Functionality
+    (function() {
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        
+        if (backToTopBtn) {
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            });
+            
+            backToTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

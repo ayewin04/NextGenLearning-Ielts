@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gas Station - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%); font-family: 'Segoe UI', Roboto, sans-serif; padding: 1rem; }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        .back-btn { display: inline-flex; align-items: center; gap: 8px; background: white; padding: 0.6rem 1.2rem; border-radius: 2rem; text-decoration: none; color: #1e3c72; font-weight: 500; margin-bottom: 1rem; transition: 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        .conversation-section { background: white; border-radius: 1rem; margin-bottom: 2rem; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+        .conversation-section h2 { background: #f39c12; color: white; padding: 1rem; font-size: 1.2rem; }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line { display: grid; grid-template-columns: 70px 1fr 1fr; gap: 0.8rem; padding: 0.8rem; border-bottom: 1px solid #eee; align-items: start; }
+        .speaker { font-weight: bold; color: #f39c12; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.95rem; }
+        .audio-btn { background: #eef4ff; border: none; border-radius: 2rem; padding: 0.3rem 0.8rem; cursor: pointer; transition: 0.2s; margin-top: 0.3rem; }
+        .audio-btn:hover { background: #f39c12; color: white; }
+        .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.8rem; padding: 1rem; }
+        .vocab-item { background: #f8f9fa; padding: 0.8rem; border-radius: 0.8rem; border-left: 3px solid #f39c12; }
+        .vocab-eng { font-weight: bold; color: #f39c12; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        .quiz-question { background: #f8f9fa; padding: 1rem; margin-bottom: 1rem; border-radius: 0.8rem; }
+        .quiz-options { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
+        .quiz-option { background: white; padding: 0.5rem 1rem; border-radius: 2rem; border: 1px solid #ddd; cursor: pointer; transition: 0.2s; }
+        .quiz-option:hover { background: #f39c12; color: white; border-color: #f39c12; }
+        .tips-box { background: #fef9e7; padding: 1rem; border-radius: 0.8rem; margin: 1rem; border-left: 3px solid #f39c12; }
+        .tips-box i { color: #f39c12; margin-right: 8px; }
+        footer { margin-top: 2rem; text-align: center; padding: 1rem; color: #6c757d; font-size: 0.8rem; }
+        .back-to-top { position: fixed; bottom: 1.5rem; right: 1.5rem; background: #1e3c72; color: white; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 1000; opacity: 0; visibility: hidden; border: 2px solid white; }
+        .back-to-top.show { opacity: 1; visibility: visible; }
+        .back-to-top:hover { background: #f5b042; color: #1e3c72; transform: translateY(-3px); }
+        .back-to-top i { font-size: 1.2rem; }
+        @media (max-width: 768px) { .back-to-top { bottom: 1rem; right: 1rem; width: 42px; height: 42px; } .back-to-top i { font-size: 1rem; } }
+        @media (max-width: 700px) { .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; } }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn"><i class="fas fa-arrow-left"></i> All Conversations</a>
+    <header><h1><i class="fas fa-gas-pump"></i> Gas Station</h1><p>Learn how to fill up gas, check oil, and pay at the station in English</p><p>ဓာတ်ဆီဖြည့်နည်း၊ ဆီစစ်နည်းနှင့် ဓာတ်ဆီဆိုင်တွင်ငွေရှင်းနည်းကို အင်္ဂလိပ်လို လေ့လာပါ</p></header>
+    
+    <!-- Dialogue 1: Full Service -->
+    <div class="conversation-section"><h2>⛽ Full Service / အပြည့်အဝဝန်ဆောင်မှု</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">Fill it up, please. Regular unleaded.</div><div class="burmese">ဓာတ်ဆီအပြည့်ဖြည့်ပေးပါ။ ပုံမှန်အဆင့်ပါ။</div><button class="audio-btn" onclick="speakEnglish('Fill it up, please. Regular unleaded.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Attendant:</div><div class="english">Would you like me to check your oil and tires?</div><div class="burmese">ဆီနဲ့တာယာတွေ စစ်ပေးဖို့လိုလား။</div><button class="audio-btn" onclick="speakEnglish('Would you like me to check your oil and tires?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">Yes, please. And could you clean the windshield?</div><div class="burmese">ဟုတ်ကဲ့။ ရှေ့မှန်ကိုလည်း သန့်ရှင်းပေးနိုင်မလား။</div><button class="audio-btn" onclick="speakEnglish('Yes, please. And could you clean the windshield?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Attendant:</div><div class="english">Your oil level is good. Your front tires need a little air. I'll fill them.</div><div class="burmese">သင့်ဆီပမာဏက ကောင်းပါတယ်။ ရှေ့တာယာတွေ လေနည်းနည်းလိုပါတယ်။ ဖြည့်ပေးပါမယ်။</div><button class="audio-btn" onclick="speakEnglish('Your oil level is good. Your front tires need a little air. I will fill them.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 2: Self Service -->
+    <div class="conversation-section"><h2>🛢️ Self Service / ကိုယ်တိုင်ဝန်ဆောင်မှု</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">I'll use pump number 3. How do I pay?</div><div class="burmese">ကျွန်တော် ပန့်နံပါတ် ၃ သုံးပါမယ်။ ဘယ်လိုပေးရမလဲ။</div><button class="audio-btn" onclick="speakEnglish('I will use pump number 3. How do I pay?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Cashier:</div><div class="english">You can pay at the pump with a credit card, or come inside to pay cash.</div><div class="burmese">ခရက်ဒစ်ကဒ်နဲ့ ပန့်မှာ ပေးချေနိုင်ပါတယ်၊ ဒါမှမဟုတ် ငွေသားပေးချေဖို့ အတွင်းကို လာနိုင်ပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('You can pay at the pump with a credit card, or come inside to pay cash.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">I'll pay at the pump. Do I need to prepay?</div><div class="burmese">ပန့်မှာ ပေးပါမယ်။ ကြိုပေးဖို့ လိုအပ်လား။</div><button class="audio-btn" onclick="speakEnglish('I will pay at the pump. Do I need to prepay?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Cashier:</div><div class="english">Yes, the pump will ask you to insert your card first. It will authorize $100 and charge the actual amount.</div><div class="burmese">ဟုတ်ပါတယ်၊ ပန့်က သင့်ကဒ်ကို အရင်ထည့်ခိုင်းပါလိမ့်မယ်။ $၁၀၀ ကို ခွင့်ပြုပြီး အမှန်တကယ်ပမာဏကို ကောက်ခံပါလိမ့်မယ်။</div><button class="audio-btn" onclick="speakEnglish('Yes, the pump will ask you to insert your card first. It will authorize 100 dollars and charge the actual amount.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 3: Diesel vs Gas -->
+    <div class="conversation-section"><h2>🚚 Diesel vs Gas / ဒီဇယ်နှင့်ဓာတ်ဆီ</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">Which pump has diesel? I drive a diesel truck.</div><div class="burmese">ဘယ်ပန့်မှာ ဒီဇယ်ရှိလဲ။ ကျွန်တော် ဒီဇယ်ထရပ်ကားမောင်းပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('Which pump has diesel? I drive a diesel truck.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Attendant:</div><div class="english">Pumps 1 and 4 have diesel. The green handle is diesel, the black is regular gas.</div><div class="burmese">ပန့် ၁ နှင့် ၄ မှာ ဒီဇယ်ရှိပါတယ်။ အစိမ်းရောင်လက်ကိုင်က ဒီဇယ်၊ အနက်ရောင်က ပုံမှန်ဓာတ်ဆီပါ။</div><button class="audio-btn" onclick="speakEnglish('Pumps 1 and 4 have diesel. The green handle is diesel, the black is regular gas.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">Thanks. I almost used the wrong pump.</div><div class="burmese">ကျေးဇူးပါ။ မှားတဲ့ပန့်သုံးတော့မယ် လုလုပဲ။</div><button class="audio-btn" onclick="speakEnglish('Thanks. I almost used the wrong pump.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 4: Paying Inside -->
+    <div class="conversation-section"><h2>💰 Paying Inside / အတွင်းမှငွေရှင်းခြင်း</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">Pump number 2. $40 on pump 2, please.</div><div class="burmese">ပန့်နံပါတ် ၂။ ပန့် ၂ အတွက် ၄၀ ဒေါ်လာ ကြိုပေးပါမယ်။</div><button class="audio-btn" onclick="speakEnglish('Pump number 2. 40 dollars on pump 2, please.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Cashier:</div><div class="english">Here you go. Your pump is activated for $40. Would you like a receipt?</div><div class="burmese">ဒီမှာပါ။ သင့်ပန့်ကို ၄၀ ဒေါ်လာဖြင့် စတင်ပေးပါပြီ။ ပြေစာလိုချင်လား။</div><button class="audio-btn" onclick="speakEnglish('Here you go. Your pump is activated for 40 dollars. Would you like a receipt?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">Yes, please. Also, can I get a bottle of water?</div><div class="burmese">ဟုတ်ကဲ့။ ရေတစ်ပုလင်းလည်း ရနိုင်မလား။</div><button class="audio-btn" onclick="speakEnglish('Yes, please. Also, can I get a bottle of water?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Cashier:</div><div class="english">Sure. That'll be $41.50 total.</div><div class="burmese">ရပါတယ်။ စုစုပေါင်း ၄၁.၅၀ ဒေါ်လာပါ။</div><button class="audio-btn" onclick="speakEnglish('Sure. That will be 41 dollars and 50 cents total.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 5: Air for Tires -->
+    <div class="conversation-section"><h2>🎈 Air for Tires / တာယာလေဖြည့်ခြင်း</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">My tire pressure light is on. Do you have an air pump?</div><div class="burmese">ကျွန်တော့်တာယာဖိအားမီး လင်းနေတယ်။ လေပန့်ရှိလား။</div><button class="audio-btn" onclick="speakEnglish('My tire pressure light is on. Do you have an air pump?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Attendant:</div><div class="english">Yes, next to pump 5. It's free. Do you know the correct pressure for your tires?</div><div class="burmese">ဟုတ်ပါတယ်၊ ပန့် ၅ ဘေးမှာပါ။ အခမဲ့ဖြစ်ပါတယ်။ သင့်တာယာအတွက် မှန်ကန်တဲ့ဖိအားကို သိလား။</div><button class="audio-btn" onclick="speakEnglish('Yes, next to pump 5. It is free. Do you know the correct pressure for your tires?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">It says 32 PSI on the door sticker.</div><div class="burmese">တံခါးစတစ်ကာမှာ ၃၂ PSI လို့ပြောထားတယ်။</div><button class="audio-btn" onclick="speakEnglish('It says 32 PSI on the door sticker.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 6: Convinience Store -->
+    <div class="conversation-section"><h2>🏪 Convenience Store / အဆင်ပြေဆိုင်</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">I'll be back. I'm going inside to grab some snacks.</div><div class="burmese">ကျွန်တော် ပြန်လာပါမယ်။ သရေစာအချို့ဝယ်ဖို့ အတွင်းကို သွားပါမယ်။</div><button class="audio-btn" onclick="speakEnglish('I will be back. I am going inside to grab some snacks.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Cashier:</div><div class="english">Take your time. We have coffee, chips, candy, and drinks.</div><div class="burmese">စိတ်ချလက်ချလုပ်ပါ။ ကော်ဖီ၊ အာလူးကြော်၊ သကြားလုံးနဲ့ အဖျော်ယမကာတွေ ရှိပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('Take your time. We have coffee, chips, candy, and drinks.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">How much is a cup of coffee?</div><div class="burmese">ကော်ဖီတစ်ခွက် ဘယ်လောက်လဲ။</div><button class="audio-btn" onclick="speakEnglish('How much is a cup of coffee?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Cashier:</div><div class="english">$1.50 for small, $2 for large. Self-serve is over there.</div><div class="burmese">သေးသေးလေး ၁.၅၀ ဒေါ်လာ၊ ကြီးကြီး ၂ ဒေါ်လာပါ။ ကိုယ်တိုင်သုံးစွဲရန် အဲဒီမှာပါ။</div><button class="audio-btn" onclick="speakEnglish('1 dollar 50 cents for small, 2 dollars for large. Self-serve is over there.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 7: Car Wash -->
+    <div class="conversation-section"><h2>🧼 Car Wash / ကားလေဆေးခြင်း</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">Do you have a car wash?</div><div class="burmese">ကားလေဆေးစက် ရှိလား။</div><button class="audio-btn" onclick="speakEnglish('Do you have a car wash?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Attendant:</div><div class="english">Yes, the automatic car wash is $12 for basic, $18 for deluxe including wax.</div><div class="burmese">ဟုတ်ပါတယ်၊ အခြေခံအတွက် ၁၂ ဒေါ်လာ၊ ဖယောင်းအပါအဝင် ဇိမ်ခံအတွက် ၁၈ ဒေါ်လာပါ။</div><button class="audio-btn" onclick="speakEnglish('Yes, the automatic car wash is 12 dollars for basic, 18 dollars for deluxe including wax.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">I'll take the deluxe. Do I stay in the car?</div><div class="burmese">ဇိမ်ခံကို ယူပါမယ်။ ကျွန်တော် ကားထဲမှာ နေရမလား။</div><button class="audio-btn" onclick="speakEnglish('I will take the deluxe. Do I stay in the car?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Attendant:</div><div class="english">Yes, just pull into the bay and put your car in neutral. The machine will guide you.</div><div class="burmese">ဟုတ်ပါတယ်၊ ကားဂိုဒေါင်ထဲကို ဝင်ပြီး ဂီယာကြားထားပါ။ စက်က လမ်းညွှန်ပေးပါလိမ့်မယ်။</div><button class="audio-btn" onclick="speakEnglish('Yes, just pull into the bay and put your car in neutral. The machine will guide you.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <!-- Dialogue 8: Rewards Card -->
+    <div class="conversation-section"><h2>💳 Rewards Card / ဆုလာဘ်ကဒ်</h2>
+    <div class="dialogue-box">
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">Do you have a loyalty program?</div><div class="burmese">သစ္စာစောင့်သိမှုအစီအစဉ် ရှိလား။</div><button class="audio-btn" onclick="speakEnglish('Do you have a loyalty program?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Cashier:</div><div class="english">Yes, it's free to join. You get 5 cents off per gallon and earn points for discounts inside.</div><div class="burmese">ဟုတ်ပါတယ်၊ အခမဲ့ပါဝင်နိုင်ပါတယ်။ တစ်ဂါလံလျှင် ၅ ဆင့် လျှော့စျေးရပြီး အတွင်းပိုင်းလျှော့စျေးများအတွက် အမှတ်များရရှိပါတယ်။</div><button class="audio-btn" onclick="speakEnglish('Yes, it is free to join. You get 5 cents off per gallon and earn points for discounts inside.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Driver:</div><div class="english">I'd like to sign up. What do I need?</div><div class="burmese">ကျွန်တော် စာရင်းသွင်းချင်ပါတယ်။ ဘာတွေလိုအပ်လဲ။</div><button class="audio-btn" onclick="speakEnglish('I would like to sign up. What do I need?')"><i class="fas fa-volume-up"></i> Listen</button></div>
+        <div class="dialogue-line"><div class="speaker">👤 Cashier:</div><div class="english">Just your phone number. I'll add you to our system. Your fuel discount will apply automatically.</div><div class="burmese">သင့်ဖုန်းနံပါတ်ပါ။ စနစ်ထဲမှာ ထည့်ပေးပါမယ်။ သင့်လောင်စာဆီလျှော့စျေးကို အလိုအလျောက် သက်ရောက်ပါလိမ့်မယ်။</div><button class="audio-btn" onclick="speakEnglish('Just your phone number. I will add you to our system. Your fuel discount will apply automatically.')"><i class="fas fa-volume-up"></i> Listen</button></div>
+    </div></div>
+    
+    <div class="vocab-grid">
+        <div class="vocab-item"><span class="vocab-eng">Regular / Premium</span><br><span class="vocab-burmese">ပုံမှန်/ပရီမီယံဓာတ်ဆီ</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Octane rating</span><br><span class="vocab-burmese">အောက်တိန်းအဆင့်</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Nozzle</span><br><span class="vocab-burmese">နော်ဇယ်</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Tire pressure gauge</span><br><span class="vocab-burmese">တာယာဖိအားတိုင်းကိရိယာ</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Windshield washer fluid</span><br><span class="vocab-burmese">ရှေ့မှန်သန့်ရှင်းရေးအရည်</span></div>
+        <div class="vocab-item"><span class="vocab-eng">Antifreeze</span><br><span class="vocab-burmese">ခဲဆန့်ဆေး</span></div>
+    </div>
+    
+    <div class="tips-box"><i class="fas fa-lightbulb"></i> <strong>Tips at the Gas Station (ဓာတ်ဆီဆိုင်တွင် အကြံပြုချက်များ):</strong><br>• Turn off your engine while pumping (ဓာတ်ဆီဖြည့်နေစဉ် အင်ဂျင်ပိတ်ထားပါ)<br>• Don't use your phone at the pump (ပန့်အနားတွင် ဖုန်းမသုံးပါနှင့်)<br>• Check your oil level regularly (သင့်ဆီပမာဏကို ပုံမှန်စစ်ဆေးပါ)<br>• Keep your tires properly inflated (သင့်တာယာများကို မှန်ကန်စွာ လေဖြည့်ပါ)</div>
+    
+    <div class="quiz-question"><p><strong>1. How do you ask for a full tank?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'Fill it up, please.')">Put $20, please.</div><div class="quiz-option" onclick="checkAnswer(this, 'Fill it up, please.')">Fill it up, please.</div><div class="quiz-option" onclick="checkAnswer(this, 'Fill it up, please.')">I need diesel.</div><div class="quiz-option" onclick="checkAnswer(this, 'Fill it up, please.')">Check the oil.</div></div></div>
+    <div class="quiz-question"><p><strong>2. "ဒီဇယ်ရှိလား" in English?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'Do you have diesel?')">Do you have regular gas?</div><div class="quiz-option" onclick="checkAnswer(this, 'Do you have diesel?')">Do you have diesel?</div><div class="quiz-option" onclick="checkAnswer(this, 'Do you have diesel?')">Do you have premium?</div><div class="quiz-option" onclick="checkAnswer(this, 'Do you have diesel?')">Do you have air?</div></div></div>
+    <div class="quiz-question"><p><strong>3. What does "prepay" mean?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'Pay before pumping')">Pay after pumping</div><div class="quiz-option" onclick="checkAnswer(this, 'Pay before pumping')">Pay with cash only</div><div class="quiz-option" onclick="checkAnswer(this, 'Pay before pumping')">Pay before pumping</div><div class="quiz-option" onclick="checkAnswer(this, 'Pay before pumping')">Pay online</div></div></div>
+    <div class="quiz-question"><p><strong>4. "ဆီစစ်ပေးနိုင်မလား" in English?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'Can you check the oil?')">Can you check the tires?</div><div class="quiz-option" onclick="checkAnswer(this, 'Can you check the oil?')">Can you check the oil?</div><div class="quiz-option" onclick="checkAnswer(this, 'Can you check the oil?')">Can you clean the windshield?</div><div class="quiz-option" onclick="checkAnswer(this, 'Can you check the oil?')">Can you fill the tank?</div></div></div>
+    <div class="quiz-question"><p><strong>5. What color handle is usually for diesel in the US?</strong></p><div class="quiz-options"><div class="quiz-option" onclick="checkAnswer(this, 'Green')">Black</div><div class="quiz-option" onclick="checkAnswer(this, 'Green')">Red</div><div class="quiz-option" onclick="checkAnswer(this, 'Green')">Green</div><div class="quiz-option" onclick="checkAnswer(this, 'Green')">Yellow</div></div></div>
+    
+    <footer><p><i class="fas fa-heart" style="color: #f39c12;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p></footer>
+</div>
+<a href="#" class="back-to-top" id="backToTopBtn"><i class="fas fa-arrow-up"></i></a>
+<script>
+    function speakEnglish(text){if(!window.speechSynthesis)return;window.speechSynthesis.cancel();const utterance=new SpeechSynthesisUtterance(text);utterance.lang='en-US';utterance.rate=0.8;utterance.pitch=1.0;function setVoice(){const voices=window.speechSynthesis.getVoices();const englishVoice=voices.find(v=>v.lang==='en-US'||v.lang.startsWith('en-'));if(englishVoice)utterance.voice=englishVoice;window.speechSynthesis.speak(utterance);}if(window.speechSynthesis.getVoices().length)setVoice();else window.speechSynthesis.onvoiceschanged=setVoice;}
+    function checkAnswer(element,correctAnswer){const options=element.parentElement.querySelectorAll('.quiz-option');const isCorrect=element.innerText===correctAnswer;if(isCorrect){element.style.background='#2ecc71';element.style.color='white';speakEnglish(correctAnswer);setTimeout(()=>{options.forEach(opt=>{opt.style.background='';opt.style.color='';});},1500);}else{element.style.background='#e74c3c';element.style.color='white';setTimeout(()=>{options.forEach(opt=>{opt.style.background='';opt.style.color='';});},500);}}
+    (function(){const btn=document.getElementById('backToTopBtn');if(btn){window.addEventListener('scroll',function(){btn.classList.toggle('show',window.scrollY>300);});btn.addEventListener('click',function(e){e.preventDefault();window.scrollTo({top:0,behavior:'smooth'});});}})();
+</script>
+</body>
+</html>

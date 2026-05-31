@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gym Membership - Learn English with Burmese</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #f0f3fa 0%, #e6ecf7 100%);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            padding: 1rem;
+        }
+        .app-container { max-width: 900px; margin: 0 auto; }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            text-decoration: none;
+            color: #1e3c72;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .back-btn:hover { background: #1e3c72; color: white; }
+        
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { color: #1e3c72; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        header p { color: #6c757d; }
+        
+        .conversation-section {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .conversation-section h2 {
+            background: #e17055;
+            color: white;
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+        .dialogue-box { padding: 1rem; }
+        .dialogue-line {
+            display: grid;
+            grid-template-columns: 70px 1fr 1fr;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            align-items: start;
+        }
+        .speaker { font-weight: bold; color: #e17055; }
+        .english { color: #27ae60; font-size: 1rem; font-weight: 500; }
+        .burmese { 
+            color: #8e6b3c; 
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 0.95rem;
+        }
+        .audio-btn {
+            background: #eef4ff;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.3rem;
+        }
+        .audio-btn:hover { background: #e17055; color: white; }
+        
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+            padding: 1rem;
+        }
+        .vocab-item {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            border-left: 3px solid #e17055;
+        }
+        .vocab-eng { font-weight: bold; color: #e17055; }
+        .vocab-burmese { color: #8e6b3c; font-family: 'Noto Sans Myanmar', sans-serif; font-size: 0.9rem; }
+        
+        .quiz-question {
+            background: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.8rem;
+        }
+        .quiz-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .quiz-option {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .quiz-option:hover { background: #e17055; color: white; border-color: #e17055; }
+        
+        .pricing-table {
+            background: #fef5e7;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #e17055;
+        }
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px dashed #ddd;
+        }
+        
+        .tips-box {
+            background: #fef5e7;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            margin: 1rem;
+            border-left: 3px solid #e17055;
+        }
+        .tips-box i { color: #e17055; margin-right: 8px; }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1rem;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: #1e3c72;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid white;
+        }
+        .back-to-top.show { opacity: 1; visibility: visible; }
+        .back-to-top:hover { background: #f5b042; color: #1e3c72; transform: translateY(-3px); }
+        .back-to-top i { font-size: 1.2rem; }
+        
+        @media (max-width: 768px) {
+            .back-to-top { bottom: 1rem; right: 1rem; width: 42px; height: 42px; }
+            .back-to-top i { font-size: 1rem; }
+        }
+        @media (max-width: 700px) {
+            .dialogue-line { grid-template-columns: 1fr; gap: 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <a href="../daily-conversations.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i> All Conversations
+    </a>
+    
+    <header>
+        <h1><i class="fas fa-dumbbell"></i> Gym Membership</h1>
+        <p>Learn how to sign up for a gym, ask about facilities, and fitness classes in English</p>
+        <p>အားကစားခန်းတွင်စာရင်းသွင်းနည်း၊ အဆောက်အအုံများအကြောင်းမေးမြန်းနည်းနှင့် ကြံ့ခိုင်ရေးသင်တန်းများအကြောင်း အင်္ဂလိပ်လို လေ့လာပါ</p>
+    </header>
+    
+    <!-- Dialogue 1: Asking About Membership -->
+    <div class="conversation-section">
+        <h2>💪 Asking About Membership / အသင်းဝင်ခြင်းအကြောင်းမေးမြန်းခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Hello, I'm interested in joining the gym. What memberships do you offer?</div>
+                <div class="burmese">မင်္ဂလာပါ၊ ကျွန်တော် အားကစားခန်းတွင် ပါဝင်ရန် စိတ်ဝင်စားပါတယ်။ ဘယ်လိုအသင်းဝင်မှုတွေ ပေးလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Hello, I am interested in joining the gym. What memberships do you offer?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Staff:</div>
+                <div class="english">We have monthly, quarterly, and annual memberships. We also offer day passes.</div>
+                <div class="burmese">ကျွန်တော်တို့မှာ လစဉ်၊ သုံးလပတ်နှင့် နှစ်စဉ်အသင်းဝင်မှုများ ရှိပါတယ်။ တစ်ရက်လက်မှတ်များလည်း ပေးပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('We have monthly, quarterly, and annual memberships. We also offer day passes.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">How much is the monthly membership?</div>
+                <div class="burmese">လစဉ်အသင်းဝင်ကြေး ဘယ်လောက်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('How much is the monthly membership?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Staff:</div>
+                <div class="english">$50 per month with a 12-month commitment, or $70 month-to-month.</div>
+                <div class="burmese">၁၂ လစာချုပ်ဖြင့် တစ်လ ၅၀ ဒေါ်လာ၊ သို့မဟုတ် လစဉ်သက်တမ်းတိုးဖြင့် ၇၀ ဒေါ်လာပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('50 dollars per month with a 12-month commitment, or 70 dollars month-to-month.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 2: Facilities and Equipment -->
+    <div class="conversation-section">
+        <h2>🏋️ Facilities and Equipment / အဆောက်အအုံများနှင့် စက်ပစ္စည်းများ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">What equipment and facilities do you have?</div>
+                <div class="burmese">ဘယ်စက်ပစ္စည်းများနှင့် အဆောက်အအုံများ ရှိလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What equipment and facilities do you have?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Staff:</div>
+                <div class="english">We have cardio machines, free weights, weight machines, a swimming pool, and a sauna.</div>
+                <div class="burmese">ကျွန်တော်တို့မှာ နှလုံးသွေးကြောလေ့ကျင့်ခန်းစက်များ၊ အလေးတုံးများ၊ အလေးမစက်များ၊ ရေကူးကန်နှင့် ရေနွေးငွေ့ခန်းတို့ ရှိပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('We have cardio machines, free weights, weight machines, a swimming pool, and a sauna.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Do you have a locker room and showers?</div>
+                <div class="burmese">သော့ခန်းနှင့် ရေချိုးခန်းများ ရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you have a locker room and showers?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Staff:</div>
+                <div class="english">Yes, both are available. Towels are provided free of charge.</div>
+                <div class="burmese">ဟုတ်ပါတယ်၊ နှစ်မျိုးစလုံး ရနိုင်ပါတယ်။ မျက်နှာသုတ်ပုဝါများကို အခမဲ့ပေးပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, both are available. Towels are provided free of charge.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 3: Fitness Classes -->
+    <div class="conversation-section">
+        <h2>🧘 Fitness Classes / ကြံ့ခိုင်ရေးသင်တန်းများ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Do you offer any fitness classes?</div>
+                <div class="burmese">ကြံ့ခိုင်ရေးသင်တန်းများ ပေးလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you offer any fitness classes?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Staff:</div>
+                <div class="english">Yes, we have yoga, spin, Zumba, Pilates, and HIIT classes included with membership.</div>
+                <div class="burmese">ဟုတ်ပါတယ်၊ ယောဂ၊ စပင်၊ ဇမ်ဘာ၊ ပိုင်လိတ်နှင့် HIIT သင်တန်းများ အသင်းဝင်ခနှင့် ပါဝင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, we have yoga, spin, Zumba, Pilates, and HIIT classes included with membership.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">What time are the classes held?</div>
+                <div class="burmese">သင်တန်းတွေ ဘယ်အချိန်ကျင်းပလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What time are the classes held?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Staff:</div>
+                <div class="english">Morning classes start at 6 AM, and evening classes at 5 PM. There are also weekend classes on Saturday morning.</div>
+                <div class="burmese">မနက်ပိုင်းသင်တန်းများ နံနက် ၆ နာရီစတင်၍ ညနေပိုင်းသင်တန်းများ ညနေ ၅ နာရီတွင်ရှိပါသည်။ စနေနေ့မနက်ပိုင်းတွင် အားလပ်ရက်သင်တန်းများလည်းရှိပါသည်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Morning classes start at 6 AM, and evening classes at 5 PM. There are also weekend classes on Saturday morning.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 4: Personal Training -->
+    <div class="conversation-section">
+        <h2>👨‍🏫 Personal Training / ကိုယ်ပိုင်သင်တန်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Do you have personal trainers?</div>
+                <div class="burmese">ကိုယ်ပိုင်သင်တန်းဆရာများ ရှိလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you have personal trainers?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Staff:</div>
+                <div class="english">Yes, we have certified personal trainers. They can create a customized workout plan for you.</div>
+                <div class="burmese">ဟုတ်ပါတယ်၊ အသိအမှတ်ပြု ကိုယ်ပိုင်သင်တန်းဆရာများ ရှိပါတယ်။ သူတို့သည် သင့်အတွက် စိတ်ကြိုက်လေ့ကျင့်ခန်းအစီအစဉ်ကို ဖန်တီးပေးနိုင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, we have certified personal trainers. They can create a customized workout plan for you.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">How much does personal training cost?</div>
+                <div class="burmese">ကိုယ်ပိုင်သင်တန်း ဘယ်လောက်ကုန်ကျလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('How much does personal training cost?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Staff:</div>
+                <div class="english">$60 per session, or $280 for a package of 5 sessions.</div>
+                <div class="burmese">တစ်ကြိမ်လျှင် ၆၀ ဒေါ်လာ၊ သို့မဟုတ် ၅ ကြိမ်အထုပ်အတွက် ၂၈၀ ဒေါ်လာပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('60 dollars per session, or 280 dollars for a package of 5 sessions.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 5: Signing Up -->
+    <div class="conversation-section">
+        <h2>📝 Signing Up / စာရင်းသွင်းခြင်း</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">I'd like to sign up for the monthly membership with a 12-month commitment.</div>
+                <div class="burmese">၁၂ လစာချုပ်ပါတဲ့ လစဉ်အသင်းဝင်မှုအတွက် စာရင်းသွင်းချင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('I would like to sign up for the monthly membership with a 12-month commitment.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Staff:</div>
+                <div class="english">Great choice. Please fill out this registration form and provide a photo ID.</div>
+                <div class="burmese">ကောင်းတဲ့ရွေးချယ်မှုပါ။ ကျေးဇူးပြု၍ ဒီမှတ်ပုံတင်ပုံစံကို ဖြည့်ပြီး ဓာတ်ပုံပါသက်သေခံ ပေးပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Great choice. Please fill out this registration form and provide a photo ID.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Here's my driver's license. When can I start?</div>
+                <div class="burmese">ဒီမှာ ကျွန်တော့်ကားမောင်းလိုင်စင်ပါ။ ဘယ်အချိန်စတင်နိုင်မလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Here is my driver\'s license. When can I start?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Staff:</div>
+                <div class="english">You can start today! I'll give you a tour of the facility and explain the equipment.</div>
+                <div class="burmese">သင်ဒီနေ့စတင်နိုင်ပါတယ်။ အဆောက်အအုံကို လှည့်လည်ပြသပြီး စက်ပစ္စည်းများကို ရှင်းပြပေးပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('You can start today! I will give you a tour of the facility and explain the equipment.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 6: Free Trial -->
+    <div class="conversation-section">
+        <h2>🎁 Free Trial / အခမဲ့စမ်းသပ်ခွင့်</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Do you offer a free trial before I commit?</div>
+                <div class="burmese">မစာရင်းသွင်းမီ အခမဲ့စမ်းသပ်ခွင့် ပေးလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Do you offer a free trial before I commit?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Staff:</div>
+                <div class="english">Yes, we offer a 3-day free trial pass. You can try all our facilities and classes.</div>
+                <div class="burmese">ဟုတ်ပါတယ်၊ ကျွန်တော်တို့ ၃ ရက် အခမဲ့စမ်းသပ်လက်မှတ် ပေးပါတယ်။ ကျွန်တော်တို့ရဲ့ အဆောက်အအုံနှင့် သင်တန်းများအားလုံးကို စမ်းကြည့်နိုင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, we offer a 3-day free trial pass. You can try all our facilities and classes.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Great! I'll take the free trial first.</div>
+                <div class="burmese">ကောင်းပါတယ်။ အရင်ဆုံး အခမဲ့စမ်းသပ်ခွင့် ယူပါမယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Great! I will take the free trial first.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Staff:</div>
+                <div class="english">Here's your trial pass. It's valid for 3 consecutive days. Enjoy!</div>
+                <div class="burmese">ဒီမှာ သင့်စမ်းသပ်လက်မှတ်ပါ။ ၃ ရက်ဆက်တိုက် အကျုံးဝင်ပါတယ်။ ပျော်ပါ။</div>
+                <button class="audio-btn" onclick="speakEnglish('Here is your trial pass. It is valid for 3 consecutive days. Enjoy!')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 7: Gym Hours -->
+    <div class="conversation-section">
+        <h2>🕐 Gym Hours / အားကစားခန်းဖွင့်ချိန်</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">What are your operating hours?</div>
+                <div class="burmese">သင့်တို့ရဲ့ ဖွင့်လှစ်ချိန်က ဘယ်လောက်လဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What are your operating hours?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Staff:</div>
+                <div class="english">We're open 24 hours, Monday through Friday. On weekends, we're open from 7 AM to 9 PM.</div>
+                <div class="burmese">ကျွန်တော်တို့ တနင်္လာနေ့မှ သောကြာနေ့အထိ ၂၄ နာရီဖွင့်ပါတယ်။ စနေ၊ တနင်္ဂနွေမှာ နံနက် ၇ နာရီမှ ည ၉ နာရီအထိ ဖွင့်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('We are open 24 hours, Monday through Friday. On weekends, we are open from 7 AM to 9 PM.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">24 hours? That's very convenient for my schedule.</div>
+                <div class="burmese">၂၄ နာရီလား။ ဒါက ကျွန်တော့်အချိန်ဇယားအတွက် အရမ်းအဆင်ပြေတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('24 hours? That is very convenient for my schedule.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Staff:</div>
+                <div class="english">Yes, members have 24/7 access with their keycard.</div>
+                <div class="burmese">ဟုတ်ပါတယ်၊ အသင်းဝင်များသည် ၎င်းတို့၏သော့ကဒ်ဖြင့် ၂၄/၇ ဝင်ရောက်ခွင့်ရှိပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, members have 24/7 access with their keycard.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dialogue 8: Cancellation Policy -->
+    <div class="conversation-section">
+        <h2>📋 Cancellation Policy / ဖျက်သိမ်းခြင်းမူဝါဒ</h2>
+        <div class="dialogue-box">
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">What is your cancellation policy?</div>
+                <div class="burmese">သင့်တို့ရဲ့ ဖျက်သိမ်းခြင်းမူဝါဒက ဘာလဲ။</div>
+                <button class="audio-btn" onclick="speakEnglish('What is your cancellation policy?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Staff:</div>
+                <div class="english">You need to give 30 days' written notice to cancel your membership. There is no cancellation fee after the first 3 months.</div>
+                <div class="burmese">အသင်းဝင်မှုဖျက်သိမ်းရန် ရက် ၃၀ ကြိုတင်အကြောင်းကြားစာ လိုအပ်ပါတယ်။ ပထမ ၃ လပြီးနောက် ဖျက်သိမ်းခအခကြေးငွေ မရှိပါဘူး။</div>
+                <button class="audio-btn" onclick="speakEnglish('You need to give 30 days written notice to cancel your membership. There is no cancellation fee after the first 3 months.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Customer:</div>
+                <div class="english">Can I freeze my membership if I'm traveling?</div>
+                <div class="burmese">ခရီးသွားရင် အသင်းဝင်မှုကို ရပ်နားထားလို့ရမလား။</div>
+                <button class="audio-btn" onclick="speakEnglish('Can I freeze my membership if I am traveling?')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">👤 Staff:</div>
+                <div class="english">Yes, you can freeze for up to 3 months per year with a $10 monthly fee.</div>
+                <div class="burmese">ဟုတ်ပါတယ်၊ တစ်လ ၁၀ ဒေါ်လာနှုန်းဖြင့် တစ်နှစ်လျှင် အများဆုံး ၃ လအထိ ရပ်နားထားနိုင်ပါတယ်။</div>
+                <button class="audio-btn" onclick="speakEnglish('Yes, you can freeze for up to 3 months per year with a 10 dollar monthly fee.')"><i class="fas fa-volume-up"></i> Listen</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Pricing Table -->
+    <div class="conversation-section">
+        <h2>💰 Membership Pricing / အသင်းဝင်စျေးနှုန်းများ</h2>
+        <div class="pricing-table">
+            <div class="price-row"><strong>Day Pass (တစ်ရက်လက်မှတ်)</strong> - $15</div>
+            <div class="price-row"><strong>Monthly (Month-to-month) (လစဉ် - လစဉ်သက်တမ်းတိုး)</strong> - $70/month</div>
+            <div class="price-row"><strong>Monthly (12-month commitment) (လစဉ် - ၁၂ လစာချုပ်)</strong> - $50/month</div>
+            <div class="price-row"><strong>Quarterly (သုံးလပတ်)</strong> - $135 ($45/month)</div>
+            <div class="price-row"><strong>Annual (နှစ်စဉ်)</strong> - $480 ($40/month)</div>
+            <div class="price-row"><strong>Student Discount (ကျောင်းသားလျှော့စျေး)</strong> - 20% off with valid student ID</div>
+            <div class="price-row"><strong>Corporate Membership (ကော်ပိုရိတ်အသင်းဝင်)</strong> - Contact for group rates</div>
+        </div>
+    </div>
+    
+    <!-- Gym Vocabulary -->
+    <div class="conversation-section">
+        <h2>📚 Gym Vocabulary / အားကစားခန်းသုံးဝေါဟာရများ</h2>
+        <div class="vocab-grid">
+            <div class="vocab-item"><span class="vocab-eng">Treadmill</span><br><span class="vocab-burmese">ပြေးစက်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Elliptical machine</span><br><span class="vocab-burmese">ဘီးလှည့်စက်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Stationary bike</span><br><span class="vocab-burmese">စက်ဘီးစက်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Rowing machine</span><br><span class="vocab-burmese">လှေလှော်စက်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Dumbbells</span><br><span class="vocab-burmese">အလေးတုံးများ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Barbell</span><br><span class="vocab-burmese">အလေးတုံးရှည်</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Weight bench</span><br><span class="vocab-burmese">အလေးမခုံ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Personal trainer</span><br><span class="vocab-burmese">ကိုယ်ပိုင်သင်တန်းဆရာ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Warm-up / Cool-down</span><br><span class="vocab-burmese">အပူပေး/အအေးခံလေ့ကျင့်ခန်း</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Reps / Sets</span><br><span class="vocab-burmese">အကြိမ်ရေ/အစုအရေ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Spotter</span><br><span class="vocab-burmese">အကူ</span></div>
+            <div class="vocab-item"><span class="vocab-eng">Locker room</span><br><span class="vocab-burmese">သော့ခန်း</span></div>
+        </div>
+    </div>
+    
+    <!-- Gym Tips -->
+    <div class="conversation-section">
+        <h2>💡 Gym Tips for Beginners / အစပြုသူများအတွက် အားကစားခန်းအကြံပြုချက်များ</h2>
+        <div class="tips-box">
+            <i class="fas fa-lightbulb"></i>
+            <strong>Tips for Your First Gym Visit (သင့်ပထမဆုံးအားကစားခန်းသွားရောက်မှုအတွက် အကြံပြုချက်များ):</strong><br>
+            • Start with a warm-up (လေ့ကျင့်ခန်းမစမီ အပူပေးလေ့ကျင့်ခန်းလုပ်ပါ)<br>
+            • Ask for a tour and equipment demonstration (လှည့်လည်ပြသခြင်းနှင့် စက်ပစ္စည်းသရုပ်ပြခြင်းကိုတောင်းပါ)<br>
+            • Don't compare yourself to others (ကိုယ့်ကိုယ်ကို အခြားသူများနှင့် မနှိုင်းယှဉ်ပါနှင့်)<br>
+            • Stay hydrated (ရေဓာတ်ပြည့်ဝအောင်ထားပါ)<br>
+            • Ask for help if you don't know how to use equipment (စက်ပစ္စည်းအသုံးပြုနည်းမသိရင် အကူအညီတောင်းပါ)<br>
+            • Wipe down equipment after use (သုံးပြီးတိုင်း စက်ပစ္စည်းကို သန့်ရှင်းရေးလုပ်ပါ)<br>
+            • Be consistent, not intense (ပြင်းထန်ခြင်းထက် ပုံမှန်လုပ်ဆောင်ခြင်းက ပိုအရေးကြီးပါတယ်)<br>
+        </div>
+    </div>
+    
+    <!-- Practice Section -->
+    <div class="conversation-section">
+        <h2>✏️ Practice Questions / လေ့ကျင့်ခန်းမေးခွန်းများ</h2>
+        <div class="dialogue-box">
+            <div class="quiz-question">
+                <p><strong>1. How do you ask about gym membership prices?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'How much is the monthly membership?')">What time do you close?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'How much is the monthly membership?')">How much is the monthly membership?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'How much is the monthly membership?')">Do you have a pool?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'How much is the monthly membership?')">Where is the locker room?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>2. "အသင်းဝင်မှုမှာ ဘယ်သင်တန်းတွေ ပါဝင်လဲ" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What classes are included with the membership?')">How much is personal training?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What classes are included with the membership?')">What classes are included with the membership?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What classes are included with the membership?')">Do you have free weights?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'What classes are included with the membership?')">Is there a sauna?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>3. What is a "personal trainer"?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A fitness professional who creates personalized workout plans')">A receptionist</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A fitness professional who creates personalized workout plans')">A janitor</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A fitness professional who creates personalized workout plans')">A fitness professional who creates personalized workout plans</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'A fitness professional who creates personalized workout plans')">A lifeguard</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>4. "အခမဲ့စမ်းသပ်ခွင့် ရှိလား" in English?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Do you offer a free trial?')">Do you have a discount?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Do you offer a free trial?')">Do you offer a free trial?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Do you offer a free trial?')">Do you have parking?</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Do you offer a free trial?')">Do you have showers?</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><strong>5. What does "warm-up" mean?</strong></p>
+                <div class="quiz-options">
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Light exercise before the main workout')">Heavy lifting</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Light exercise before the main workout')">Running fast</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Light exercise before the main workout')">Light exercise before the main workout</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, 'Light exercise before the main workout')">Stretching after workout</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p><i class="fas fa-heart" style="color: #e17055;"></i> Next Gen Learning Myanmar - Learn English with Burmese</p>
+        <p style="font-size: 0.75rem; margin-top: 0.5rem;">Practice these conversations to join a gym with confidence!</p>
+    </footer>
+</div>
+
+<a href="#" class="back-to-top" id="backToTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+<script>
+    function speakEnglish(text) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8;
+        utterance.pitch = 1.0;
+        
+        function setVoice() {
+            const voices = window.speechSynthesis.getVoices();
+            const englishVoice = voices.find(v => v.lang === 'en-US' || v.lang.startsWith('en-'));
+            if (englishVoice) utterance.voice = englishVoice;
+            window.speechSynthesis.speak(utterance);
+        }
+        
+        if (window.speechSynthesis.getVoices().length) setVoice();
+        else window.speechSynthesis.onvoiceschanged = setVoice;
+    }
+    
+    function checkAnswer(element, correctAnswer) {
+        const options = element.parentElement.querySelectorAll('.quiz-option');
+        const isCorrect = element.innerText === correctAnswer;
+        
+        if (isCorrect) {
+            element.style.background = '#2ecc71';
+            element.style.color = 'white';
+            speakEnglish(correctAnswer);
+            setTimeout(() => {
+                options.forEach(opt => {
+                    opt.style.background = '';
+                    opt.style.color = '';
+                });
+            }, 1500);
+        } else {
+            element.style.background = '#e74c3c';
+            element.style.color = 'white';
+            setTimeout(() => {
+                element.style.background = '';
+                opt.style.color = '';
+            }, 500);
+        }
+    }
+    
+    (function() {
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        if (backToTopBtn) {
+            window.addEventListener('scroll', function() {
+                backToTopBtn.classList.toggle('show', window.scrollY > 300);
+            });
+            backToTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+    })();
+</script>
+</body>
+</html>
